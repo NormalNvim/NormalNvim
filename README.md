@@ -3,8 +3,10 @@ A normal NeoVim config
 
 ## Install
 
-    git clone --depth 1 git@github.com:Zeioth/NormalNVim.git ~/.config/nvim
-    nvim
+```
+git clone --depth 1 git@github.com:Zeioth/NormalNVim.git ~/.config/nvim
+nvim
+```
 
 ## Plugins
 
