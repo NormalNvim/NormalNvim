@@ -1,5 +1,5 @@
 # NormalNVim
-My personal NVim dotfiles
+A normal NeoVim config
 
 ## What is this
 This NeoVim distro is esentially AstroVim de-branded and simplified.
