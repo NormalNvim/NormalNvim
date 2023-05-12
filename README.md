@@ -1,7 +1,12 @@
 # NormalNVim
 A normal NeoVim config
 
-## Blugins
+## Install
+
+    git clone --depth 1 git@github.com:Zeioth/NormalNVim.git ~/.config/nvim
+    nvim
+
+## Plugins
 
 WIP
 
