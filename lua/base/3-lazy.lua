@@ -26,9 +26,7 @@ for _, config_dir in ipairs(base.supported_configs) do
   if vim.fn.isdirectory(config_dir .. "/lua/user/plugins") == 1 then user_plugins = { import = "user.plugins" } end
 end
 
---local spec = base.updater.options.pin_plugins and { { import = base.updater.snapshot.module } } or {}
-local spec =  {}
-
+local spec = base.updater.options.pin_plugins and { { import = base.updater.snapshot.module } } or {}
 vim.list_extend(spec, { { import = "plugins" }, user_plugins })
 
 local colorscheme = base.default_colorscheme and { base.default_colorscheme } or nil

@@ -1,10 +1,21 @@
 -- Disabled plugins
 -- In case we want to re-enable them in the future.
 
-return {
 
+--    Sections:
+--       -> bufdelete
+--       -> neo-tree
+
+
+
+
+return {
+    --  bufdelete
+    --  https://github.com/famiu/bufdelete.nvim
     -- { "famiu/bufdelete.nvim", cmd = { "Bdelete", "Bwipeout" } },
 
+    --  neotree
+    --  https://github.com/nvim-neo-tree/neo-tree.nvim
     -- {
     -- "nvim-neo-tree/neo-tree.nvim",
     -- dependencies = { "MunifTanjim/nui.nvim" },

@@ -113,6 +113,16 @@ function base.user_opts(module, default, extend)
   return default
 end
 
+--- Updater settings overridden with any user provided configuration
+base.updater = {
+  options = base.user_opts("updater", { remote = "origin", channel = "stable" }),
+  snapshot = { module = "lazy_snapshot", path = vim.fn.stdpath "config" .. "/lua/lazy_snapshot.lua" },
+  rollback_file = vim.fn.stdpath "cache" .. "/nvim_rollback.lua",
+}
+local options = base.updater.options
+if base.install.is_stable ~= nil then options.channel = base.install.is_stable and "stable" or "nightly" end
+if options.pin_plugins == nil then options.pin_plugins = options.channel == "stable" end
+
 --- table of user created terminals
 base.user_terminals = {}
 --- table of language servers to ignore the setup of, configured through lsp.skip_setup in the user configuration

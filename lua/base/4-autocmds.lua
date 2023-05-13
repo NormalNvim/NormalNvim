@@ -2,11 +2,19 @@ local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local cmd = vim.api.nvim_create_user_command
 local namespace = vim.api.nvim_create_namespace
-
 local utils = require "base.utils"
 local is_available = utils.is_available
 local baseevent = utils.event
 
+
+--    Sections:
+--       -> auto-hlsearch.nvim
+--       -> update buffers when adding new buffers.
+
+
+
+
+-- auto-hlsearch.nvim
 vim.on_key(function(char)
   if vim.fn.mode() == "n" then
     local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/" }, vim.fn.keytrans(char))
@@ -14,6 +22,10 @@ vim.on_key(function(char)
   end
 end, namespace "auto_hlsearch")
 
+
+
+
+-- Update buffers when adding new buffers
 local bufferline_group = augroup("bufferline", { clear = true })
 autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
   desc = "Update buffers when adding new buffers",
@@ -29,6 +41,11 @@ autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
     baseevent "BufsUpdated"
   end,
 })
+
+
+
+
+-- Update buffers when deleting buffers
 autocmd("BufDelete", {
   desc = "Update buffers when deleting buffers",
   group = bufferline_group,
@@ -51,12 +68,18 @@ autocmd("BufDelete", {
   end,
 })
 
+
+
+
 autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   desc = "URL Highlighting",
   group = augroup("highlighturl", { clear = true }),
   pattern = "*",
   callback = function() utils.set_url_match() end,
 })
+
+
+
 
 local view_group = augroup("auto_view", { clear = true })
 autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {
@@ -66,6 +89,10 @@ autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {
     if vim.b[event.buf].view_activated then vim.cmd.mkview { mods = { emsg_silent = true } } end
   end,
 })
+
+
+
+
 autocmd("BufWinEnter", {
   desc = "Try to load file view if available and enable view saving for real files",
   group = view_group,
@@ -82,6 +109,9 @@ autocmd("BufWinEnter", {
   end,
 })
 
+
+
+
 autocmd("BufWinEnter", {
   desc = "Make q close help, man, quickfix, dap floats",
   group = augroup("q_close_windows", { clear = true }),
@@ -94,6 +124,9 @@ autocmd("BufWinEnter", {
   end,
 })
 
+
+
+
 autocmd("TextYankPost", {
   desc = "Highlight yanked text",
   group = augroup("highlightyank", { clear = true }),
@@ -101,12 +134,18 @@ autocmd("TextYankPost", {
   callback = function() vim.highlight.on_yank() end,
 })
 
+
+
+
 autocmd("FileType", {
   desc = "Unlist quickfist buffers",
   group = augroup("unlist_quickfist", { clear = true }),
   pattern = "qf",
   callback = function() vim.opt_local.buflisted = false end,
 })
+
+
+
 
 autocmd("BufEnter", {
   desc = "Quit Nvim if more than one window is open and only sidebar windows are list",
@@ -137,6 +176,9 @@ autocmd("BufEnter", {
     end
   end,
 })
+
+
+
 
 if is_available "alpha-nvim" then
   local group_name = augroup("alpha_settings", { clear = true })
@@ -182,6 +224,9 @@ if is_available "alpha-nvim" then
   })
 end
 
+
+
+
 if is_available "resession.nvim" then
   autocmd("VimLeavePre", {
     desc = "Save session on close",
@@ -196,6 +241,9 @@ if is_available "resession.nvim" then
     end,
   })
 end
+
+
+
 
 if is_available "neo-tree.nvim" then
   autocmd("BufEnter", {
@@ -215,6 +263,9 @@ if is_available "neo-tree.nvim" then
   })
 end
 
+
+
+
 autocmd({ "VimEnter", "ColorScheme" }, {
   desc = "Load custom highlights from user configuration",
   group = augroup("base_highlights", { clear = true }),
@@ -230,6 +281,9 @@ autocmd({ "VimEnter", "ColorScheme" }, {
   end,
 })
 
+
+
+
 autocmd({ "BufReadPost", "BufNewFile" }, {
   desc = "Nvim user events for file detection (BaseFile and BaseGitFile)",
   group = augroup("file_user_events", { clear = true }),
@@ -242,3 +296,19 @@ autocmd({ "BufReadPost", "BufNewFile" }, {
 })
 
 
+
+-- NVin updater
+cmd(
+  "NvimChangelog",
+  function() require("base.utils.updater").changelog() end,
+  { desc = "Check Nvim Changelog" }
+)
+cmd(
+  "NVimUpdatePackages",
+  function() require("base.utils.updater").update_packages() end,
+  { desc = "Update Plugins and Mason" }
+)
+cmd("NVimRollback", function() require("base.utils.updater").rollback() end, { desc = "Rollback Nvim" })
+cmd("NVimUpdate", function() require("base.utils.updater").update() end, { desc = "Update Nvim" })
+cmd("NVimVersion", function() require("base.utils.updater").version() end, { desc = "Check Nvim Version" })
+cmd("NVimReload", function() require("base.utils").reload() end, { desc = "Reload Nvim (Experimental)" })

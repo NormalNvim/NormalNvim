@@ -3,20 +3,20 @@
 
 
 --    Sections:
---       -- TREE SITTER -------------------------------------------
+--       ## TREE SITTER
 --       -> nvim-treesitter                [syntax highlight]
 --       -> nvim-ts-autotag                [treesitter understand html tags]
 --       -> nvim-ts-context-commentstring  [treesitter comments]
 --       -> nvim-colorizer                 [hex colors]
 
---       -- LSP --------------------------------------------------
+--       ## LSP
 --       -> SchemaStore.nvim               [lsp schema manager]
 --       -> mason.nvim                     [lsp package manager]
 --       -> nvim-lspconfig                 [lsp config]
 --       -> null-ls                        [code formatting]
 --       -> luasnip                        [snippet-engine]
 
---       -- AUTO COMPLETON ----------------------------------------
+--       ## AUTO COMPLETON
 --       -> nvim-cmp                       [auto completion engine]
 --       -> cmp-nvim-buffer                [auto completion buffer]
 --       -> cmp-nvim-path                  [auto completion path]

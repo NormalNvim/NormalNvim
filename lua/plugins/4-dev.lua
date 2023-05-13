@@ -3,27 +3,27 @@
 
 
 --    Sections:
---       -- UTILITIES ---------------------------------------------
+--       ## UTILITIES
 --       -> autopairs                      [auto pairs]
 --       -> nvim-ufo + promise async       [folding mod]
 
---       -- COMMENTS ----------------------------------------------
+--       ## COMMENTS
 --       -> comment.nvim                   [adv. comments]
 
---       -- SNIPPETS ----------------------------------------------
+--       ## SNIPPETS
 --       -> luasnip                        [snippet engine] 
---       -> friendly-snippets              [predefined snippets]
+--       -> friendly-snippets              [snippet templates]
 
---       -- GIT ---------------------------------------------------
+--       ## GIT
 --       -> gitsigns.nvim                  [git]
 
---       -- DEBUGGER ----------------------------------------------
+--       ## DEBUGGER
 --       -> nvim-dap                       [debugger]
 
---       -- ANALYZER ----------------------------------------------
+--       ## ANALYZER
 --       -> aerial.nvim                    [code analyzer]
 
---       -- EXTRA ----------------------------------------------
+--       ## EXTRA
 --       -> guess-indent                   [guess-indent]
 
 
@@ -121,7 +121,7 @@ return {
 
 
   --  SNIPPETS ----------------------------------------------------------------
-  --  Vim Snippets engine  [snippet engine] + [predefined snippets]
+  --  Vim Snippets engine  [snippet engine] + [snippet templates]
   --  https://github.com/L3MON4D3/LuaSnip
   --  https://github.com/rafamadriz/friendly-snippets
   {
