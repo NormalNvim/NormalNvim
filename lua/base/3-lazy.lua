@@ -23,7 +23,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local user_plugins = base.user_opts "plugins"
+local user_plugins = {}
 for _, config_dir in ipairs(base.supported_configs) do
   if vim.fn.isdirectory(config_dir .. "/lua/user/plugins") == 1 then user_plugins = { import = "user.plugins" } end
 end
@@ -33,7 +33,7 @@ vim.list_extend(spec, { { import = "plugins" }, user_plugins })
 
 local colorscheme = base.default_colorscheme and { base.default_colorscheme } or nil
 
-require("lazy").setup(base.user_opts("lazy", {
+require("lazy").setup({
   spec = spec,
   defaults = { lazy = true },
   install = { colorscheme = colorscheme },
@@ -44,4 +44,4 @@ require("lazy").setup(base.user_opts("lazy", {
     },
   },
   lockfile = vim.fn.stdpath "data" .. "/lazy-lock.json",
-}))
+})

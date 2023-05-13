@@ -268,24 +268,6 @@ end
 
 
 
-autocmd({ "VimEnter", "ColorScheme" }, {
-  desc = "Load custom highlights from user configuration",
-  group = augroup("base_highlights", { clear = true }),
-  callback = function()
-    if vim.g.colors_name then
-      for _, module in ipairs { "init", vim.g.colors_name } do
-        for group, spec in pairs(base.user_opts("highlights." .. module)) do
-          vim.api.nvim_set_hl(0, group, spec)
-        end
-      end
-    end
-    baseevent "ColorScheme"
-  end,
-})
-
-
-
-
 autocmd({ "BufReadPost", "BufNewFile" }, {
   desc = "Nvim user events for file detection (BaseFile and BaseGitFile)",
   group = augroup("file_user_events", { clear = true }),

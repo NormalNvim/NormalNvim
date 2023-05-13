@@ -1,27 +1,17 @@
 -- variables
 
 
-
-
 -- theme
-base.default_colorscheme = base.user_opts(
-  "colorscheme", "astrotheme", false
-)
+base.default_colorscheme = "astrotheme"
 
-
-
-
--- vim variables
+-- remove+append
 vim.opt.viewoptions:remove "curdir"             -- disable saving current directory with views
 vim.opt.shortmess:append { s = true, I = true } -- disable startup message
 vim.opt.backspace:append { "nostop" }           -- Don't stop backspace at insert
 vim.opt.diffopt:append "linematch:60"           -- enable linematch diff algorithm
 
-
-
-
 -- nvim variables
-local options = base.user_opts("options", {
+local options = {
   opt = {
     history = 1000,                             -- Number of commands to remember in a history table.
     breakindent = true,                         -- Wrap indent to match  line start.
@@ -78,12 +68,12 @@ local options = base.user_opts("options", {
     ui_notifications_enabled = true,            -- disable notifications when toggling UI elements.
   },
   t = vim.t.bufs and vim.t.bufs or { bufs = vim.api.nvim_list_bufs() }, -- initialize buffers for the current tab.
-})
+}
 
 
 
 
--- apply settings
+-- set defined variables
 for scope, table in pairs(options) do
   for setting, value in pairs(table) do
     vim[scope][setting] = value
@@ -93,8 +83,4 @@ end
 
 
 
---- table of user created terminals
-base.user_terminals = {}
---- table of language servers to ignore the setup of, configured through lsp.skip_setup in the user configuration
-base.lsp = { skip_setup = base.user_opts("lsp.skip_setup", {}) }
 

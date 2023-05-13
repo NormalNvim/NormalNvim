@@ -61,31 +61,9 @@ end
 
 
 
---- User configuration entry point to override the default options of a
---- configuration table with a user configuration file or table in the
---- user/init.lua user settings.
---- @param module string The module path of the override setting.
---- @param default? table The default settings that will be overridden.
---- @param extend? boolean # Whether extend the default settings or overwrite 
---- them with the user settings entirely (default: true).
---@return any # The new configuration settings with the user overrides applied.
-function base.user_opts(module, default, extend)
-  -- default to extend = true
-  if extend == nil then extend = true end
-  -- if no default table is provided set it to an empty table
-  if default == nil then default = {} end
-  -- try to load a module file if it exists
-  local user_module_settings = load_module_file("user." .. module)
-  -- return the final configuration table with any overrides applied
-  return default
-end
-
-
-
-
 --- Updater setup
 base.updater = {
-  options = base.user_opts("updater", { remote = "origin", channel = "stable" }),
+  options = { remote = "origin", channel = "stable" },
   snapshot = {
     module = "lazy_snapshot",
     path = vim.fn.stdpath "config" .. "/lua/lazy_snapshot.lua" 
@@ -103,4 +81,8 @@ end
 
 
 
+--- table of user created terminals
+--base.user_terminals = {}
+--- table of language servers to ignore the setup of, configured through lsp.skip_setup in the user configuration
+base.lsp = { skip_setup = {} }
 

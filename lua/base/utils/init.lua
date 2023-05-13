@@ -81,8 +81,8 @@ end
 function M.get_icon(kind)
   local icon_pack = vim.g.icons_enabled and "icons" or "text_icons"
   if not M[icon_pack] then
-    M.icons = base.user_opts("icons", require "base.icons.nerd_font")
-    M.text_icons = base.user_opts("text_icons", require "base.icons.text")
+    M.icons = require "base.icons.nerd_font"
+    M.text_icons = require "base.icons.text"
   end
   return M[icon_pack] and M[icon_pack][kind] or ""
 end
@@ -143,7 +143,7 @@ end
 --- Toggle a user terminal if it exists, if not then create a new one and save it
 ---@param opts string|table A terminal command string or a table of options for Terminal:new() (Check toggleterm.nvim documentation for table format)
 function M.toggle_term_cmd(opts)
-  local terms = base.user_terminals
+  local terms = {}
   -- if a command string is provided, create a basic table for Terminal:new() options
   if type(opts) == "string" then opts = { cmd = opts, hidden = true } end
   local num = vim.v.count > 0 and vim.v.count or 1

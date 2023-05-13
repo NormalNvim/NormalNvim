@@ -20,5 +20,3 @@ if base.default_colorscheme then
     )
   end
 end
-
-require("base.utils").conditional_func(base.user_opts("polish", nil, false), true)

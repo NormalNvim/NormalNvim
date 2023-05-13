@@ -72,7 +72,7 @@ M.env.modes = {
   ["null"] = { "null", "inactive" },
 }
 
-M.env.separators = base.user_opts("heirline.separators", {
+M.env.separators = {
   none = { "", "" },
   left = { "", "  " },
   right = { "  ", "" },
@@ -80,22 +80,22 @@ M.env.separators = base.user_opts("heirline.separators", {
   tab = { "", " " },
   breadcrumbs = "  ",
   path = "  ",
-})
+}
 
-M.env.attributes = base.user_opts("heirline.attributes", {
+M.env.attributes = {
   buffer_active = { bold = true, italic = true },
   buffer_picker = { bold = true },
   macro_recording = { bold = true },
   git_branch = { bold = true },
   git_diff = { bold = true },
-})
+}
 
-M.env.icon_highlights = base.user_opts("heirline.icon_highlights", {
+M.env.icon_highlights = {
   file_icon = {
     tabline = function(self) return self.is_active or self.is_visible end,
     statusline = true,
   },
-})
+}
 
 local function pattern_match(str, pattern_list)
   for _, pattern in ipairs(pattern_list) do
@@ -143,7 +143,6 @@ for _, sign in ipairs { "", "Rejected", "Condition" } do
   local name = "DapBreakpoint" .. sign
   if not M.env.sign_handlers[name] then M.env.sign_handlers[name] = dap_breakpoint end
 end
-M.env.sign_handlers = base.user_opts("heirline.sign_handlers", M.env.sign_handlers)
 
 --- Get the highlight background color of the lualine theme for the current colorscheme
 ---@param mode string the neovim mode to get the color of

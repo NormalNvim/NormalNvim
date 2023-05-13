@@ -277,7 +277,7 @@ return {
         local HeirlineTerminal = get_hlgroup("HeirlineTerminal", { bg = nil }).bg
           or status.hl.lualine_mode("insert", HeirlineInsert)
 
-        local colors = base.user_opts("heirline.colors", {
+        local colors = {
           close_fg = Error.fg,
           fg = StatusLine.fg,
           bg = StatusLine.bg,
@@ -328,7 +328,7 @@ return {
           replace = HeirlineReplace,
           command = HeirlineCommand,
           terminal = HeirlineTerminal,
-        })
+        }
 
         for _, section in ipairs {
           "git_branch",
