@@ -1,3 +1,5 @@
+-- nvim keybindings
+
 local utils = require "base.utils"
 local is_available = utils.is_available
 local ui = require "base.utils.ui"
