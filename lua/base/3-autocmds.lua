@@ -10,13 +10,26 @@ local baseevent = utils.event
 
 
 --    Sections:
---       -> auto-hlsearch.nvim
---       -> update buffers when adding new buffers.
+--       -> 1. auto-hlsearch.nvim.
+--       -> 2. update buffers when adding new buffers.
+--       -> 3. Update buffers when deleting buffers.
+--       -> 4. URL highlighting.
+--       -> 5. Save view with mkview for real files.
+--       -> 6. Load file view if available. Enable view saving for real files.
+--       -> 7. Make q close help, man, quickfix, dap floats.
+--       -> 8. Effect: Briefly flash on yank.
+--       -> 9. Unlist quickfist buffers.
+--       -> 10. Quit Nvim if >=1 window open and only sidebar windows are list.
+--       -> 11. Open the greeter on opening vim.
+--       -> 12. Save session on close.
+--       -> 13. Open Ranger on startup with directory.
+--       -> 14. Nvim user events for file detection (BaseFile and BaseGitFile).
+--       -> 15. NVin updater commands.
 
 
 
 
--- auto-hlsearch.nvim
+-- 1. auto-hlsearch.nvim
 vim.on_key(function(char)
   if vim.fn.mode() == "n" then
     local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/" }, vim.fn.keytrans(char))
@@ -27,7 +40,7 @@ end, namespace "auto_hlsearch")
 
 
 
--- Update buffers when adding new buffers
+-- 2. Update buffers when adding new buffers
 local bufferline_group = augroup("bufferline", { clear = true })
 autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
   desc = "Update buffers when adding new buffers",
@@ -47,7 +60,7 @@ autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
 
 
 
--- Update buffers when deleting buffers
+-- 3. Update buffers when deleting buffers
 autocmd("BufDelete", {
   desc = "Update buffers when deleting buffers",
   group = bufferline_group,
@@ -73,6 +86,7 @@ autocmd("BufDelete", {
 
 
 
+-- 4. URL highlighting
 autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   desc = "URL Highlighting",
   group = augroup("highlighturl", { clear = true }),
@@ -83,6 +97,7 @@ autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
 
 
 
+-- 5. Save view with mkview for real files
 local view_group = augroup("auto_view", { clear = true })
 autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {
   desc = "Save view with mkview for real files",
@@ -95,6 +110,7 @@ autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {
 
 
 
+-- 6. Load file view if available. Enable view saving for real files.
 autocmd("BufWinEnter", {
   desc = "Try to load file view if available and enable view saving for real files",
   group = view_group,
@@ -114,6 +130,7 @@ autocmd("BufWinEnter", {
 
 
 
+-- 7. Make q close help, man, quickfix, dap floats
 autocmd("BufWinEnter", {
   desc = "Make q close help, man, quickfix, dap floats",
   group = augroup("q_close_windows", { clear = true }),
@@ -128,7 +145,7 @@ autocmd("BufWinEnter", {
 
 
 
--- Effect: Briefly flash on yank
+-- 8. Effect: Briefly flash on yank
 autocmd("TextYankPost", {
   desc = "Highlight yanked text",
   group = augroup("highlightyank", { clear = true }),
@@ -139,6 +156,7 @@ autocmd("TextYankPost", {
 
 
 
+-- 9. Unlist quickfist buffers
 autocmd("FileType", {
   desc = "Unlist quickfist buffers",
   group = augroup("unlist_quickfist", { clear = true }),
@@ -149,6 +167,7 @@ autocmd("FileType", {
 
 
 
+-- 10. Quit Nvim if >=1 window open and only sidebar windows are list
 autocmd("BufEnter", {
   desc = "Quit Nvim if more than one window is open and only sidebar windows are list",
   group = augroup("auto_quit", { clear = true }),
@@ -182,6 +201,7 @@ autocmd("BufEnter", {
 
 
 
+-- 11. Open the greeter on opening vim
 if is_available "alpha-nvim" then
   local group_name = augroup("alpha_settings", { clear = true })
   autocmd({ "User", "BufEnter" }, {
@@ -229,6 +249,7 @@ end
 
 
 
+-- 12. Save session on close
 if is_available "resession.nvim" then
   autocmd("VimLeavePre", {
     desc = "Save session on close",
@@ -247,27 +268,51 @@ end
 
 
 
-if is_available "neo-tree.nvim" then
-  autocmd("BufEnter", {
-    desc = "Open Neo-Tree on startup with directory",
-    group = augroup("neotree_start", { clear = true }),
-    callback = function()
-      if package.loaded["neo-tree"] then
-        vim.api.nvim_del_augroup_by_name "neotree_start"
-      else
-        local stats = vim.loop.fs_stat(vim.api.nvim_buf_get_name(0))
-        if stats and stats.type == "directory" then
-          vim.api.nvim_del_augroup_by_name "neotree_start"
-          require "neo-tree"
-        end
-      end
-    end,
-  })
-end
+-- Open Neo-Tree on startup with directory
+-- if is_available "neo-tree.nvim" then
+--   autocmd("BufEnter", {
+--     desc = "Open Neo-Tree on startup with directory",
+--     group = augroup("neotree_start", { clear = true }),
+--     callback = function()
+--       if package.loaded["neo-tree"] then
+--         vim.api.nvim_del_augroup_by_name "neotree_start"
+--       else
+--         local stats = vim.loop.fs_stat(vim.api.nvim_buf_get_name(0))
+--         if stats and stats.type == "directory" then
+--           vim.api.nvim_del_augroup_by_name "neotree_start"
+--           require "neo-tree"
+--         end
+--       end
+--     end,
+--   })
+-- end
 
 
 
 
+-- 13. Open Ranger on startup with directory
+-- if is_available "neo-tree.nvim" then
+--   autocmd("BufEnter", {
+--     desc = "Open Neo-Tree on startup with directory",
+--     group = augroup("neotree_start", { clear = true }),
+--     callback = function()
+--       if package.loaded["neo-tree"] then
+--         vim.api.nvim_del_augroup_by_name "neotree_start"
+--       else
+--         local stats = vim.loop.fs_stat(vim.api.nvim_buf_get_name(0))
+--         if stats and stats.type == "directory" then
+--           vim.api.nvim_del_augroup_by_name "neotree_start"
+--           require "neo-tree"
+--         end
+--       end
+--     end,
+--   })
+-- end
+
+
+
+
+-- 14. Nvim user events for file detection (BaseFile and BaseGitFile)
 autocmd({ "BufReadPost", "BufNewFile" }, {
   desc = "Nvim user events for file detection (BaseFile and BaseGitFile)",
   group = augroup("file_user_events", { clear = true }),
@@ -281,7 +326,7 @@ autocmd({ "BufReadPost", "BufNewFile" }, {
 
 
 
--- NVin updater
+-- 15. NVin updater commands
 cmd(
   "NvimChangelog",
   function() require("base.utils.updater").changelog() end,
