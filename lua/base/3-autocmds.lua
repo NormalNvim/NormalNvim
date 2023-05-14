@@ -128,7 +128,7 @@ autocmd("BufWinEnter", {
 
 
 
-
+-- Effect: Briefly flash on yank
 autocmd("TextYankPost", {
   desc = "Highlight yanked text",
   group = augroup("highlightyank", { clear = true }),

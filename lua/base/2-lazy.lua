@@ -1,5 +1,19 @@
--- Lazy nvim package manager config file
+-- Lazy config file (nvim package manager)
 
+
+--- NVim updater options
+base.updater = {
+  options = { remote = "origin", channel = "stable" },
+  snapshot = {
+    module = "lazy_snapshot",
+    path = vim.fn.stdpath "config" .. "/lua/lazy_snapshot.lua" 
+  },
+  rollback_file = vim.fn.stdpath "cache" .. "/nvim_rollback.lua",
+}
+
+
+
+--- Lazy options
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   local output = vim.fn.system { "git", "clone", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath }
@@ -23,23 +37,18 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local user_plugins = {}
-for _, config_dir in ipairs(base.supported_configs) do
-  if vim.fn.isdirectory(config_dir .. "/lua/user/plugins") == 1 then user_plugins = { import = "user.plugins" } end
-end
 
+-- Assign spec
 local spec = base.updater.options.pin_plugins and { { import = base.updater.snapshot.module } } or {}
-vim.list_extend(spec, { { import = "plugins" }, user_plugins })
+vim.list_extend(spec, { { import = "plugins" } })
 
-local colorscheme = base.default_colorscheme and { base.default_colorscheme } or nil
 
+-- The actual setup
 require("lazy").setup({
   spec = spec,
   defaults = { lazy = true },
-  install = { colorscheme = colorscheme },
   performance = {
     rtp = {
-      paths = base.supported_configs,
       disabled_plugins = { "tohtml", "gzip", "zipPlugin", "netrwPlugin", "tarPlugin" },
     },
   },

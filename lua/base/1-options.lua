@@ -1,16 +1,21 @@
--- variables
+-- NVim option variables
 
 
--- theme
+-- Global that will contain the NVim distro options (updater... etc)
+_G.base = {}
+
+
+-- Theme
 base.default_colorscheme = "astrotheme"
 
--- remove+append
+
+-- Remove/append
 vim.opt.viewoptions:remove "curdir"             -- disable saving current directory with views
 vim.opt.shortmess:append { s = true, I = true } -- disable startup message
 vim.opt.backspace:append { "nostop" }           -- Don't stop backspace at insert
 vim.opt.diffopt:append "linematch:60"           -- enable linematch diff algorithm
 
--- nvim variables
+-- NVim variables
 local options = {
   opt = {
     history = 1000,                             -- Number of commands to remember in a history table.
@@ -73,12 +78,15 @@ local options = {
 
 
 
--- set defined variables
+-- Set defined variables
 for scope, table in pairs(options) do
   for setting, value in pairs(table) do
     vim[scope][setting] = value
   end
 end
+
+
+
 
 
 

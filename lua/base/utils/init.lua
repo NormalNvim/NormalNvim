@@ -1,6 +1,6 @@
 --- ### Nvim Utilities
 --
--- Various utility functions to use within Nvim and user configurations.
+-- Various utility functions to use within Nvim.
 --
 -- This module can be loaded with `local utils = require "base.utils"`
 --

@@ -1,6 +1,7 @@
 --- ### Nvim LSP Utils
 --
--- LSP related utility functions to use within Nvim and user configurations.
+-- LSP related utility functions to use within Nvim.
+-- This modele is meant to be required by the plugin neovin/nvim-lspconfig.
 --
 -- This module can be loaded with `local lsp_utils = require("base.utils.lsp")`
 --
@@ -10,23 +11,24 @@
 -- @license GNU General Public License v3.0
 
 local M = {}
+
+local skip_setup = {} -- List of servers to disable by default.
 local tbl_contains = vim.tbl_contains
 local tbl_isempty = vim.tbl_isempty
-local user_opts = base.user_opts
 
 local utils = require "base.utils"
 local conditional_func = utils.conditional_func
 local is_available = utils.is_available
 
 local server_config = "lsp.config."
-local setup_handlers = user_opts("lsp.setup_handlers", {
+local setup_handlers = {
   function(server, opts) require("lspconfig")[server].setup(opts) end,
-})
+}
 
 M.diagnostics = { [0] = {}, {}, {}, {} }
 
 M.setup_diagnostics = function(signs)
-  local default_diagnostics = base.user_opts("diagnostics", {
+  local default_diagnostics = {
     virtual_text = true,
     signs = { active = signs },
     update_in_insert = true,
@@ -40,7 +42,7 @@ M.setup_diagnostics = function(signs)
       header = "",
       prefix = "",
     },
-  })
+  }
   M.diagnostics = {
     -- diagnostics off
     [0] = utils.extend_tbl(
@@ -58,7 +60,7 @@ M.setup_diagnostics = function(signs)
   vim.diagnostic.config(M.diagnostics[vim.g.diagnostics_mode])
 end
 
-M.formatting = user_opts("lsp.formatting", { format_on_save = { enabled = true }, disabled = {} })
+M.formatting = { format_on_save = { enabled = true }, disabled = {} }
 if type(M.formatting.format_on_save) == "boolean" then
   M.formatting.format_on_save = { enabled = M.formatting.format_on_save }
 end
@@ -79,12 +81,12 @@ M.setup = function(server)
   -- if server doesn't exist, set it up from user server definition
   local config_avail, config = pcall(require, "lspconfig.server_configurations." .. server)
   if not config_avail or not config.default_config then
-    local server_definition = user_opts(server_config .. server)
+    local server_definition = {}
     if server_definition.cmd then require("lspconfig.configs")[server] = { default_config = server_definition } end
   end
   local opts = M.config(server)
   local setup_handler = setup_handlers[server] or setup_handlers[1]
-  if not vim.tbl_contains(base.lsp.skip_setup, server) and setup_handler then setup_handler(server, opts) end
+  if not vim.tbl_contains(skip_setup, server) and setup_handler then setup_handler(server, opts) end
 end
 
 --- Helper function to check if any active LSP clients given a filter provide a specific capability
@@ -349,9 +351,9 @@ M.on_attach = function(client, bufnr)
   if not vim.tbl_isempty(lsp_mappings.v) then
     lsp_mappings.v["<leader>l"] = { desc = (vim.g.icons_enabled and " " or "") .. "LSP" }
   end
-  utils.set_mappings(user_opts("lsp.mappings", lsp_mappings), { buffer = bufnr })
+  utils.set_mappings(lsp_mappings, { buffer = bufnr })
 
-  local on_attach_override = user_opts("lsp.on_attach", nil, false)
+  local on_attach_override = nil
   conditional_func(on_attach_override, true, client, bufnr)
 end
 
@@ -368,8 +370,7 @@ M.capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = 
 M.capabilities.textDocument.completion.completionItem.resolveSupport =
   { properties = { "documentation", "detail", "additionalTextEdits" } }
 M.capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
-M.capabilities = user_opts("lsp.capabilities", M.capabilities)
-M.flags = user_opts "lsp.flags"
+
 
 --- Get the server configuration for a given language server to be provided to the server's `setup()` call
 ---@param server_name string The name of the server
@@ -404,7 +405,7 @@ function M.config(server_name)
     end
     lsp_opts.settings = { Lua = { workspace = { checkThirdParty = false } } }
   end
-  local opts = user_opts(server_config .. server_name, lsp_opts)
+  local opts = lsp_opts
   local old_on_attach = server.on_attach
   local user_on_attach = opts.on_attach
   opts.on_attach = function(client, bufnr)

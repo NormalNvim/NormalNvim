@@ -2,11 +2,10 @@
 -- Source config files
 -- Plugins are on lazy
 for _, source in ipairs {
-  "base.1-bootstrap",
-  "base.2-options",
-  "base.3-lazy",
-  "base.4-autocmds",
-  "base.5-mappings",
+  "base.1-options",
+  "base.2-lazy",
+  "base.3-autocmds",
+  "base.4-mappings",
 } do
   local status_ok, fault = pcall(require, source)
   if not status_ok then vim.api.nvim_err_writeln("Failed to load " .. source .. "\n\n" .. fault) end
