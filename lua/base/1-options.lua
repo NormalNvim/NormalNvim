@@ -6,7 +6,8 @@ _G.base = {}
 
 
 -- Theme
-base.default_colorscheme = "astrotheme"
+--base.default_colorscheme = "astrotheme"
+base.default_colorscheme = "tokyonight-night"
 
 
 -- Remove/append
@@ -19,29 +20,16 @@ vim.opt.diffopt:append "linematch:60"           -- enable linematch diff algorit
 local options = {
   opt = {
     history = 1000,                             -- Number of commands to remember in a history table.
-    breakindent = true,                         -- Wrap indent to match  line start.
-    clipboard = "unnamedplus",                  -- Connection to the system clipboard.
-    cmdheight = 0,                              -- hide command line unless needed.
-    completeopt = { "menuone", "noselect" },    -- Options for insert mode completion.
-    copyindent = true,                          -- Copy the previous indentation on autoindenting.
-    cursorline = true,                          -- Highlight the text line of the cursor.
-    expandtab = true,                           -- Enable the use of space in tab.
-    fileencoding = "utf-8",                     -- File content encoding for the buffer.
-    fillchars = { eob = " " },                  -- Disable `~` on nonexistent lines.
-    ignorecase = true,                          -- Case insensitive searching.
-    infercase = true,                           -- Infer cases in keyword completion.
-    laststatus = 3,                             -- globalstatus.
-    linebreak = true,                           -- Wrap lines at 'breakat'.
     mouse = "a",                                -- Enable mouse support.
     number = true,                              -- Show numberline.
     preserveindent = true,                      -- Preserve indent structure as much as possible.
     pumheight = 10,                             -- Height of the pop up menu.
     relativenumber = true,                      -- Show relative numberline.
-    scrolloff = 8,                              -- Number of lines to keep above and below the cursor.
+    scrolloff = 0,                              -- Number of lines to keep above and below the cursor.
     shiftwidth = 2,                             -- Number of space inserted for indentation.
     showmode = false,                           -- Disable showing modes in command line.
     showtabline = 2,                            -- always display tabline.
-    sidescrolloff = 8,                          -- Number of columns to keep at the sides of the cursor.
+    sidescrolloff = 0,                          -- Number of columns to keep at the sides of the cursor.
     signcolumn = "yes",                         -- Always show the sign column.
     smartcase = true,                           -- Case sensitivie searching.
     smartindent = true,                         -- Smarter autoindentation.
@@ -61,8 +49,8 @@ local options = {
     foldcolumn = "1",                           -- show foldcolumn.
   },
   g = {
-    highlighturl_enabled = true,                -- highlight URLs by default.
     mapleader = " ",                            -- set leader key.
+    highlighturl_enabled = true,                -- highlight URLs by default.
     autoformat_enabled = true,                  -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled).
     codelens_enabled = true,                    -- enable or disable automatic codelens refreshing for lsp that support it.
     lsp_handlers_enabled = true,                -- enable or disable default vim.lsp.handlers (hover and signatureHelp).

@@ -20,7 +20,6 @@ local utils = require "base.utils"
 local conditional_func = utils.conditional_func
 local is_available = utils.is_available
 
-local server_config = "lsp.config."
 local setup_handlers = {
   function(server, opts) require("lspconfig")[server].setup(opts) end,
 }
@@ -60,6 +59,7 @@ M.setup_diagnostics = function(signs)
   vim.diagnostic.config(M.diagnostics[vim.g.diagnostics_mode])
 end
 
+-- Format on save
 M.formatting = { format_on_save = { enabled = true }, disabled = {} }
 if type(M.formatting.format_on_save) == "boolean" then
   M.formatting.format_on_save = { enabled = M.formatting.format_on_save }
@@ -79,11 +79,6 @@ end
 ---@param server string The name of the server to be setup
 M.setup = function(server)
   -- if server doesn't exist, set it up from user server definition
-  local config_avail, config = pcall(require, "lspconfig.server_configurations." .. server)
-  if not config_avail or not config.default_config then
-    local server_definition = {}
-    if server_definition.cmd then require("lspconfig.configs")[server] = { default_config = server_definition } end
-  end
   local opts = M.config(server)
   local setup_handler = setup_handlers[server] or setup_handlers[1]
   if not vim.tbl_contains(skip_setup, server) and setup_handler then setup_handler(server, opts) end
@@ -271,7 +266,7 @@ M.on_attach = function(client, bufnr)
   end
 
   if capabilities.hoverProvider then
-    lsp_mappings.n["K"] = {
+    lsp_mappings.n["gh"] = {
       function() vim.lsp.buf.hover() end,
       desc = "Hover symbol details",
     }
@@ -355,6 +350,7 @@ M.on_attach = function(client, bufnr)
 
   local on_attach_override = nil
   conditional_func(on_attach_override, true, client, bufnr)
+
 end
 
 --- The default Nvim LSP capabilities
@@ -395,7 +391,7 @@ function M.config(server_name)
     pcall(require, "neodev")
     lsp_opts.before_init = function(param, config)
       if vim.b.neodev_enabled then
-        for _, base_config in ipairs(astronvim.supported_configs) do
+        for _, base_config in ipairs(base.supported_configs) do
           if param.rootPath:match(base_config) then
             table.insert(config.settings.Lua.workspace.library, base.install.home .. "/lua")
             break
@@ -406,12 +402,9 @@ function M.config(server_name)
     lsp_opts.settings = { Lua = { workspace = { checkThirdParty = false } } }
   end
   local opts = lsp_opts
-  local old_on_attach = server.on_attach
-  local user_on_attach = opts.on_attach
   opts.on_attach = function(client, bufnr)
-    conditional_func(old_on_attach, true, client, bufnr)
+    server.on_attach(client, bufnr)
     M.on_attach(client, bufnr)
-    conditional_func(user_on_attach, true, client, bufnr)
   end
   return opts
 end

@@ -26,7 +26,10 @@ return {
     "AstroNvim/astrotheme",
     opts = { plugins = { ["dashboard-nvim"] = true } } 
   },
-
+  {
+    "folke/tokyonight.nvim",
+    opts = { plugins = { ["dashboard-nvim"] = true } } 
+  },
 
 
 

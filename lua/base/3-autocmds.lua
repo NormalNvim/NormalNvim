@@ -10,8 +10,8 @@ local baseevent = utils.event
 
 
 --    Sections:
---       -> 1. auto-hlsearch.nvim.
---       -> 2. update buffers when adding new buffers.
+--       -> 1. Auto-hlsearch.nvim.
+--       -> 2. Update buffers when adding new buffers.
 --       -> 3. Update buffers when deleting buffers.
 --       -> 4. URL highlighting.
 --       -> 5. Save view with mkview for real files.
@@ -23,8 +23,9 @@ local baseevent = utils.event
 --       -> 11. Open the greeter on opening vim.
 --       -> 12. Save session on close.
 --       -> 13. Open Ranger on startup with directory.
---       -> 14. Nvim user events for file detection (BaseFile and BaseGitFile).
---       -> 15. NVin updater commands.
+--       -> 14. Cursor always centered
+--       -> 15. Nvim user events for file detection (BaseFile and BaseGitFile).
+--       -> 16. NVin updater commands.
 
 
 
@@ -312,7 +313,29 @@ end
 
 
 
--- 14. Nvim user events for file detection (BaseFile and BaseGitFile)
+-- 14. Cursor always centered
+local cursor_group = augroup("cursor", { clear = true })
+autocmd({ "CursorMoved", "CursorMovedI", "BufEnter"}, {
+  desc = "Keep cursor always centered",
+  group = cursor_group,
+  callback = function()
+    vim.api.nvim_exec("norm zz", false)
+    baseevent "CursorCentered"
+  end,
+})
+autocmd({ "WinScrolled"}, {
+  desc = "Keep cursor always centered",
+  group = cursor_group,
+  callback = function()
+    vim.api.nvim_exec("norm zz", false)
+    baseevent "CursorCentered"
+  end,
+})
+
+
+
+
+-- 15. Nvim user events for file detection (BaseFile and BaseGitFile)
 autocmd({ "BufReadPost", "BufNewFile" }, {
   desc = "Nvim user events for file detection (BaseFile and BaseGitFile)",
   group = augroup("file_user_events", { clear = true }),
@@ -326,7 +349,7 @@ autocmd({ "BufReadPost", "BufNewFile" }, {
 
 
 
--- 15. NVin updater commands
+-- 16. NVin updater commands
 cmd(
   "NvimChangelog",
   function() require("base.utils.updater").changelog() end,
