@@ -314,16 +314,9 @@ end
 
 
 -- 14. Cursor always centered
+-- Warning: Using CursorMovedI
 local cursor_group = augroup("cursor", { clear = true })
-autocmd({ "CursorMoved", "CursorMovedI", "BufEnter"}, {
-  desc = "Keep cursor always centered",
-  group = cursor_group,
-  callback = function()
-    vim.api.nvim_exec("norm zz", false)
-    baseevent "CursorCentered"
-  end,
-})
-autocmd({ "WinScrolled"}, {
+autocmd({ "CursorMoved", "BufEnter"}, {
   desc = "Keep cursor always centered",
   group = cursor_group,
   callback = function()

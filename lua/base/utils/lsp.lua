@@ -85,8 +85,8 @@ M.setup = function(server)
 end
 
 --- Helper function to check if any active LSP clients given a filter provide a specific capability
----@param capability string The server capability to check for (example: "documentFormattingProvider")
----@param filter vim.lsp.get_active_clients.filter|nil (table|nil) A table with
+--- @param capability string The server capability to check for (example: "documentFormattingProvider")
+--- @param filter vim.lsp.get_active_clients.filter|nil (table|nil) A table with
 ---              key-value pairs used to filter the returned clients.
 ---              The available keys are:
 ---               - id (number): Only return clients with the given id
