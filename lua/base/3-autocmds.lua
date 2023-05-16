@@ -314,7 +314,7 @@ end
 
 
 -- 14. Cursor always centered
--- Warning: Using CursorMovedI
+-- Warning: Using CursorMovedI will break Telescope
 local cursor_group = augroup("cursor", { clear = true })
 autocmd({ "CursorMoved", "BufEnter"}, {
   desc = "Keep cursor always centered",
