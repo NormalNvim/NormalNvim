@@ -23,9 +23,9 @@ local baseevent = utils.event
 --       -> 11. Open the greeter on opening vim.
 --       -> 12. Save session on close.
 --       -> 13. Open Ranger on startup with directory.
---       -> 14. Cursor always centered
---       -> 15. Nvim user events for file detection (BaseFile and BaseGitFile).
---       -> 16. NVin updater commands.
+--       -> 14. Nvim user events for file detection (BaseFile and BaseGitFile).
+--       -> 15. NVin updater commands.
+--       -> 16. Ranger rnvim enable mouse support.
 
 
 
@@ -313,22 +313,7 @@ end
 
 
 
--- 14. Cursor always centered
--- Warning: Using CursorMovedI will break Telescope
-local cursor_group = augroup("cursor", { clear = true })
-autocmd({ "CursorMoved", "BufEnter"}, {
-  desc = "Keep cursor always centered",
-  group = cursor_group,
-  callback = function()
-    vim.api.nvim_exec("norm zz", false)
-    baseevent "CursorCentered"
-  end,
-})
-
-
-
-
--- 15. Nvim user events for file detection (BaseFile and BaseGitFile)
+-- 14. Nvim user events for file detection (BaseFile and BaseGitFile)
 autocmd({ "BufReadPost", "BufNewFile" }, {
   desc = "Nvim user events for file detection (BaseFile and BaseGitFile)",
   group = augroup("file_user_events", { clear = true }),
@@ -342,7 +327,7 @@ autocmd({ "BufReadPost", "BufNewFile" }, {
 
 
 
--- 16. NVin updater commands
+-- 15. NVin updater commands
 cmd(
   "NvimChangelog",
   function() require("base.utils.updater").changelog() end,
@@ -357,3 +342,62 @@ cmd("NVimRollback", function() require("base.utils.updater").rollback() end, { d
 cmd("NVimUpdate", function() require("base.utils.updater").update() end, { desc = "Update Nvim" })
 cmd("NVimVersion", function() require("base.utils.updater").version() end, { desc = "Check Nvim Version" })
 cmd("NVimReload", function() require("base.utils").reload() end, { desc = "Reload Nvim (Experimental)" })
+
+
+
+
+-- 16. Ranger rnvim enable mouse support.
+local rnvimr_mouse_group = augroup("RnvimrMouse", { clear = true })
+
+-- Enables mouse support for rnvimr
+function set_mouse_with_rnvimr()
+  local n_mouse = vim.o.mouse
+
+  -- Disable nvim mouse support while we are on the rnvimr buffer
+  if string.match(n_mouse, '[a|h|n]') then
+    autocmd({ "TermEnter", "WinEnter <buffer>" }, {
+      desc = "Disable nvim mouse support while we are on the rnvimr buffer",
+      group = rnvimr_mouse_group,
+      callback = function()
+       vim.api.nvim_set_option('mouse', '')
+      end
+    })
+  end
+
+  -- Extra mouse fix for tmux
+  -- If tmux mouse mode is enabled
+  local output = vim.fn.system('tmux display -p "#{mouse}"')
+  if output:sub(1, 1) == "1" then
+
+    -- Disable tmux mouse while using rnvimr 
+    autocmd({ "TermEnter", "WinEnter <buffer>" }, {
+      desc = "Disable tmux mouse while using rnvimr",
+      group = rnvimr_mouse_group,
+      callback = function()
+       vim.fn.system('tmux set mouse off')
+      end
+    })
+
+    -- Enable tmux mouse when mouse leaves rnvimr
+    autocmd({ "WinLeave"}, {
+      desc = "Enable tmux mouse when mouse leaves rnvimr",
+      group = rnvimr_mouse_group,
+      callback = function()
+       vim.fn.system('tmux set mouse off')
+      end
+    })
+
+  end
+end
+
+-- Entry point
+autocmd({ "FileType" }, {
+  desc = "If we are on the rnvimr buffer, execute the callback",
+  group = rnvimr_mouse_group,
+  callback = function()
+    if vim.bo.filetype == 'rnvimr' then
+      set_mouse_with_rnvimr()
+    end
+  end,
+})
+
