@@ -30,7 +30,7 @@ return {
 
   -- easier window selection  [windows]
   -- https://github.com/s1n7ax/nvim-window-picker
-  { 
+  {
     "s1n7ax/nvim-window-picker", opts = { use_winbar = "smart" } 
   },
 
@@ -43,14 +43,14 @@ return {
     "max397574/better-escape.nvim",
     event = "InsertCharPre",
     opts = {
-      mapping = {"<Esc>"},
-      timeout = 300 
-    } 
+      mapping = {},
+      timeout = 300,
+    }
   },
 
 
 
-  
+
   -- Toggle floating terminal on <F7> [term]
   -- https://github.com/akinsho/toggleterm.nvim 
   {

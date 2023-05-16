@@ -323,14 +323,6 @@ autocmd({ "CursorMoved", "CursorMovedI", "BufEnter"}, {
     baseevent "CursorCentered"
   end,
 })
-autocmd({ "WinScrolled"}, {
-  desc = "Keep cursor always centered",
-  group = cursor_group,
-  callback = function()
-    vim.api.nvim_exec("norm zz", false)
-    baseevent "CursorCentered"
-  end,
-})
 
 
 
