@@ -4,6 +4,8 @@
 
 --    Sections:
 --       -> ranger file browser    [ranger]
+--       -> trim.nvim              [auto trim spaces]
+--       -> stay-centered.nvim     [cursor centered]
 --       -> nvim-window-picker     [windows]
 --       -> better-scape.nvim      [esc]
 --       -> toggleterm.nvim        [term]
@@ -19,10 +21,49 @@ local get_icon = require("base.utils").get_icon
 -- configures plugins
 return {
   -- [ranger] file browser
-  -- https://github.com/francoiscabrol/ranger.vim
+  -- https://github.com/kevinhwang91/rnvimr
+  {
+    "kevinhwang91/rnvimr",
+     cmd = { "RnvimrToggle" },
+     init = function ()
+       vim.g.rnvimr_enable_picker = 1
+     end
+  },
   {
     "francoiscabrol/ranger.vim",
-     cmd = { "RangerCurrentFile" },
+     cmd = { "Ranger" },
+     init = function()
+       vim.g.ranger_terminal = 'foot'
+       vim.g.ranger_command_override = 'LC_ALL=es_ES.UTF8 TERMCMD="foot -a \"scratchpad\"" ranger'
+       vim.g.ranger_map_keys = 0
+     end
+  },
+
+
+  -- trim.nvim [auto trim spaces]
+  -- https://github.com/cappyzawa/trim.nvim
+  {
+    "cappyzawa/trim.nvim",
+    event = "BufWrite",
+    opts = {
+      -- ft_blocklist = {"typescript"},
+      trim_on_write = true,
+      trim_trailing = true,
+      trim_last_line = false,
+      trim_first_line = false,
+      -- patterns = {[[%s/\(\n\n\)\n\+/\1/]]}, -- Only one consecutive bl
+    },
+  },
+
+
+  -- stay-centered.nvim [cursor centered]
+  -- https://github.com/arnamak/stay-centered.nvim
+  {
+    "arnamak/stay-centered.nvim",
+     lazy=false,
+     opts = {
+       skip_filetypes = { }
+     }
   },
 
 
