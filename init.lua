@@ -1,6 +1,5 @@
-
 -- Source config files
--- Plugins are on lazy
+-- Plugins are loaded using 2-lazy
 for _, source in ipairs {
   "base.1-options",
   "base.2-lazy",

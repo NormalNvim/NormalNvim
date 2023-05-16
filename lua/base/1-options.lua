@@ -16,10 +16,12 @@ vim.opt.shortmess:append { s = true, I = true } -- disable startup message
 vim.opt.backspace:append { "nostop" }           -- Don't stop backspace at insert
 vim.opt.diffopt:append "linematch:60"           -- enable linematch diff algorithm
 
+
 -- NVim variables
 local options = {
   opt = {
     history = 1000,                             -- Number of commands to remember in a history table.
+    colorcolumn = "80",                         -- PEP8 like character limit.
     mouse = "a",                                -- Enable mouse support.
     number = true,                              -- Show numberline.
     preserveindent = true,                      -- Preserve indent structure as much as possible.
@@ -72,11 +74,5 @@ for scope, table in pairs(options) do
     vim[scope][setting] = value
   end
 end
-
-
-
-
-
-
 
 
