@@ -20,17 +20,11 @@ local get_icon = require("base.utils").get_icon
 
 -- configures plugins
 return {
-  -- [ranger] file browser
-  -- https://github.com/kevinhwang91/rnvimr
+  -- [ranger] file browser (fork with mouse scroll support)
+  -- https://github.com/Zeioth/ranger.vim
   {
-    "kevinhwang91/rnvimr",
-     cmd = { "RnvimrToggle" },
-     init = function ()
-       vim.g.rnvimr_enable_picker = 1
-     end
-  },
-  {
-    "francoiscabrol/ranger.vim",
+    "zeioth/ranger.vim",
+    dependencies = {"rbgrouleff/bclose.vim"},
      cmd = { "Ranger" },
      init = function()
        vim.g.ranger_terminal = 'foot'
@@ -109,6 +103,18 @@ return {
     },
   },
 
+
+  -- TODO: Move to UI o Dev
+  {
+    "ahmedkhalf/project.nvim",
+    event = "BufEnter",
+    init = function ()
+      -- How to find root directory
+      patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" }
+      silent_chdir = false
+      manual_mode = true
+    end
+  },
 
 
 
