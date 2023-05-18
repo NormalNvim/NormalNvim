@@ -25,12 +25,11 @@ local baseevent = utils.event
 --       -> 13. Open Ranger on startup with directory.
 --       -> 14. Nvim user events for file detection (BaseFile and BaseGitFile).
 --       -> 15. NVin updater commands.
---       -> 16. Ranger rnvim enable mouse support.
 
 
 
 
--- 1. auto-hlsearch.nvim
+-- 1. hlsearch (serch highlighting)
 vim.on_key(function(char)
   if vim.fn.mode() == "n" then
     local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/" }, vim.fn.keytrans(char))
@@ -269,47 +268,24 @@ end
 
 
 
--- Open Neo-Tree on startup with directory
--- if is_available "neo-tree.nvim" then
---   autocmd("BufEnter", {
---     desc = "Open Neo-Tree on startup with directory",
---     group = augroup("neotree_start", { clear = true }),
---     callback = function()
---       if package.loaded["neo-tree"] then
---         vim.api.nvim_del_augroup_by_name "neotree_start"
---       else
---         local stats = vim.loop.fs_stat(vim.api.nvim_buf_get_name(0))
---         if stats and stats.type == "directory" then
---           vim.api.nvim_del_augroup_by_name "neotree_start"
---           require "neo-tree"
---         end
---       end
---     end,
---   })
--- end
-
-
-
-
--- 13. Open Ranger on startup with directory
--- if is_available "neo-tree.nvim" then
---   autocmd("BufEnter", {
---     desc = "Open Neo-Tree on startup with directory",
---     group = augroup("neotree_start", { clear = true }),
---     callback = function()
---       if package.loaded["neo-tree"] then
---         vim.api.nvim_del_augroup_by_name "neotree_start"
---       else
---         local stats = vim.loop.fs_stat(vim.api.nvim_buf_get_name(0))
---         if stats and stats.type == "directory" then
---           vim.api.nvim_del_augroup_by_name "neotree_start"
---           require "neo-tree"
---         end
---       end
---     end,
---   })
--- end
-
+-- 13. Open Neo-Tree on startup with directory
+if is_available "neo-tree.nvim" then
+  autocmd("BufEnter", {
+    desc = "Open Neo-Tree on startup with directory",
+    group = augroup("neotree_start", { clear = true }),
+    callback = function()
+      if package.loaded["neo-tree"] then
+        vim.api.nvim_del_augroup_by_name "neotree_start"
+      else
+        local stats = vim.loop.fs_stat(vim.api.nvim_buf_get_name(0))
+        if stats and stats.type == "directory" then
+          vim.api.nvim_del_augroup_by_name "neotree_start"
+          require "neo-tree"
+        end
+      end
+    end,
+  })
+end
 
 
 
@@ -334,70 +310,49 @@ cmd(
   { desc = "Check Nvim Changelog" }
 )
 cmd(
-  "NVimUpdatePackages",
+  "NvimUpdatePackages",
   function() require("base.utils.updater").update_packages() end,
   { desc = "Update Plugins and Mason" }
 )
-cmd("NVimRollback", function() require("base.utils.updater").rollback() end, { desc = "Rollback Nvim" })
-cmd("NVimUpdate", function() require("base.utils.updater").update() end, { desc = "Update Nvim" })
-cmd("NVimVersion", function() require("base.utils.updater").version() end, { desc = "Check Nvim Version" })
-cmd("NVimReload", function() require("base.utils").reload() end, { desc = "Reload Nvim (Experimental)" })
+cmd("NvimRollback", function() require("base.utils.updater").rollback() end, { desc = "Rollback Nvim" })
+cmd("NvimUpdate", function() require("base.utils.updater").update() end, { desc = "Update Nvim" })
+cmd("NvimVersion", function() require("base.utils.updater").version() end, { desc = "Check Nvim Version" })
+cmd("NvimReload", function() require("base.utils").reload() end, { desc = "Reload Nvim (Experimental)" })
 
 
 
 
--- 16. Ranger rnvim enable mouse support.
-local rnvimr_mouse_group = augroup("RnvimrMouse", { clear = true })
+-- 16. Disable side scroll in all buffers
+-- TODO: Limit it only to terminal and neotree
+-- autocmd({ "CursorMoved" }, {
+--   desc = "Disables side scroll, which is an unwanted behavior on most plugins",
+--   group = augroup("disable_mouse_sidescrolling", { clear = true }),
+--   callback = function()
+--     vim.cmd("norm!99zH")
+--   end,
+-- })
 
--- Enables mouse support for rnvimr
-function set_mouse_with_rnvimr()
-  local n_mouse = vim.o.mouse
 
-  -- Disable nvim mouse support while we are on the rnvimr buffer
-  if string.match(n_mouse, '[a|h|n]') then
-    autocmd({ "TermEnter", "WinEnter <buffer>" }, {
-      desc = "Disable nvim mouse support while we are on the rnvimr buffer",
-      group = rnvimr_mouse_group,
-      callback = function()
-       vim.api.nvim_set_option('mouse', '')
-      end
-    })
-  end
+-- Extra Cmds
+cmd("Cwd", function()
+  vim.cmd(":cd %:p:h")
+  vim.cmd(":pwd")
+end, { desc = "cd current file's directory" })
+cmd("Swd", function()
+  vim.cmd(":cd %:p:h")
+  vim.cmd(":pwd")
+end, { desc = "cd current file's directory" })
 
-  -- Extra mouse fix for tmux
-  -- If tmux mouse mode is enabled
-  local output = vim.fn.system('tmux display -p "#{mouse}"')
-  if output:sub(1, 1) == "1" then
 
-    -- Disable tmux mouse while using rnvimr 
-    autocmd({ "TermEnter", "WinEnter <buffer>" }, {
-      desc = "Disable tmux mouse while using rnvimr",
-      group = rnvimr_mouse_group,
-      callback = function()
-       vim.fn.system('tmux set mouse off')
-      end
-    })
 
-    -- Enable tmux mouse when mouse leaves rnvimr
-    autocmd({ "WinLeave"}, {
-      desc = "Enable tmux mouse when mouse leaves rnvimr",
-      group = rnvimr_mouse_group,
-      callback = function()
-       vim.fn.system('tmux set mouse off')
-      end
-    })
 
-  end
-end
 
--- Entry point
-autocmd({ "FileType" }, {
-  desc = "If we are on the rnvimr buffer, execute the callback",
-  group = rnvimr_mouse_group,
-  callback = function()
-    if vim.bo.filetype == 'rnvimr' then
-      set_mouse_with_rnvimr()
-    end
-  end,
-})
+
+
+
+
+
+
+
+
 
