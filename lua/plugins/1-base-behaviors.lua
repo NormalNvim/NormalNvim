@@ -4,6 +4,7 @@
 
 --    Sections:
 --       -> ranger file browser    [ranger]
+--       -> rooter.nvim            [auto cd to project root]
 --       -> trim.nvim              [auto trim spaces]
 --       -> stay-centered.nvim     [cursor centered]
 --       -> nvim-window-picker     [windows]
@@ -34,6 +35,53 @@ return {
   },
 
 
+
+
+  -- TODO: WIP: Currently broken
+  --       - Buffers open on float beause pynvim issuer supposedly.
+  {
+    "kevinhwang91/rnvimr",
+     cmd = { "RnvimrToggle" },
+     init = function ()
+       vim.g.rnvimr_enable_picker = 1
+       vim.g.rnvimr_ranger_cmd = { 'ranger' } -- use ranger_custom to enable term
+
+     end
+  },
+
+
+
+
+  -- rooter.nvim [auto cd to project root]
+  -- https://github.com/ygm2/rooter.nvim
+  {
+    "ygm2/rooter.nvim",
+    event = "BufEnter",
+    init = function ()
+      -- How to find root directory
+      rooter_pattern = {'.git', 'src', 'Makefile', 'node_modules'}
+      outermost_root = false
+    end
+  },
+
+
+
+
+  -- TODO: Add it to the top once it works
+  {
+    "ahmedkhalf/project.nvim",
+    event = "BufEnter",
+    init = function ()
+      -- How to find root directory
+      patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" }
+      silent_chdir = false
+      manual_mode = true
+    end
+  },
+
+
+
+
   -- trim.nvim [auto trim spaces]
   -- https://github.com/cappyzawa/trim.nvim
   {
@@ -48,6 +96,8 @@ return {
       -- patterns = {[[%s/\(\n\n\)\n\+/\1/]]}, -- Only one consecutive bl
     },
   },
+
+
 
 
   -- stay-centered.nvim [cursor centered]
@@ -66,7 +116,7 @@ return {
   -- easier window selection  [windows]
   -- https://github.com/s1n7ax/nvim-window-picker
   {
-    "s1n7ax/nvim-window-picker", opts = { use_winbar = "smart" } 
+    "s1n7ax/nvim-window-picker", opts = { use_winbar = "smart" }
   },
 
 
@@ -87,7 +137,7 @@ return {
 
 
   -- Toggle floating terminal on <F7> [term]
-  -- https://github.com/akinsho/toggleterm.nvim 
+  -- https://github.com/akinsho/toggleterm.nvim
   {
     "akinsho/toggleterm.nvim",
     cmd = { "ToggleTerm", "TermExec" },
@@ -103,18 +153,6 @@ return {
     },
   },
 
-
-  -- TODO: Move to UI o Dev
-  {
-    "ahmedkhalf/project.nvim",
-    event = "BufEnter",
-    init = function ()
-      -- How to find root directory
-      patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" }
-      silent_chdir = false
-      manual_mode = true
-    end
-  },
 
 
 
@@ -139,9 +177,9 @@ return {
 
 
 
-    --neotree
-    -- https://github.com/nvim-neo-tree/neo-tree.nvim
-    {
+  --neotree
+  -- https://github.com/nvim-neo-tree/neo-tree.nvim
+  {
     "nvim-neo-tree/neo-tree.nvim",
     dependencies = { "MunifTanjim/nui.nvim" },
     cmd = "Neotree",
@@ -153,6 +191,13 @@ return {
       source_selector = {
         winbar = true,
         content_layout = "center",
+        sources = {
+        { source = "filesystem", display_name = get_icon "FolderClosed" .. " File" },
+        { source = "buffers", display_name = get_icon "DefaultFile" .. " Bufs" },
+        { source = "git_status", display_name = get_icon "Git" .. " Git" },
+        { source = "diagnostics", display_name = get_icon "Diagnostic" .. " Diagnostic" },
+      },
+
       },
       default_component_configs = {
         indent = { padding = 0, indent_size = 1 },
@@ -234,6 +279,37 @@ return {
             vim.fn.setreg("+", result.val)
           end
         end,
+        run_command = function(state)
+          vim.api.nvim_input(":")
+        end,
+        diff_files = function(state)
+          local node = state.tree:get_node()
+          local log = require("neo-tree.log")
+          state.clipboard = state.clipboard or {}
+          if diff_Node and diff_Node ~= tostring(node.id) then
+            local current_Diff = node.id
+            require("neo-tree.utils").open_file(state, diff_Node, open)
+            vim.cmd("vert diffs " .. current_Diff)
+            log.info("Diffing " .. diff_Name .. " against " .. node.name)
+            diff_Node = nil
+            current_Diff = nil
+            state.clipboard = {}
+            require("neo-tree.ui.renderer").redraw(state)
+          else
+            local existing = state.clipboard[node.id]
+            if existing and existing.action == "diff" then
+              state.clipboard[node.id] = nil
+              diff_Node = nil
+              require("neo-tree.ui.renderer").redraw(state)
+            else
+              state.clipboard[node.id] = { action = "diff", node = node }
+              diff_Name = state.clipboard[node.id].node.name
+              diff_Node = tostring(state.clipboard[node.id].node.id)
+              log.info("Diff source file " .. diff_Name)
+              require("neo-tree.ui.renderer").redraw(state)
+            end
+          end
+        end,
       },
       window = {
         width = 30,
@@ -241,11 +317,16 @@ return {
           ["<space>"] = false, -- disable space until we figure out which-key disabling
           ["[b"] = "prev_source",
           ["]b"] = "next_source",
+          ['e'] = function() vim.api.nvim_exec('Neotree focus filesystem left', true) end,
+          ['b'] = function() vim.api.nvim_exec('Neotree focus buffers left', true) end,
+          ['g'] = function() vim.api.nvim_exec('Neotree focus git_status left', true) end,
           o = "open",
           O = "system_open",
           h = "parent_or_close",
           l = "child_or_open",
           Y = "copy_selector",
+          ["s"] = "run_command",
+          ['D'] = "diff_files", -- This replaces filter directories
         },
       },
       filesystem = {
@@ -263,6 +344,13 @@ return {
           event = "neo_tree_buffer_enter",
           handler = function(_) vim.opt_local.signcolumn = "auto" end,
         },
+        --{
+        --  event = "file_opened",
+        --  handler = function(file_path)
+        --    --auto close
+        --    require("neo-tree").close_all()
+        --  end
+        --},
       },
     },
   },
