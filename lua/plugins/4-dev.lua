@@ -11,7 +11,7 @@
 --       -> comment.nvim                   [adv. comments]
 
 --       ## SNIPPETS
---       -> luasnip                        [snippet engine] 
+--       -> luasnip                        [snippet engine]
 --       -> friendly-snippets              [snippet templates]
 
 --       ## GIT
@@ -219,12 +219,16 @@ return {
     },
   },
 },
+-- Telescope integration (:Telescope aerial)
+{ "nvim-telescope/telescope.nvim", opts = function() require("telescope").load_extension "aerial" end },
+
+
 
 
   --  EXTRA ----------------------------------------------------------------
   --  [guess-indent]
   --  https://github.com/NMAC427/guess-indent.nvim
-  { 
+  {
     "NMAC427/guess-indent.nvim",
     event = "User BaseFile",
     config = function(_, opts)
