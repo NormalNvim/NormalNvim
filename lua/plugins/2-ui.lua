@@ -3,7 +3,7 @@
 
 
 --    Sections:
---       -> astrotheme                  [theme] 
+--       -> astrotheme                  [theme]
 --       -> alpha-nvim                  [greeter]
 --       -> nvim-notify                 [notifications]
 --       -> indent-blankline.nvim       [guides]
@@ -24,12 +24,15 @@ return {
   --  https://github.com/AstroNvim/astrotheme
   {
     "AstroNvim/astrotheme",
-    opts = { plugins = { ["dashboard-nvim"] = true } } 
+    opts = { plugins = { ["dashboard-nvim"] = true } }
   },
+  -- Tokyo night [theme]
+  -- https://github.com/folke/tokyonight.nvim
   {
     "folke/tokyonight.nvim",
-    opts = { plugins = { ["dashboard-nvim"] = true } } 
+    opts = { plugins = { ["dashboard-nvim"] = true } }
   },
+
 
 
 
@@ -42,11 +45,14 @@ return {
       local dashboard = require "alpha.themes.dashboard"
       dashboard.section.header.val = {
 
-        "    ███    ██ ██    ██ ██ ███    ███",
-        "    ████   ██ ██    ██ ██ ████  ████",
-        "    ██ ██  ██ ██    ██ ██ ██ ████ ██",
-        "    ██  ██ ██  ██  ██  ██ ██  ██  ██",
-        "    ██   ████   ████   ██ ██      ██",
+      "                                                                     ",
+      "       ████ ██████           █████      ██                     ",
+      "      ███████████             █████                             ",
+      "      █████████ ███████████████████ ███   ███████████   ",
+      "     █████████  ███    █████████████ █████ ██████████████   ",
+      "    █████████ ██████████ █████████ █████ █████ ████ █████   ",
+      "  ███████████ ███    ███ █████████ █████ █████ ████ █████  ",
+      " ██████  █████████████████████ ████ █████ █████ ████ ██████ ",
       }
       dashboard.section.header.opts.hl = "DashboardHeader"
 
@@ -397,7 +403,6 @@ return {
             height = 0.80,
             preview_cutoff = 120,
           },
-
           mappings = {
             i = {
               ["<C-n>"] = actions.cycle_history_next,
@@ -420,8 +425,6 @@ return {
       conditional_func(telescope.load_extension, pcall(require, "notify"), "notify")
       conditional_func(telescope.load_extension, pcall(require, "aerial"), "aerial")
       conditional_func(telescope.load_extension, utils.is_available "telescope-fzf-native.nvim", "fzf")
-      --conditional_func(telescope.load_extension, pcall(require, "projects"), "projects")
-      --telescope.extensions.projects.projects{}
     end
   },
 
