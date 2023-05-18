@@ -17,6 +17,10 @@ vim.opt.backspace:append { "nostop" }           -- Don't stop backspace at inser
 vim.opt.diffopt:append "linematch:60"           -- enable linematch diff algorithm
 
 
+-- Sets
+vim.cmd("set autochdir")                        -- By default, use current file dir as working dir.
+
+
 -- NVim variables
 local options = {
   opt = {
@@ -43,12 +47,13 @@ local options = {
     undofile = true,                            -- Enable persistent undo.
     updatetime = 300,                           -- Length of time to wait before triggering the plugin.
     virtualedit = "block",                      -- allow going past end of line in visual block mode.
-    wrap = true,                                -- Disable wrapping of lines longer than the width of window.
     writebackup = false,                        -- Disable making a backup before overwriting a file.
     foldenable = true,                          -- enable fold for nvim-ufo.
     foldlevel = 99,                             -- set high foldlevel for nvim-ufo.
     foldlevelstart = 99,                        -- start with all code unfolded.
     foldcolumn = "1",                           -- show foldcolumn.
+    wrap = true,                                -- Disable wrapping of lines longer than the width of window.
+    mousescroll = "ver:1,hor:0",                -- Disables hozirontal scroll in neovim
   },
   g = {
     mapleader = " ",                            -- set leader key.
