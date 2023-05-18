@@ -23,7 +23,7 @@ end
 ---@param quiet? boolean Whether or not to notify on completion of reloading
 ---@return boolean # True if the reload was successful, False otherwise
 function M.reload(quiet)
-  local core_modules = { "base.bootstrap", "base.options", "base.mappings" }
+  local core_modules = { "base.1-options", "base.4-mappings" }
   local modules = vim.tbl_filter(function(module) return module:find "^user%." end, vim.tbl_keys(package.loaded))
 
   vim.tbl_map(require("plenary.reload").reload_module, vim.list_extend(modules, core_modules))
