@@ -77,7 +77,7 @@ end
 ---@param quiet? boolean Whether to quietly execute or send a notification
 ---@return string # The current Nvim version string
 function M.version(quiet)
-  local version = base.install.version or git.current_version(false) or "unknown"
+  local version = git.current_version(false) or "unknown"
   if base.updater.options.channel ~= "stable" then version = ("nightly (%s)"):format(version) end
   if version and not quiet then notify("Version: " .. version) end
   return version
