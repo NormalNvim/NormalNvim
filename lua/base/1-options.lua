@@ -9,13 +9,15 @@ _G.base = {}
 --base.default_colorscheme = "astrotheme"
 base.default_colorscheme = "tokyonight-night"
 
+-- Right click message: Disable
+vim.api.nvim_command([[aunmenu PopUp.How-to\ disable\ mouse]]) -- Disable right click message
+vim.api.nvim_command([[aunmenu PopUp.-1-]])                    -- Disable right click message
 
 -- Remove/append
 vim.opt.viewoptions:remove "curdir"             -- disable saving current directory with views
 vim.opt.shortmess:append { s = true, I = true } -- disable startup message
 vim.opt.backspace:append { "nostop" }           -- Don't stop backspace at insert
 vim.opt.diffopt:append "linematch:60"           -- enable linematch diff algorithm
-
 
 -- Sets
 vim.cmd("set autochdir")                        -- By default, use current file dir as working dir.

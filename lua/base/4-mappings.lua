@@ -51,8 +51,12 @@ maps.n["<C-q>"] = { "<cmd>q!<cr>", desc = "Force quit" }
 maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
 maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
 
-
-
+-- Clipboard
+maps.n['<C-y>'] = { '"+y<esc>', desc = "Copy to cliboard" }
+maps.v['<C-y>'] = { '"+y<esc>', desc = "Copy to cliboard" }
+maps.n['<C-d>'] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
+maps.v['<C-d>'] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
+maps.n['<C-p>'] = { '"+p<esc>', desc = "Paste from cliboard" }
 
 -- Plugin Manager
 maps.n["<leader>p"] = sections.p
@@ -460,9 +464,6 @@ maps.n["<leader>uy"] = { ui.toggle_syntax, desc = "Toggle syntax highlight" }
 maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Toggle foldcolumn" }
 
 
--- Clipboard
--- maps.v["+y"] = { 'y:call system("wl-copy", @")', desc = "Yank to clipboard" }
--- maps.n["C-y"] = { '"+y', desc = "Yank to clipboard" }
--- maps.v["C-p"] = { '+p<ESC>', desc = "Paste from clipboard" }
-
 utils.set_mappings(maps)
+
+
