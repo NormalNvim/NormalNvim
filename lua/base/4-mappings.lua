@@ -58,6 +58,10 @@ maps.n['<C-d>'] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
 maps.v['<C-d>'] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
 maps.n['<C-p>'] = { '"+p<esc>', desc = "Paste from cliboard" }
 
+-- Disable cliboard for other keys
+maps.n["x"] = { '"_x', desc = "Delete character without yanking it." }
+maps.v["x"] = { '"_x', desc = "Delete character without yanking it." }
+
 -- Plugin Manager
 maps.n["<leader>p"] = sections.p
 maps.n["<leader>pi"] = { function() require("lazy").install() end, desc = "Plugins Install" }
@@ -462,6 +466,8 @@ maps.n["<leader>uu"] = { ui.toggle_url_match, desc = "Toggle URL highlight" }
 maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Toggle wrap" }
 maps.n["<leader>uy"] = { ui.toggle_syntax, desc = "Toggle syntax highlight" }
 maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Toggle foldcolumn" }
+
+
 
 
 utils.set_mappings(maps)
