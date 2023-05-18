@@ -1,7 +1,6 @@
 --- ### Nvim LSP Utils
 --
--- LSP related utility functions to use within Nvim.
--- This modele is meant to be required by the plugin neovin/nvim-lspconfig.
+-- LSP related utility functions to use within Nvim and user configurations.
 --
 -- This module can be loaded with `local lsp_utils = require("base.utils.lsp")`
 --
@@ -11,8 +10,6 @@
 -- @license GNU General Public License v3.0
 
 local M = {}
-
-local skip_setup = {} -- List of servers to disable by default.
 local tbl_contains = vim.tbl_contains
 local tbl_isempty = vim.tbl_isempty
 
@@ -20,13 +17,19 @@ local utils = require "base.utils"
 local conditional_func = utils.conditional_func
 local is_available = utils.is_available
 
+local server_config = "lsp.config."
 local setup_handlers = {
   function(server, opts) require("lspconfig")[server].setup(opts) end,
 }
 
-M.diagnostics = { [0] = {}, {}, {}, {} }
+M.diagnostics = { [0] = {}, {}, {}, {} } -- For diagnostics toggle in ./ui.lua
 
+
+
+
+-- Settings
 M.setup_diagnostics = function(signs)
+  -- Default: Diagnostics
   local default_diagnostics = {
     virtual_text = true,
     signs = { active = signs },
@@ -42,6 +45,7 @@ M.setup_diagnostics = function(signs)
       prefix = "",
     },
   }
+  -- For diagnostics toggle in ./ui.lua
   M.diagnostics = {
     -- diagnostics off
     [0] = utils.extend_tbl(
@@ -59,12 +63,15 @@ M.setup_diagnostics = function(signs)
   vim.diagnostic.config(M.diagnostics[vim.g.diagnostics_mode])
 end
 
--- Format on save
+
+
+
+-- Default: Formating settings
+-- Enabled by default if there is a formatter present
 M.formatting = { format_on_save = { enabled = true }, disabled = {} }
 if type(M.formatting.format_on_save) == "boolean" then
   M.formatting.format_on_save = { enabled = M.formatting.format_on_save }
 end
-
 M.format_opts = vim.deepcopy(M.formatting)
 M.format_opts.disabled = nil
 M.format_opts.format_on_save = nil
@@ -75,18 +82,24 @@ M.format_opts.filter = function(client)
   return not (vim.tbl_contains(disabled, client.name) or (type(filter) == "function" and not filter(client)))
 end
 
+
+
+
 --- Helper function to set up a given server with the Neovim LSP client
 ---@param server string The name of the server to be setup
 M.setup = function(server)
   -- if server doesn't exist, set it up from user server definition
   local opts = M.config(server)
   local setup_handler = setup_handlers[server] or setup_handlers[1]
-  if not vim.tbl_contains(skip_setup, server) and setup_handler then setup_handler(server, opts) end
+  if setup_handler then setup_handler(server, opts) end
 end
 
+
+
+
 --- Helper function to check if any active LSP clients given a filter provide a specific capability
---- @param capability string The server capability to check for (example: "documentFormattingProvider")
---- @param filter vim.lsp.get_active_clients.filter|nil (table|nil) A table with
+---@param capability string The server capability to check for (example: "documentFormattingProvider")
+---@param filter vim.lsp.get_active_clients.filter|nil (table|nil) A table with
 ---              key-value pairs used to filter the returned clients.
 ---              The available keys are:
 ---               - id (number): Only return clients with the given id
@@ -118,10 +131,14 @@ local function del_buffer_autocmd(augroup, bufnr)
   if cmds_found then vim.tbl_map(function(cmd) vim.api.nvim_del_autocmd(cmd.id) end, cmds) end
 end
 
+
+
+
 --- The `on_attach` function used by Nvim
 ---@param client table The LSP client details when attaching
 ---@param bufnr number The buffer that the LSP client is attaching to
 M.on_attach = function(client, bufnr)
+  -- Default: LSP mappings
   local capabilities = client.server_capabilities
   local lsp_mappings = {
     n = {
@@ -266,7 +283,7 @@ M.on_attach = function(client, bufnr)
   end
 
   if capabilities.hoverProvider then
-    lsp_mappings.n["gh"] = {
+    lsp_mappings.n["K"] = {
       function() vim.lsp.buf.hover() end,
       desc = "Hover symbol details",
     }
@@ -348,9 +365,8 @@ M.on_attach = function(client, bufnr)
   end
   utils.set_mappings(lsp_mappings, { buffer = bufnr })
 
-  local on_attach_override = nil
+  local on_attach_override = nil -- todo: clean this
   conditional_func(on_attach_override, true, client, bufnr)
-
 end
 
 --- The default Nvim LSP capabilities
@@ -366,6 +382,10 @@ M.capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = 
 M.capabilities.textDocument.completion.completionItem.resolveSupport =
   { properties = { "documentation", "detail", "additionalTextEdits" } }
 M.capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
+M.capabilities = M.capabilities
+M.flags = {}
+
+
 
 
 --- Get the server configuration for a given language server to be provided to the server's `setup()` call
@@ -391,20 +411,18 @@ function M.config(server_name)
     pcall(require, "neodev")
     lsp_opts.before_init = function(param, config)
       if vim.b.neodev_enabled then
-        for _, base_config in ipairs(base.supported_configs) do
-          if param.rootPath:match(base_config) then
-            table.insert(config.settings.Lua.workspace.library, base.install.home .. "/lua")
-            break
-          end
-        end
+        table.insert(config.settings.Lua.workspace.library, "~/.config/nvim" .. "/lua")
       end
     end
     lsp_opts.settings = { Lua = { workspace = { checkThirdParty = false } } }
   end
   local opts = lsp_opts
+  local old_on_attach = server.on_attach
+  local user_on_attach = opts.on_attach
   opts.on_attach = function(client, bufnr)
-    server.on_attach(client, bufnr)
+    conditional_func(old_on_attach, true, client, bufnr)
     M.on_attach(client, bufnr)
+    conditional_func(user_on_attach, true, client, bufnr)
   end
   return opts
 end
