@@ -1,5 +1,23 @@
 -- nvim keybindings
 
+
+--         Mode  | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang |
+-- Command        +------+-----+-----+-----+-----+-----+------+------+
+-- [nore]map      | yes  |  -  |  -  | yes | yes | yes |  -   |  -   |
+-- n[nore]map     | yes  |  -  |  -  |  -  |  -  |  -  |  -   |  -   |
+-- [nore]map!     |  -   | yes | yes |  -  |  -  |  -  |  -   |  -   |
+-- i[nore]map     |  -   | yes |  -  |  -  |  -  |  -  |  -   |  -   |
+-- c[nore]map     |  -   |  -  | yes |  -  |  -  |  -  |  -   |  -   |
+-- v[nore]map     |  -   |  -  |  -  | yes | yes |  -  |  -   |  -   |
+-- x[nore]map     |  -   |  -  |  -  | yes |  -  |  -  |  -   |  -   |
+-- s[nore]map     |  -   |  -  |  -  |  -  | yes |  -  |  -   |  -   |
+-- o[nore]map     |  -   |  -  |  -  |  -  |  -  | yes |  -   |  -   |
+-- t[nore]map     |  -   |  -  |  -  |  -  |  -  |  -  | yes  |  -   |
+-- l[nore]map     |  -   | yes | yes |  -  |  -  |  -  |  -   | yes  |
+
+
+
+
 local utils = require "base.utils"
 local is_available = utils.is_available
 local ui = require "base.utils.ui"
@@ -32,6 +50,9 @@ maps.n["<C-s>"] = { "<cmd>w!<cr>", desc = "Force write" }
 maps.n["<C-q>"] = { "<cmd>q!<cr>", desc = "Force quit" }
 maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
 maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
+
+
+
 
 -- Plugin Manager
 maps.n["<leader>p"] = sections.p
@@ -401,9 +422,12 @@ if is_available "nvim-ufo" then
   maps.n["zp"] = { function() require("ufo").peekFoldedLinesUnderCursor() end, desc = "Peek fold" }
 end
 
--- Stay in indent mode
+-- Improved tabulation - Stay in indent mode
 maps.v["<S-Tab>"] = { "<gv", desc = "unindent line" }
 maps.v["<Tab>"] = { ">gv", desc = "indent line" }
+maps.v["<"] = { "<gv", desc = "unindent line" }
+maps.v[">"] = { ">gv", desc = "indent line" }
+
 
 -- Improved Terminal Navigation
 maps.t["<C-h>"] = { "<cmd>wincmd h<cr>", desc = "Terminal left window navigation" }
@@ -434,5 +458,11 @@ maps.n["<leader>uu"] = { ui.toggle_url_match, desc = "Toggle URL highlight" }
 maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Toggle wrap" }
 maps.n["<leader>uy"] = { ui.toggle_syntax, desc = "Toggle syntax highlight" }
 maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Toggle foldcolumn" }
+
+
+-- Clipboard
+-- maps.v["+y"] = { 'y:call system("wl-copy", @")', desc = "Yank to clipboard" }
+-- maps.n["C-y"] = { '"+y', desc = "Yank to clipboard" }
+-- maps.v["C-p"] = { '+p<ESC>', desc = "Paste from clipboard" }
 
 utils.set_mappings(maps)
