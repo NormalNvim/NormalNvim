@@ -4,7 +4,7 @@
 
 --    Sections:
 --       -> ranger file browser    [ranger]
---       -> rooter.nvim            [auto cd to project root]
+--       -> project.nvim           [project search + auto cd]
 --       -> trim.nvim              [auto trim spaces]
 --       -> stay-centered.nvim     [cursor centered]
 --       -> nvim-window-picker     [windows]
@@ -51,33 +51,22 @@ return {
 
 
 
-
-  -- rooter.nvim [auto cd to project root]
-  -- https://github.com/ygm2/rooter.nvim
-  {
-    "ygm2/rooter.nvim",
-    event = "BufEnter",
-    init = function ()
-      -- How to find root directory
-      rooter_pattern = {'.git', 'src', 'Makefile', 'node_modules'}
-      outermost_root = false
-    end
-  },
-
-
-
-
-  -- TODO: Add it to the top once it works
+  -- project.nvim [project search + auto cd]
+  -- https://github.com/ahmedkhalf/project.nvim
   {
     "ahmedkhalf/project.nvim",
-    event = "BufEnter",
+    event = "VeryLazy",
     init = function ()
       -- How to find root directory
       patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" }
       silent_chdir = false
-      manual_mode = true
-    end
+      manual_mode = false
+    end,
+    opts = { ignore_lsp = { "lua_ls" } },
+    config = function(_, opts) require("project_nvim").setup(opts) end,
   },
+  { "nvim-telescope/telescope.nvim", opts = function() require("telescope").load_extension "projects" end },
+
 
 
 
