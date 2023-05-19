@@ -70,11 +70,11 @@ maps.n["<leader>pS"] = { function() require("lazy").sync() end, desc = "Plugins 
 maps.n["<leader>pu"] = { function() require("lazy").check() end, desc = "Plugins Check Updates" }
 maps.n["<leader>pU"] = { function() require("lazy").update() end, desc = "Plugins Update" }
 
--- NVim updater
-maps.n["<leader>pa"] = { "<cmd>NVimUpdatePackages<cr>", desc = "Update Plugins and Mason" }
-maps.n["<leader>pA"] = { "<cmd>NVimUpdate<cr>", desc = "Nvim Update" }
-maps.n["<leader>pv"] = { "<cmd>NVimVersion<cr>", desc = "Nvim Version" }
-maps.n["<leader>pl"] = { "<cmd>NVimChangelog<cr>", desc = "Nvim Changelog" }
+-- Nvim updater
+maps.n["<leader>pa"] = { "<cmd>NvimUpdatePackages<cr>", desc = "Update Plugins and Mason" }
+maps.n["<leader>pA"] = { "<cmd>NvimUpdate<cr>", desc = "Nvim Update" }
+maps.n["<leader>pv"] = { "<cmd>NvimVersion<cr>", desc = "Nvim Version" }
+maps.n["<leader>pl"] = { "<cmd>NvimChangelog<cr>", desc = "Nvim Changelog" }
 
 -- Manage Buffers
 maps.n["<leader>c"] = { function() require("base.utils.buffer").close() end, desc = "Close buffer" }

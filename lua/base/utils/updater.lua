@@ -10,6 +10,17 @@
 -- @license GNU General Public License v3.0
 
 
+--    Functions:
+--       -> generate_snapshot   → Snapshot of the plugins installed.
+--       -> version             →
+--       -> changelog           →
+--       -> attempt_update      →
+--       -> update_packages     → Sync Packer and then update Mason.
+--       -> create_rollback     → create rollback file before updating.
+--       -> rollback            → Nvim's rollback to a saved previous version.
+--       -> update              →
+
+
 local git = require "base.utils.git"
 
 local M = {}
@@ -74,8 +85,8 @@ function M.generate_snapshot(write)
 end
 
 --- Get the current Nvim version
----@param quiet? boolean Whether to quietly execute or send a notification
----@return string # The current Nvim version string
+--- @param quiet? boolean Whether to quietly execute or send a notification
+--- @return string # The current Nvim version string
 function M.version(quiet)
   local version = git.current_version(false) or "unknown"
   if base.updater.options.channel ~= "stable" then version = ("nightly (%s)"):format(version) end
@@ -84,8 +95,8 @@ function M.version(quiet)
 end
 
 --- Get the full Nvim changelog
----@param quiet? boolean Whether to quietly execute or display the changelog
----@return table # The current Nvim changelog table of commit messages
+--- @param quiet? boolean Whether to quietly execute or display the changelog
+--- @return table # The current Nvim changelog table of commit messages
 function M.changelog(quiet)
   local summary = {}
   vim.list_extend(summary, git.pretty_changelog(git.get_commit_range()))
@@ -94,7 +105,7 @@ function M.changelog(quiet)
 end
 
 --- Attempt an update of Nvim
----@param target string The target if checking out a specific tag or commit or nil if just pulling
+--- @param target string The target if checking out a specific tag or commit or nil if just pulling
 local function attempt_update(target, opts)
   -- if updating to a new stable version or a specific commit checkout the provided target
   if opts.channel == "stable" or opts.commit then
@@ -115,8 +126,8 @@ function M.update_packages()
 end
 
 --- Create a table of options for the currently installed Nvim version
----@param write? boolean Whether or not to write to the rollback file (default: false)
----@return table # The table of updater options
+--- @param write? boolean Whether or not to write to the rollback file (default: false)
+--- @return table # The table of updater options
 function M.create_rollback(write)
   local snapshot = { branch = git.current_branch(), commit = git.local_head() }
   if snapshot.branch == "HEAD" then snapshot.branch = "main" end
@@ -143,7 +154,7 @@ function M.rollback()
 end
 
 --- Nvim's updater function
----@param opts? table the settings to use for the update
+--- @param opts? table the settings to use for the update
 function M.update(opts)
   if not opts then opts = base.updater.options end
   opts = require("base.utils").extend_tbl({ remote = "origin", show_changelog = true, auto_quit = false }, opts)

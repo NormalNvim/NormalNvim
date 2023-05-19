@@ -1,19 +1,23 @@
 -- Lazy config file (nvim package manager)
 
 
---- NVim updater options
+--    Functions:
+--       -> nvim updater options      → used to lock package version.
+--       -> lazyload extra behaviors  → notifications and stuff.
+--       -> assign spec               → if channel==stable, uses lazy_snatshot.lua
+--       -> setup using spec          → actual setup.
+
+
+--- nvim updater options
+--- used by lazy.lua and updater.lua to lock package version.
 base.updater = {
   options = { remote = "origin", channel = "stable" },
-  snapshot = {
-    module = "lazy_snapshot",
-    path = vim.fn.stdpath "config" .. "/lua/lazy_snapshot.lua" 
-  },
-  rollback_file = vim.fn.stdpath "cache" .. "/nvim_rollback.lua",
+  snapshot = { module = "lazy_snapshot", path = vim.fn.stdpath "config" .. "/lua/lazy_snapshot.lua" },
+  rollback_file = vim.fn.stdpath "cache" .. "/rollback.lua",
 }
 
 
-
---- Lazy options
+--- lazyload extra behavior (notifications and stuff)
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
   local output = vim.fn.system { "git", "clone", "https://github.com/folke/lazy.nvim.git", "--branch=stable", lazypath }
@@ -37,13 +41,15 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+ -- true if channel is 'stable'
+local pin_plugins = base.updater.options.channel == "stable"
 
--- Assign spec
-local spec = base.updater.options.pin_plugins and { { import = base.updater.snapshot.module } } or {}
+-- assign spec (if pin_plugins is true, load ./lua/lazy_snapshot.lua)
+local spec = pin_plugins and {{ import = base.updater.snapshot.module }} or {}
 vim.list_extend(spec, { { import = "plugins" } })
 
 
--- The actual setup
+-- the actual setup
 require("lazy").setup({
   spec = spec,
   defaults = { lazy = true },
@@ -52,5 +58,5 @@ require("lazy").setup({
       disabled_plugins = { "tohtml", "gzip", "zipPlugin", "netrwPlugin", "tarPlugin" },
     },
   },
-  lockfile = vim.fn.stdpath "data" .. "/lazy-lock.json",
+  lockfile = vim.fn.stdpath "config" .. "/lazy-lock.json",
 })
