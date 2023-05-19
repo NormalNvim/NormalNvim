@@ -38,18 +38,21 @@ local sections = {
 }
 if not vim.g.icons_enabled then vim.tbl_map(function(opts) opts.desc = opts.desc:gsub("^.* ", "") end, sections) end
 
+
+
 -- Normal --
 -- Standard Operations
 maps.n["j"] = { "v:count == 0 ? 'gj' : 'j'", expr = true, desc = "Move cursor down" }
 maps.n["k"] = { "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Move cursor up" }
 maps.n["<leader>w"] = { "<cmd>w<cr>", desc = "Save" }
-maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
+maps.n["<leader>q"] = { "<cmd>bw<cr>", desc = "Quit" }
 maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New File" }
 maps.n["gx"] = { utils.system_open, desc = "Open the file under cursor with system app" }
 maps.n["<C-s>"] = { "<cmd>w!<cr>", desc = "Force write" }
 maps.n["<C-q>"] = { "<cmd>q!<cr>", desc = "Force quit" }
 maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
 maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
+maps.i["<C-BS>"] = { "<C-W>", desc = "Enable CTRL+backsace to delete." }
 
 -- Clipboard
 maps.n['<C-y>'] = { '"+y<esc>', desc = "Copy to cliboard" }
@@ -59,7 +62,21 @@ maps.v['<C-d>'] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
 maps.n['<C-p>'] = { '"+p<esc>', desc = "Paste from cliboard" }
 
 -- Disable cliboard for other keys
-maps.n["x"] = { '"_x', desc = "Delete character without yanking it." }
+function xDeleteLineIfEmtpy()
+    -- Also, x does not copy to clipboard
+    if vim.fn.col('.') == 1 then
+        local line = vim.fn.getline('.')
+        if line:match('^%s*$') then
+            vim.api.nvim_feedkeys('dd', 'n', false)
+            vim.api.nvim_feedkeys('$', 'n', false)
+        else
+            vim.api.nvim_feedkeys('"_x', 'n', false)
+        end
+    else
+        vim.api.nvim_feedkeys('"_x', 'n', false)
+    end
+end
+maps.n["x"] = { ':lua xDeleteLineIfEmtpy()<CR>' }
 maps.v["x"] = { '"_x', desc = "Delete character without yanking it." }
 
 -- Plugin Manager
