@@ -24,7 +24,7 @@ local baseevent = utils.event
 --       -> 12. Save session on close.
 --       -> 13. Open Ranger on startup with directory.
 --       -> 14. Nvim user events for file detection (BaseFile and BaseGitFile).
---       -> 15. NVin updater commands.
+--       -> 15. NVim updater commands.
 
 
 
@@ -303,7 +303,7 @@ autocmd({ "BufReadPost", "BufNewFile" }, {
 
 
 
--- 15. NVin updater commands
+-- 15. Nvim updater commands
 cmd(
   "NvimChangelog",
   function() require("base.utils.updater").changelog() end,
@@ -314,10 +314,12 @@ cmd(
   function() require("base.utils.updater").update_packages() end,
   { desc = "Update Plugins and Mason" }
 )
-cmd("NvimRollback", function() require("base.utils.updater").rollback() end, { desc = "Rollback Nvim" })
-cmd("NvimUpdate", function() require("base.utils.updater").update() end, { desc = "Update Nvim" })
-cmd("NvimVersion", function() require("base.utils.updater").version() end, { desc = "Check Nvim Version" })
-cmd("NvimReload", function() require("base.utils").reload() end, { desc = "Reload Nvim (Experimental)" })
+cmd("NvimRollbackCreate", function() require("base.utils.updater").create_rollback(true) end, { desc = "Create a rollback of '~/.config/nvim'." })
+cmd("NvimRollbackRestore", function() require("base.utils.updater").rollback() end, { desc = "Restores '~/.config/nvim' to the last rollbacked state." })
+cmd("NvimLockPluginVersions", function() require("base.utils.updater").generate_snapshot(true) end, { desc = "Lock package versions (only lazy, not mason)." })
+cmd("NvimUpdate", function() require("base.utils.updater").update() end, { desc = "Update Nvim distro" })
+cmd("NvimVersion", function() require("base.utils.updater").version() end, { desc = "Check Nvim distro Version" })
+cmd("NvimReload", function() require("base.utils").reload() end, { desc = "Reload Nvim without closing it (Experimental)" })
 
 
 

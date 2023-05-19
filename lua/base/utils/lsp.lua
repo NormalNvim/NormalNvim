@@ -9,6 +9,15 @@
 -- @copyright 2022
 -- @license GNU General Public License v3.0
 
+
+--    Functions:
+--       -> LSP settings
+--       -> Formatting settings
+--       -> setup
+--       -> on_attach
+--       -> config
+
+
 local M = {}
 local tbl_contains = vim.tbl_contains
 local tbl_isempty = vim.tbl_isempty
@@ -27,7 +36,7 @@ M.diagnostics = { [0] = {}, {}, {}, {} } -- For diagnostics toggle in ./ui.lua
 
 
 
--- Settings
+-- LSP settings
 M.setup_diagnostics = function(signs)
   -- Default: Diagnostics
   local default_diagnostics = {

@@ -139,15 +139,6 @@ function git.latest_version(versions, ...)
   return versions[#versions]
 end
 
---- Parse a remote url
----@param str string the remote to parse to a full git url
----@return string # The full git url for the given remote string
-function git.parse_remote_url(str)
-  return vim.fn.match(str, base.url_matcher) == -1
-      and git.url .. str .. (vim.fn.match(str, "/") == -1 and "/Nvim.git" or ".git")
-    or str
-end
-
 --- Check if a Conventional Commit commit message is breaking or not
 ---@param commit string a commit message
 ---@return boolean true if the message is breaking, false if the commit message is not breaking

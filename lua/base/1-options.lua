@@ -1,6 +1,19 @@
 -- NVim option variables
 
 
+-- HELLO, welcome to NormalNVim!
+-- -------------------------------------
+-- Here you can define your nvim options.
+--
+-- You can updatethis nvim distro with :NvimUpdate
+-- you can easily revert to the previous version with :NvimRollbackRestore
+--
+-- For plugin updates
+-- Check ./lazy.lua to know more about "stable" and "nightly" channels.
+-- And how to lock your package versions.
+
+
+
 -- Global that will contain the NVim distro options (updater... etc)
 _G.base = {}
 
@@ -18,6 +31,7 @@ vim.opt.viewoptions:remove "curdir"             -- disable saving current direct
 vim.opt.shortmess:append { s = true, I = true } -- disable startup message
 vim.opt.backspace:append { "nostop" }           -- Don't stop backspace at insert
 vim.opt.diffopt:append "linematch:60"           -- enable linematch diff algorithm
+
 
 -- Sets
 vim.cmd("set autochdir")                        -- By default, use current file dir as working dir.
@@ -81,5 +95,6 @@ for scope, table in pairs(options) do
     vim[scope][setting] = value
   end
 end
+
 
 

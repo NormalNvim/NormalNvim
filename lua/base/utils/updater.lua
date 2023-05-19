@@ -81,6 +81,7 @@ function M.generate_snapshot(write)
     file:write "}"
     file:close()
   end
+  notify("Lazy packages locked to the current version.")
   return snapshot
 end
 
@@ -139,7 +140,8 @@ function M.create_rollback(write)
     file:write("return " .. vim.inspect(snapshot, { newline = " ", indent = "" }))
     file:close()
   end
-
+  -- Rollback file created
+  notify("Rollback file created in ~/.cache/nvim\n\npointing to commit:\n" .. snapshot.commit  .. "  \n\nYou can use :NvimRollbackRestore to revert ~/.config to this state.")
   return snapshot
 end
 
@@ -173,32 +175,16 @@ function M.update(opts)
     return
   end
   -- set up any remotes defined by the user if they do not exist
-  for remote, entry in pairs(opts.remotes and opts.remotes or {}) do
-    local url = git.parse_remote_url(entry)
-    local current_url = git.remote_url(remote, false)
-    local check_needed = false
-    if not current_url then
-      git.remote_add(remote, url)
-      check_needed = true
-    elseif
-      current_url ~= url
-      and confirm_prompt {
-        { "Remote " },
-        { remote, "Title" },
-        { " is currently set to " },
-        { current_url, "WarningMsg" },
-        { "\nWould you like us to set it to " },
-        { url, "String" },
-        { "?" },
-      }
-    then
-      git.remote_update(remote, url)
-      check_needed = true
-    end
-    if check_needed and git.remote_url(remote, false) ~= url then
-      vim.api.nvim_err_writeln("Error setting up remote " .. remote .. " to " .. url)
-      return
-    end
+  for remote in pairs(opts.remotes and opts.remotes or {}) do
+    local url = git.remote_url(remote, false)
+    -- Show remote we are using
+    echo {
+      { "Checking remote " },
+      { remote, "Title" },
+      { " which is currently set to " },
+      { url, "WarningMsg" },
+      { "..." }
+    }
   end
   local is_stable = opts.channel == "stable"
   if is_stable then
@@ -252,7 +238,7 @@ function M.update(opts)
     vim.api.nvim_err_writeln "Error checking for updates"
     return
   elseif source == target then
-    echo { { "No updates available", "String" } }
+    echo { { "No changes available", "String" } }
     return
   elseif -- prompt user if they want to accept update
     not opts.skip_prompts
@@ -266,6 +252,7 @@ function M.update(opts)
     return
   else -- perform update
     M.create_rollback(true) -- create rollback file before updating
+
     -- calculate and print the changelog
     local changelog = git.get_commit_range(source, target)
     local breaking = git.breaking_changes(changelog)
