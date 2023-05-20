@@ -15,8 +15,8 @@ WIP
 ## Distro features
 
 * 😴 Lazy: Plugins are loaded lazily, providing super fast startup times.
-* 😎 Plugins self-contained: Allowing you to easily delete what you don't want.
-* 🔒 Plugin version lock: Options to choose between locking your plugin versions, or go bleeding edge and have the latest updates.
+* 😎 Plugins are self-contained: Allowing you to easily delete what you don't want.
+* 🔒 Plugin version lock: Choose "stable" or "nightly" channels to choose between locking your plugin versions, or go bleeding edge and have the latest updates.
 * 🔙 Rollbacks: You can easily recover from a nvim distro update using :NvimRollbackRestore
 * 🔥 Hot reload: Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
 * ❤️ We don't treat you like you stupid: Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
