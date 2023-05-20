@@ -195,7 +195,9 @@ return {
   {
   "stevearc/aerial.nvim",
   event = "User BaseFile",
+  cmd = {"AerialToggle", "AerialOpen", "AerialNavOpen", "AerialInfo"},
   opts = {
+    open_automatic = false, -- See autocmds
     attach_mode = "global",
     backends = { "lsp", "treesitter", "markdown", "man" },
     layout = { min_width = 28 },
