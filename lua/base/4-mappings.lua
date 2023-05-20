@@ -45,7 +45,8 @@ if not vim.g.icons_enabled then vim.tbl_map(function(opts) opts.desc = opts.desc
 maps.n["j"] = { "v:count == 0 ? 'gj' : 'j'", expr = true, desc = "Move cursor down" }
 maps.n["k"] = { "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Move cursor up" }
 maps.n["<leader>w"] = { "<cmd>w<cr>", desc = "Save" }
-maps.n["<leader>q"] = { "<cmd>bw<cr>", desc = "Quit" }
+maps.n["<leader>q"] = { "<cmd>bw<cr>", desc = "Quit buffer" }
+--maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
 maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New File" }
 maps.n["gx"] = { utils.system_open, desc = "Open the file under cursor with system app" }
 maps.n["<C-s>"] = { "<cmd>w!<cr>", desc = "Force write" }
@@ -78,6 +79,21 @@ function xDeleteLineIfEmtpy()
 end
 maps.n["x"] = { ':lua xDeleteLineIfEmtpy()<CR>' }
 maps.v["x"] = { '"_x', desc = "Delete character without yanking it." }
+
+
+-- ESC - Clear hlsearch, but preserve original functionality
+maps.n["<ESC>"] = {
+  function()
+    if vim.fn.hlexists('Search') then
+      vim.cmd('nohlsearch')
+    else
+      vim.api.nvim_feedkeys(
+        vim.api.nvim_replace_termcodes('<ESC>', true, true, true), 'n', true
+      )
+    end
+  end
+}
+
 
 -- Plugin Manager
 maps.n["<leader>p"] = sections.p
