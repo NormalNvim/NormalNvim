@@ -23,3 +23,6 @@ WIP
 
 ## Credits
 Originally it took AstroVim as base. But implements [this VIM config](https://github.com/Zeioth/vim-zeioth-config). Code has been simplified while retaining its core features.
+
+## FAQ
+* How do I disable the tabs? You either ":set showtabline=0" or check the plugin heirline. Here is where we implement the logic.
