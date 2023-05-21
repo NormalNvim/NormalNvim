@@ -57,7 +57,7 @@ maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
 maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
 maps.i["<C-BS>"] = { "<C-W>", desc = "Enable CTRL+backsace to delete." }
 
--- Clipboard
+-- Clipboard → only useful when clibboard is commented on ./1-options.lua
 maps.n['<C-y>'] = { '"+y<esc>', desc = "Copy to cliboard" }
 maps.v['<C-y>'] = { '"+y<esc>', desc = "Copy to cliboard" }
 maps.n['<C-d>'] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
