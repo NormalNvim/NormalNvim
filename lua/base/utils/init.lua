@@ -19,15 +19,20 @@ function M.extend_tbl(default, opts)
   return default and vim.tbl_deep_extend("force", default, opts) or opts
 end
 
---- Partially reload Nvim user settings. Includes core vim options, mappings, and highlights. This is an experimental feature and may lead to instabilities until restart.
+--- Partially reload Nvim user settings. Includes core vim options, mappings,
+--- and highlights. This is an experimental feature and may lead to
+--- instabilities until restart.
 ---@param quiet? boolean Whether or not to notify on completion of reloading
 ---@return boolean # True if the reload was successful, False otherwise
 function M.reload(quiet)
+
+  -- Reload options, mappings and plugins (this is managed automatically by lazy).
+  -- Never reload base.3-autocmds to avoid issues.
   local core_modules = { "base.1-options", "base.4-mappings" }
   local modules = vim.tbl_filter(function(module) return module:find "^user%." end, vim.tbl_keys(package.loaded))
 
-  vim.tbl_map(require("plenary.reload").reload_module, vim.list_extend(modules, core_modules))
 
+  vim.tbl_map(require("plenary.reload").reload_module, vim.list_extend(modules, core_modules))
   local success = true
   for _, module in ipairs(core_modules) do
     local status_ok, fault = pcall(require, module)
@@ -43,7 +48,9 @@ function M.reload(quiet)
       M.notify("Error reloading Nvim...", vim.log.levels.ERROR)
     end
   end
-  vim.cmd.doautocmd "ColorScheme"
+  vim.cmd.doautocmd "ColorScheme" -- For heirline
+  vim.cmd("colorscheme " .. base.default_colorscheme)
+
   return success
 end
 
@@ -119,7 +126,7 @@ function M.notify(msg, type, opts)
   vim.schedule(function() vim.notify(msg, type, M.extend_tbl({ title = "Nvim" }, opts)) end)
 end
 
---- Trigger an Nvim user event
+--- Trigger an Nvim event
 ---@param event string The event name to be appended to NVim
 function M.event(event)
   vim.schedule(function() vim.api.nvim_exec_autocmds("User", { pattern = "Base" .. event }) end)

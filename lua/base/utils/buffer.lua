@@ -107,7 +107,7 @@ end
 
 --- Sort a the buffers in the current tab based on some comparator
 ---@param compare_func string|function a string of a comparator defined in require("base.utils.buffer").comparator or a custom comparator function
----@param skip_autocmd boolean|nil whether or not to skip triggering AstroBufsUpdated autocmd event
+---@param skip_autocmd boolean|nil whether or not to skip triggering BaseBufsUpdated autocmd event
 ---@return boolean # Whether or not the buffers were sorted
 function M.sort(compare_func, skip_autocmd)
   if type(compare_func) == "string" then compare_func = M.comparator[compare_func] end

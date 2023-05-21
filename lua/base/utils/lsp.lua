@@ -26,7 +26,6 @@ local utils = require "base.utils"
 local conditional_func = utils.conditional_func
 local is_available = utils.is_available
 
-local server_config = "lsp.config."
 local setup_handlers = {
   function(server, opts) require("lspconfig")[server].setup(opts) end,
 }
@@ -418,7 +417,7 @@ function M.config(server_name)
   end
   if server_name == "lua_ls" then -- by default initialize neodev and disable third party checking
     pcall(require, "neodev")
-    lsp_opts.before_init = function(param, config)
+    lsp_opts.before_init = function(config)
       if vim.b.neodev_enabled then
         table.insert(config.settings.Lua.workspace.library, "~/.config/nvim" .. "/lua")
       end

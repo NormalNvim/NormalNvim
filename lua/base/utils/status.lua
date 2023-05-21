@@ -168,7 +168,7 @@ function M.hl.mode_bg() return M.env.modes[vim.fn.mode()][2] end
 
 --- Get the foreground color group for the current filetype
 ---@return table # the highlight group for the current filetype foreground
--- @usage local heirline_component = { provider = require("base.utils.status").provider.fileicon(), hl = require("astronvim.utils.status").hl.filetype_color },
+-- @usage local heirline_component = { provider = require("base.utils.status").provider.fileicon(), hl = require("base.utils.status").hl.filetype_color },
 function M.hl.filetype_color(self)
   local devicons_avail, devicons = pcall(require, "nvim-web-devicons")
   if not devicons_avail then return {} end
@@ -388,7 +388,7 @@ end
 -- @see base.utils.status.utils.stylize
 function M.provider.foldcolumn(opts)
   opts = extend_tbl({ escape = false }, opts)
-  local ffi = require "base.utils.ffi" -- get AstroNvim C extensions
+  local ffi = require "base.utils.ffi" -- get Nvim C extensions
   local fillchars = vim.opt.fillchars:get()
   local foldopen = fillchars.foldopen or get_icon "FoldOpened"
   local foldclosed = fillchars.foldclose or get_icon "FoldClosed"
@@ -1349,7 +1349,7 @@ function M.component.signcolumn(opts)
   return M.component.builder(M.utils.setup_providers(opts, { "signcolumn" }))
 end
 
---- A general function to build a section of base status providers with highlights, conditions, and section surrounding
+--- A general function to build a section of nvim status providers with highlights, conditions, and section surrounding
 ---@param opts? table a list of components to build into a section
 ---@return table # The Heirline component table
 -- @usage local heirline_component = require("base.utils.status").components.builder({ { provider = "file_icon", opts = { padding = { right = 1 } } }, { provider = "filename" } })
@@ -1601,7 +1601,7 @@ M.heirline.make_buflist = function(component)
     ),
     { provider = get_icon "ArrowLeft" .. " ", hl = overflow_hl },
     { provider = get_icon "ArrowRight" .. " ", hl = overflow_hl },
-    function() return vim.t.bufs end, -- use base bufs variable
+    function() return vim.t.bufs end, -- use nvim bufs variable
     false -- disable internal caching
   )
 end
