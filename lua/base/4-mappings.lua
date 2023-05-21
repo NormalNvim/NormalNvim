@@ -1,7 +1,9 @@
 -- nvim keybindings
 
 
---         Mode  | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang |
+-- KEYBINDING REFERENCE TABLE
+-- -------------------------------------------------------------------
+-- |        Mode  | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang |
 -- Command        +------+-----+-----+-----+-----+-----+------+------+
 -- [nore]map      | yes  |  -  |  -  | yes | yes | yes |  -   |  -   |
 -- n[nore]map     | yes  |  -  |  -  |  -  |  -  |  -  |  -   |  -   |
@@ -14,7 +16,7 @@
 -- o[nore]map     |  -   |  -  |  -  |  -  |  -  | yes |  -   |  -   |
 -- t[nore]map     |  -   |  -  |  -  |  -  |  -  |  -  | yes  |  -   |
 -- l[nore]map     |  -   | yes | yes |  -  |  -  |  -  |  -   | yes  |
-
+-- -------------------------------------------------------------------
 
 
 
@@ -62,23 +64,25 @@ maps.n['<C-d>'] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
 maps.v['<C-d>'] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
 maps.n['<C-p>'] = { '"+p<esc>', desc = "Paste from cliboard" }
 
--- Disable cliboard for other keys
-function xDeleteLineIfEmtpy()
-  -- Also, x does not copy to clipboard
-  if vim.fn.col('.') == 1 then
-    local line = vim.fn.getline('.')
-    if line:match('^%s*$') then
-      vim.api.nvim_feedkeys('dd', 'n', false)
-      vim.api.nvim_feedkeys('$', 'n', false)
+
+-- Also, x does not copy to clipboard.
+maps.n["x"] = {
+  -- Allow x key to delete blank lines in normal mode.
+  function()
+    if vim.fn.col('.') == 1 then
+      local line = vim.fn.getline('.')
+      if line:match('^%s*$') then
+        vim.api.nvim_feedkeys('dd', 'n', false)
+        vim.api.nvim_feedkeys('$', 'n', false)
+      else
+        vim.api.nvim_feedkeys('"_x', 'n', false)
+      end
     else
       vim.api.nvim_feedkeys('"_x', 'n', false)
     end
-  else
-    vim.api.nvim_feedkeys('"_x', 'n', false)
-  end
-end
-
-maps.n["x"] = { ':lua xDeleteLineIfEmtpy()<CR>' }
+  end,
+  desc = "Delete character without yanking it."
+}
 maps.v["x"] = { '"_x', desc = "Delete character without yanking it." }
 
 
