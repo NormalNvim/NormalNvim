@@ -19,12 +19,8 @@ _G.base = {}
 
 
 -- Theme
---base.default_colorscheme = "astrotheme"
-base.default_colorscheme = "tokyonight-night"
-
--- Right click message: Disable
-vim.api.nvim_command([[aunmenu PopUp.How-to\ disable\ mouse]]) -- Disable right click message
-vim.api.nvim_command([[aunmenu PopUp.-1-]])                    -- Disable right click message
+base.default_colorscheme = "astrotheme"
+--base.default_colorscheme = "tokyonight-night"
 
 -- Remove/append
 vim.opt.viewoptions:remove "curdir"             -- disable saving current directory with views

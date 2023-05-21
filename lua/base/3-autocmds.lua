@@ -22,20 +22,27 @@ local baseevent = utils.event
 --       -> 10. Quit Nvim if >=1 window open and only sidebar windows are list.
 --       -> 11. Open the greeter on opening vim.
 --       -> 12. Save session on close.
---       -> 13. Open Ranger on startup with directory.
---       -> 14. Nvim user events for file detection (BaseFile and BaseGitFile).
---       -> 15. NVim updater commands.
+--       -> 13. Open neotree in the current working directory
+--       -> 14. At startup, open neotree and aerial.
+--       -> 15. Auto reload.
+--       -> 16. Disable right click contextual menu.
+--       -> 17. Nvim user events for file detection (BaseFile and BaseGitFile).
+--       -> 18. NVim updater commands.
+--       -> .   Extra commands
+
+
+--    command groups:
 
 
 
 
 -- 1. hlsearch (serch highlighting)
-vim.on_key(function(char)
-  if vim.fn.mode() == "n" then
-    local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/" }, vim.fn.keytrans(char))
-    if vim.opt.hlsearch:get() ~= new_hlsearch then vim.opt.hlsearch = new_hlsearch end
-  end
-end, namespace "auto_hlsearch")
+-- vim.on_key(function(char)
+--   if vim.fn.mode() == "n" then
+--     local new_hlsearch = vim.tbl_contains({ "<CR>", "n", "N", "*", "#", "?", "/" }, vim.fn.keytrans(char))
+--     if vim.opt.hlsearch:get() ~= new_hlsearch then vim.opt.hlsearch = new_hlsearch end
+--   end
+-- end, namespace "auto_hlsearch")
 
 
 
@@ -183,7 +190,7 @@ autocmd("BufEnter", {
         -- If any visible windows are not sidebars, early return
         if not sidebar_fts[filetype] then
           return
-        -- If the visible window is a sidebar
+          -- If the visible window is a sidebar
         else
           -- only count filetypes once, so remove a found sidebar from the detection
           sidebar_fts[filetype] = nil
@@ -209,17 +216,17 @@ if is_available "alpha-nvim" then
     group = group_name,
     callback = function(event)
       if
-        (
-          (event.event == "User" and event.file == "AlphaReady")
-          or (event.event == "BufEnter" and vim.api.nvim_get_option_value("filetype", { buf = event.buf }) == "alpha")
-        ) and not vim.g.before_alpha
+          (
+            (event.event == "User" and event.file == "AlphaReady")
+            or (event.event == "BufEnter" and vim.api.nvim_get_option_value("filetype", { buf = event.buf }) == "alpha")
+          ) and not vim.g.before_alpha
       then
         vim.g.before_alpha = { showtabline = vim.opt.showtabline:get(), laststatus = vim.opt.laststatus:get() }
         vim.opt.showtabline, vim.opt.laststatus = 0, 0
       elseif
-        vim.g.before_alpha
-        and event.event == "BufEnter"
-        and vim.api.nvim_get_option_value("buftype", { buf = event.buf }) ~= "nofile"
+          vim.g.before_alpha
+          and event.event == "BufEnter"
+          and vim.api.nvim_get_option_value("buftype", { buf = event.buf }) ~= "nofile"
       then
         vim.opt.laststatus, vim.opt.showtabline = vim.g.before_alpha.laststatus, vim.g.before_alpha.showtabline
         vim.g.before_alpha = nil
@@ -245,7 +252,6 @@ if is_available "alpha-nvim" then
     end,
   })
 end
-
 
 
 
@@ -289,7 +295,61 @@ end
 
 
 
--- 14. Nvim user events for file detection (BaseFile and BaseGitFile)
+
+-- 14. At startup, open neotree and aerial and send the focus to the main buffer
+-- autocmd({ "BufAdd" }, {
+--   desc = "Do the next things when nvim opens",
+--   group = augroup("open_on_startup", { clear = true }),
+--   callback = function()
+--     -- Trigger only if buffer is empty
+--     if vim.fn.empty(vim.fn.expand('%:p')) == 1 then
+--       vim.cmd("Neotree")
+--       vim.defer_fn(function()vim.schedule(function()
+--           vim.api.nvim_input('<C-w><C-w>')
+--       end) end, 50)
+--     end
+--   end,
+-- })
+
+
+
+
+-- 15.  Auto reload.
+autocmd({ "BufWritePost" }, {
+  desc = "When writing a buffer, :NvimReload if the buffer is a config file.",
+  group = augroup("reload_if_buffer_is_config_file", { clear = true }),
+  callback = function()
+    local filesThatTriggerReload = {
+      "/home/zeioth/.config/nvim/lua/base/1-options.lua",
+      "/home/zeioth/.config/nvim/lua/base/4-mappings.lua",
+    }
+
+    local bufPath = vim.fn.expand("%:p")
+    for _, filePath in ipairs(filesThatTriggerReload) do
+      if filePath == bufPath then
+        vim.cmd("NvimReload")
+      end
+    end
+  end,
+})
+
+
+
+
+-- 16.  Disable right click contextual menu warning message
+autocmd("VimEnter", {
+  desc = "Disable right contextual menu warning message",
+  group = augroup("contextual_menu", { clear = true }),
+  callback = function()
+    vim.api.nvim_command([[aunmenu PopUp.How-to\ disable\ mouse]]) -- Disable right click message
+    vim.api.nvim_command([[aunmenu PopUp.-1-]])                    -- Disable right click message
+  end,
+})
+
+
+
+
+-- 17. Nvim user events for file detection (BaseFile and BaseGitFile)
 autocmd({ "BufReadPost", "BufNewFile" }, {
   desc = "Nvim user events for file detection (BaseFile and BaseGitFile)",
   group = augroup("file_user_events", { clear = true }),
@@ -303,7 +363,8 @@ autocmd({ "BufReadPost", "BufNewFile" }, {
 
 
 
--- 15. Nvim updater commands
+
+-- 18. Nvim updater commands
 cmd(
   "NvimChangelog",
   function() require("base.utils.updater").changelog() end,
@@ -314,47 +375,31 @@ cmd(
   function() require("base.utils.updater").update_packages() end,
   { desc = "Update Plugins and Mason" }
 )
-cmd("NvimRollbackCreate", function() require("base.utils.updater").create_rollback(true) end, { desc = "Create a rollback of '~/.config/nvim'." })
-cmd("NvimRollbackRestore", function() require("base.utils.updater").rollback() end, { desc = "Restores '~/.config/nvim' to the last rollbacked state." })
-cmd("NvimLockPluginVersions", function() require("base.utils.updater").generate_snapshot(true) end, { desc = "Lock package versions (only lazy, not mason)." })
+cmd("NvimRollbackCreate", function() require("base.utils.updater").create_rollback(true) end,
+  { desc = "Create a rollback of '~/.config/nvim'." })
+cmd("NvimRollbackRestore", function() require("base.utils.updater").rollback() end,
+  { desc = "Restores '~/.config/nvim' to the last rollbacked state." })
+cmd("NvimLockPluginVersions", function() require("base.utils.updater").generate_snapshot(true) end,
+  { desc = "Lock package versions (only lazy, not mason)." })
 cmd("NvimUpdate", function() require("base.utils.updater").update() end, { desc = "Update Nvim distro" })
 cmd("NvimVersion", function() require("base.utils.updater").version() end, { desc = "Check Nvim distro Version" })
-cmd("NvimReload", function() require("base.utils").reload() end, { desc = "Reload Nvim without closing it (Experimental)" })
+cmd("NvimReload", function() require("base.utils").reload() end,
+  { desc = "Reload Nvim without closing it (Experimental)" })
 
 
 
 
--- 16. Disable side scroll in all buffers
--- TODO: Limit it only to terminal and neotree
--- autocmd({ "CursorMoved" }, {
---   desc = "Disables side scroll, which is an unwanted behavior on most plugins",
---   group = augroup("disable_mouse_sidescrolling", { clear = true }),
---   callback = function()
---     vim.cmd("norm!99zH")
---   end,
--- })
+-- . Extra commands
+----------------------------------------------
 
-
--- Extra Cmds
+-- Change working directory
 cmd("Cwd", function()
   vim.cmd(":cd %:p:h")
   vim.cmd(":pwd")
 end, { desc = "cd current file's directory" })
+
+-- Set working directory (alias)
 cmd("Swd", function()
   vim.cmd(":cd %:p:h")
   vim.cmd(":pwd")
 end, { desc = "cd current file's directory" })
-
-
-
-
-
-
-
-
-
-
-
-
-
-
