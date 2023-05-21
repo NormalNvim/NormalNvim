@@ -64,24 +64,26 @@ maps.n['<C-p>'] = { '"+p<esc>', desc = "Paste from cliboard" }
 
 -- Disable cliboard for other keys
 function xDeleteLineIfEmtpy()
-    -- Also, x does not copy to clipboard
-    if vim.fn.col('.') == 1 then
-        local line = vim.fn.getline('.')
-        if line:match('^%s*$') then
-            vim.api.nvim_feedkeys('dd', 'n', false)
-            vim.api.nvim_feedkeys('$', 'n', false)
-        else
-            vim.api.nvim_feedkeys('"_x', 'n', false)
-        end
+  -- Also, x does not copy to clipboard
+  if vim.fn.col('.') == 1 then
+    local line = vim.fn.getline('.')
+    if line:match('^%s*$') then
+      vim.api.nvim_feedkeys('dd', 'n', false)
+      vim.api.nvim_feedkeys('$', 'n', false)
     else
-        vim.api.nvim_feedkeys('"_x', 'n', false)
+      vim.api.nvim_feedkeys('"_x', 'n', false)
     end
+  else
+    vim.api.nvim_feedkeys('"_x', 'n', false)
+  end
 end
+
 maps.n["x"] = { ':lua xDeleteLineIfEmtpy()<CR>' }
 maps.v["x"] = { '"_x', desc = "Delete character without yanking it." }
 
 
--- ESC - Clear hlsearch, but preserve original functionality
+-- ESC - Clear hlsearch, but preserve original functionality.
+--       TIP: Change ESC for <leader>ENTER to avoid triggering it by accident.
 maps.n["<ESC>"] = {
   function()
     if vim.fn.hlexists('Search') then
@@ -504,5 +506,3 @@ maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Toggle foldcolumn" }
 
 
 utils.set_mappings(maps)
-
-
