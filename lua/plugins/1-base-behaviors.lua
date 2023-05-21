@@ -92,17 +92,21 @@ return {
 
 
 
-
-
-
-
   -- stay-centered.nvim [cursor centered]
   -- https://github.com/arnamak/stay-centered.nvim
   {
     "arnamak/stay-centered.nvim",
      lazy=false,
      opts = {
-       skip_filetypes = { }
+       skip_filetypes = {
+         "alpha",
+         "ranger",
+         "rnvimr",
+         "neotree",
+         "neotree-popup",
+         "spectre_panel",
+         "aerial",
+         "aerial-nav" }
      }
   },
 
