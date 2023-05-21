@@ -44,30 +44,32 @@ return {
       local dashboard = require "alpha.themes.dashboard"
       dashboard.section.header.val = {
 
-      "                                                                     ",
-      "       ████ ██████           █████      ██                     ",
-      "      ███████████             █████                             ",
-      "      █████████ ███████████████████ ███   ███████████   ",
-      "     █████████  ███    █████████████ █████ ██████████████   ",
-      "    █████████ ██████████ █████████ █████ █████ ████ █████   ",
-      "  ███████████ ███    ███ █████████ █████ █████ ████ █████  ",
-      " ██████  █████████████████████ ████ █████ █████ ████ ██████ ",
+        "                                                                     ",
+        "       ████ ██████           █████      ██                     ",
+        "      ███████████             █████                             ",
+        "      █████████ ███████████████████ ███   ███████████   ",
+        "     █████████  ███    █████████████ █████ ██████████████   ",
+        "    █████████ ██████████ █████████ █████ █████ ████ █████   ",
+        "  ███████████ ███    ███ █████████ █████ █████ ████ █████  ",
+        " ██████  █████████████████████ ████ █████ █████ ████ ██████ ",
       }
       dashboard.section.header.opts.hl = "DashboardHeader"
 
       local button = require("base.utils").alpha_button
       dashboard.section.buttons.val = {
-        button("LDR n  ", "  New File  "),
-        button("LDR f f", "  Find File  "),
-        button("LDR f o", "󰈙  Recents  "),
-        button("LDR f w", "󰈭  Find Word  "),
-        button("LDR f '", "  Bookmarks  "),
-        button("LDR S l", "  Last Session  "),
+        button("LDR n  ", "📄  New  "),
+        button("LDR f o", "🪿  Recent  "),
+        button("LDR r  ", "🐍  Ranger  "),
+        button("LDR S f", "🔎  Sessions  "),
+        button("LDR    ", "💼  Projects  "),
+        --button("LDR f '", "  Bookmarks  "),
       }
 
+      -- Center in the screen
       dashboard.config.layout[1].val = vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.2) }
-      dashboard.config.layout[3].val = 5
+      dashboard.config.layout[3].val = 6
       dashboard.config.opts.noautocmd = true
+
       return dashboard
     end,
     config = function(_, opts)
@@ -81,7 +83,7 @@ return {
           local stats = require("lazy").stats()
           local ms = math.floor(stats.startuptime * 100 + 0.5) / 100
           opts.section.footer.val =
-            { " ", " ", " ", "Nvim loaded " .. stats.count .. " plugins  in " .. ms .. "ms" }
+          { " ", " ", " ", "Loaded " .. stats.count .. " plugins  in " .. ms .. "ms" }
           opts.section.footer.opts.hl = "DashboardFooter"
           pcall(vim.cmd.AlphaRedraw)
         end,
@@ -165,91 +167,98 @@ return {
 
   --  [statusbar]
   --  https://github.com/rebelot/heirline.nvim
-{
-  "rebelot/heirline.nvim",
-  event = "BufEnter",
-  opts = function()
-    local status = require "base.utils.status"
-    return {
-      opts = {
-        disable_winbar_cb = function(args)
-          return status.condition.buffer_matches({
-            buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
-            filetype = { "NvimTree", "neo%-tree", "dashboard", "Outline", "aerial" },
-          }, args.buf)
-        end,
-      },
-      statusline = { -- statusline
-        hl = { fg = "fg", bg = "bg" },
-        status.component.mode(),
-        status.component.git_branch(),
-        status.component.file_info { filetype = {}, filename = false, file_modified = false },
-        status.component.git_diff(),
-        status.component.diagnostics(),
-        status.component.fill(),
-        status.component.cmd_info(),
-        status.component.fill(),
-        status.component.lsp(),
-        status.component.treesitter(),
-        status.component.nav(),
-        status.component.mode { surround = { separator = "right" } },
-      },
-      winbar = { -- winbar
-        init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
-        fallthrough = false,
-        {
-          condition = function() return not status.condition.is_active() end,
-          status.component.separated_path(),
-          status.component.file_info {
-            file_icon = { hl = status.hl.file_icon "winbar", padding = { left = 0 } },
-            file_modified = false,
-            file_read_only = false,
-            hl = status.hl.get_attributes("winbarnc", true),
-            surround = false,
-            update = "BufEnter",
-          },
-        },
-        status.component.breadcrumbs { hl = status.hl.get_attributes("winbar", true) },
-      },
-      tabline = { -- bufferline
-        { -- file tree padding
-          condition = function(self)
-            self.winid = vim.api.nvim_tabpage_list_wins(0)[1]
-            return status.condition.buffer_matches(
-              { filetype = { "aerial", "dapui_.", "neo%-tree", "NvimTree" } },
-              vim.api.nvim_win_get_buf(self.winid)
-            )
+  {
+    "rebelot/heirline.nvim",
+    event = "BufEnter",
+    opts = function()
+      local status = require "base.utils.status"
+      return {
+        opts = {
+          -- Disable heirline for the next special buffers
+          -- Not used in this distro as we have a single heirline for all.
+          disable_winbar_cb = function(args)
+            return status.condition.buffer_matches({
+              buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
+              filetype = { "NvimTree", "neo%-tree", "dashboard", "Outline", "aerial" },
+            }, args.buf)
           end,
-          provider = function(self) return string.rep(" ", vim.api.nvim_win_get_width(self.winid) + 1) end,
-          hl = { bg = "tabline_bg" },
         },
-        status.heirline.make_buflist(status.component.tabline_file_info()), -- component for each buffer tab
-        status.component.fill { hl = { bg = "tabline_bg" } }, -- fill the rest of the tabline with background color
-        { -- tab list
-          condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
-          status.heirline.make_tablist { -- component for each tab
-            provider = status.provider.tabnr(),
-            hl = function(self) return status.hl.get_attributes(status.heirline.tab_type(self, "tab"), true) end,
+        statusline = {
+          -- statusline
+          hl = { fg = "fg", bg = "bg" },
+          status.component.mode(),
+          status.component.git_branch(),
+          status.component.file_info { filetype = {}, filename = false, file_modified = false },
+          status.component.git_diff(),
+          status.component.diagnostics(),
+          status.component.fill(),
+          status.component.cmd_info(),
+          status.component.fill(),
+          status.component.lsp(),
+          status.component.treesitter(),
+          status.component.nav(),
+          status.component.mode { surround = { separator = "right" } },
+        },
+        winbar = {
+          -- winbar
+          init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
+          fallthrough = false,
+          {
+            condition = function() return not status.condition.is_active() end,
+            status.component.separated_path(),
+            status.component.file_info {
+              file_icon = { hl = status.hl.file_icon "winbar", padding = { left = 0 } },
+              file_modified = false,
+              file_read_only = false,
+              hl = status.hl.get_attributes("winbarnc", true),
+              surround = false,
+              update = "BufEnter",
+            },
           },
-          { -- close button for current tab
-            provider = status.provider.close_button { kind = "TabClose", padding = { left = 1, right = 1 } },
-            hl = status.hl.get_attributes("tab_close", true),
-            on_click = {
-              callback = function() require("base.utils.buffer").close_tab() end,
-              name = "heirline_tabline_close_tab_callback",
+          status.component.breadcrumbs { hl = status.hl.get_attributes("winbar", true) },
+        },
+        tabline = { -- bufferline
+          {
+            -- file tree padding
+            condition = function(self)
+              self.winid = vim.api.nvim_tabpage_list_wins(0)[1]
+              return status.condition.buffer_matches(
+                { filetype = { "aerial", "dapui_.", "neo%-tree", "NvimTree" } },
+                vim.api.nvim_win_get_buf(self.winid)
+              )
+            end,
+            provider = function(self) return string.rep(" ", vim.api.nvim_win_get_width(self.winid) + 1) end,
+            hl = { bg = "tabline_bg" },
+          },
+          status.heirline.make_buflist(status.component.tabline_file_info()), -- component for each buffer tab
+          status.component.fill { hl = { bg = "tabline_bg" } },               -- fill the rest of the tabline with background color
+          {
+            -- tab list
+            condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
+            status.heirline.make_tablist {                                        -- component for each tab
+              provider = status.provider.tabnr(),
+              hl = function(self) return status.hl.get_attributes(status.heirline.tab_type(self, "tab"), true) end,
+            },
+            {
+              -- close button for current tab
+              provider = status.provider.close_button { kind = "TabClose", padding = { left = 1, right = 1 } },
+              hl = status.hl.get_attributes("tab_close", true),
+              on_click = {
+                callback = function() require("base.utils.buffer").close_tab() end,
+                name = "heirline_tabline_close_tab_callback",
+              },
             },
           },
         },
-      },
-      statuscolumn = vim.fn.has "nvim-0.9" == 1 and {
-        status.component.foldcolumn(),
-        status.component.fill(),
-        status.component.numbercolumn(),
-        status.component.signcolumn(),
-      } or nil,
-    }
-  end,
-  config = function(_, opts)
+        statuscolumn = vim.fn.has "nvim-0.9" == 1 and {
+          status.component.foldcolumn(),
+          status.component.fill(),
+          status.component.numbercolumn(),
+          status.component.signcolumn(),
+        } or nil,
+      }
+    end,
+    config = function(_, opts)
       local heirline = require "heirline"
       local status = require "base.utils.status"
       local C = status.env.fallback_colors
@@ -275,16 +284,18 @@ return {
         local DiagnosticInfo = get_hlgroup("DiagnosticInfo", { fg = C.white, bg = C.dark_bg })
         local DiagnosticHint = get_hlgroup("DiagnosticHint", { fg = C.bright_yellow, bg = C.dark_bg })
         local HeirlineInactive = get_hlgroup("HeirlineInactive", { bg = nil }).bg
-          or status.hl.lualine_mode("inactive", C.dark_grey)
+            or status.hl.lualine_mode("inactive", C.dark_grey)
         local HeirlineNormal = get_hlgroup("HeirlineNormal", { bg = nil }).bg or status.hl.lualine_mode("normal", C.blue)
-        local HeirlineInsert = get_hlgroup("HeirlineInsert", { bg = nil }).bg or status.hl.lualine_mode("insert", C.green)
-        local HeirlineVisual = get_hlgroup("HeirlineVisual", { bg = nil }).bg or status.hl.lualine_mode("visual", C.purple)
+        local HeirlineInsert = get_hlgroup("HeirlineInsert", { bg = nil }).bg or
+            status.hl.lualine_mode("insert", C.green)
+        local HeirlineVisual = get_hlgroup("HeirlineVisual", { bg = nil }).bg or
+            status.hl.lualine_mode("visual", C.purple)
         local HeirlineReplace = get_hlgroup("HeirlineReplace", { bg = nil }).bg
-          or status.hl.lualine_mode("replace", C.bright_red)
+            or status.hl.lualine_mode("replace", C.bright_red)
         local HeirlineCommand = get_hlgroup("HeirlineCommand", { bg = nil }).bg
-          or status.hl.lualine_mode("command", C.bright_yellow)
+            or status.hl.lualine_mode("command", C.bright_yellow)
         local HeirlineTerminal = get_hlgroup("HeirlineTerminal", { bg = nil }).bg
-          or status.hl.lualine_mode("insert", HeirlineInsert)
+            or status.hl.lualine_mode("insert", HeirlineInsert)
 
         local colors = {
           close_fg = Error.fg,
