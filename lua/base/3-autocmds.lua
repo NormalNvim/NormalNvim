@@ -297,24 +297,6 @@ end
 
 
 
--- 14. At startup, open neotree and aerial and send the focus to the main buffer
--- autocmd({ "BufAdd" }, {
---   desc = "Do the next things when nvim opens",
---   group = augroup("open_on_startup", { clear = true }),
---   once = true,
---   callback = function()
---     -- Trigger only if buffer is empty
---     if vim.fn.empty(vim.fn.expand('%:p')) == 1 then
---       vim.cmd("Neotree")
---       vim.defer_fn(function()vim.schedule(function()
---           vim.api.nvim_input('<C-w><C-w>')
---       end) end, 50)
---     end
---   end,
--- })
-
-
-
 
 -- 15.  Auto reload.
 autocmd({ "BufWritePost" }, {
@@ -322,8 +304,8 @@ autocmd({ "BufWritePost" }, {
   group = augroup("reload_if_buffer_is_config_file", { clear = true }),
   callback = function()
     local filesThatTriggerReload = {
-      "/home/zeioth/.config/nvim/lua/base/1-options.lua",
-      "/home/zeioth/.config/nvim/lua/base/4-mappings.lua",
+      vim.fn.stdpath("config") .. "lua/base/1-options.lua",
+      vim.fn.stdpath("config") .. "lua/base/4-mappings.lua"
     }
 
     local bufPath = vim.fn.expand("%:p")

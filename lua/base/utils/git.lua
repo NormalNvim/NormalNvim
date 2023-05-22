@@ -14,7 +14,7 @@ local function trim_or_nil(str) return type(str) == "string" and vim.trim(str) o
 ---@param args string the git arguments
 ---@return string|nil # The result of the command or nil if unsuccessful
 function git.cmd(args, ...)
-  return require("base.utils").cmd("git -C " .. "~/.config/nvim" .. " " .. args, ...)
+  return require("base.utils").cmd("git -C " .. vim.fn.stdpath("config") .. " " .. args, ...)
 end
 
 --- Check if the Nvim is able to reach the `git` command

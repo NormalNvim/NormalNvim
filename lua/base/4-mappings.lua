@@ -321,7 +321,7 @@ if is_available "telescope.nvim" then
   maps.n["<leader>fa"] = {
     function()
       local cwd = vim.fn.stdpath "config" .. "/.."
-      local search_dirs = { "~/.config/nvim" }
+      local search_dirs = { vim.fn.stdpath("config") }
       if #search_dirs == 1 then cwd = search_dirs[1] end -- if only one directory, focus cwd
       require("telescope.builtin").find_files {
         prompt_title = "Config Files",

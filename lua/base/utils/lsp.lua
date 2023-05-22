@@ -419,7 +419,7 @@ function M.config(server_name)
     pcall(require, "neodev")
     lsp_opts.before_init = function(config)
       if vim.b.neodev_enabled then
-        table.insert(config.settings.Lua.workspace.library, "~/.config/nvim" .. "/lua")
+        table.insert(config.settings.Lua.workspace.library, vim.fn.stdpath("config") .. "/lua")
       end
     end
     lsp_opts.settings = { Lua = { workspace = { checkThirdParty = false } } }
