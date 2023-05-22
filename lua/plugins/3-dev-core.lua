@@ -133,7 +133,7 @@ return {
       config = function(_, opts)
         require("mason").setup(opts)
 
-        -- TODO: AstroNvim v4: change these auto command names to not conflict with core Mason commands
+        -- TODO: change these auto command names to not conflict with core Mason commands
         local cmd = vim.api.nvim_create_user_command
         cmd("MasonUpdate", function(options) require("base.utils.mason").update(options.fargs) end, {
           nargs = "*",

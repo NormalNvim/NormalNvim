@@ -222,8 +222,7 @@ return {
       local status = require "base.utils.status"
       return {
         opts = {
-          -- Disable heirline for the next special buffers
-          -- Not used in this distro as we have a single heirline for all.
+          -- Disable the winbar for the next special buffers
           disable_winbar_cb = function(args)
             return status.condition.buffer_matches({
               buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
@@ -247,13 +246,17 @@ return {
           status.component.nav(),
           status.component.mode { surround = { separator = "right" } },
         },
-        winbar = {
-          -- winbar
+        winbar = {  -- winbar is where breadcrubms are displayed
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
           fallthrough = false,
           {
-            condition = function() return not status.condition.is_active() end,
+            condition = function()  -- Condition to show breadcrumrs
+              return not status.condition.is_active()
+            end,
             status.component.separated_path(),
+            -- Comment the block below to hide the breadcrumbs while unfocused.
+            -- But you won't know the buffer name then while unfocused.
+            -- This is specially important as we currently use a single status bar.
             status.component.file_info {
               file_icon = { hl = status.hl.file_icon "winbar", padding = { left = 0 } },
               file_modified = false,
@@ -421,7 +424,7 @@ return {
 
       local augroup = vim.api.nvim_create_augroup("Heirline", { clear = true })
       vim.api.nvim_create_autocmd("User", {
-        pattern = "ColorScheme", -- Don't change this
+        pattern = "ColorScheme", -- This is an autocmd event
         group = augroup,
         desc = "Refresh heirline colors",
         callback = function() require("heirline.utils").on_colorscheme(setup_colors()) end,
