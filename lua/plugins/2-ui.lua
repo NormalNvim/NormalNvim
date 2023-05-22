@@ -100,19 +100,19 @@ return {
         dashboard.button("n", "📄 New     ", ':ene<CR>'),
         dashboard.button("e", "🌺 Recent  ", ':Telescope oldfiles<CR>'),
         dashboard.button("r", "🐍 Ranger  ", ':Ranger<CR>'),
-        dashboard.button("s", "🔎 Sessions", 'SessionManager! load_session<CR>'),
+        dashboard.button("s", "🔎 Sessions", ':SessionManager! load_session<CR>'),
         dashboard.button("p", "💼 Projects", ':Telescope projects<CR>'),
-        --dashboard.button( "  ", " " , ' '),
+        dashboard.button("", ""),
         dashboard.button("q", "   Quit", ':exit<CR>'),
         --  --button("LDR f '", "  Bookmarks  "),
       }
 
-      ---- Center alpha in the screen
-      dashboard.config.layout[1].val = vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) }
-      dashboard.config.layout[3].val = 4 -- Space between header and buttons
+      ---- Vertical margins
+      dashboard.config.layout[1].val = vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) } -- Above header
+      dashboard.config.layout[3].val = vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) } -- Above buttons
 
+      -- Disablel autocmd and return
       dashboard.config.opts.noautocmd = true
-
       return dashboard
     end,
     config = function(_, opts)
