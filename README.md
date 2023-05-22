@@ -27,9 +27,9 @@ Originally it took AstroVim as base. But implements [this VIM config](https://gi
 ## FAQ
 99% of your questions can be solved by reading the AstroVim manual.
 
-* NormalNvim is working ok. How can I know why?
+* **NormalNvim is working ok. How can I know why?**
 
     :healthcheck base
 
-* How do I disable the tabs? You either ":set showtabline=0" or check the plugin heirline. Here is where we implement the logic.
+* **How do I disable the tabine?** You either ":set showtabline=0" or check the plugin heirline. Here is where implement the tab logic. Also check the ./lua/base/3-autocmds.lua and ./lua/base/utils/status.lua in case you wanna remove the code 100%.
 
