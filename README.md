@@ -27,7 +27,7 @@ Originally it took AstroVim as base. But implements [this VIM config](https://gi
 ## FAQ
 99% of your questions can be solved by reading the AstroVim manual.
 
-* How do I check NormalNVim is working ok?
+* NormalNvim is working ok. How can I know why?
 
     :healthcheck base
 
