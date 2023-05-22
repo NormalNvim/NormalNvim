@@ -1,4 +1,4 @@
-# NormalNVim
+# NormalNvim
 A normal NeoVim config
 
 ## Install
@@ -24,11 +24,11 @@ WIP
 ## FAQ
 Please before opening an issue, check [the AstroVim manual](https://neovim.io/doc/user/pi_health.html).
 
-* How do I check NormalNvim is working ok?
+* **NormalNvim is not working ok. How can I know why?**
 
     :healthcheck base
 
-* How do I disable the tabs? You either ":set showtabline=0" or check the plugin heirline. Here is where we implement the logic.
+* **How do I disable the tabine?** You either ":set showtabline=0" or check the plugin heirline. Here is where implement the tab logic. Also check the ./lua/base/3-autocmds.lua and ./lua/base/utils/status.lua in case you wanna remove the code 100%.
 
 ## Credits
 Originally it took AstroVim as base. But implements [this VIM config](https://github.com/Zeioth/vim-zeioth-config). Code has been simplified while retaining its core features.
