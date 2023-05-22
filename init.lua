@@ -10,7 +10,6 @@ for _, source in ipairs {
   if not status_ok then vim.api.nvim_err_writeln("Failed to load " .. source .. "\n\n" .. fault) end
 end
 
-
 -- Apply color scheme defined in ./lua/1-options.lua after all modules loaded
 if base.default_colorscheme then
   if not pcall(vim.cmd.colorscheme, base.default_colorscheme) then

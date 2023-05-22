@@ -13,7 +13,6 @@
 -- And how to lock your package versions.
 
 
-
 -- Global that will contain this Nvim distro options (updater... etc)
 _G.base = {}
 
@@ -90,6 +89,7 @@ local options = {
     colorcolumn = "80", -- PEP8 like character limit vertical bar.
     mouse = "a", -- Enable mouse support.
     mousescroll = "ver:1,hor:0", -- Disables hozirontal scroll in neovim
+
   },
   g = {
     highlighturl_enabled = true, -- highlight URLs by default
@@ -111,6 +111,4 @@ for scope, table in pairs(options) do
     vim[scope][setting] = value
   end
 end
-
-
 

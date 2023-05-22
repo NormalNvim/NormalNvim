@@ -279,6 +279,7 @@ if is_available "neo-tree.nvim" then
   autocmd("BufEnter", {
     desc = "Open Neo-Tree on startup with directory",
     group = augroup("neotree_start", { clear = true }),
+    once = true,
     callback = function()
       if package.loaded["neo-tree"] then
         vim.api.nvim_del_augroup_by_name "neotree_start"
@@ -300,6 +301,7 @@ end
 -- autocmd({ "BufAdd" }, {
 --   desc = "Do the next things when nvim opens",
 --   group = augroup("open_on_startup", { clear = true }),
+--   once = true,
 --   callback = function()
 --     -- Trigger only if buffer is empty
 --     if vim.fn.empty(vim.fn.expand('%:p')) == 1 then
