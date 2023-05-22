@@ -11,7 +11,8 @@
 --       -> friendly-snippets              [snippet templates]
 
 --       ## GIT
---       -> gitsigns.nvim                  [git]
+--       -> gitsigns.nvim                  [git hunks]
+--       -> fugitive.vim                   [git commands]
 
 --       ## DEBUGGER
 --       -> nvim-dap                       [debugger]
@@ -21,7 +22,7 @@
 
 --       ## EXTRA
 --       -> guess-indent                   [guess-indent]
-
+--       -> neural                         [chatgpt code generator]
 
 
 
@@ -59,7 +60,7 @@ return {
 
 
   --  GIT ---------------------------------------------------------------------
-  --  Git commands inside vim [git]
+  --  Git signs [git hunks]
   --  https://github.com/lewis6991/gitsigns.nvim
   {
     "lewis6991/gitsigns.nvim",
@@ -77,6 +78,21 @@ return {
     },
   },
 
+
+  --  Git fugitive mergetool + [git commands]
+  --  https://github.com/lewis6991/gitsigns.nvim
+    "https://github.com/tpope/vim-fugitive",
+     enabled = vim.fn.executable "git" == 1,
+     cmd = {
+       "Gvdiffsplit", "Gdiffsplit", "Gedit", "Gsplit",
+       "Gread", "Gwrite", "Ggrep", "GMove", "GRename", "GDelete", "GRemove",
+       "GBrowse", "Git", "Gstatus"
+     },
+     event = "User BaseGitFile",
+     init = function()
+       vim.g.fugitive_no_maps = 1
+     end,
+  },
 
 
 
@@ -161,6 +177,24 @@ return {
     end,
   },
 
+
+
+
+  --  neural [chatgpt code generator]
+  --  https://github.com/dense-analysis/neural
+  {
+    "dense-analysis/neural",
+    cmd = { "Neural" },
+    config = function(_, opts)
+      require('neural').setup({
+          source = {
+              openai = {
+                  api_key = vim.env.OPENAI_API_KEY,
+              },
+          },
+      })
+    end,
+  },
 
 
 
