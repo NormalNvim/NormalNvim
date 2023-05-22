@@ -83,7 +83,7 @@ M.env.separators = {
 }
 
 M.env.attributes = {
-  buffer_active = { bold = true, italic = true },
+  buffer_active = { bold = true, italic = false },
   buffer_picker = { bold = true },
   macro_recording = { bold = true },
   git_branch = { bold = true },
@@ -1009,8 +1009,8 @@ function M.component.tabline_file_info(opts)
       hl = function(self) return M.hl.get_attributes(self.tab_type .. "_path") end,
     },
     close_button = {
-      hl = function(self) return M.hl.get_attributes(self.tab_type .. "_close") end,
-      padding = { left = 1, right = 1 },
+      hl = function(self) return M.hl.get_attributes(self.tab_type .. "_close") end, -- Close X color
+      padding = { left = 1, right = 1 }, -- Mimimum tab size
       on_click = {
         callback = function(_, minwid) require("base.utils.buffer").close(minwid) end,
         minwid = function(self) return self.bufnr end,
