@@ -1,4 +1,4 @@
-# NormalNVim
+# NormalNvim
 A normal NeoVim config
 
 ## Install
