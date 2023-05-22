@@ -15,6 +15,7 @@ nvim
 * 🔒 Plugin version lock: Options to choose "stable" or "nightly" channels to choose between locking your plugin versions, or go bleeding edge and have the latest updates.
 * 🔙 Rollbacks: You can easily recover from a nvim distro update using :NvimRollbackRestore
 * 🔥 Hot reload: Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
+* 📱 Phone friendly: Good usability even on smalll screens.
 * ❤️ We don't treat you like you stupid: Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
 
 ## Plugins
