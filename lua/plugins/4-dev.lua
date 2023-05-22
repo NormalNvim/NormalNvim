@@ -119,7 +119,7 @@ return {
   event = "User BaseFile",
   cmd = {"AerialToggle", "AerialOpen", "AerialNavOpen", "AerialInfo", "AerialClose"},
   opts = {
-    open_automatic = true, -- Open if the buffer is compatible
+    open_automatic = false, -- Open if the buffer is compatible
     attach_mode = "global",
     backends = { "lsp", "treesitter", "markdown", "man" },
     layout = { min_width = 28 },

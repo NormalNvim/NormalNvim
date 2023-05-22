@@ -88,8 +88,9 @@ local options = {
     wrap = true, -- Disable wrapping of lines longer than the width of window.
     colorcolumn = "80", -- PEP8 like character limit vertical bar.
     mouse = "a", -- Enable mouse support.
-    mousescroll = "ver:1,hor:0", -- Disables hozirontal scroll in neovim
-
+    mousescroll = "ver:1,hor:0", -- Disables hozirontal scroll in neovim.
+    guicursor = "a:blinkon200", -- Enable cursor blink.
+    autochdir = true -- Use current file dir as working dir (See project.nvim)
   },
   g = {
     highlighturl_enabled = true, -- highlight URLs by default
