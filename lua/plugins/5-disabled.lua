@@ -42,6 +42,37 @@ return {
   -- },
 
 
+  -- -- stay-centered.nvim [cursor centered]
+  -- -- https://github.com/arnamak/stay-centered.nvim
+  --
+  -- NOTE: use scrolloff = 1000 instead of this plugin
+  --       it causes problems with other plugins like mini.animate.
+  -- {
+  --   "arnamak/stay-centered.nvim",
+  --   lazy = false,
+  --   opts = {
+  --     skip_filetypes = {
+  --       "ranger",
+  --       "rnvimr",
+  --       "neotree",
+  --       "NvimTree",
+  --       "neo-tree",
+  --       "neotree-popup",
+  --       "spectre_panel",
+  --       "help",
+  --       "startify",
+  --       "aerial",
+  --       "aerial-nav",
+  --       "alpha",
+  --       "dashboard",
+  --       "lazy",
+  --       "neogitstatus",
+  --       "Trouble",
+  --     },
+  --   },
+  -- },
+
+
 
 
   }
