@@ -1,7 +1,6 @@
 -- User interface
 -- Things that make the GUI better.
 
-
 --    Sections:
 --       -> astrotheme                  [theme]
 --       -> alpha-nvim                  [greeter]
@@ -16,24 +15,19 @@
 --       -> lspkind.nvim                [icons | lsp]
 --       -> which-key                   [on-screen keybinding]
 
-
-
-
 return {
   --  Astrotheme [theme]
   --  https://github.com/AstroNvim/astrotheme
   {
     "AstroNvim/astrotheme",
-    opts = { plugins = { ["dashboard-nvim"] = true } }
+    opts = { plugins = { ["dashboard-nvim"] = true } },
   },
   -- Tokyo night [theme]
   -- https://github.com/folke/tokyonight.nvim
   {
     "folke/tokyonight.nvim",
-    opts = { plugins = { ["dashboard-nvim"] = true } }
+    opts = { plugins = { ["dashboard-nvim"] = true } },
   },
-
-
 
   --  Alpha-nvim [greeter]
   --  https://github.com/goolord/alpha-nvim
@@ -42,7 +36,7 @@ return {
     cmd = "Alpha",
     -- setup header and buttonts
     opts = function()
-      local dashboard = require 'alpha.themes.dashboard'
+      local dashboard = require "alpha.themes.dashboard"
 
       -- Header
       -- dashboard.section.header.val = {
@@ -89,21 +83,21 @@ return {
         [[/' _ `\/\ \/\ \\/\ \ /' __` __`\  ]],
         [[/\ \/\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
         [[\ \_\ \_\ \___/  \ \_\ \_\ \_\ \_\]],
-        [[ \/_/\/_/\/__/    \/_/\/_/\/_/\/_/]]
+        [[ \/_/\/_/\/__/    \/_/\/_/\/_/\/_/]],
       }
 
       dashboard.section.header.opts.hl = "DashboardHeader"
-      vim.cmd("highlight DashboardHeader guifg=#F7778F")
+      vim.cmd "highlight DashboardHeader guifg=#F7778F"
 
       -- Buttons
       dashboard.section.buttons.val = {
-        dashboard.button("n", "📄 New     ", ':ene<CR>'),
-        dashboard.button("e", "🌺 Recent  ", ':Telescope oldfiles<CR>'),
-        dashboard.button("r", "🐍 Ranger  ", ':Ranger<CR>'),
-        dashboard.button("s", "🔎 Sessions", ':SessionManager! load_session<CR>'),
-        dashboard.button("p", "💼 Projects", ':Telescope projects<CR>'),
+        dashboard.button("n", "📄 New     ", "<cmd>ene<CR>"),
+        dashboard.button("e", "🌺 Recent  ", "<cmd>Telescope oldfiles<CR>"),
+        dashboard.button("r", "🐍 Ranger  ", "<cmd>RnvimrToggle<CR>"),
+        dashboard.button("s", "🔎 Sessions", "<cmd>SessionManager! load_session<CR>"),
+        dashboard.button("p", "💼 Projects", "<cmd>Telescope projects<CR>"),
         dashboard.button("", ""),
-        dashboard.button("q", "   Quit", ':exit<CR>'),
+        dashboard.button("q", "   Quit", ":exit<CR>"),
         --  --button("LDR f '", "  Bookmarks  "),
       }
 
@@ -125,22 +119,20 @@ return {
         callback = function()
           local stats = require("lazy").stats()
           local ms = math.floor(stats.startuptime * 100 + 0.5) / 100
-          opts.section.footer.val =
-          {
-            " ", " ", " ",
+          opts.section.footer.val = {
+            " ",
+            " ",
+            " ",
             "Loaded " .. stats.count .. " plugins  in " .. ms .. "ms",
-            ".............................."
+            "..............................",
           }
           opts.section.footer.opts.hl = "DashboardFooter"
-          vim.cmd("highlight DashboardFooter guifg=#D29B68")
+          vim.cmd "highlight DashboardFooter guifg=#D29B68"
           pcall(vim.cmd.AlphaRedraw)
         end,
       })
     end,
   },
-
-
-
 
   --  [notifications]
   --  https://github.com/rcarriga/nvim-notify
@@ -156,8 +148,6 @@ return {
   },
   -- Telescope integration (:Telescope notify)
   { "nvim-telescope/telescope.nvim", opts = function() require("telescope").load_extension "notify" end },
-
-
 
   --  Code identation [guides]
   --  https://github.com/lukas-reineke/indent-blankline.nvim
@@ -180,6 +170,8 @@ return {
         "NvimTree",
         "neo-tree",
         "Trouble",
+        "ranger",
+        "rnvimr",
       },
       context_patterns = {
         "class",
@@ -210,8 +202,6 @@ return {
       show_current_context = true,
     },
   },
-
-
 
   --  [statusbar]
   --  https://github.com/rebelot/heirline.nvim
@@ -246,11 +236,12 @@ return {
           status.component.nav(),
           status.component.mode { surround = { separator = "right" } },
         },
-        winbar = {  -- winbar is where breadcrubms are displayed
+        winbar = {
+          -- winbar is where breadcrubms are displayed
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
           fallthrough = false,
           {
-            condition = function()  -- Condition to show breadcrumrs
+            condition = function() -- Condition to show breadcrumrs
               return not status.condition.is_active()
             end,
             status.component.separated_path(),
@@ -336,11 +327,12 @@ return {
         local DiagnosticHint = get_hlgroup("DiagnosticHint", { fg = C.bright_yellow, bg = C.dark_bg })
         local HeirlineInactive = get_hlgroup("HeirlineInactive", { bg = nil }).bg
             or status.hl.lualine_mode("inactive", C.dark_grey)
-        local HeirlineNormal = get_hlgroup("HeirlineNormal", { bg = nil }).bg or status.hl.lualine_mode("normal", C.blue)
-        local HeirlineInsert = get_hlgroup("HeirlineInsert", { bg = nil }).bg or
-            status.hl.lualine_mode("insert", C.green)
-        local HeirlineVisual = get_hlgroup("HeirlineVisual", { bg = nil }).bg or
-            status.hl.lualine_mode("visual", C.purple)
+        local HeirlineNormal = get_hlgroup("HeirlineNormal", { bg = nil }).bg
+            or status.hl.lualine_mode("normal", C.blue)
+        local HeirlineInsert = get_hlgroup("HeirlineInsert", { bg = nil }).bg
+            or status.hl.lualine_mode("insert", C.green)
+        local HeirlineVisual = get_hlgroup("HeirlineVisual", { bg = nil }).bg
+            or status.hl.lualine_mode("visual", C.purple)
         local HeirlineReplace = get_hlgroup("HeirlineReplace", { bg = nil }).bg
             or status.hl.lualine_mode("replace", C.bright_red)
         local HeirlineCommand = get_hlgroup("HeirlineCommand", { bg = nil }).bg
@@ -429,11 +421,8 @@ return {
         desc = "Refresh heirline colors",
         callback = function() require("heirline.utils").on_colorscheme(setup_colors()) end,
       })
-    end
+    end,
   },
-
-
-
 
   --  Telescope [search] + [search backend] dependency
   --  https://github.com/nvim-telescope/telescope.nvim
@@ -485,11 +474,8 @@ return {
       local utils = require "base.utils"
       local conditional_func = utils.conditional_func
       conditional_func(telescope.load_extension, utils.is_available "telescope-fzf-native.nvim", "fzf")
-    end
+    end,
   },
-
-
-
 
   --  [window-dimming]
   --  https://github.com/mrjones2014/smart-splits.nvim
@@ -497,9 +483,6 @@ return {
     "mrjones2014/smart-splits.nvim",
     opts = { ignored_filetypes = { "nofile", "quickfix", "qf", "prompt" }, ignored_buftypes = { "nofile" } },
   },
-
-
-
 
   --  [better ui elements]
   --  https://github.com/stevearc/dressing.nvim
@@ -517,9 +500,6 @@ return {
       },
     },
   },
-
-
-
 
   --  UI icons [icons]
   --  https://github.com/nvim-tree/nvim-web-devicons
@@ -544,9 +524,6 @@ return {
       },
     },
   },
-
-
-
 
   --  LSP icons [icons]
   --  https://github.com/onsails/lspkind.nvim
@@ -580,8 +557,17 @@ return {
     end,
   },
 
-
-
+  {
+    "petertriho/nvim-scrollbar",
+    opts = {
+      handlers = {
+        gitsigns = require("base.utils").is_available "gitsigns",
+        search = require("base.utils").is_available "hlslens",
+        ale = require("base.utils").is_available "ale",
+      },
+    },
+    event = "User BaseFile",
+  },
 
   --  [on-screen keybindings]
   --  https://github.com/folke/which-key.nvim
@@ -597,8 +583,4 @@ return {
       require("base.utils").which_key_register()
     end,
   },
-
-
-
-
 }
