@@ -297,7 +297,6 @@ end
 
 
 
-
 -- 15.  Auto reload.
 autocmd({ "BufWritePost" }, {
   desc = "When writing a buffer, :NvimReload if the buffer is a config file.",
