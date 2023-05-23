@@ -8,6 +8,13 @@ git clone --depth 1 git@github.com:Zeioth/NormalNVim.git ~/.config/nvim
 nvim
 ```
 
+## System dependencies
+```sh
+pynvim       # Necessary for Rnvimr.
+yarn npm     # Necessary for most formatters and parsers.
+```
+
+
 ## Distro features
 
 * 😴 Lazy: Plugins are loaded lazily, providing super fast startup times.
