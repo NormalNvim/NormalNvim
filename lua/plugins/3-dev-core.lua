@@ -82,8 +82,6 @@ return {
 
 
 
-
-
   --  LSP -------------------------------------------------------------------
   --  Schema Store [lsp schema manager]
   --  https://github.com/b0o/SchemaStore.nvim
@@ -308,6 +306,8 @@ return {
             ["<PageDown>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select, count=8 },
             ["<C-PageUp>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select, count=16 },
             ["<C-PageDown>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select, count=16 },
+            ["<S-PageUp>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select, count=16 },
+            ["<S-PageDown>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select, count=16 },
             ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
             ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select},
             ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
