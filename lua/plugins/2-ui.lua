@@ -273,11 +273,11 @@ return {
             hl = { bg = "tabline_bg" },
           },
           status.heirline.make_buflist(status.component.tabline_file_info()), -- component for each buffer tab
-          status.component.fill { hl = { bg = "tabline_bg" } },               -- fill the rest of the tabline with background color
+          status.component.fill { hl = { bg = "tabline_bg" } }, -- fill the rest of the tabline with background color
           {
             -- tab list
             condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
-            status.heirline.make_tablist {                                        -- component for each tab
+            status.heirline.make_tablist { -- component for each tab
               provider = status.provider.tabnr(),
               hl = function(self) return status.hl.get_attributes(status.heirline.tab_type(self, "tab"), true) end,
             },
@@ -326,19 +326,19 @@ return {
         local DiagnosticInfo = get_hlgroup("DiagnosticInfo", { fg = C.white, bg = C.dark_bg })
         local DiagnosticHint = get_hlgroup("DiagnosticHint", { fg = C.bright_yellow, bg = C.dark_bg })
         local HeirlineInactive = get_hlgroup("HeirlineInactive", { bg = nil }).bg
-            or status.hl.lualine_mode("inactive", C.dark_grey)
+          or status.hl.lualine_mode("inactive", C.dark_grey)
         local HeirlineNormal = get_hlgroup("HeirlineNormal", { bg = nil }).bg
-            or status.hl.lualine_mode("normal", C.blue)
+          or status.hl.lualine_mode("normal", C.blue)
         local HeirlineInsert = get_hlgroup("HeirlineInsert", { bg = nil }).bg
-            or status.hl.lualine_mode("insert", C.green)
+          or status.hl.lualine_mode("insert", C.green)
         local HeirlineVisual = get_hlgroup("HeirlineVisual", { bg = nil }).bg
-            or status.hl.lualine_mode("visual", C.purple)
+          or status.hl.lualine_mode("visual", C.purple)
         local HeirlineReplace = get_hlgroup("HeirlineReplace", { bg = nil }).bg
-            or status.hl.lualine_mode("replace", C.bright_red)
+          or status.hl.lualine_mode("replace", C.bright_red)
         local HeirlineCommand = get_hlgroup("HeirlineCommand", { bg = nil }).bg
-            or status.hl.lualine_mode("command", C.bright_yellow)
+          or status.hl.lualine_mode("command", C.bright_yellow)
         local HeirlineTerminal = get_hlgroup("HeirlineTerminal", { bg = nil }).bg
-            or status.hl.lualine_mode("insert", HeirlineInsert)
+          or status.hl.lualine_mode("insert", HeirlineInsert)
 
         local colors = {
           close_fg = Error.fg,
@@ -567,6 +567,45 @@ return {
       },
     },
     event = "User BaseFile",
+  },
+
+  {
+    "echasnovski/mini.animate",
+    event = "VeryLazy",
+    -- enabled = false,
+    opts = function()
+      -- don't use animate when scrolling with the mouse
+      local mouse_scrolled = false
+      for _, scroll in ipairs { "Up", "Down" } do
+        local key = "<ScrollWheel" .. scroll .. ">"
+        vim.keymap.set({ "", "i" }, key, function()
+          mouse_scrolled = true
+          return key
+        end, { expr = true })
+      end
+
+      local animate = require "mini.animate"
+      return {
+        resize = {
+          timing = animate.gen_timing.linear { duration = 25, unit = "total" },
+        },
+        scroll = {
+          timing = animate.gen_timing.linear { duration = 37, unit = "total" },
+          subscroll = animate.gen_subscroll.equal {
+            predicate = function(total_scroll)
+              if mouse_scrolled then
+                mouse_scrolled = false
+                return false
+              end
+              return total_scroll > 1
+            end,
+          },
+        },
+        cursor = {
+          timing = animate.gen_timing.linear { duration = 20, unit = "total" },
+        },
+      }
+    end,
   },
 
   --  [on-screen keybindings]
