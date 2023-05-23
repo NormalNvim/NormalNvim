@@ -1,7 +1,6 @@
 -- Dev
 -- Things you actively use for coding.
 
-
 --    Sections:
 --       ## COMMENTS
 --       -> comment.nvim                   [adv. comments]
@@ -23,8 +22,9 @@
 --       ## EXTRA
 --       -> guess-indent                   [guess-indent]
 --       -> neural                         [chatgpt code generator]
-
-
+--
+--       -> markdown-preview.nvim          [markdown previewer]
+--       -> markmap                        [markdown mindmap]
 
 return {
   --  COMMENTS ----------------------------------------------------------------
@@ -42,7 +42,6 @@ return {
     end,
   },
 
-
   --  SNIPPETS ----------------------------------------------------------------
   --  Vim Snippets engine  [snippet engine] + [snippet templates]
   --  https://github.com/L3MON4D3/LuaSnip
@@ -52,12 +51,12 @@ return {
     dependencies = { "rafamadriz/friendly-snippets" },
     config = function(_, opts)
       if opts then require("luasnip").config.setup(opts) end
-      vim.tbl_map(function(type) require("luasnip.loaders.from_" .. type).lazy_load() end, { "vscode", "snipmate", "lua" })
+      vim.tbl_map(
+        function(type) require("luasnip.loaders.from_" .. type).lazy_load() end,
+        { "vscode", "snipmate", "lua" }
+      )
     end,
   },
-
-
-
 
   --  GIT ---------------------------------------------------------------------
   --  Git signs [git hunks]
@@ -78,23 +77,30 @@ return {
     },
   },
 
-
   --  Git fugitive mergetool + [git commands]
   --  https://github.com/lewis6991/gitsigns.nvim
+  {
     "https://github.com/tpope/vim-fugitive",
-     enabled = vim.fn.executable "git" == 1,
-     cmd = {
-       "Gvdiffsplit", "Gdiffsplit", "Gedit", "Gsplit",
-       "Gread", "Gwrite", "Ggrep", "GMove", "GRename", "GDelete", "GRemove",
-       "GBrowse", "Git", "Gstatus"
-     },
-     event = "User BaseGitFile",
-     init = function()
-       vim.g.fugitive_no_maps = 1
-     end,
+    enabled = vim.fn.executable "git" == 1,
+    cmd = {
+      "Gvdiffsplit",
+      "Gdiffsplit",
+      "Gedit",
+      "Gsplit",
+      "Gread",
+      "Gwrite",
+      "Ggrep",
+      "GMove",
+      "GRename",
+      "GDelete",
+      "GRemove",
+      "GBrowse",
+      "Git",
+      "Gstatus",
+    },
+    event = "User BaseGitFile",
+    init = function() vim.g.fugitive_no_maps = 1 end,
   },
-
-
 
   --  DEBUGGER ----------------------------------------------------------------
   --  Debugger alternative to vim-inspector [debugger]
@@ -124,46 +130,40 @@ return {
     event = "User BaseFile",
   },
 
-
-
-
   --  ANALYZER ----------------------------------------------------------------
   --  [code analyzer]
   --  https://github.com/stevearc/aerial.nvim
   {
-  "stevearc/aerial.nvim",
-  event = "User BaseFile",
-  cmd = {"AerialToggle", "AerialOpen", "AerialNavOpen", "AerialInfo", "AerialClose"},
-  opts = {
-    open_automatic = false, -- Open if the buffer is compatible
-    attach_mode = "global",
-    backends = { "lsp", "treesitter", "markdown", "man" },
-    layout = { min_width = 28 },
-    show_guides = true,
-    filter_kind = false,
-    guides = {
-      mid_item = "├ ",
-      last_item = "└ ",
-      nested_top = "│ ",
-      whitespace = "  ",
-    },
-    keymaps = {
-      ["[y"] = "actions.prev",
-      ["]y"] = "actions.next",
-      ["[Y"] = "actions.prev_up",
-      ["]Y"] = "actions.next_up",
-      ["{"] = false,
-      ["}"] = false,
-      ["[["] = false,
-      ["]]"] = false,
+    "stevearc/aerial.nvim",
+    event = "User BaseFile",
+    cmd = { "AerialToggle", "AerialOpen", "AerialNavOpen", "AerialInfo", "AerialClose" },
+    opts = {
+      open_automatic = false, -- Open if the buffer is compatible
+      attach_mode = "global",
+      backends = { "lsp", "treesitter", "markdown", "man" },
+      layout = { min_width = 28 },
+      show_guides = true,
+      filter_kind = false,
+      guides = {
+        mid_item = "├ ",
+        last_item = "└ ",
+        nested_top = "│ ",
+        whitespace = "  ",
+      },
+      keymaps = {
+        ["[y"] = "actions.prev",
+        ["]y"] = "actions.next",
+        ["[Y"] = "actions.prev_up",
+        ["]Y"] = "actions.next_up",
+        ["{"] = false,
+        ["}"] = false,
+        ["[["] = false,
+        ["]]"] = false,
+      },
     },
   },
-},
--- Telescope integration (:Telescope aerial)
-{ "nvim-telescope/telescope.nvim", opts = function() require("telescope").load_extension "aerial" end },
-
-
-
+  -- Telescope integration (:Telescope aerial)
+  { "nvim-telescope/telescope.nvim", opts = function() require("telescope").load_extension "aerial" end },
 
   --  EXTRA ----------------------------------------------------------------
   --  [guess-indent]
@@ -177,26 +177,30 @@ return {
     end,
   },
 
-
-
-
   --  neural [chatgpt code generator]
   --  https://github.com/dense-analysis/neural
   {
     "dense-analysis/neural",
     cmd = { "Neural" },
-    config = function(_, opts)
-      require('neural').setup({
-          source = {
-              openai = {
-                  api_key = vim.env.OPENAI_API_KEY,
-              },
+    config = function()
+      require("neural").setup {
+        source = {
+          openai = {
+            api_key = vim.env.OPENAI_API_KEY,
           },
-      })
+        },
+        ui = {
+          prompt_icon = ">",
+        },
+      }
     end,
   },
 
-
-
-
+  --  [markdown previewer]
+  --  https://github.com/iamcco/markdown-preview.nvim
+  {
+    "iamcco/markdown-preview.nvim",
+    build = "cd app && npm install",
+    ft = "markdown",
+  },
 }
