@@ -10,7 +10,8 @@ nvim
 
 ## System dependencies
 ```sh
-pynvim  # Necessary for Rnvimr.
+pynvim       # Necessary for Rnvimr.
+yarn npm     # Necessary for most formatters and parsers.
 ```
 
 
