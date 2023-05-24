@@ -13,6 +13,8 @@
 --       -> dressing.nvim               [better ui elements]
 --       -> nvim-web-devicons           [icons | ui]
 --       -> lspkind.nvim                [icons | lsp]
+--       -> nvim-scrollbar              [scrollbar]
+--       -> mini.animate                [animations]
 --       -> which-key                   [on-screen keybinding]
 
 return {
@@ -22,11 +24,21 @@ return {
     "AstroNvim/astrotheme",
     opts = { plugins = { ["dashboard-nvim"] = true } },
   },
+
   -- Tokyo night [theme]
   -- https://github.com/folke/tokyonight.nvim
   {
     "folke/tokyonight.nvim",
-    opts = { plugins = { ["dashboard-nvim"] = true } },
+    opts = {
+      plugins = { ["dashboard-nvim"] = true },
+      dim_inactive = true, -- dims inactive windows
+
+      -- Colors can be overrided
+      on_colors = function(colors)
+        colors.hint = colors.orange
+        colors.error = "#ff0000"
+      end,
+    },
   },
 
   --  Alpha-nvim [greeter]
@@ -557,6 +569,8 @@ return {
     end,
   },
 
+  --  nvim-scrollbar [scrollbar]
+  --  https://github.com/petertriho/nvim-scrollbar
   {
     "petertriho/nvim-scrollbar",
     opts = {
@@ -569,6 +583,8 @@ return {
     event = "User BaseFile",
   },
 
+  --  mini.animate [animations]
+  --  https://github.com/echasnovski/mini.animate
   {
     "echasnovski/mini.animate",
     event = "VeryLazy",
@@ -587,10 +603,10 @@ return {
       local animate = require "mini.animate"
       return {
         resize = {
-          timing = animate.gen_timing.linear { duration = 25, unit = "total" },
+          timing = animate.gen_timing.linear { duration = 33, unit = "total" },
         },
         scroll = {
-          timing = animate.gen_timing.linear { duration = 37, unit = "total" },
+          timing = animate.gen_timing.linear { duration = 50, unit = "total" },
           subscroll = animate.gen_subscroll.equal {
             predicate = function(total_scroll)
               if mouse_scrolled then
@@ -602,7 +618,7 @@ return {
           },
         },
         cursor = {
-          timing = animate.gen_timing.linear { duration = 20, unit = "total" },
+          timing = animate.gen_timing.linear { duration = 26, unit = "total" },
         },
       }
     end,
