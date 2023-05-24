@@ -22,6 +22,10 @@
 --       ## ANALYZER
 --       -> aerial.nvim                    [code analyzer]
 
+--       ## CODE DOCUMENTATION
+--       -> vim-doxigen                    [general    doc generator]
+--       -> vim-typedoc                    [typescript doc generator]
+
 --       ## EXTRA
 --       -> guess-indent                   [guess-indent]
 --       -> neural                         [chatgpt code generator]
@@ -160,7 +164,6 @@ return {
   --    :TestStopBlock  -- Stop the nearest test to the cursor.
   --    :TestRunFile    -- Run all tests in the file.
   --    :TestDebugBlock -- Debug the nearest test under the cursor using dap
-  --    :TestDebugBlock -- Debug the nearest test under the cursor using dap
   --
   --  All this commands are meant to be executed in a test file.
   --  You can find them on ../base/3-autocmds.lua
@@ -175,8 +178,8 @@ return {
     "nvim-neotest/neotest",
     cmd = {             -- All this commands are meant to run in a test file
       "TestRunBlock",   -- Run the nearest test to the cursor.
-      "TestStopBlock",  -- Stop the test under the cursor
-      "TestDebugBlock", -- Show errors in the nearest test to the cursor.
+      "TestStopBlock",  -- Stop the test to the cursor.
+      "TestDebugBlock", -- Debug the nearest test under the cursor using dap.
       "TestRunFile",    -- Run all tests in the file.
     },
     config = function()
@@ -287,6 +290,40 @@ return {
     opts = function() require("telescope").load_extension "aerial" end,
   },
 
+  --  CODE DOCUMENTATION ----------------------------------------------------------------
+  --  vim-doxygen
+  --  https://github.com/Zeioth/vim-doxygen
+  {
+    "Zeioth/vim-doxygen",
+    tf = {
+      "c",
+      "cpp",
+      "cs",
+      "python",
+      "d",
+      "fortran",
+      "java",
+      "perl",
+      "vhdl",
+      "objc",
+      "php",
+    },
+    cmd = {
+      "TypedocOpen",
+      "TypedocRegen",
+    },
+  },
+  --  vim-typedoc
+  --  https://github.com/Zeioth/vim-typedoc
+  {
+    "Zeioth/vim-doxygen",
+    tf = { "typescript" },
+    cmd = {
+      "DoxygenOpen",
+      "DoxygenRegen",
+    },
+  },
+
   --  EXTRA ----------------------------------------------------------------
   --  [guess-indent]
   --  https://github.com/NMAC427/guess-indent.nvim
@@ -323,9 +360,15 @@ return {
 
   --  [markdown previewer]
   --  https://github.com/iamcco/markdown-preview.nvim
+  --  Note: If you change the build command, wipe ~/.local/data/nvim/lazy
   {
     "iamcco/markdown-preview.nvim",
-    build = "cd app && npm install",
     ft = "markdown",
+    cmd = {
+      "MarkdownPreview",
+      "MarkdownPreviewStop",
+      "MarkdownPreviewToggle",
+    },
+    build = "cd app && npm install",
   },
 }
