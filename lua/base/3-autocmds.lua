@@ -370,7 +370,7 @@ cmd(
   { desc = "Restores '~/.config/nvim' to the last rollbacked state." }
 )
 cmd(
-  "NvimLockPluginVersions",
+  "NvimFreezePluginVersions",
   function() require("base.utils.updater").generate_snapshot(true) end,
   { desc = "Lock package versions (only lazy, not mason)." }
 )
@@ -390,7 +390,7 @@ cmd(
   { desc = "Reload Nvim without closing it (Experimental)" }
 )
 
--- . Extra commands
+-- Extra commands
 ----------------------------------------------
 
 -- Change working directory
@@ -404,57 +404,6 @@ cmd("Swd", function()
   vim.cmd ":cd %:p:h"
   vim.cmd ":pwd"
 end, { desc = "cd current file's directory" })
-
--- Neotest commands
-cmd(
-  "TestRunBlock",
-  function() require("neotest").run.run() end,
-  { desc = "Run the nearest test under the cursor" }
-)
-
-cmd(
-  "TestStopBlock",
-  function() require("neotest").run.stop() end,
-  { desc = "Stopts the nearest test under the cursor" }
-)
-
-cmd(
-  "TestRunFile",
-  function() require("neotest").run.run(vim.fn.expand "%") end,
-  { desc = "Run all tests in the test file" }
-)
-
-cmd(
-  "TestDebugBlock",
-  function() require("neotest").run.run { strategy = "dap" } end,
-  { desc = "Debug the nearest test under the cursor using dap" }
-)
-
--- Run e2e for nodejs projects (Customize it)
-cmd("E2eOpenInToggleTerm", function()
-  vim.cmd ":ProjectRoot" -- cd the project root (requires project.nvim)
-  vim.cmd ":TermExec yarn run e2e" -- Conventional way to call e2e in nodejs     (requires ToggleTerm)
-end, { desc = "cd the project root and run yarn run e2e" })
-cmd(
-  "NvimLockPluginVersions",
-  function() require("base.utils.updater").generate_snapshot(true) end,
-  { desc = "Lock package versions (only lazy, not mason)." }
-)
-cmd(
-  "NvimUpdate",
-  function() require("base.utils.updater").update() end,
-  { desc = "Update Nvim distro" }
-)
-cmd(
-  "NvimVersion",
-  function() require("base.utils.updater").version() end,
-  { desc = "Check Nvim distro Version" }
-)
-cmd(
-  "NvimReload",
-  function() require("base.utils").reload() end,
-  { desc = "Reload Nvim without closing it (Experimental)" }
-)
 
 -- Neotest commands
 -- Neotest doesn't implement commands, so we do it here
@@ -494,18 +443,3 @@ cmd("TestNodejsE2e", function()
   vim.cmd ":ProjectRoot" -- cd the project root (requires project.nvim)
   vim.cmd ":TermExec npm run e2e" -- Conventional way to call e2e in nodejs (requires ToggleTerm)
 end, { desc = "Run e2e tests for the current nodejs project" })
-
--- Extra commands
-----------------------------------------------
-
--- Change working directory
-cmd("Cwd", function()
-  vim.cmd ":cd %:p:h"
-  vim.cmd ":pwd"
-end, { desc = "cd current file's directory" })
-
--- Set working directory (alias)
-cmd("Swd", function()
-  vim.cmd ":cd %:p:h"
-  vim.cmd ":pwd"
-end, { desc = "cd current file's directory" })
