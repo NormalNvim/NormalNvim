@@ -16,15 +16,23 @@
 --       ## DEBUGGER
 --       -> nvim-dap                       [debugger]
 
+--       ## TESTING
+--       -> neotest.nvim                   [unit testing]
+
 --       ## ANALYZER
 --       -> aerial.nvim                    [code analyzer]
 
 --       ## EXTRA
 --       -> guess-indent                   [guess-indent]
 --       -> neural                         [chatgpt code generator]
---
 --       -> markdown-preview.nvim          [markdown previewer]
 --       -> markmap                        [markdown mindmap]
+
+--       ## NOT INSTALLED
+--       -> distant.nvim                   [ssh to edit in a remove machine]
+
+
+
 
 return {
   --  COMMENTS ----------------------------------------------------------------
@@ -37,8 +45,12 @@ return {
       { "gb", mode = { "n", "v" }, desc = "Comment toggle blockwise" },
     },
     opts = function()
-      local commentstring_avail, commentstring = pcall(require, "ts_context_commentstring.integrations.comment_nvim")
-      return commentstring_avail and commentstring and { pre_hook = commentstring.create_pre_hook() } or {}
+      local commentstring_avail, commentstring =
+          pcall(require, "ts_context_commentstring.integrations.comment_nvim")
+      return commentstring_avail
+          and commentstring
+          and { pre_hook = commentstring.create_pre_hook() }
+          or {}
     end,
   },
 
@@ -120,14 +132,107 @@ return {
         opts = { floating = { border = "rounded" } },
         config = function(_, opts)
           local dap, dapui = require "dap", require "dapui"
-          dap.listeners.after.event_initialized["dapui_config"] = function() dapui.open() end
-          dap.listeners.before.event_terminated["dapui_config"] = function() dapui.close() end
-          dap.listeners.before.event_exited["dapui_config"] = function() dapui.close() end
+          dap.listeners.after.event_initialized["dapui_config"] = function(
+          )
+            dapui.open()
+          end
+          dap.listeners.before.event_terminated["dapui_config"] = function(
+          )
+            dapui.close()
+          end
+          dap.listeners.before.event_exited["dapui_config"] = function()
+            dapui.close()
+          end
           dapui.setup(opts)
         end,
       },
     },
     event = "User BaseFile",
+  },
+
+  --  TESTING ----------------------------------------------------------------
+  --  Run tests inside of nvim [unit testing]
+  --  https://github.com/nvim-neotest/neotest
+  --
+  --  MANUAL:
+  --
+  --  -- Unit testing:
+  --
+  --  -- e2e testing
+  --  This is not supported by neotest.
+  --  For e2e frameworks like cypress, you will normally run the framework GUI.
+  --  But if you prefer to run a e2e framework inside nvim,
+  --  check the next command in ../base/3-autocmds.lua:
+  --
+  --  :E2eOpenInToggleTerm
+  --
+  "nvim-neotest/neotest",
+    cmd = {
+      require("neotest").run.run(),
+      require("neotest").run.run(vim.fn.expand "%"),
+      require("neotest").run.run { strategy = "dap" },
+      require("neotest").run.stop(),
+      require("neotest").run.attach(),
+    },
+  config = function()
+    -- get neotest namespace (api call creates or returns namespace)
+    local neotest_ns = vim.api.nvim_create_namespace "neotest"
+    vim.diagnostic.config({
+      virtual_text = {
+        format = function(diagnostic)
+          local message = diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
+          return message
+        end,
+      },
+    }, neotest_ns)
+    require("neotest").setup {
+      -- your neotest config here
+      adapters = {
+        require "neotest-dotnet",
+        require "neotest-python",
+        require "neotest-rust",
+        require "neotest-go",
+        require "neotest-jest",
+        require "neotest-minitest",
+        require "neotest-rspec",
+        require "neotest-vitest",
+        require "neotest-testhat",
+        require "neotest-phpunit",
+        require "neotest-pest",
+      },
+
+    }
+  end,
+  dependencies = {
+    "Issafalcon/neotest-dotnet",
+    "nvim-neotest/neotest-python",
+    "rouge8/neotest-rust",
+    "nvim-neotest/neotest-go",
+    "nvim-neotest/neotest-jest",
+    "zidhuss/neotest-minitest",
+    "olimorris/neotest-rspec",
+    "marilari88/neotest-vitest",
+    "shunsambongi/neotest-testthat",
+    "olimorris/neotest-phpunit",
+    "theutz/neotest-pest",
+    },
+  },
+
+  --  Shows a float panel with the [code coverage]
+  --  https://github.com/andythigpen/nvim-coverage
+  {
+    "andythigpen/nvim-coverage",
+    cmd = {
+      "Coverage",
+      "CoverageLoad",
+      "CoverageLoadLcov",
+      "CoverageShow",
+      "CoverageHide",
+      "CoverageToggle",
+      "CoverageClear",
+      "CoverageSummary"
+    },
+    requires = { "nvim-lua/plenary.nvim" },
   },
 
   --  ANALYZER ----------------------------------------------------------------
@@ -136,7 +241,13 @@ return {
   {
     "stevearc/aerial.nvim",
     event = "User BaseFile",
-    cmd = { "AerialToggle", "AerialOpen", "AerialNavOpen", "AerialInfo", "AerialClose" },
+    cmd = {
+      "AerialToggle",
+      "AerialOpen",
+      "AerialNavOpen",
+      "AerialInfo",
+      "AerialClose",
+    },
     opts = {
       open_automatic = false, -- Open if the buffer is compatible
       attach_mode = "global",
@@ -163,7 +274,10 @@ return {
     },
   },
   -- Telescope integration (:Telescope aerial)
-  { "nvim-telescope/telescope.nvim", opts = function() require("telescope").load_extension "aerial" end },
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = function() require("telescope").load_extension "aerial" end,
+  },
 
   --  EXTRA ----------------------------------------------------------------
   --  [guess-indent]
@@ -173,7 +287,10 @@ return {
     event = "User BaseFile",
     config = function(_, opts)
       require("guess-indent").setup(opts)
-      vim.cmd.lua { args = { "require('guess-indent').set_from_buffer('auto_cmd')" }, mods = { silent = true } }
+      vim.cmd.lua {
+        args = { "require('guess-indent').set_from_buffer('auto_cmd')" },
+        mods = { silent = true },
+      }
     end,
   },
 
