@@ -29,7 +29,8 @@ return {
     cmd = { "Ranger" },
     init = function() -- For this plugin has to be init
       vim.g.ranger_terminal = "foot"
-      vim.g.ranger_command_override = 'LC_ALL=es_ES.UTF8 TERMCMD="foot -a "scratchpad"" ranger'
+      vim.g.ranger_command_override =
+      'LC_ALL=es_ES.UTF8 TERMCMD="foot -a "scratchpad"" ranger'
       vim.g.ranger_map_keys = 0
     end,
   },
@@ -106,17 +107,29 @@ return {
   {
     "ahmedkhalf/project.nvim",
     event = "VeryLazy",
+    cmd = "ProjectRoot",
     opts = {
       -- How to find root directory
-      patterns = { ".git", "_darcs", ".hg", ".bzr", ".svn", "Makefile", "package.json" },
-      silent_chdir = false,
+      patterns = {
+        ".git",
+        "_darcs",
+        ".hg",
+        ".bzr",
+        ".svn",
+        "Makefile",
+        "package.json",
+      },
+      silent_chdir = true,
       manual_mode = false,
       --ignore_lsp = { "lua_ls" },
     },
     config = function(_, opts) require("project_nvim").setup(opts) end,
   },
   -- Telescope integration (:Telescope projects)
-  { "nvim-telescope/telescope.nvim", opts = function() require("telescope").load_extension "projects" end },
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = function() require("telescope").load_extension "projects" end,
+  },
 
   -- trim.nvim [auto trim spaces]
   -- https://github.com/cappyzawa/trim.nvim
@@ -154,7 +167,10 @@ return {
     -- }
   },
   -- Telescope integration (:Telescope projects)
-  { "nvim-telescope/telescope.nvim", opts = function() require("telescope").load_extension "undo" end },
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = function() require("telescope").load_extension "undo" end,
+  },
 
   -- easier window selection  [windows]
   -- https://github.com/s1n7ax/nvim-window-picker
@@ -204,8 +220,12 @@ return {
     "stevearc/resession.nvim",
     enabled = vim.g.resession_enabled == true,
     opts = {
-      buf_filter = function(bufnr) return require("base.utils.buffer").is_valid(bufnr) end,
-      tab_buf_filter = function(tabpage, bufnr) return vim.tbl_contains(vim.t[tabpage].bufs, bufnr) end,
+      buf_filter = function(bufnr)
+        return require("base.utils.buffer").is_valid(bufnr)
+      end,
+      tab_buf_filter = function(tabpage, bufnr)
+        return vim.tbl_contains(vim.t[tabpage].bufs, bufnr)
+      end,
       extensions = { base = {} },
     },
   },
@@ -322,10 +342,19 @@ return {
         winbar = true,
         content_layout = "center",
         sources = {
-          { source = "filesystem", display_name = get_icon "FolderClosed" .. " File" },
-          { source = "buffers", display_name = get_icon "DefaultFile" .. " Bufs" },
+          {
+            source = "filesystem",
+            display_name = get_icon "FolderClosed" .. " File",
+          },
+          {
+            source = "buffers",
+            display_name = get_icon "DefaultFile" .. " Bufs",
+          },
           { source = "git_status", display_name = get_icon "Git" .. " Git" },
-          { source = "diagnostics", display_name = get_icon "Diagnostic" .. " Diagnostic" },
+          {
+            source = "diagnostics",
+            display_name = get_icon "Diagnostic" .. " Diagnostic",
+          },
         },
       },
       default_component_configs = {
@@ -352,13 +381,21 @@ return {
         },
       },
       commands = {
-        system_open = function(state) require("base.utils").system_open(state.tree:get_node():get_id()) end,
+        system_open = function(state)
+          require("base.utils").system_open(state.tree:get_node():get_id())
+        end,
         parent_or_close = function(state)
           local node = state.tree:get_node()
-          if (node.type == "directory" or node:has_children()) and node:is_expanded() then
+          if
+              (node.type == "directory" or node:has_children())
+              and node:is_expanded()
+          then
             state.commands.toggle_node(state)
           else
-            require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
+            require("neo-tree.ui.renderer").focus_node(
+              state,
+              node:get_parent_id()
+            )
           end
         end,
         child_or_open = function(state)
@@ -366,8 +403,11 @@ return {
           if node.type == "directory" or node:has_children() then
             if not node:is_expanded() then -- if unexpanded, expand
               state.commands.toggle_node(state)
-            else -- if expanded and has children, seleect the next child
-              require("neo-tree.ui.renderer").focus_node(state, node:get_child_ids()[1])
+            else                           -- if expanded and has children, seleect the next child
+              require("neo-tree.ui.renderer").focus_node(
+                state,
+                node:get_child_ids()[1]
+              )
             end
           else -- if not a directory just open it
             state.commands.open(state)
@@ -382,7 +422,10 @@ return {
           local results = {
             e = { val = modify(filename, ":e"), msg = "Extension only" },
             f = { val = filename, msg = "Filename" },
-            F = { val = modify(filename, ":r"), msg = "Filename w/o extension" },
+            F = {
+              val = modify(filename, ":r"),
+              msg = "Filename w/o extension",
+            },
             h = { val = modify(filepath, ":~"), msg = "Path relative to Home" },
             p = { val = modify(filepath, ":."), msg = "Path relative to CWD" },
             P = { val = filepath, msg = "Absolute path" },
@@ -394,9 +437,9 @@ return {
           for i, result in pairs(results) do
             if result.val and result.val ~= "" then
               vim.list_extend(messages, {
-                { ("%s."):format(i), "Identifier" },
+                { ("%s."):format(i),           "Identifier" },
                 { (" %s: "):format(result.msg) },
-                { result.val, "String" },
+                { result.val,                  "String" },
                 { "\n" },
               })
             end
@@ -444,9 +487,15 @@ return {
           ["<space>"] = false, -- disable space until we figure out which-key disabling
           ["[b"] = "prev_source",
           ["]b"] = "next_source",
-          ["e"] = function() vim.api.nvim_exec("Neotree focus filesystem left", true) end,
-          ["b"] = function() vim.api.nvim_exec("Neotree focus buffers left", true) end,
-          ["g"] = function() vim.api.nvim_exec("Neotree focus git_status left", true) end,
+          ["e"] = function()
+            vim.api.nvim_exec("Neotree focus filesystem left", true)
+          end,
+          ["b"] = function()
+            vim.api.nvim_exec("Neotree focus buffers left", true)
+          end,
+          ["g"] = function()
+            vim.api.nvim_exec("Neotree focus git_status left", true)
+          end,
           o = "open",
           O = "system_open",
           h = "parent_or_close",
@@ -508,13 +557,32 @@ return {
         end
 
         return (filetype == "" or buftype == "nofile") and "indent" -- only use indent until a file is opened
-          or function(bufnr)
-            return require("ufo")
-              .getFolds(bufnr, "lsp")
-              :catch(function(err) return handleFallbackException(bufnr, err, "treesitter") end)
-              :catch(function(err) return handleFallbackException(bufnr, err, "indent") end)
-          end
+            or function(bufnr)
+              return require("ufo")
+                  .getFolds(bufnr, "lsp")
+                  :catch(
+                    function(err)
+                      return handleFallbackException(bufnr, err, "treesitter")
+                    end
+                  )
+                  :catch(
+                    function(err)
+                      return handleFallbackException(bufnr, err, "indent")
+                    end
+                  )
+            end
       end,
+    },
+  },
+
+  -- Lua
+  {
+    "folke/zen-mode.nvim",
+    cmd = "ZenMode",
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
     },
   },
 }
