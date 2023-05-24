@@ -14,6 +14,7 @@
 --       -> spectre.nvim           [search and replace in project]
 --       -> neotree file browser   [neotree]
 --       -> nvim-ufo               [folding mod]
+--       -> nvim-neoclip           [nvim clipboard]
 
 -- import custom icons
 local get_icon = require("base.utils").get_icon
@@ -29,8 +30,7 @@ return {
     cmd = { "Ranger" },
     init = function() -- For this plugin has to be init
       vim.g.ranger_terminal = "foot"
-      vim.g.ranger_command_override =
-      'LC_ALL=es_ES.UTF8 TERMCMD="foot -a "scratchpad"" ranger'
+      vim.g.ranger_command_override = 'LC_ALL=es_ES.UTF8 TERMCMD="foot -a "scratchpad"" ranger'
       vim.g.ranger_map_keys = 0
     end,
   },
@@ -220,12 +220,8 @@ return {
     "stevearc/resession.nvim",
     enabled = vim.g.resession_enabled == true,
     opts = {
-      buf_filter = function(bufnr)
-        return require("base.utils.buffer").is_valid(bufnr)
-      end,
-      tab_buf_filter = function(tabpage, bufnr)
-        return vim.tbl_contains(vim.t[tabpage].bufs, bufnr)
-      end,
+      buf_filter = function(bufnr) return require("base.utils.buffer").is_valid(bufnr) end,
+      tab_buf_filter = function(tabpage, bufnr) return vim.tbl_contains(vim.t[tabpage].bufs, bufnr) end,
       extensions = { base = {} },
     },
   },
@@ -381,21 +377,13 @@ return {
         },
       },
       commands = {
-        system_open = function(state)
-          require("base.utils").system_open(state.tree:get_node():get_id())
-        end,
+        system_open = function(state) require("base.utils").system_open(state.tree:get_node():get_id()) end,
         parent_or_close = function(state)
           local node = state.tree:get_node()
-          if
-              (node.type == "directory" or node:has_children())
-              and node:is_expanded()
-          then
+          if (node.type == "directory" or node:has_children()) and node:is_expanded() then
             state.commands.toggle_node(state)
           else
-            require("neo-tree.ui.renderer").focus_node(
-              state,
-              node:get_parent_id()
-            )
+            require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
           end
         end,
         child_or_open = function(state)
@@ -403,11 +391,8 @@ return {
           if node.type == "directory" or node:has_children() then
             if not node:is_expanded() then -- if unexpanded, expand
               state.commands.toggle_node(state)
-            else                           -- if expanded and has children, seleect the next child
-              require("neo-tree.ui.renderer").focus_node(
-                state,
-                node:get_child_ids()[1]
-              )
+            else -- if expanded and has children, seleect the next child
+              require("neo-tree.ui.renderer").focus_node(state, node:get_child_ids()[1])
             end
           else -- if not a directory just open it
             state.commands.open(state)
@@ -437,9 +422,9 @@ return {
           for i, result in pairs(results) do
             if result.val and result.val ~= "" then
               vim.list_extend(messages, {
-                { ("%s."):format(i),           "Identifier" },
+                { ("%s."):format(i), "Identifier" },
                 { (" %s: "):format(result.msg) },
-                { result.val,                  "String" },
+                { result.val, "String" },
                 { "\n" },
               })
             end
@@ -487,15 +472,9 @@ return {
           ["<space>"] = false, -- disable space until we figure out which-key disabling
           ["[b"] = "prev_source",
           ["]b"] = "next_source",
-          ["e"] = function()
-            vim.api.nvim_exec("Neotree focus filesystem left", true)
-          end,
-          ["b"] = function()
-            vim.api.nvim_exec("Neotree focus buffers left", true)
-          end,
-          ["g"] = function()
-            vim.api.nvim_exec("Neotree focus git_status left", true)
-          end,
+          ["e"] = function() vim.api.nvim_exec("Neotree focus filesystem left", true) end,
+          ["b"] = function() vim.api.nvim_exec("Neotree focus buffers left", true) end,
+          ["g"] = function() vim.api.nvim_exec("Neotree focus git_status left", true) end,
           o = "open",
           O = "system_open",
           h = "parent_or_close",
@@ -557,25 +536,18 @@ return {
         end
 
         return (filetype == "" or buftype == "nofile") and "indent" -- only use indent until a file is opened
-            or function(bufnr)
-              return require("ufo")
-                  .getFolds(bufnr, "lsp")
-                  :catch(
-                    function(err)
-                      return handleFallbackException(bufnr, err, "treesitter")
-                    end
-                  )
-                  :catch(
-                    function(err)
-                      return handleFallbackException(bufnr, err, "indent")
-                    end
-                  )
-            end
+          or function(bufnr)
+            return require("ufo")
+              .getFolds(bufnr, "lsp")
+              :catch(function(err) return handleFallbackException(bufnr, err, "treesitter") end)
+              :catch(function(err) return handleFallbackException(bufnr, err, "indent") end)
+          end
       end,
     },
   },
 
-  -- Lua
+  --  [zen mode]
+  --  https://github.com/folke/zen-mode.nvim
   {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
@@ -584,5 +556,24 @@ return {
       -- or leave it empty to use the default settings
       -- refer to the configuration section below
     },
+  },
+
+  --  nvim-neoclip [nvim clipboard]
+  --  https://github.com/AckslD/nvim-neoclip.lua
+  --  Registers are deleted between sessions
+  {
+    "AckslD/nvim-neoclip.lua",
+    cmd = { "Telescope neoclip", "Telescope macroscope" },
+    dependencies = { "nvim-telescope/telescope.nvim" },
+    opts = {},
+    config = function() require("neoclip").setup() end,
+  },
+  -- Telescope integration (:Telescope neoclip amd :Telescope macroscope)
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = function()
+      require("telescope").load_extension "neoclip"
+      require("telescope").load_extension "macroscope"
+    end,
   },
 }
