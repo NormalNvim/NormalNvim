@@ -38,6 +38,10 @@ Please before opening an issue, check [the AstroVim manual](https://neovim.io/do
 
 * **How do I disable the tabine?** You either ":set showtabline=0" or check the plugin heirline. Here is where implement the tab logic. Also check the ./lua/base/3-autocmds.lua and ./lua/base/utils/status.lua in case you wanna remove the code 100%.
 
+* **What scenarios are not covered by this distro?**
+  * **Kubernetes**: We do not provide a kubernetes plugin. There is not much neovim can do for you if you work with Kubernetes apart from the features provided by Mason (LSP, Hightighing, autocompletion..).
+  * **e2e testing**: We to not provide a e2e plugin. But we do provide the :E2eOpenInToggleTerm command you can customize on [/lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua).
+
 ## Credits
 Originally it took AstroVim as base. But implements [this VIM config](https://github.com/Zeioth/vim-zeioth-config). Code has been simplified while retaining its core features.
 
