@@ -27,7 +27,8 @@ local baseevent = utils.event
 --       -> 16. Disable right click contextual menu.
 --       -> 17. Nvim user events for file detection (BaseFile and BaseGitFile).
 --       -> 18. NVim updater commands.
---       -> .   Extra commands
+--       ->     Neotest commands
+--       ->     Extra commands
 
 --    command groups:
 
@@ -52,7 +53,7 @@ autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
       vim.t.bufs = bufs
     end
     vim.t.bufs =
-        vim.tbl_filter(require("base.utils.buffer").is_valid, vim.t.bufs)
+      vim.tbl_filter(require("base.utils.buffer").is_valid, vim.t.bufs)
     baseevent "BufsUpdated"
   end,
 })
@@ -75,7 +76,7 @@ autocmd("BufDelete", {
       end
     end
     vim.t.bufs =
-        vim.tbl_filter(require("base.utils.buffer").is_valid, vim.t.bufs)
+      vim.tbl_filter(require("base.utils.buffer").is_valid, vim.t.bufs)
     baseevent "BufsUpdated"
     vim.cmd.redrawtabline()
   end,
@@ -108,15 +109,15 @@ autocmd("BufWinEnter", {
   callback = function(event)
     if not vim.b[event.buf].view_activated then
       local filetype =
-          vim.api.nvim_get_option_value("filetype", { buf = event.buf })
+        vim.api.nvim_get_option_value("filetype", { buf = event.buf })
       local buftype =
-          vim.api.nvim_get_option_value("buftype", { buf = event.buf })
+        vim.api.nvim_get_option_value("buftype", { buf = event.buf })
       local ignore_filetypes = { "gitcommit", "gitrebase", "svg", "hgcommit" }
       if
-          buftype == ""
-          and filetype
-          and filetype ~= ""
-          and not vim.tbl_contains(ignore_filetypes, filetype)
+        buftype == ""
+        and filetype
+        and filetype ~= ""
+        and not vim.tbl_contains(ignore_filetypes, filetype)
       then
         vim.b[event.buf].view_activated = true
         vim.cmd.loadview { mods = { emsg_silent = true } }
@@ -131,9 +132,9 @@ autocmd("BufWinEnter", {
   group = augroup("q_close_windows", { clear = true }),
   callback = function(event)
     local filetype =
-        vim.api.nvim_get_option_value("filetype", { buf = event.buf })
+      vim.api.nvim_get_option_value("filetype", { buf = event.buf })
     local buftype =
-        vim.api.nvim_get_option_value("buftype", { buf = event.buf })
+      vim.api.nvim_get_option_value("buftype", { buf = event.buf })
     if buftype == "nofile" or filetype == "help" then
       vim.keymap.set(
         "n",
@@ -174,7 +175,7 @@ autocmd("BufEnter", {
       if vim.api.nvim_win_is_valid(winid) then
         local bufnr = vim.api.nvim_win_get_buf(winid)
         local filetype =
-            vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+          vim.api.nvim_get_option_value("filetype", { buf = bufnr })
         -- If any visible windows are not sidebars, early return
         if not sidebar_fts[filetype] then
           return
@@ -201,17 +202,17 @@ if is_available "alpha-nvim" then
     group = group_name,
     callback = function(event)
       if
-          (
-            (event.event == "User" and event.file == "AlphaReady")
-            or (
-              event.event == "BufEnter"
-              and vim.api.nvim_get_option_value(
+        (
+          (event.event == "User" and event.file == "AlphaReady")
+          or (
+            event.event == "BufEnter"
+            and vim.api.nvim_get_option_value(
                 "filetype",
                 { buf = event.buf }
               )
               == "alpha"
-            )
-          ) and not vim.g.before_alpha
+          )
+        ) and not vim.g.before_alpha
       then
         vim.g.before_alpha = {
           showtabline = vim.opt.showtabline:get(),
@@ -219,13 +220,13 @@ if is_available "alpha-nvim" then
         }
         vim.opt.showtabline, vim.opt.laststatus = 0, 0
       elseif
-          vim.g.before_alpha
-          and event.event == "BufEnter"
-          and vim.api.nvim_get_option_value("buftype", { buf = event.buf })
+        vim.g.before_alpha
+        and event.event == "BufEnter"
+        and vim.api.nvim_get_option_value("buftype", { buf = event.buf })
           ~= "nofile"
       then
         vim.opt.laststatus, vim.opt.showtabline =
-            vim.g.before_alpha.laststatus, vim.g.before_alpha.showtabline
+          vim.g.before_alpha.laststatus, vim.g.before_alpha.showtabline
         vim.g.before_alpha = nil
       end
     end,
@@ -236,18 +237,18 @@ if is_available "alpha-nvim" then
     callback = function()
       local should_skip = false
       if
-          vim.fn.argc() > 0
-          or vim.fn.line2byte(vim.fn.line "$") ~= -1
-          or not vim.o.modifiable
+        vim.fn.argc() > 0
+        or vim.fn.line2byte(vim.fn.line "$") ~= -1
+        or not vim.o.modifiable
       then
         should_skip = true
       else
         for _, arg in pairs(vim.v.argv) do
           if
-              arg == "-b"
-              or arg == "-c"
-              or vim.startswith(arg, "+")
-              or arg == "-S"
+            arg == "-b"
+            or arg == "-c"
+            or vim.startswith(arg, "+")
+            or arg == "-S"
           then
             should_skip = true
             break
@@ -268,7 +269,7 @@ if is_available "resession.nvim" then
     group = augroup("resession_auto_save", { clear = true }),
     callback = function(event)
       local filetype =
-          vim.api.nvim_get_option_value("filetype", { buf = event.buf })
+        vim.api.nvim_get_option_value("filetype", { buf = event.buf })
       if not vim.tbl_contains({ "gitcommit", "gitrebase" }, filetype) then
         local save = require("resession").save
         save "Last Session"
@@ -321,7 +322,7 @@ autocmd("VimEnter", {
   group = augroup("contextual_menu", { clear = true }),
   callback = function()
     vim.api.nvim_command [[aunmenu PopUp.How-to\ disable\ mouse]] -- Disable right click message
-    vim.api.nvim_command [[aunmenu PopUp.-1-]]                    -- Disable right click message
+    vim.api.nvim_command [[aunmenu PopUp.-1-]] -- Disable right click message
   end,
 })
 
@@ -331,15 +332,15 @@ autocmd({ "BufReadPost", "BufNewFile" }, {
   group = augroup("file_user_events", { clear = true }),
   callback = function(args)
     if
-        not (
-          vim.fn.expand "%" == ""
-          or vim.api.nvim_get_option_value("buftype", { buf = args.buf })
+      not (
+        vim.fn.expand "%" == ""
+        or vim.api.nvim_get_option_value("buftype", { buf = args.buf })
           == "nofile"
-        )
+      )
     then
       utils.event "File"
       if
-          utils.cmd('git -C "' .. vim.fn.expand "%:p:h" .. '" rev-parse', false)
+        utils.cmd('git -C "' .. vim.fn.expand "%:p:h" .. '" rev-parse', false)
       then
         utils.event "GitFile"
       end
@@ -404,8 +405,107 @@ cmd("Swd", function()
   vim.cmd ":pwd"
 end, { desc = "cd current file's directory" })
 
+-- Neotest commands
+cmd(
+  "TestRunBlock",
+  function() require("neotest").run.run() end,
+  { desc = "Run the nearest test under the cursor" }
+)
+
+cmd(
+  "TestStopBlock",
+  function() require("neotest").run.stop() end,
+  { desc = "Stopts the nearest test under the cursor" }
+)
+
+cmd(
+  "TestRunFile",
+  function() require("neotest").run.run(vim.fn.expand "%") end,
+  { desc = "Run all tests in the test file" }
+)
+
+cmd(
+  "TestDebugBlock",
+  function() require("neotest").run.run { strategy = "dap" } end,
+  { desc = "Debug the nearest test under the cursor using dap" }
+)
+
 -- Run e2e for nodejs projects (Customize it)
 cmd("E2eOpenInToggleTerm", function()
-  vim.cmd ":ProjectRoot"           -- cd the project root (requires project.nvim)
+  vim.cmd ":ProjectRoot" -- cd the project root (requires project.nvim)
   vim.cmd ":TermExec yarn run e2e" -- Conventional way to call e2e in nodejs     (requires ToggleTerm)
 end, { desc = "cd the project root and run yarn run e2e" })
+cmd(
+  "NvimLockPluginVersions",
+  function() require("base.utils.updater").generate_snapshot(true) end,
+  { desc = "Lock package versions (only lazy, not mason)." }
+)
+cmd(
+  "NvimUpdate",
+  function() require("base.utils.updater").update() end,
+  { desc = "Update Nvim distro" }
+)
+cmd(
+  "NvimVersion",
+  function() require("base.utils.updater").version() end,
+  { desc = "Check Nvim distro Version" }
+)
+cmd(
+  "NvimReload",
+  function() require("base.utils").reload() end,
+  { desc = "Reload Nvim without closing it (Experimental)" }
+)
+
+-- Neotest commands
+-- Neotest doesn't implement commands, so we do it here
+----------------------------------------------
+cmd(
+  "TestRunBlock",
+  function() require("neotest").run.run() end,
+  { desc = "Run the nearest test under the cursor" }
+)
+
+cmd(
+  "TestStopBlock",
+  function() require("neotest").run.stop() end,
+  { desc = "Stopts the nearest test under the cursor" }
+)
+
+cmd(
+  "TestRunFile",
+  function() require("neotest").run.run(vim.fn.expand "%") end,
+  { desc = "Run all tests in the test file" }
+)
+
+cmd(
+  "TestDebugBlock",
+  function() require("neotest").run.run { strategy = "dap" } end,
+  { desc = "Debug the nearest test under the cursor using dap" }
+)
+
+-- Customize this command to work as you like
+cmd("TestNodejs", function()
+  vim.cmd ":ProjectRoot" -- cd the project root (requires project.nvim)
+  vim.cmd ":TermExec npm run tests" -- Conventional way to run the test suite in nodejs (requires ToggleTerm)
+end, { desc = "Run all unit tests for the current nodejs project" })
+
+-- Customize this command to work as you like
+cmd("TestNodejsE2e", function()
+  vim.cmd ":ProjectRoot" -- cd the project root (requires project.nvim)
+  vim.cmd ":TermExec npm run e2e" -- Conventional way to call e2e in nodejs (requires ToggleTerm)
+end, { desc = "Run e2e tests for the current nodejs project" })
+
+-- Extra commands
+----------------------------------------------
+
+-- Change working directory
+cmd("Cwd", function()
+  vim.cmd ":cd %:p:h"
+  vim.cmd ":pwd"
+end, { desc = "cd current file's directory" })
+
+-- Set working directory (alias)
+cmd("Swd", function()
+  vim.cmd ":cd %:p:h"
+  vim.cmd ":pwd"
+end, { desc = "cd current file's directory" })

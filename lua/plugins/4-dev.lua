@@ -31,9 +31,6 @@
 --       ## NOT INSTALLED
 --       -> distant.nvim                   [ssh to edit in a remove machine]
 
-
-
-
 return {
   --  COMMENTS ----------------------------------------------------------------
   --  Advanced comment features [adv. comments]
@@ -154,67 +151,78 @@ return {
   --  Run tests inside of nvim [unit testing]
   --  https://github.com/nvim-neotest/neotest
   --
+  --
   --  MANUAL:
-  --
   --  -- Unit testing:
+  --  To tun an unit test you can run any of these commands:
   --
-  --  -- e2e testing
-  --  This is not supported by neotest.
-  --  For e2e frameworks like cypress, you will normally run the framework GUI.
-  --  But if you prefer to run a e2e framework inside nvim,
-  --  check the next command in ../base/3-autocmds.lua:
+  --    :TestRunBlock   -- Runs the nearest test to the cursor.
+  --    :TestStopBlock  -- Stop the nearest test to the cursor.
+  --    :TestRunFile    -- Run all tests in the file.
+  --    :TestDebugBlock -- Debug the nearest test under the cursor using dap
+  --    :TestDebugBlock -- Debug the nearest test under the cursor using dap
   --
-  --  :E2eOpenInToggleTerm
+  --  All this commands are meant to be executed in a test file.
+  --  You can find them on ../base/3-autocmds.lua
   --
-  "nvim-neotest/neotest",
-    cmd = {
-      require("neotest").run.run(),
-      require("neotest").run.run(vim.fn.expand "%"),
-      require("neotest").run.run { strategy = "dap" },
-      require("neotest").run.stop(),
-      require("neotest").run.attach(),
+  --  -- E2e and Test Suite
+  --  Normally you will prefer to open your e2e framework GUI outside of nvim.
+  --  But you have the next commands in ../base/3-autocmds.lua:
+  --
+  --    :TestNodejs    -- Run all tests for this nodejs project.
+  --    :TestNodejsE2e -- Run the e2e tests/suite for this nodejs project.
+  {
+    "nvim-neotest/neotest",
+    cmd = {             -- All this commands are meant to run in a test file
+      "TestRunBlock",   -- Run the nearest test to the cursor.
+      "TestStopBlock",  -- Stop the test under the cursor
+      "TestDebugBlock", -- Show errors in the nearest test to the cursor.
+      "TestRunFile",    -- Run all tests in the file.
     },
-  config = function()
-    -- get neotest namespace (api call creates or returns namespace)
-    local neotest_ns = vim.api.nvim_create_namespace "neotest"
-    vim.diagnostic.config({
-      virtual_text = {
-        format = function(diagnostic)
-          local message = diagnostic.message:gsub("\n", " "):gsub("\t", " "):gsub("%s+", " "):gsub("^%s+", "")
-          return message
-        end,
-      },
-    }, neotest_ns)
-    require("neotest").setup {
-      -- your neotest config here
-      adapters = {
-        require "neotest-dotnet",
-        require "neotest-python",
-        require "neotest-rust",
-        require "neotest-go",
-        require "neotest-jest",
-        require "neotest-minitest",
-        require "neotest-rspec",
-        require "neotest-vitest",
-        require "neotest-testhat",
-        require "neotest-phpunit",
-        require "neotest-pest",
-      },
-
-    }
-  end,
-  dependencies = {
-    "Issafalcon/neotest-dotnet",
-    "nvim-neotest/neotest-python",
-    "rouge8/neotest-rust",
-    "nvim-neotest/neotest-go",
-    "nvim-neotest/neotest-jest",
-    "zidhuss/neotest-minitest",
-    "olimorris/neotest-rspec",
-    "marilari88/neotest-vitest",
-    "shunsambongi/neotest-testthat",
-    "olimorris/neotest-phpunit",
-    "theutz/neotest-pest",
+    config = function()
+      -- get neotest namespace (api call creates or returns namespace)
+      local neotest_ns = vim.api.nvim_create_namespace "neotest"
+      vim.diagnostic.config({
+        virtual_text = {
+          format = function(diagnostic)
+            local message = diagnostic.message
+                :gsub("\n", " ")
+                :gsub("\t", " ")
+                :gsub("%s+", " ")
+                :gsub("^%s+", "")
+            return message
+          end,
+        },
+      }, neotest_ns)
+      require("neotest").setup {
+        -- your neotest config here
+        adapters = {
+          require "neotest-dotnet",
+          require "neotest-python",
+          require "neotest-rust",
+          require "neotest-go",
+          require "neotest-jest",
+          require "neotest-minitest",
+          require "neotest-rspec",
+          require "neotest-vitest",
+          require "neotest-testthat",
+          require "neotest-phpunit",
+          require "neotest-pest",
+        },
+      }
+    end,
+    dependencies = {
+      "Issafalcon/neotest-dotnet",
+      "nvim-neotest/neotest-python",
+      "rouge8/neotest-rust",
+      "nvim-neotest/neotest-go",
+      "nvim-neotest/neotest-jest",
+      "zidhuss/neotest-minitest",
+      "olimorris/neotest-rspec",
+      "marilari88/neotest-vitest",
+      "shunsambongi/neotest-testthat",
+      "olimorris/neotest-phpunit",
+      "theutz/neotest-pest",
     },
   },
 
@@ -230,7 +238,7 @@ return {
       "CoverageHide",
       "CoverageToggle",
       "CoverageClear",
-      "CoverageSummary"
+      "CoverageSummary",
     },
     requires = { "nvim-lua/plenary.nvim" },
   },
