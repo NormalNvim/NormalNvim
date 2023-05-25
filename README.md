@@ -30,7 +30,7 @@ yarn npm     # Necessary for most formatters and parsers.
 WIP
 
 ## FAQ
-Please before opening an issue, check [the AstroVim manual](https://neovim.io/doc/user/pi_health.html).
+Please before opening an issue, check [the AstroVim manual](https://astronvim.com/).
 
 * **NormalNvim is not working ok. How can I know why?**
 
