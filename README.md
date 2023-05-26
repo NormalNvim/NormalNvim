@@ -27,7 +27,7 @@ yarn npm     # Necessary for most formatters and parsers.
 
 ## Plugins
 
-01-behaviors.lua - Things that add new behaviors.
+01-behaviors.lua
 ``` lua
 --       -> ranger file browser    [ranger]
 --       -> project.nvim           [project search + auto cd]
@@ -45,7 +45,7 @@ yarn npm     # Necessary for most formatters and parsers.
 
 ```
 
-02-ui.lua - Things that make the GUI better.
+02-ui.lua
 ``` lua
 --    Sections:
 --       -> astrotheme                  [theme]
@@ -64,7 +64,7 @@ yarn npm     # Necessary for most formatters and parsers.
 --       -> which-key                   [on-screen keybinding]
 ```
 
-3-dev-core.lua - Things that are just there.
+3-dev-core.lua
 ``` lua
 --    Sections:
 --       ## TREE SITTER
@@ -88,7 +88,7 @@ yarn npm     # Necessary for most formatters and parsers.
 --       -> cmp-luasnip                    [auto completion snippets]
 ```
 
-4-dev.lua - Things you actively use for coding.
+4-dev.lua
 ``` lua
 --    Sections:
 --       ## COMMENTS
