@@ -17,7 +17,7 @@ yarn npm     # Necessary for most formatters and parsers.
 
 ## Distro features
 
-* 😴 Lazy: Plugins are loaded lazily, providing super fast performance.
+* ⚡ Lazy: Plugins are loaded lazily, providing super fast performance.
 * 😎 Plugins are self-contained: Allowing you to easily delete what you don't want.
 * 🔒 Plugin version lock: Options to choose "stable" or "nightly" channels to choose between locking your plugin versions, or go bleeding edge and have the latest updates.
 * 🔙 Rollbacks: You can easily recover from a nvim distro update using :NvimRollbackRestore
