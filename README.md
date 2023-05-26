@@ -34,6 +34,7 @@ yarn npm     # Necessary for most formatters and parsers.
 --       -> trim.nvim              [auto trim spaces]
 --       -> stickybuf.nvim         [lock special buffers]
 --       -> nvim-window-picker     [windows]
+--       -> telescope-undo.nvim    [internal clipboard history]
 --       -> better-scape.nvim      [esc]
 --       -> toggleterm.nvim        [term]
 --       -> session-manager        [session]
