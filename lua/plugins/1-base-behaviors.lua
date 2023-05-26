@@ -40,9 +40,6 @@ return {
       -- vim.g.rnvimr_ranger_cmd = { "ranger-custom" } -- Currently broken
     end,
     config = function() -- FIX: Adds mouse support to rnvimr
-      -- BUG FOUND
-      -- After leaving rnvimr mouse support is not restored.
-
       -- TODO: You can delete this after the author merges it:
       -- https://github.com/kevinhwang91/rnvimr/issues/58
       local augroup = vim.api.nvim_create_augroup
