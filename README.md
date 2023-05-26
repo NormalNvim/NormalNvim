@@ -27,10 +27,110 @@ yarn npm     # Necessary for most formatters and parsers.
 
 ## Plugins
 
-WIP
+01-behaviors.lua
+``` lua
+--       -> ranger file browser    [ranger]
+--       -> project.nvim           [project search + auto cd]
+--       -> trim.nvim              [auto trim spaces]
+--       -> stickybuf.nvim         [lock special buffers]
+--       -> nvim-window-picker     [windows]
+--       -> better-scape.nvim      [esc]
+--       -> toggleterm.nvim        [term]
+--       -> session-manager        [session]
+--       -> spectre.nvim           [search and replace in project]
+--       -> neotree file browser   [neotree]
+--       -> nvim-ufo               [folding mod]
+--       -> nvim-neoclip           [nvim clipboard] 
+
+```
+
+02-ui.lua
+``` lua
+--    Sections:
+--       -> astrotheme                  [theme]
+--       -> alpha-nvim                  [greeter]
+--       -> nvim-notify                 [notifications]
+--       -> indent-blankline.nvim       [guides]
+--       -> heirline                    [statusbar]
+--       -> telescope                   [search]
+--       -> telescope-fzf-native.nvim   [search backend]
+--       -> smart-splits                [window-dimming]
+--       -> dressing.nvim               [better ui elements]
+--       -> nvim-web-devicons           [icons | ui]
+--       -> lspkind.nvim                [icons | lsp]
+--       -> nvim-scrollbar              [scrollbar]
+--       -> mini.animate                [animations]
+--       -> which-key                   [on-screen keybinding]
+```
+
+3-dev-core.lua
+``` lua
+--    Sections:
+--       ## TREE SITTER
+--       -> nvim-treesitter                [syntax highlight]
+--       -> nvim-ts-autotag                [treesitter understand html tags]
+--       -> nvim-ts-context-commentstring  [treesitter comments]
+--       -> nvim-colorizer                 [hex colors]
+
+--       ## LSP
+--       -> SchemaStore.nvim               [lsp schema manager]
+--       -> mason.nvim                     [lsp package manager]
+--       -> nvim-lspconfig                 [lsp config]
+--       -> null-ls                        [code formatting]
+--       -> luasnip                        [snippet-engine]
+
+--       ## AUTO COMPLETON
+--       -> nvim-cmp                       [auto completion engine]
+--       -> cmp-nvim-buffer                [auto completion buffer]
+--       -> cmp-nvim-path                  [auto completion path]
+--       -> cmp-nvim-lsp                   [auto completion lsp]
+--       -> cmp-luasnip                    [auto completion snippets]
+```
+
+4-dev.lua
+``` lua
+--    Sections:
+--       ## COMMENTS
+--       -> comment.nvim                   [adv. comments]
+
+--       ## SNIPPETS
+--       -> luasnip                        [snippet engine]
+--       -> friendly-snippets              [snippet templates]
+
+--       ## GIT
+--       -> gitsigns.nvim                  [git hunks]
+--       -> fugitive.vim                   [git commands]
+
+--       ## DEBUGGER
+--       -> nvim-dap                       [debugger]
+
+--       ## TESTING
+--       -> neotest.nvim                   [unit testing]
+
+--       ## ANALYZER
+--       -> aerial.nvim                    [code analyzer]
+
+--       ## CODE DOCUMENTATION
+--       -> vim-doxigen                    [general    doc generator]
+--       -> vim-typedoc                    [typescript doc generator]
+
+--       ## EXTRA
+--       -> guess-indent                   [guess-indent]
+--       -> neural                         [chatgpt code generator]
+--       -> markdown-preview.nvim          [markdown previewer]
+--       -> markmap                        [markdown mindmap]
+```
+
+## Base
+This is the core part of the config. (WIP, make this a table)
+
+* **1-options.lua:** let and set variables.
+* **2-lazy.lua:** Here you can select the channed for updates. "Stable" by default.
+* **3-autocmds.lua:** Hacks to make your life better.
+* **4-mappings.lua:** All keybindings are defined here in one single place with the only exception of LSP, which can be found in [/lua/base/utils/lsp](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/utils/lsp.lua). This is necessary for us to enable/disable lsp features on the fly.
 
 ## FAQ
-Please before opening an issue, check [the AstroVim manual](https://astronvim.com/).
+Please before opening an issue, check [the AstroVim manual](https://astronvim.com/) and the [AstroVim Community](https://github.com/AstroNvim/astrocommunity) repos where you can find help about how to install and configure most plugins.
 
 * **NormalNvim is not working ok. How can I know why?**
 
@@ -40,7 +140,7 @@ Please before opening an issue, check [the AstroVim manual](https://astronvim.co
 
 * **What scenarios are not covered by this distro?**
   * **Kubernetes**: We do not provide a kubernetes plugin. There is not much neovim can do for you if you work with Kubernetes apart from the features provided by Mason (LSP, Hightighing, autocompletion..).
-  * **e2e testing**: We to not provide a e2e plugin. But we do provide the :TestNodejsE2e command you can customize on [/lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua) along with all the other testing commands.
+  * **e2e testing**: We to not provide a e2e plugin. But we do provide the :TestNodejsE2e command you can customize on [/lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua) along with all the other testing commands. You can also rename the command to anything you want in case you don't use nodejs.
 
 ## Credits
 Originally it took AstroVim as base. But implements [this VIM config](https://github.com/Zeioth/vim-zeioth-config). Code has been simplified while retaining its core features.
