@@ -32,7 +32,6 @@ yarn npm     # Necessary for most formatters and parsers.
 --       -> ranger file browser    [ranger]
 --       -> project.nvim           [project search + auto cd]
 --       -> trim.nvim              [auto trim spaces]
---       -> stay-centered.nvim     [cursor centered]
 --       -> stickybuf.nvim         [lock special buffers]
 --       -> nvim-window-picker     [windows]
 --       -> better-scape.nvim      [esc]
