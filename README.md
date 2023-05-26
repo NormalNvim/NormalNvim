@@ -120,8 +120,15 @@ yarn npm     # Necessary for most formatters and parsers.
 --       -> neural                         [chatgpt code generator]
 --       -> markdown-preview.nvim          [markdown previewer]
 --       -> markmap                        [markdown mindmap]
-
 ```
+
+## Base
+This is the core part of the config. (WIP)
+
+* 1-options.lua
+* 2-lazy.lua
+* 3-autocmds.lua
+* 4-mappings.lua
 
 ## FAQ
 Please before opening an issue, check [the AstroVim manual](https://astronvim.com/) and the [AstroVim Community](https://github.com/AstroNvim/astrocommunity) repos where you can find help about how to install and configure most plugins.
