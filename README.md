@@ -17,14 +17,14 @@ yarn npm     # Necessary for most formatters and parsers.
 
 ## Distro features
 
-* ⚡ Lazy: Plugins are loaded lazily, providing super fast performance.
-* 😎 Plugins are self-contained: Allowing you to easily delete what you don't want.
-* 🔋 Batteries included: Most plugins you will ever need are inclued and debugged. Get the best user experience out of the box and forget about nasty bugs in your Neovim config.
-* 🔒 Plugin version lock: You canchoose "stable" or "nightly" channels to lock your plugin versions, or go bleeding edge and have the last updates.
-* 🔙 Rollbacks: You can easily recover from a nvim distro update using :NvimRollbackRestore
-* 🔥 Hot reload: Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
-* 📱 Phone friendly: Good usability even on smalll screens.
-* ❤️ We don't treat you like you are stupid: Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
+* ⚡ **Lazy:** Plugins are loaded lazily, providing super fast performance.
+* 😎 **Plugins are self-contained:** Allowing you to easily delete what you don't want.
+* 🔋 **Batteries included:** Most plugins you will ever need are inclued and debugged. Get the best user experience out of the box and forget about nasty bugs in your Neovim config.
+* 🔒 **Plugin version lock:** You canchoose "stable" or "nightly" channels to lock your plugin versions, or go bleeding edge and have the last updates.
+* 🔙 **Rollbacks:** You can easily recover from a nvim distro update using :NvimRollbackRestore
+* 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
+* 📱 **Phone friendly:** Good usability even on smalll screens.
+* ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
 
 ## Plugins included
 
