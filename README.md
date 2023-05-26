@@ -25,7 +25,7 @@ yarn npm     # Necessary for most formatters and parsers.
 * 📱 Phone friendly: Good usability even on smalll screens.
 * ❤️ We don't treat you like you are stupid: Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
 
-## Plugins
+## Plugins included
 
 01-behaviors.lua
 ``` lua
