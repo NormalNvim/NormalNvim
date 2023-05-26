@@ -45,7 +45,8 @@ return {
       local augroup = vim.api.nvim_create_augroup
       local autocmd = vim.api.nvim_create_autocmd
 
-      local rnvimr_mouse_group = augroup("RnvimrMouse", { clear = true })
+      local rnvimr_mouse_group =
+        augroup("RnvimrMouseSupport", { clear = true })
 
       -- Enables mouse support for rnvimr
       local function set_mouse_with_rnvimr()
@@ -201,6 +202,67 @@ return {
         highlights = { border = "Normal", background = "Normal" },
       },
     },
+    init = function()
+      -- PATCH: Enable mouse support for ToggleTerm.
+      -- TODO: Remove this once the patch is merged into main.
+      -- https://github.com/akinsho/toggleterm.nvim/pull/441
+      local augroup = vim.api.nvim_create_augroup
+      local autocmd = vim.api.nvim_create_autocmd
+
+      local toggleterm_mouse_group =
+        augroup("ToggleTermMouseSupport", { clear = true })
+
+      -- Enables mouse support for toggleterm
+      local function set_mouse_with_toggleterm()
+        local n_mouse = vim.o.mouse
+
+        -- Disable nvim mouse support while we are on the toggleterm buffer
+        if string.match(n_mouse, "[a|h|n]") then
+          autocmd({ "TermEnter", "WinEnter <buffer>" }, {
+            desc = "Disable nvim mouse support while we are on the toggleterm buffer",
+            group = toggleterm_mouse_group,
+            callback = function() vim.api.nvim_set_option("mouse", "") end,
+          })
+          -- Restore mouse mode on exiting toggleterm
+          autocmd({ "TermLeave", "WinLeave <buffer>" }, {
+            desc = "Disable nvim mouse support while we are on the toggleterm buffer",
+            group = toggleterm_mouse_group,
+            callback = function() vim.api.nvim_set_option("mouse", n_mouse) end,
+          })
+        end
+
+        -- Extra mouse fix for tmux
+        -- If tmux mouse mode is enabled
+        local output = vim.fn.system 'tmux display -p "#{mouse}"'
+        if output:sub(1, 1) == "1" then
+          -- Disable tmux mouse while using toggleterm
+          autocmd({ "TermEnter", "WinEnter <buffer>" }, {
+            desc = "Disable tmux mouse while using toggleterm",
+            group = toggleterm_mouse_group,
+            callback = function() vim.fn.system "tmux set mouse off" end,
+          })
+
+          -- Enable tmux mouse when mouse leaves toggleterm
+          autocmd({ "WinLeave <buffer>" }, {
+            desc = "Enable tmux mouse when mouse leaves toggleterm",
+            group = toggleterm_mouse_group,
+            callback = function() vim.fn.system "tmux set mouse on" end,
+          })
+        end
+      end
+
+      -- Entry point
+      autocmd({ "FileType rnvimr" }, {
+        desc = "If we are on the rnvimr buffer, execute the callback",
+        group = toggleterm_mouse_group,
+        callback = function()
+          -- Apply only to toggleterm
+          if vim.bo.filetype == "toggleterm" then
+            set_mouse_with_toggleterm()
+          end
+        end,
+      })
+    end,
   },
 
   -- Session management [session]
@@ -383,8 +445,8 @@ return {
         parent_or_close = function(state)
           local node = state.tree:get_node()
           if
-              (node.type == "directory" or node:has_children())
-              and node:is_expanded()
+            (node.type == "directory" or node:has_children())
+            and node:is_expanded()
           then
             state.commands.toggle_node(state)
           else
@@ -399,7 +461,7 @@ return {
           if node.type == "directory" or node:has_children() then
             if not node:is_expanded() then -- if unexpanded, expand
               state.commands.toggle_node(state)
-            else                           -- if expanded and has children, seleect the next child
+            else -- if expanded and has children, seleect the next child
               require("neo-tree.ui.renderer").focus_node(
                 state,
                 node:get_child_ids()[1]
@@ -433,9 +495,9 @@ return {
           for i, result in pairs(results) do
             if result.val and result.val ~= "" then
               vim.list_extend(messages, {
-                { ("%s."):format(i),           "Identifier" },
+                { ("%s."):format(i), "Identifier" },
                 { (" %s: "):format(result.msg) },
-                { result.val,                  "String" },
+                { result.val, "String" },
                 { "\n" },
               })
             end
@@ -553,20 +615,20 @@ return {
         end
 
         return (filetype == "" or buftype == "nofile") and "indent" -- only use indent until a file is opened
-            or function(bufnr)
-              return require("ufo")
-                  .getFolds(bufnr, "lsp")
-                  :catch(
-                    function(err)
-                      return handleFallbackException(bufnr, err, "treesitter")
-                    end
-                  )
-                  :catch(
-                    function(err)
-                      return handleFallbackException(bufnr, err, "indent")
-                    end
-                  )
-            end
+          or function(bufnr)
+            return require("ufo")
+              .getFolds(bufnr, "lsp")
+              :catch(
+                function(err)
+                  return handleFallbackException(bufnr, err, "treesitter")
+                end
+              )
+              :catch(
+                function(err)
+                  return handleFallbackException(bufnr, err, "indent")
+                end
+              )
+          end
       end,
     },
   },
