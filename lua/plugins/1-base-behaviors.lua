@@ -32,14 +32,17 @@ return {
       vim.g.rnvimr_ranger_cmd = { "ranger" }
 
       -- Known bug: We cannot set a custom terminal for rnvimr.
-      --            (now even thourh a wrapper exe)
+      --            (now even through a wrapper)
       --            Doing so will provoke rnvimr RPC to not close correctly.
-      --            If you need that use ranger.vim
+      --            If you need that feature, use ranger.vim instead.
       --
       -- Check: https://github.com/kevinhwang91/rnvimr/issues/149
       -- vim.g.rnvimr_ranger_cmd = { "ranger-custom" } -- Currently broken
     end,
     config = function() -- FIX: Adds mouse support to rnvimr
+      -- BUG FOUND
+      -- After leaving rnvimr mouse support is not restored.
+
       -- TODO: You can delete this after the author merges it:
       -- https://github.com/kevinhwang91/rnvimr/issues/58
       local augroup = vim.api.nvim_create_augroup
@@ -58,6 +61,12 @@ return {
             group = rnvimr_mouse_group,
             callback = function() vim.api.nvim_set_option("mouse", "") end,
           })
+          -- Restore mouse mode on exiting rnvimr
+          autocmd({ "TermLeave", "WinLeave <buffer>" }, {
+            desc = "Disable nvim mouse support while we are on the rnvimr buffer",
+            group = rnvimr_mouse_group,
+            callback = function() vim.api.nvim_set_option("mouse", n_mouse) end,
+          })
         end
 
         -- Extra mouse fix for tmux
@@ -72,10 +81,10 @@ return {
           })
 
           -- Enable tmux mouse when mouse leaves rnvimr
-          autocmd({ "WinLeave" }, {
+          autocmd({ "WinLeave <buffer>" }, {
             desc = "Enable tmux mouse when mouse leaves rnvimr",
             group = rnvimr_mouse_group,
-            callback = function() vim.fn.system "tmux set mouse off" end,
+            callback = function() vim.fn.system "tmux set mouse on" end,
           })
         end
       end
@@ -85,6 +94,7 @@ return {
         desc = "If we are on the rnvimr buffer, execute the callback",
         group = rnvimr_mouse_group,
         callback = function()
+          -- Apply only to rnvimr
           if vim.bo.filetype == "rnvimr" then set_mouse_with_rnvimr() end
         end,
       })
@@ -209,8 +219,12 @@ return {
     "stevearc/resession.nvim",
     enabled = vim.g.resession_enabled == true,
     opts = {
-      buf_filter = function(bufnr) return require("base.utils.buffer").is_valid(bufnr) end,
-      tab_buf_filter = function(tabpage, bufnr) return vim.tbl_contains(vim.t[tabpage].bufs, bufnr) end,
+      buf_filter = function(bufnr)
+        return require("base.utils.buffer").is_valid(bufnr)
+      end,
+      tab_buf_filter = function(tabpage, bufnr)
+        return vim.tbl_contains(vim.t[tabpage].bufs, bufnr)
+      end,
       extensions = { base = {} },
     },
   },
@@ -366,13 +380,21 @@ return {
         },
       },
       commands = {
-        system_open = function(state) require("base.utils").system_open(state.tree:get_node():get_id()) end,
+        system_open = function(state)
+          require("base.utils").system_open(state.tree:get_node():get_id())
+        end,
         parent_or_close = function(state)
           local node = state.tree:get_node()
-          if (node.type == "directory" or node:has_children()) and node:is_expanded() then
+          if
+              (node.type == "directory" or node:has_children())
+              and node:is_expanded()
+          then
             state.commands.toggle_node(state)
           else
-            require("neo-tree.ui.renderer").focus_node(state, node:get_parent_id())
+            require("neo-tree.ui.renderer").focus_node(
+              state,
+              node:get_parent_id()
+            )
           end
         end,
         child_or_open = function(state)
@@ -380,8 +402,11 @@ return {
           if node.type == "directory" or node:has_children() then
             if not node:is_expanded() then -- if unexpanded, expand
               state.commands.toggle_node(state)
-            else -- if expanded and has children, seleect the next child
-              require("neo-tree.ui.renderer").focus_node(state, node:get_child_ids()[1])
+            else                           -- if expanded and has children, seleect the next child
+              require("neo-tree.ui.renderer").focus_node(
+                state,
+                node:get_child_ids()[1]
+              )
             end
           else -- if not a directory just open it
             state.commands.open(state)
@@ -411,9 +436,9 @@ return {
           for i, result in pairs(results) do
             if result.val and result.val ~= "" then
               vim.list_extend(messages, {
-                { ("%s."):format(i), "Identifier" },
+                { ("%s."):format(i),           "Identifier" },
                 { (" %s: "):format(result.msg) },
-                { result.val, "String" },
+                { result.val,                  "String" },
                 { "\n" },
               })
             end
@@ -461,9 +486,15 @@ return {
           ["<space>"] = false, -- disable space until we figure out which-key disabling
           ["[b"] = "prev_source",
           ["]b"] = "next_source",
-          ["e"] = function() vim.api.nvim_exec("Neotree focus filesystem left", true) end,
-          ["b"] = function() vim.api.nvim_exec("Neotree focus buffers left", true) end,
-          ["g"] = function() vim.api.nvim_exec("Neotree focus git_status left", true) end,
+          ["e"] = function()
+            vim.api.nvim_exec("Neotree focus filesystem left", true)
+          end,
+          ["b"] = function()
+            vim.api.nvim_exec("Neotree focus buffers left", true)
+          end,
+          ["g"] = function()
+            vim.api.nvim_exec("Neotree focus git_status left", true)
+          end,
           o = "open",
           O = "system_open",
           h = "parent_or_close",
@@ -525,12 +556,20 @@ return {
         end
 
         return (filetype == "" or buftype == "nofile") and "indent" -- only use indent until a file is opened
-          or function(bufnr)
-            return require("ufo")
-              .getFolds(bufnr, "lsp")
-              :catch(function(err) return handleFallbackException(bufnr, err, "treesitter") end)
-              :catch(function(err) return handleFallbackException(bufnr, err, "indent") end)
-          end
+            or function(bufnr)
+              return require("ufo")
+                  .getFolds(bufnr, "lsp")
+                  :catch(
+                    function(err)
+                      return handleFallbackException(bufnr, err, "treesitter")
+                    end
+                  )
+                  :catch(
+                    function(err)
+                      return handleFallbackException(bufnr, err, "indent")
+                    end
+                  )
+            end
       end,
     },
   },
