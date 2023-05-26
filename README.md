@@ -120,7 +120,7 @@ yarn npm     # Necessary for most formatters and parsers.
 --       -> guess-indent                   [guess-indent]
 --       -> neural                         [chatgpt code generator]
 --       -> markdown-preview.nvim          [markdown previewer]
---       -> markmap                        [markdown mindmap]
+--       -> markmap.nvim                   [markdown mindmap]
 ```
 
 ## Base
