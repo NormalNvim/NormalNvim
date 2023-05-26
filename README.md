@@ -23,6 +23,7 @@ yarn npm     # Necessary for most formatters and parsers.
 * 🔙 Rollbacks: You can easily recover from a nvim distro update using :NvimRollbackRestore
 * 🔥 Hot reload: Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
 * 📱 Phone friendly: Good usability even on smalll screens.
+* 🔋 Batteries included: Most plugins you will ever need are inclued and debugged so you get the best possible user experience out of the box. Forget about nasty bugs in your nvim distro.
 * ❤️ We don't treat you like you are stupid: Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
 
 ## Plugins included
