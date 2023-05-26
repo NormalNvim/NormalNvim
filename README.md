@@ -127,7 +127,7 @@ yarn npm     # Necessary for most formatters and parsers.
 This is the core part of the config. (WIP, make this a table)
 
 * **1-options.lua:** let and set variables.
-* **2-lazy.lua:** Here you can select the channed for updates. "Stable" by default.
+* **2-lazy.lua:** Here you can select the channel for updates. "Stable" by default.
 * **3-autocmds.lua:** Hacks to make your life better.
 * **4-mappings.lua:** All keybindings are defined here in one single place with the only exception of LSP, which can be found in [/lua/base/utils/lsp](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/utils/lsp.lua). This is necessary for us to enable/disable lsp features on the fly.
 
