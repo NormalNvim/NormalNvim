@@ -45,3 +45,5 @@ Please before opening an issue, check [the AstroVim manual](https://astronvim.co
 ## Credits
 Originally it took AstroVim as base. But implements [this VIM config](https://github.com/Zeioth/vim-zeioth-config). Code has been simplified while retaining its core features.
 
+## TODOS
+* The plugins vim-doxygen and vim-typedoc are not compatible with windows yet. Is it planned to re-write them on lua with windows support, but in the meantime if you are on windows, please don't use them.
