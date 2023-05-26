@@ -27,7 +27,101 @@ yarn npm     # Necessary for most formatters and parsers.
 
 ## Plugins
 
-WIP
+01-behaviors.lua - Things that add new behaviors.
+``` lua
+--       -> ranger file browser    [ranger]
+--       -> project.nvim           [project search + auto cd]
+--       -> trim.nvim              [auto trim spaces]
+--       -> stay-centered.nvim     [cursor centered]
+--       -> stickybuf.nvim         [lock special buffers]
+--       -> nvim-window-picker     [windows]
+--       -> better-scape.nvim      [esc]
+--       -> toggleterm.nvim        [term]
+--       -> session-manager        [session]
+--       -> spectre.nvim           [search and replace in project]
+--       -> neotree file browser   [neotree]
+--       -> nvim-ufo               [folding mod]
+--       -> nvim-neoclip           [nvim clipboard] 
+
+```
+
+02-ui.lua - Things that make the GUI better.
+``` lua
+--    Sections:
+--       -> astrotheme                  [theme]
+--       -> alpha-nvim                  [greeter]
+--       -> nvim-notify                 [notifications]
+--       -> indent-blankline.nvim       [guides]
+--       -> heirline                    [statusbar]
+--       -> telescope                   [search]
+--       -> telescope-fzf-native.nvim   [search backend]
+--       -> smart-splits                [window-dimming]
+--       -> dressing.nvim               [better ui elements]
+--       -> nvim-web-devicons           [icons | ui]
+--       -> lspkind.nvim                [icons | lsp]
+--       -> nvim-scrollbar              [scrollbar]
+--       -> mini.animate                [animations]
+--       -> which-key                   [on-screen keybinding]
+```
+
+3-dev-core.lua - Things that are just there.
+``` lua
+--    Sections:
+--       ## TREE SITTER
+--       -> nvim-treesitter                [syntax highlight]
+--       -> nvim-ts-autotag                [treesitter understand html tags]
+--       -> nvim-ts-context-commentstring  [treesitter comments]
+--       -> nvim-colorizer                 [hex colors]
+
+--       ## LSP
+--       -> SchemaStore.nvim               [lsp schema manager]
+--       -> mason.nvim                     [lsp package manager]
+--       -> nvim-lspconfig                 [lsp config]
+--       -> null-ls                        [code formatting]
+--       -> luasnip                        [snippet-engine]
+
+--       ## AUTO COMPLETON
+--       -> nvim-cmp                       [auto completion engine]
+--       -> cmp-nvim-buffer                [auto completion buffer]
+--       -> cmp-nvim-path                  [auto completion path]
+--       -> cmp-nvim-lsp                   [auto completion lsp]
+--       -> cmp-luasnip                    [auto completion snippets]
+```
+
+4-dev.lua - Things you actively use for coding.
+``` lua
+--    Sections:
+--       ## COMMENTS
+--       -> comment.nvim                   [adv. comments]
+
+--       ## SNIPPETS
+--       -> luasnip                        [snippet engine]
+--       -> friendly-snippets              [snippet templates]
+
+--       ## GIT
+--       -> gitsigns.nvim                  [git hunks]
+--       -> fugitive.vim                   [git commands]
+
+--       ## DEBUGGER
+--       -> nvim-dap                       [debugger]
+
+--       ## TESTING
+--       -> neotest.nvim                   [unit testing]
+
+--       ## ANALYZER
+--       -> aerial.nvim                    [code analyzer]
+
+--       ## CODE DOCUMENTATION
+--       -> vim-doxigen                    [general    doc generator]
+--       -> vim-typedoc                    [typescript doc generator]
+
+--       ## EXTRA
+--       -> guess-indent                   [guess-indent]
+--       -> neural                         [chatgpt code generator]
+--       -> markdown-preview.nvim          [markdown previewer]
+--       -> markmap                        [markdown mindmap]
+
+```
 
 ## FAQ
 Please before opening an issue, check [the AstroVim manual](https://astronvim.com/) and the [AstroVim Community](https://github.com/AstroNvim/astrocommunity) repos where you can find help about how to install and configure most plugins.
