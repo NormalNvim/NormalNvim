@@ -53,6 +53,7 @@ yarn npm     # Necessary for most formatters and parsers.
 ``` lua
 --    Sections:
 --       -> astrotheme                  [theme]
+--       -> tokyonight                  [theme]
 --       -> alpha-nvim                  [greeter]
 --       -> nvim-notify                 [notifications]
 --       -> indent-blankline.nvim       [guides]
