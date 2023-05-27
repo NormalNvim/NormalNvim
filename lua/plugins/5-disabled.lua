@@ -78,6 +78,7 @@ return {
   -- https://github.com/Zeioth/ranger.vim
   -- {
   --   -- This one is a backup ranger in case rnvimr breaks for some reason.
+  --   -- It supports invoking terminals from inside ranger, which Rnvimr doesn't atm.
   --   "zeioth/ranger.vim",
   --   dependencies = { "rbgrouleff/bclose.vim" },
   --   cmd = { "Ranger" },
