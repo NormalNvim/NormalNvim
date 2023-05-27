@@ -1,7 +1,6 @@
 -- Dev core
 -- Things that are just there.
 
-
 --    Sections:
 --       ## TREE SITTER
 --       -> nvim-treesitter                [syntax highlight]
@@ -14,7 +13,6 @@
 --       -> mason.nvim                     [lsp package manager]
 --       -> nvim-lspconfig                 [lsp config]
 --       -> null-ls                        [code formatting]
---       -> luasnip                        [snippet-engine]
 
 --       ## AUTO COMPLETON
 --       -> nvim-cmp                       [auto completion engine]
@@ -22,9 +20,6 @@
 --       -> cmp-nvim-path                  [auto completion path]
 --       -> cmp-nvim-lsp                   [auto completion lsp]
 --       -> cmp-luasnip                    [auto completion snippets]
-
-
-
 
 return {
   {
@@ -37,7 +32,7 @@ return {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       "windwp/nvim-ts-autotag",
-      "JoosepAlviste/nvim-ts-context-commentstring"
+      "JoosepAlviste/nvim-ts-context-commentstring",
     },
     event = "User BaseFile",
     cmd = {
@@ -59,7 +54,9 @@ return {
     opts = {
       highlight = {
         enable = true,
-        disable = function(_, bufnr) return vim.api.nvim_buf_line_count(bufnr) > 10000 end,
+        disable = function(_, bufnr)
+          return vim.api.nvim_buf_line_count(bufnr) > 10000
+        end,
       },
       incremental_selection = { enable = true },
       indent = { enable = true },
@@ -69,18 +66,19 @@ return {
     config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
   },
 
-
-
   --  [hex colors]
   --  https://github.com/NvChad/nvim-colorizer.lua
   {
     "NvChad/nvim-colorizer.lua",
     event = "User BaseFile",
-    cmd = { "ColorizerToggle", "ColorizerAttachToBuffer", "ColorizerDetachFromBuffer", "ColorizerReloadAllBuffers" },
+    cmd = {
+      "ColorizerToggle",
+      "ColorizerAttachToBuffer",
+      "ColorizerDetachFromBuffer",
+      "ColorizerReloadAllBuffers",
+    },
     opts = { user_default_options = { names = false } },
   },
-
-
 
   --  LSP -------------------------------------------------------------------
   --  Schema Store [lsp schema manager]
@@ -101,9 +99,6 @@ return {
         end,
       },
     },
-
-
-
 
     --  Syntax highlight [lsp package manager]
     --  https://github.com/williamboman/mason.nvim
@@ -133,25 +128,30 @@ return {
 
         -- TODO: change these auto command names to not conflict with core Mason commands
         local cmd = vim.api.nvim_create_user_command
-        cmd("MasonUpdate", function(options) require("base.utils.mason").update(options.fargs) end, {
-          nargs = "*",
-          desc = "Update Mason Package",
-          complete = "custom,v:lua.mason_completion.available_package_completion",
-        })
+        cmd(
+          "MasonUpdate",
+          function(options) require("base.utils.mason").update(options.fargs) end,
+          {
+            nargs = "*",
+            desc = "Update Mason Package",
+            complete = "custom,v:lua.mason_completion.available_package_completion",
+          }
+        )
         cmd(
           "MasonUpdateAll",
           function() require("base.utils.mason").update_all() end,
           { desc = "Update Mason Packages" }
         )
 
-        for _, plugin in ipairs { "mason-lspconfig", "mason-null-ls", "mason-nvim-dap" } do
+        for _, plugin in ipairs {
+          "mason-lspconfig",
+          "mason-null-ls",
+          "mason-nvim-dap",
+        } do
           pcall(require, plugin)
         end
       end,
     },
-
-
-
 
     --  Syntax highlight [lsp config]
     --  https://github.com/nvim-lspconfig
@@ -163,12 +163,14 @@ return {
           cmd = { "LspInstall", "LspUninstall" },
           opts = function(_, opts)
             if not opts.handlers then opts.handlers = {} end
-            opts.handlers[1] = function(server) require("base.utils.lsp").setup(server) end
+            opts.handlers[1] = function(server)
+              require("base.utils.lsp").setup(server)
+            end
           end,
           config = function(_, opts)
             require("mason-lspconfig").setup(opts)
             require("base.utils").event "MasonLspSetup"
-          end
+          end,
         },
       },
       event = "User BaseFile",
@@ -176,15 +178,51 @@ return {
         local lsp = require "base.utils.lsp"
         local get_icon = require("base.utils").get_icon
         local signs = {
-          { name = "DiagnosticSignError",    text = get_icon "DiagnosticError",        texthl = "DiagnosticSignError" },
-          { name = "DiagnosticSignWarn",     text = get_icon "DiagnosticWarn",         texthl = "DiagnosticSignWarn" },
-          { name = "DiagnosticSignHint",     text = get_icon "DiagnosticHint",         texthl = "DiagnosticSignHint" },
-          { name = "DiagnosticSignInfo",     text = get_icon "DiagnosticInfo",         texthl = "DiagnosticSignInfo" },
-          { name = "DapStopped",             text = get_icon "DapStopped",             texthl = "DiagnosticWarn" },
-          { name = "DapBreakpoint",          text = get_icon "DapBreakpoint",          texthl = "DiagnosticInfo" },
-          { name = "DapBreakpointRejected",  text = get_icon "DapBreakpointRejected",  texthl = "DiagnosticError" },
-          { name = "DapBreakpointCondition", text = get_icon "DapBreakpointCondition", texthl = "DiagnosticInfo" },
-          { name = "DapLogPoint",            text = get_icon "DapLogPoint",            texthl = "DiagnosticInfo" },
+          {
+            name = "DiagnosticSignError",
+            text = get_icon "DiagnosticError",
+            texthl = "DiagnosticSignError",
+          },
+          {
+            name = "DiagnosticSignWarn",
+            text = get_icon "DiagnosticWarn",
+            texthl = "DiagnosticSignWarn",
+          },
+          {
+            name = "DiagnosticSignHint",
+            text = get_icon "DiagnosticHint",
+            texthl = "DiagnosticSignHint",
+          },
+          {
+            name = "DiagnosticSignInfo",
+            text = get_icon "DiagnosticInfo",
+            texthl = "DiagnosticSignInfo",
+          },
+          {
+            name = "DapStopped",
+            text = get_icon "DapStopped",
+            texthl = "DiagnosticWarn",
+          },
+          {
+            name = "DapBreakpoint",
+            text = get_icon "DapBreakpoint",
+            texthl = "DiagnosticInfo",
+          },
+          {
+            name = "DapBreakpointRejected",
+            text = get_icon "DapBreakpointRejected",
+            texthl = "DiagnosticError",
+          },
+          {
+            name = "DapBreakpointCondition",
+            text = get_icon "DapBreakpointCondition",
+            texthl = "DiagnosticInfo",
+          },
+          {
+            name = "DapLogPoint",
+            text = get_icon "DapLogPoint",
+            texthl = "DiagnosticInfo",
+          },
         }
 
         for _, sign in ipairs(signs) do
@@ -193,25 +231,33 @@ return {
         lsp.setup_diagnostics(signs)
 
         if vim.g.lsp_handlers_enabled then
-          vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover,
-            { border = "rounded", silent = true })
-          vim.lsp.handlers["textDocument/signatureHelp"] =
-              vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded", silent = true })
+          vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+            vim.lsp.handlers.hover,
+            { border = "rounded", silent = true }
+          )
+          vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(
+            vim.lsp.handlers.signature_help,
+            { border = "rounded", silent = true }
+          )
         end
         local setup_servers = function()
           vim.api.nvim_exec_autocmds("FileType", {})
           require("base.utils").event "LspSetup"
         end
         if require("base.utils").is_available "mason-lspconfig.nvim" then
-          vim.api.nvim_create_autocmd("User", { pattern = "BaseMasonLspSetup", once = true, callback = setup_servers })
+          vim.api.nvim_create_autocmd(
+            "User",
+            {
+              pattern = "BaseMasonLspSetup",
+              once = true,
+              callback = setup_servers,
+            }
+          )
         else
           setup_servers()
         end
       end,
     },
-
-
-
 
     --  null ls [code formatting]
     --  https://github.com/jose-elias-alvarez/null-ls.nvim
@@ -226,24 +272,21 @@ return {
       },
       event = "User File",
       opts = function()
-        local nls = require("null-ls")
+        local nls = require "null-ls"
         return {
           sources = {
-            nls.builtins.formatting.beautysh.with({
-              command = 'beautysh',
+            nls.builtins.formatting.beautysh.with {
+              command = "beautysh",
               args = {
                 "--indent-size=2",
-                "$FILENAME"
+                "$FILENAME",
               },
-            }),
+            },
           },
-          on_attach = require("base.utils.lsp").on_attach
+          on_attach = require("base.utils.lsp").on_attach,
         }
-      end
+      end,
     },
-
-
-
 
     --  AUTO COMPLETION --------------------------------------------------------
     --  Auto completion engine [autocompletion engine]
@@ -270,18 +313,28 @@ return {
 
         local function has_words_before()
           local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-          return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
+          return col ~= 0
+              and vim.api
+              .nvim_buf_get_lines(0, line - 1, line, true)[1]
+              :sub(col, col)
+              :match "%s"
+              == nil
         end
 
         return {
           enabled = function()
-            if vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt" then return false end
+            if
+                vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt"
+            then
+              return false
+            end
             return vim.g.cmp_enabled
           end,
           preselect = cmp.PreselectMode.None,
           formatting = {
             fields = { "kind", "abbr", "menu" },
-            format = lspkind_status_ok and lspkind.cmp_format(base.lspkind) or nil,
+            format = lspkind_status_ok and lspkind.cmp_format(base.lspkind)
+                or nil,
           },
           snippet = {
             expand = function(args) luasnip.lsp_expand(args.body) end,
@@ -302,23 +355,56 @@ return {
             documentation = cmp.config.window.bordered(border_opts),
           },
           mapping = {
-            ["<PageUp>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select, count=8 },
-            ["<PageDown>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select, count=8 },
-            ["<C-PageUp>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select, count=16 },
-            ["<C-PageDown>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select, count=16 },
-            ["<S-PageUp>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select, count=16 },
-            ["<S-PageDown>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select, count=16 },
-            ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
-            ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select},
-            ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-            ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-            ["<C-k>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-            ["<C-j>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+            ["<PageUp>"] = cmp.mapping.select_prev_item {
+              behavior = cmp.SelectBehavior.Select,
+              count = 8,
+            },
+            ["<PageDown>"] = cmp.mapping.select_next_item {
+              behavior = cmp.SelectBehavior.Select,
+              count = 8,
+            },
+            ["<C-PageUp>"] = cmp.mapping.select_prev_item {
+              behavior = cmp.SelectBehavior.Select,
+              count = 16,
+            },
+            ["<C-PageDown>"] = cmp.mapping.select_next_item {
+              behavior = cmp.SelectBehavior.Select,
+              count = 16,
+            },
+            ["<S-PageUp>"] = cmp.mapping.select_prev_item {
+              behavior = cmp.SelectBehavior.Select,
+              count = 16,
+            },
+            ["<S-PageDown>"] = cmp.mapping.select_next_item {
+              behavior = cmp.SelectBehavior.Select,
+              count = 16,
+            },
+            ["<Up>"] = cmp.mapping.select_prev_item {
+              behavior = cmp.SelectBehavior.Select,
+            },
+            ["<Down>"] = cmp.mapping.select_next_item {
+              behavior = cmp.SelectBehavior.Select,
+            },
+            ["<C-p>"] = cmp.mapping.select_prev_item {
+              behavior = cmp.SelectBehavior.Insert,
+            },
+            ["<C-n>"] = cmp.mapping.select_next_item {
+              behavior = cmp.SelectBehavior.Insert,
+            },
+            ["<C-k>"] = cmp.mapping.select_prev_item {
+              behavior = cmp.SelectBehavior.Insert,
+            },
+            ["<C-j>"] = cmp.mapping.select_next_item {
+              behavior = cmp.SelectBehavior.Insert,
+            },
             ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
             ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
             ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
             ["<C-y>"] = cmp.config.disable,
-            ["<C-e>"] = cmp.mapping { i = cmp.mapping.abort(), c = cmp.mapping.close() },
+            ["<C-e>"] = cmp.mapping {
+              i = cmp.mapping.abort(),
+              c = cmp.mapping.close(),
+            },
             ["<CR>"] = cmp.mapping.confirm { select = false },
             ["<Tab>"] = cmp.mapping(function(fallback)
               if cmp.visible() then
@@ -350,5 +436,5 @@ return {
         }
       end,
     },
-  } -- end of collection
-}   -- end of return
+  }, -- end of collection
+}    -- end of return
