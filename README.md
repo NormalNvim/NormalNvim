@@ -17,15 +17,16 @@ yarn npm     # Necessary for most formatters and parsers.
 
 ## Distro features
 
-* 😴 Lazy: Plugins are loaded lazily, providing super fast startup times.
-* 😎 Plugins are self-contained: Allowing you to easily delete what you don't want.
-* 🔒 Plugin version lock: Options to choose "stable" or "nightly" channels to choose between locking your plugin versions, or go bleeding edge and have the latest updates.
-* 🔙 Rollbacks: You can easily recover from a nvim distro update using :NvimRollbackRestore
-* 🔥 Hot reload: Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
-* 📱 Phone friendly: Good usability even on smalll screens.
-* ❤️ We don't treat you like you are stupid: Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
+* ⚡ **Lazy:** Plugins are loaded lazily, providing super fast performance.
+* 😎 **Plugins are self-contained:** Allowing you to easily delete what you don't want.
+* 🔋 **Batteries included:** Most plugins you will ever need are inclued and debugged by default. Get the best user experience out of the box and forget about nasty bugs in your Neovim config.
+* 🔒 **Plugin version lock:** You can choose "stable" or "nightly" update channels. Or if you prefer, use :NvimFreezePluginVersions to create your own stable versions!
+* 🔙 **Rollbacks:** You can easily recover from a nvim distro update using :NvimRollbackRestore
+* 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
+* 📱 **Phone friendly:** Good usability even on smalll screens.
+* ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
 
-## Plugins
+## Plugins included
 
 01-behaviors.lua
 ``` lua
@@ -34,6 +35,7 @@ yarn npm     # Necessary for most formatters and parsers.
 --       -> trim.nvim              [auto trim spaces]
 --       -> stickybuf.nvim         [lock special buffers]
 --       -> nvim-window-picker     [windows]
+--       -> telescope-undo.nvim    [internal clipboard history]
 --       -> better-scape.nvim      [esc]
 --       -> toggleterm.nvim        [term]
 --       -> session-manager        [session]
@@ -118,14 +120,14 @@ yarn npm     # Necessary for most formatters and parsers.
 --       -> guess-indent                   [guess-indent]
 --       -> neural                         [chatgpt code generator]
 --       -> markdown-preview.nvim          [markdown previewer]
---       -> markmap                        [markdown mindmap]
+--       -> markmap.nvim                   [markdown mindmap]
 ```
 
 ## Base
 This is the core part of the config. (WIP, make this a table)
 
 * **1-options.lua:** let and set variables.
-* **2-lazy.lua:** Here you can select the channed for updates. "Stable" by default.
+* **2-lazy.lua:** Here you can select the channel for updates. "Stable" by default.
 * **3-autocmds.lua:** Hacks to make your life better.
 * **4-mappings.lua:** All keybindings are defined here in one single place with the only exception of LSP, which can be found in [/lua/base/utils/lsp](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/utils/lsp.lua). This is necessary for us to enable/disable lsp features on the fly.
 
@@ -147,3 +149,5 @@ Originally it took AstroVim as base. But implements [this VIM config](https://gi
 
 ## TODOS
 * The plugins [vim-doxygen](https://github.com/Zeioth/vim-doxygen) and [vim-typedoc](https://github.com/Zeioth/vim-typedoc) are not compatible with windows yet. Is it planned to re-write them on lua with windows support, but in the meantime if you are on windows, please don't use them.
+* Add hyperlinks to the file names in the readme.
+* Improve the description of some plugins in the readme.
