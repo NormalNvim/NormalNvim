@@ -22,7 +22,7 @@ yarn npm     # Necessary for most formatters and parsers.
 
 * ⚡ **Lazy:** Plugins are loaded lazily, providing super fast performance.
 * 😎 **Plugins are self-contained:** Allowing you to easily delete what you don't want.
-* 🔋 **Batteries included:** Most plugins you will ever need are inclued and debugged by default. Get the best user experience out of the box and forget about nasty bugs in your Neovim config.
+* 🔋 **Batteries included:** Most plugins you will ever need are included and debugged by default. Get the best user experience out of the box and forget about nasty bugs in your Neovim config.
 * 🔒 **Plugin version lock:** You can choose "stable" or "nightly" update channels. Or if you prefer, use :NvimFreezePluginVersions to create your own stable versions!
 * 🔙 **Rollbacks:** You can easily recover from a nvim distro update using :NvimRollbackRestore
 * 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
@@ -53,6 +53,7 @@ yarn npm     # Necessary for most formatters and parsers.
 ``` lua
 --    Sections:
 --       -> astrotheme                  [theme]
+--       -> tokyonight                  [theme]
 --       -> alpha-nvim                  [greeter]
 --       -> nvim-notify                 [notifications]
 --       -> indent-blankline.nvim       [guides]
