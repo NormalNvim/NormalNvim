@@ -340,7 +340,7 @@ end
 
 -- Ranger
 if is_available "rnvimr" then
-  maps.n["<leader>r"] = { "<cmd>Ranger<cr>", desc = "File Explorer" }
+  maps.n["<leader>r"] = { "<cmd>Rnvimr<cr>", desc = "File Explorer" }
 end
 
 -- NeoTree
