@@ -1,6 +1,9 @@
 # NormalNvim
 A normal NeoVim config
 
+![screenshot_2023-05-27_16-41-26_120206834](https://github.com/Zeioth/NormalNvim/assets/3357792/8f3b76c8-3ceb-4b8d-a0e1-50f73c94eb00)
+
+
 ## Install
 
 ```sh
