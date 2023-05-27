@@ -39,64 +39,6 @@ return {
       -- Check: https://github.com/kevinhwang91/rnvimr/issues/149
       -- vim.g.rnvimr_ranger_cmd = { "ranger-custom" } -- Currently broken
     end,
-    config = function() -- FIX: Adds mouse support to rnvimr
-      -- TODO: You can delete this after the author merges it:
-      -- https://github.com/kevinhwang91/rnvimr/issues/58
-      local augroup = vim.api.nvim_create_augroup
-      local autocmd = vim.api.nvim_create_autocmd
-
-      local rnvimr_mouse_group =
-          augroup("RnvimrMouseSupport", { clear = true })
-
-      -- Enables mouse support for rnvimr
-      local function set_mouse_with_rnvimr()
-        local n_mouse = vim.o.mouse
-
-        -- Disable nvim mouse support while we are on the rnvimr buffer
-        if string.match(n_mouse, "[a|h|n]") then
-          autocmd({ "TermEnter", "WinEnter <buffer>" }, {
-            desc = "Disable nvim mouse support while we are on the rnvimr buffer",
-            group = rnvimr_mouse_group,
-            callback = function() vim.api.nvim_set_option("mouse", "") end,
-          })
-          -- Restore mouse mode on exiting rnvimr
-          autocmd({ "TermLeave", "WinLeave <buffer>" }, {
-            desc = "Disable nvim mouse support while we are on the rnvimr buffer",
-            group = rnvimr_mouse_group,
-            callback = function() vim.api.nvim_set_option("mouse", n_mouse) end,
-          })
-        end
-
-        -- Extra mouse fix for tmux
-        -- If tmux mouse mode is enabled
-        local output = vim.fn.system 'tmux display -p "#{mouse}"'
-        if output:sub(1, 1) == "1" then
-          -- Disable tmux mouse while using rnvimr
-          autocmd({ "TermEnter", "WinEnter <buffer>" }, {
-            desc = "Disable tmux mouse while using rnvimr",
-            group = rnvimr_mouse_group,
-            callback = function() vim.fn.system "tmux set mouse off" end,
-          })
-
-          -- Enable tmux mouse when mouse leaves rnvimr
-          autocmd({ "WinLeave <buffer>" }, {
-            desc = "Enable tmux mouse when mouse leaves rnvimr",
-            group = rnvimr_mouse_group,
-            callback = function() vim.fn.system "tmux set mouse on" end,
-          })
-        end
-      end
-
-      -- Entry point
-      autocmd({ "FileType rnvimr" }, {
-        desc = "If we are on the rnvimr buffer, execute the callback",
-        group = rnvimr_mouse_group,
-        callback = function()
-          -- Apply only to rnvimr
-          if vim.bo.filetype == "rnvimr" then set_mouse_with_rnvimr() end
-        end,
-      })
-    end,
   },
 
   -- project.nvim [project search + auto cd]
@@ -210,7 +152,7 @@ return {
       local autocmd = vim.api.nvim_create_autocmd
 
       local toggleterm_mouse_group =
-          augroup("ToggleTermMouseSupport", { clear = true })
+        augroup("ToggleTermMouseSupport", { clear = true })
 
       -- Enables mouse support for toggleterm
       local function set_mouse_with_toggleterm()
@@ -445,8 +387,8 @@ return {
         parent_or_close = function(state)
           local node = state.tree:get_node()
           if
-              (node.type == "directory" or node:has_children())
-              and node:is_expanded()
+            (node.type == "directory" or node:has_children())
+            and node:is_expanded()
           then
             state.commands.toggle_node(state)
           else
@@ -461,7 +403,7 @@ return {
           if node.type == "directory" or node:has_children() then
             if not node:is_expanded() then -- if unexpanded, expand
               state.commands.toggle_node(state)
-            else                           -- if expanded and has children, seleect the next child
+            else -- if expanded and has children, seleect the next child
               require("neo-tree.ui.renderer").focus_node(
                 state,
                 node:get_child_ids()[1]
@@ -495,9 +437,9 @@ return {
           for i, result in pairs(results) do
             if result.val and result.val ~= "" then
               vim.list_extend(messages, {
-                { ("%s."):format(i),           "Identifier" },
+                { ("%s."):format(i), "Identifier" },
                 { (" %s: "):format(result.msg) },
-                { result.val,                  "String" },
+                { result.val, "String" },
                 { "\n" },
               })
             end
@@ -615,20 +557,20 @@ return {
         end
 
         return (filetype == "" or buftype == "nofile") and "indent" -- only use indent until a file is opened
-            or function(bufnr)
-              return require("ufo")
-                  .getFolds(bufnr, "lsp")
-                  :catch(
-                    function(err)
-                      return handleFallbackException(bufnr, err, "treesitter")
-                    end
-                  )
-                  :catch(
-                    function(err)
-                      return handleFallbackException(bufnr, err, "indent")
-                    end
-                  )
-            end
+          or function(bufnr)
+            return require("ufo")
+              .getFolds(bufnr, "lsp")
+              :catch(
+                function(err)
+                  return handleFallbackException(bufnr, err, "treesitter")
+                end
+              )
+              :catch(
+                function(err)
+                  return handleFallbackException(bufnr, err, "indent")
+                end
+              )
+          end
       end,
     },
   },
