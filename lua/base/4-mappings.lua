@@ -7,22 +7,23 @@
 --       -> standard operations
 --       -> clipboard
 --       -> search highlighting
+--       -> improved tabulation
 --       -> packages
---       -> buffers
+--       -> buffers/tabs
 --
 --       ## Plugin bindings
 --       -> alpha-nvim
---       -> code comments
+--       -> comments.nvim
 --       -> gitsigns.nvim
 --       -> file browsers
 --       -> session manager
---       -> package manager
---       -> smart splits
---       -> symbols outline [aerial]
---       -> search [telescope]
---       -> terminal [termToggle]
---       -> improve code folding [nvim-ufo]
---       -> ui toogleable features [ui-toggles]
+--       -> smart-splits.nvim
+--       -> aerial.nvim
+--       -> telescope.nivm
+--       -> toggleterm.nvim
+--       -> dap.nvim [debugger]
+--       -> nvim-ufo [code folding]
+--       -> ui toggles
 --
 --
 --   KEYBINDINGS REFERENCE
@@ -138,7 +139,13 @@ maps.n["<ESC>"] = {
   end,
 }
 
--- packages -------------------------------------------------------
+-- Improved tabulation ------------------------------------------------------
+maps.v["<S-Tab>"] = { "<gv", desc = "unindent line" }
+maps.v["<Tab>"] = { ">gv", desc = "indent line" }
+maps.v["<"] = { "<gv", desc = "unindent line" }
+maps.v[">"] = { ">gv", desc = "indent line" }
+
+-- packages -----------------------------------------------------------------
 -- lazy
 maps.n["<leader>p"] = icons.p
 maps.n["<leader>pi"] =
@@ -165,7 +172,7 @@ maps.n["<leader>pA"] = { "<cmd>NvimUpdate<cr>", desc = "Nvim Update" }
 maps.n["<leader>pv"] = { "<cmd>NvimVersion<cr>", desc = "Nvim Version" }
 maps.n["<leader>pl"] = { "<cmd>NvimChangelog<cr>", desc = "Nvim Changelog" }
 
--- buffers -----------------------------------------------------------------
+-- buffers/tabs ------------------------------------------------------------
 maps.n["<leader>c"] = {
   function() require("base.utils.buffer").close() end,
   desc = "Close buffer",
@@ -272,9 +279,39 @@ maps.n["<leader>b|"] = {
   desc = "Vertical split buffer from tabline",
 }
 
--- navigate tabs
+-- tabs
 maps.n["]t"] = { function() vim.cmd.tabnext() end, desc = "Next tab" }
 maps.n["[t"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
+
+-- ui toggles ---------------------------------------------------------------
+maps.n["<leader>u"] = icons.u
+if is_available "nvim-autopairs" then
+  maps.n["<leader>ua"] = { ui.toggle_autopairs, desc = "Toggle autopairs" }
+end
+maps.n["<leader>ub"] = { ui.toggle_background, desc = "Toggle background" }
+if is_available "nvim-cmp" then
+  maps.n["<leader>uc"] = { ui.toggle_cmp, desc = "Toggle autocompletion" }
+end
+if is_available "nvim-colorizer.lua" then
+  maps.n["<leader>uC"] =
+    { "<cmd>ColorizerToggle<cr>", desc = "Toggle color highlight" }
+end
+maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "Toggle diagnostics" }
+maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Toggle signcolumn" }
+maps.n["<leader>ui"] = { ui.set_indent, desc = "Change indent setting" }
+maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Toggle statusline" }
+maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "Toggle CodeLens" }
+maps.n["<leader>un"] = { ui.change_number, desc = "Change line numbering" }
+maps.n["<leader>uN"] =
+  { ui.toggle_ui_notifications, desc = "Toggle UI notifications" }
+maps.n["<leader>up"] = { ui.toggle_paste, desc = "Toggle paste mode" }
+maps.n["<leader>us"] = { ui.toggle_spell, desc = "Toggle spellcheck" }
+maps.n["<leader>uS"] = { ui.toggle_conceal, desc = "Toggle conceal" }
+maps.n["<leader>ut"] = { ui.toggle_tabline, desc = "Toggle tabline" }
+maps.n["<leader>uu"] = { ui.toggle_url_match, desc = "Toggle URL highlight" }
+maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Toggle wrap" }
+maps.n["<leader>uy"] = { ui.toggle_syntax, desc = "Toggle syntax highlight" }
+maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Toggle foldcolumn" }
 
 -- -------------------------------------------------------------------------
 --
@@ -300,7 +337,7 @@ if is_available "alpha-nvim" then
   }
 end
 
--- code comments
+-- comment.nvim -------------------------------------------------------------
 if is_available "Comment.nvim" then
   maps.n["<leader>/"] = {
     function()
@@ -382,7 +419,7 @@ if is_available "neo-tree.nvim" then
   }
 end
 
--- session manager
+-- session manager ---------------------------------------------------------
 if is_available "neovim-session-manager" then
   maps.n["<leader>S"] = icons.S
   maps.n["<leader>Sl"] = {
@@ -426,7 +463,7 @@ if is_available "resession.nvim" then
   }
 end
 
--- smart splits
+-- smart-splits.nivm
 if is_available "smart-splits.nvim" then
   maps.n["<C-h>"] = {
     function() require("smart-splits").move_cursor_left() end,
@@ -473,14 +510,14 @@ else
     { "<cmd>vertical resize +2<CR>", desc = "Resize split right" }
 end
 
--- symbols outline [aerial]
+-- aerial.nvimm ------------------------------------------------------------
 if is_available "aerial.nvim" then
   maps.n["<leader>l"] = icons.l
   maps.n["<leader>lS"] =
     { function() require("aerial").toggle() end, desc = "Symbols outline" }
 end
 
--- Search [telescope]
+-- telescope.nvim ----------------------------------------------------------
 if is_available "telescope.nvim" then
   maps.n["<leader>f"] = icons.f
   maps.n["<leader>g"] = icons.g
@@ -603,7 +640,7 @@ if is_available "telescope.nvim" then
   }
 end
 
--- Terminal [termtoggle]
+-- toggleterm.nvim
 if is_available "toggleterm.nvim" then
   maps.n["<leader>t"] = icons.t
   if vim.fn.executable "lazygit" == 1 then
@@ -653,6 +690,17 @@ if is_available "toggleterm.nvim" then
   maps.t["<C-'>"] = maps.n["<F7>"] -- requires terminal that supports binding <C-'>
 end
 
+-- extra - improved terminal navigation
+maps.t["<C-h>"] =
+  { "<cmd>wincmd h<cr>", desc = "Terminal left window navigation" }
+maps.t["<C-j>"] =
+  { "<cmd>wincmd j<cr>", desc = "Terminal down window navigation" }
+maps.t["<C-k>"] =
+  { "<cmd>wincmd k<cr>", desc = "Terminal up window navigation" }
+maps.t["<C-l>"] =
+  { "<cmd>wincmd l<cr>", desc = "Terminal right window navigation" }
+
+-- dap.nvim [debugger] -----------------------------------------------------
 if is_available "nvim-dap" then
   maps.n["<leader>d"] = icons.d
   maps.v["<leader>d"] = icons.d
@@ -745,7 +793,7 @@ if is_available "nvim-dap" then
   end
 end
 
--- Improved Code Folding [nvim-ufo]
+-- nvim-ufo [code folding]
 if is_available "nvim-ufo" then
   maps.n["zR"] =
     { function() require("ufo").openAllFolds() end, desc = "Open all folds" }
@@ -762,52 +810,5 @@ if is_available "nvim-ufo" then
     desc = "Peek fold",
   }
 end
-
--- Improved tabulation - Stay in indent mode
-maps.v["<S-Tab>"] = { "<gv", desc = "unindent line" }
-maps.v["<Tab>"] = { ">gv", desc = "indent line" }
-maps.v["<"] = { "<gv", desc = "unindent line" }
-maps.v[">"] = { ">gv", desc = "indent line" }
-
--- Improved Terminal Navigation
-maps.t["<C-h>"] =
-  { "<cmd>wincmd h<cr>", desc = "Terminal left window navigation" }
-maps.t["<C-j>"] =
-  { "<cmd>wincmd j<cr>", desc = "Terminal down window navigation" }
-maps.t["<C-k>"] =
-  { "<cmd>wincmd k<cr>", desc = "Terminal up window navigation" }
-maps.t["<C-l>"] =
-  { "<cmd>wincmd l<cr>", desc = "Terminal right window navigation" }
-
-maps.n["<leader>u"] = icons.u
-
--- user interface toogleable features [ui-toggles]
-if is_available "nvim-autopairs" then
-  maps.n["<leader>ua"] = { ui.toggle_autopairs, desc = "Toggle autopairs" }
-end
-maps.n["<leader>ub"] = { ui.toggle_background, desc = "Toggle background" }
-if is_available "nvim-cmp" then
-  maps.n["<leader>uc"] = { ui.toggle_cmp, desc = "Toggle autocompletion" }
-end
-if is_available "nvim-colorizer.lua" then
-  maps.n["<leader>uC"] =
-    { "<cmd>ColorizerToggle<cr>", desc = "Toggle color highlight" }
-end
-maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "Toggle diagnostics" }
-maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Toggle signcolumn" }
-maps.n["<leader>ui"] = { ui.set_indent, desc = "Change indent setting" }
-maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Toggle statusline" }
-maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "Toggle CodeLens" }
-maps.n["<leader>un"] = { ui.change_number, desc = "Change line numbering" }
-maps.n["<leader>uN"] =
-  { ui.toggle_ui_notifications, desc = "Toggle UI notifications" }
-maps.n["<leader>up"] = { ui.toggle_paste, desc = "Toggle paste mode" }
-maps.n["<leader>us"] = { ui.toggle_spell, desc = "Toggle spellcheck" }
-maps.n["<leader>uS"] = { ui.toggle_conceal, desc = "Toggle conceal" }
-maps.n["<leader>ut"] = { ui.toggle_tabline, desc = "Toggle tabline" }
-maps.n["<leader>uu"] = { ui.toggle_url_match, desc = "Toggle URL highlight" }
-maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Toggle wrap" }
-maps.n["<leader>uy"] = { ui.toggle_syntax, desc = "Toggle syntax highlight" }
-maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Toggle foldcolumn" }
 
 utils.set_mappings(maps)
