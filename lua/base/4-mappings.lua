@@ -1,50 +1,60 @@
 -- nvim keybindings
 
 --    Sections:
---       ## TREE SITTER
---       -> nvim-treesitter                [syntax highlight]
---       -> nvim-ts-autotag                [treesitter understand html tags]
---       -> nvim-ts-context-commentstring  [treesitter comments]
---       -> nvim-colorizer                 [hex colors]
-
---       ## LSP
---       -> SchemaStore.nvim               [lsp schema manager]
---       -> mason.nvim                     [lsp package manager]
---       -> nvim-lspconfig                 [lsp config]
---       -> null-ls                        [code formatting]
---       -> luasnip                        [snippet-engine]
-
---       ## AUTO COMPLETON
---       -> nvim-cmp                       [auto completion engine]
---       -> cmp-nvim-buffer                [auto completion buffer]
---       -> cmp-nvim-path                  [auto completion path]
---       -> cmp-nvim-lsp                   [auto completion lsp]
---       -> cmp-luasnip                    [auto completion snippets]
-
--- KEYBINDING REFERENCE TABLE
--- -------------------------------------------------------------------
--- |        Mode  | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang |
--- Command        +------+-----+-----+-----+-----+-----+------+------+
--- [nore]map      | yes  |  -  |  -  | yes | yes | yes |  -   |  -   |
--- n[nore]map     | yes  |  -  |  -  |  -  |  -  |  -  |  -   |  -   |
--- [nore]map!     |  -   | yes | yes |  -  |  -  |  -  |  -   |  -   |
--- i[nore]map     |  -   | yes |  -  |  -  |  -  |  -  |  -   |  -   |
--- c[nore]map     |  -   |  -  | yes |  -  |  -  |  -  |  -   |  -   |
--- v[nore]map     |  -   |  -  |  -  | yes | yes |  -  |  -   |  -   |
--- x[nore]map     |  -   |  -  |  -  | yes |  -  |  -  |  -   |  -   |
--- s[nore]map     |  -   |  -  |  -  |  -  | yes |  -  |  -   |  -   |
--- o[nore]map     |  -   |  -  |  -  |  -  |  -  | yes |  -   |  -   |
--- t[nore]map     |  -   |  -  |  -  |  -  |  -  |  -  | yes  |  -   |
--- l[nore]map     |  -   | yes | yes |  -  |  -  |  -  |  -   | yes  |
--- -------------------------------------------------------------------
+--
+--       ## Core bindings
+--       -> icons displayed on which-key.nvim
+--       -> standard operations
+--       -> clipboard
+--       -> search highlighting
+--       -> packages
+--       -> buffers
+--
+--       ## Plugin bindings
+--       -> alpha-nvim
+--       -> code comments
+--       -> gitsigns.nvim
+--       -> file browsers
+--       -> session manager
+--       -> package manager
+--       -> smart splits
+--       -> symbols outline [aerial]
+--       -> search [telescope]
+--       -> terminal [termToggle]
+--       -> improve code folding [nvim-ufo]
+--       -> ui toogleable features [ui-toggles]
+--
+--
+--   KEYBINDINGS REFERENCE
+--   -------------------------------------------------------------------
+--   |        Mode  | Norm | Ins | Cmd | Vis | Sel | Opr | Term | Lang |
+--   Command        +------+-----+-----+-----+-----+-----+------+------+
+--   [nore]map      | yes  |  -  |  -  | yes | yes | yes |  -   |  -   |
+--   n[nore]map     | yes  |  -  |  -  |  -  |  -  |  -  |  -   |  -   |
+--   [nore]map!     |  -   | yes | yes |  -  |  -  |  -  |  -   |  -   |
+--   i[nore]map     |  -   | yes |  -  |  -  |  -  |  -  |  -   |  -   |
+--   c[nore]map     |  -   |  -  | yes |  -  |  -  |  -  |  -   |  -   |
+--   v[nore]map     |  -   |  -  |  -  | yes | yes |  -  |  -   |  -   |
+--   x[nore]map     |  -   |  -  |  -  | yes |  -  |  -  |  -   |  -   |
+--   s[nore]map     |  -   |  -  |  -  |  -  | yes |  -  |  -   |  -   |
+--   o[nore]map     |  -   |  -  |  -  |  -  |  -  | yes |  -   |  -   |
+--   t[nore]map     |  -   |  -  |  -  |  -  |  -  |  -  | yes  |  -   |
+--   l[nore]map     |  -   | yes | yes |  -  |  -  |  -  |  -   | yes  |
+--   -------------------------------------------------------------------
 
 local utils = require "base.utils"
 local is_available = utils.is_available
 local ui = require "base.utils.ui"
-
 local maps = { i = {}, n = {}, v = {}, t = {} }
 
-local sections = {
+-- -------------------------------------------------------------------------
+--
+-- ## Base bindings ########################################################
+--
+-- -------------------------------------------------------------------------
+
+-- icons displayed on which-key.nvim ---------------------------------------
+local icons = {
   f = { desc = "󰍉 Find" },
   p = { desc = "󰏖 Packages" },
   l = { desc = " LSP" },
@@ -57,21 +67,16 @@ local sections = {
   t = { desc = " Terminal" },
 }
 if not vim.g.icons_enabled then
-  vim.tbl_map(
-    function(opts) opts.desc = opts.desc:gsub("^.* ", "") end,
-    sections
-  )
+  vim.tbl_map(function(opts) opts.desc = opts.desc:gsub("^.* ", "") end, icons)
 end
 
--- Normal --
--- Standard Operations
+-- standard Operations -----------------------------------------------------
 maps.n["j"] =
   { "v:count == 0 ? 'gj' : 'j'", expr = true, desc = "Move cursor down" }
 maps.n["k"] =
   { "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Move cursor up" }
 maps.n["<leader>w"] = { "<cmd>w<cr>", desc = "Save" }
 maps.n["<leader>q"] = { "<cmd>bw<cr>", desc = "Quit buffer" }
---maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
 maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New File" }
 maps.n["gx"] =
   { utils.system_open, desc = "Open the file under cursor with system app" }
@@ -80,21 +85,23 @@ maps.n["<C-q>"] = { "<cmd>q!<cr>", desc = "Force quit" }
 maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
 maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
 maps.i["<C-BS>"] = { "<C-W>", desc = "Enable CTRL+backsace to delete." }
+--maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" } -- Disabled by default so we don't exit by accident. To exit do :q
 
 -- Override nvim default behavior so it doesn't auto-yank when pasting on visual mode.
 maps.v["p"] = { "P", desc = "Paste content you've previourly yanked" }
 maps.v["P"] = { "p", desc = "Yank what you are going to override, then paste" }
 
--- Clipboard → only useful when clibboard is commented on ./1-options.lua
+-- clipboard ---------------------------------------------------------------
+-- only useful when the option clipboard is commented on ./1-options.lua
 maps.n["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
 maps.v["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
 maps.n["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
 maps.v["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
 maps.n["<C-p>"] = { '"+p<esc>', desc = "Paste from cliboard" }
 
--- Also, x does not copy to clipboard.
+-- Make 'x' key not copy to clipboard when depeting a character.
 maps.n["x"] = {
-  -- Allow x key to delete blank lines in normal mode.
+  -- Also let's allow 'x' key to delete blank lines in normal mode.
   function()
     if vim.fn.col "." == 1 then
       local line = vim.fn.getline "."
@@ -112,8 +119,11 @@ maps.n["x"] = {
 }
 maps.v["x"] = { '"_x', desc = "Delete character without yanking it." }
 
--- ESC - Clear hlsearch, but preserve original functionality.
---       TIP: Change ESC for <leader>ENTER to avoid triggering it by accident.
+-- search highlighing ------------------------------------------------------
+-- use ESC to clear hlsearch, while preserving its original functionality.
+--
+-- TIP: If you prefer,  use <leader>ENTER instead of <ESC>
+--      to avoid triggering it by accident.
 maps.n["<ESC>"] = {
   function()
     if vim.fn.hlexists "Search" then
@@ -128,8 +138,9 @@ maps.n["<ESC>"] = {
   end,
 }
 
--- Plugin Manager
-maps.n["<leader>p"] = sections.p
+-- packages -------------------------------------------------------
+-- lazy
+maps.n["<leader>p"] = icons.p
 maps.n["<leader>pi"] =
   { function() require("lazy").install() end, desc = "Plugins Install" }
 maps.n["<leader>ps"] =
@@ -141,14 +152,20 @@ maps.n["<leader>pu"] =
 maps.n["<leader>pU"] =
   { function() require("lazy").update() end, desc = "Plugins Update" }
 
--- Nvim updater
+-- mason
+if is_available "mason.nvim" then
+  maps.n["<leader>pm"] = { "<cmd>Mason<cr>", desc = "Mason Installer" }
+  maps.n["<leader>pM"] = { "<cmd>MasonUpdateAll<cr>", desc = "Mason Update" }
+end
+
+-- nvim updater
 maps.n["<leader>pa"] =
   { "<cmd>NvimUpdatePackages<cr>", desc = "Update Plugins and Mason" }
 maps.n["<leader>pA"] = { "<cmd>NvimUpdate<cr>", desc = "Nvim Update" }
 maps.n["<leader>pv"] = { "<cmd>NvimVersion<cr>", desc = "Nvim Version" }
 maps.n["<leader>pl"] = { "<cmd>NvimChangelog<cr>", desc = "Nvim Changelog" }
 
--- Manage Buffers
+-- buffers -----------------------------------------------------------------
 maps.n["<leader>c"] = {
   function() require("base.utils.buffer").close() end,
   desc = "Close buffer",
@@ -182,7 +199,7 @@ maps.n["<b"] = {
   desc = "Move buffer tab left",
 }
 
-maps.n["<leader>b"] = sections.b
+maps.n["<leader>b"] = icons.b
 maps.n["<leader>bc"] = {
   function() require("base.utils.buffer").close_all(true) end,
   desc = "Close all buffers except current",
@@ -215,7 +232,7 @@ maps.n["<leader>br"] = {
   function() require("base.utils.buffer").close_right() end,
   desc = "Close all buffers to the right",
 }
-maps.n["<leader>bs"] = sections.bs
+maps.n["<leader>bs"] = icons.bs
 maps.n["<leader>bse"] = {
   function() require("base.utils.buffer").sort "extension" end,
   desc = "Sort by extension (buffers)",
@@ -255,11 +272,17 @@ maps.n["<leader>b|"] = {
   desc = "Vertical split buffer from tabline",
 }
 
--- Navigate tabs
+-- navigate tabs
 maps.n["]t"] = { function() vim.cmd.tabnext() end, desc = "Next tab" }
 maps.n["[t"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
 
--- Alpha
+-- -------------------------------------------------------------------------
+--
+-- ## Plugin bindings
+--
+-- -------------------------------------------------------------------------
+
+-- alpha-nvim --------------------------------------------------------------
 if is_available "alpha-nvim" then
   maps.n["<leader>h"] = {
     function()
@@ -277,7 +300,7 @@ if is_available "alpha-nvim" then
   }
 end
 
--- Comment
+-- code comments
 if is_available "Comment.nvim" then
   maps.n["<leader>/"] = {
     function()
@@ -293,9 +316,9 @@ if is_available "Comment.nvim" then
   }
 end
 
--- GitSigns
+-- gitsigns.nvim -----------------------------------------------------------
 if is_available "gitsigns.nvim" then
-  maps.n["<leader>g"] = sections.g
+  maps.n["<leader>g"] = icons.g
   maps.n["]g"] =
     { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }
   maps.n["[g"] = {
@@ -338,12 +361,13 @@ if is_available "gitsigns.nvim" then
     { function() require("gitsigns").diffthis() end, desc = "View Git diff" }
 end
 
--- Ranger
+-- file browsers ------------------------------------
+-- ranger
 if is_available "rnvimr" then
   maps.n["<leader>r"] = { "<cmd>Rnvimr<cr>", desc = "File Explorer" }
 end
 
--- NeoTree
+-- neotree
 if is_available "neo-tree.nvim" then
   maps.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle Explorer" }
   maps.n["<leader>o"] = {
@@ -358,9 +382,9 @@ if is_available "neo-tree.nvim" then
   }
 end
 
--- Session Manager
+-- session manager
 if is_available "neovim-session-manager" then
-  maps.n["<leader>S"] = sections.S
+  maps.n["<leader>S"] = icons.S
   maps.n["<leader>Sl"] = {
     "<cmd>SessionManager! load_last_session<cr>",
     desc = "Load last session",
@@ -379,7 +403,7 @@ if is_available "neovim-session-manager" then
   }
 end
 if is_available "resession.nvim" then
-  maps.n["<leader>S"] = sections.S
+  maps.n["<leader>S"] = icons.S
   maps.n["<leader>Sl"] = {
     function() require("resession").load "Last Session" end,
     desc = "Load last session",
@@ -402,13 +426,7 @@ if is_available "resession.nvim" then
   }
 end
 
--- Package Manager
-if is_available "mason.nvim" then
-  maps.n["<leader>pm"] = { "<cmd>Mason<cr>", desc = "Mason Installer" }
-  maps.n["<leader>pM"] = { "<cmd>MasonUpdateAll<cr>", desc = "Mason Update" }
-end
-
--- Smart Splits
+-- smart splits
 if is_available "smart-splits.nvim" then
   maps.n["<C-h>"] = {
     function() require("smart-splits").move_cursor_left() end,
@@ -455,17 +473,17 @@ else
     { "<cmd>vertical resize +2<CR>", desc = "Resize split right" }
 end
 
--- SymbolsOutline
+-- symbols outline [aerial]
 if is_available "aerial.nvim" then
-  maps.n["<leader>l"] = sections.l
+  maps.n["<leader>l"] = icons.l
   maps.n["<leader>lS"] =
     { function() require("aerial").toggle() end, desc = "Symbols outline" }
 end
 
--- Telescope
+-- Search [telescope]
 if is_available "telescope.nvim" then
-  maps.n["<leader>f"] = sections.f
-  maps.n["<leader>g"] = sections.g
+  maps.n["<leader>f"] = icons.f
+  maps.n["<leader>g"] = icons.g
   maps.n["<leader>gb"] = {
     function() require("telescope.builtin").git_branches() end,
     desc = "Git branches",
@@ -567,7 +585,7 @@ if is_available "telescope.nvim" then
     end,
     desc = "Find words in all files",
   }
-  maps.n["<leader>l"] = sections.l
+  maps.n["<leader>l"] = icons.l
   maps.n["<leader>lD"] = {
     function() require("telescope.builtin").diagnostics() end,
     desc = "Search diagnostics",
@@ -585,11 +603,11 @@ if is_available "telescope.nvim" then
   }
 end
 
--- Terminal
+-- Terminal [termtoggle]
 if is_available "toggleterm.nvim" then
-  maps.n["<leader>t"] = sections.t
+  maps.n["<leader>t"] = icons.t
   if vim.fn.executable "lazygit" == 1 then
-    maps.n["<leader>g"] = sections.g
+    maps.n["<leader>g"] = icons.g
     maps.n["<leader>gg"] = {
       function() utils.toggle_term_cmd "lazygit" end,
       desc = "ToggleTerm lazygit",
@@ -636,8 +654,8 @@ if is_available "toggleterm.nvim" then
 end
 
 if is_available "nvim-dap" then
-  maps.n["<leader>d"] = sections.d
-  maps.v["<leader>d"] = sections.d
+  maps.n["<leader>d"] = icons.d
+  maps.v["<leader>d"] = icons.d
   -- modified function keys found with `showkey -a` in the terminal to get key code
   -- run `nvim -V3log +quit` and search through the "Terminal info" in the `log` file for the correct keyname
   maps.n["<F5>"] =
@@ -727,7 +745,7 @@ if is_available "nvim-dap" then
   end
 end
 
--- Improved Code Folding
+-- Improved Code Folding [nvim-ufo]
 if is_available "nvim-ufo" then
   maps.n["zR"] =
     { function() require("ufo").openAllFolds() end, desc = "Open all folds" }
@@ -761,8 +779,9 @@ maps.t["<C-k>"] =
 maps.t["<C-l>"] =
   { "<cmd>wincmd l<cr>", desc = "Terminal right window navigation" }
 
-maps.n["<leader>u"] = sections.u
--- Custom menu for modification of the user experience
+maps.n["<leader>u"] = icons.u
+
+-- user interface toogleable features [ui-toggles]
 if is_available "nvim-autopairs" then
   maps.n["<leader>ua"] = { ui.toggle_autopairs, desc = "Toggle autopairs" }
 end
