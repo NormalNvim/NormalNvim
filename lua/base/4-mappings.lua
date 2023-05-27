@@ -81,6 +81,10 @@ maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
 maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
 maps.i["<C-BS>"] = { "<C-W>", desc = "Enable CTRL+backsace to delete." }
 
+-- Override nvim default behavior so it doesn't auto-yank when pasting on visual mode.
+maps.v["p"] = { "P", desc = "Paste content you've previourly yanked" }
+maps.v["P"] = { "p", desc = "Yank what you are going to override, then paste" }
+
 -- Clipboard → only useful when clibboard is commented on ./1-options.lua
 maps.n["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
 maps.v["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
