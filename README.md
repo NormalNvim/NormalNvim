@@ -82,7 +82,6 @@ yarn npm     # Necessary for most formatters and parsers.
 --       -> mason.nvim                     [lsp package manager]
 --       -> nvim-lspconfig                 [lsp config]
 --       -> null-ls                        [code formatting]
---       -> luasnip                        [snippet-engine]
 
 --       ## AUTO COMPLETON
 --       -> nvim-cmp                       [auto completion engine]
