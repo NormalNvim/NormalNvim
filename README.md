@@ -47,4 +47,3 @@ Originally it took AstroVim as base. But implements [this VIM config](https://gi
 
 ## TODOS
 * The plugins [vim-doxygen](https://github.com/Zeioth/vim-doxygen) and [vim-typedoc](https://github.com/Zeioth/vim-typedoc) are not compatible with windows yet. Is it planned to re-write them on lua with windows support, but in the meantime if you are on windows, please don't use them.
-* Instead of showing every plugin in the readme, show the main ones with a description. That will make easier for people to understand the main features. We can move the details to the wiki. (Also this approach allow us to use images to display whichkeys for every category).
