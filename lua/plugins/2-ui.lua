@@ -199,7 +199,7 @@ return {
         ),
         dashboard.button("p", "💼 Projects", "<cmd>Telescope projects<CR>"),
         dashboard.button("", ""),
-        dashboard.button("q", "   Quit", ":exit<CR>"),
+        dashboard.button("q", "   Quit", "<cmd>exit<CR>"),
         --  --button("LDR f '", "  Bookmarks  "),
       }
 
