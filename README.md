@@ -7,6 +7,7 @@ A normal NeoVim config
 ## Install
 
 ```sh
+# Fork the project first, then clone from there.
 git clone --depth 1 git@github.com:Zeioth/NormalNVim.git ~/.config/nvim
 nvim
 ```
@@ -29,110 +30,10 @@ yarn npm     # Necessary for most formatters and parsers.
 * 📱 **Phone friendly:** Good usability even on smalll screens.
 * ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
 
-## Plugins included
+## Design decissions
+You are expected to fork the project before cloning it. So you are the only one in control.
 
-01-behaviors.lua
-``` lua
---       -> ranger file browser    [ranger]
---       -> project.nvim           [project search + auto cd]
---       -> trim.nvim              [auto trim spaces]
---       -> stickybuf.nvim         [lock special buffers]
---       -> nvim-window-picker     [windows]
---       -> telescope-undo.nvim    [internal clipboard history]
---       -> better-scape.nvim      [esc]
---       -> toggleterm.nvim        [term]
---       -> session-manager        [session]
---       -> spectre.nvim           [search and replace in project]
---       -> neotree file browser   [neotree]
---       -> nvim-ufo               [folding mod]
---       -> nvim-neoclip           [nvim clipboard] 
-
-```
-
-02-ui.lua
-``` lua
---    Sections:
---       -> astrotheme                  [theme]
---       -> tokyonight                  [theme]
---       -> alpha-nvim                  [greeter]
---       -> nvim-notify                 [notifications]
---       -> indent-blankline.nvim       [guides]
---       -> heirline                    [statusbar]
---       -> telescope                   [search]
---       -> telescope-fzf-native.nvim   [search backend]
---       -> smart-splits                [window-dimming]
---       -> dressing.nvim               [better ui elements]
---       -> nvim-web-devicons           [icons | ui]
---       -> lspkind.nvim                [icons | lsp]
---       -> nvim-scrollbar              [scrollbar]
---       -> mini.animate                [animations]
---       -> which-key                   [on-screen keybinding]
-```
-
-3-dev-core.lua
-``` lua
---    Sections:
---       ## TREE SITTER
---       -> nvim-treesitter                [syntax highlight]
---       -> nvim-ts-autotag                [treesitter understand html tags]
---       -> nvim-ts-context-commentstring  [treesitter comments]
---       -> nvim-colorizer                 [hex colors]
-
---       ## LSP
---       -> SchemaStore.nvim               [lsp schema manager]
---       -> mason.nvim                     [lsp package manager]
---       -> nvim-lspconfig                 [lsp config]
---       -> null-ls                        [code formatting]
-
---       ## AUTO COMPLETON
---       -> nvim-cmp                       [auto completion engine]
---       -> cmp-nvim-buffer                [auto completion buffer]
---       -> cmp-nvim-path                  [auto completion path]
---       -> cmp-nvim-lsp                   [auto completion lsp]
---       -> cmp-luasnip                    [auto completion snippets]
-```
-
-4-dev.lua
-``` lua
---    Sections:
---       ## COMMENTS
---       -> comment.nvim                   [adv. comments]
-
---       ## SNIPPETS
---       -> luasnip                        [snippet engine]
---       -> friendly-snippets              [snippet templates]
-
---       ## GIT
---       -> gitsigns.nvim                  [git hunks]
---       -> fugitive.vim                   [git commands]
-
---       ## DEBUGGER
---       -> nvim-dap                       [debugger]
-
---       ## TESTING
---       -> neotest.nvim                   [unit testing]
-
---       ## ANALYZER
---       -> aerial.nvim                    [code analyzer]
-
---       ## CODE DOCUMENTATION
---       -> vim-doxigen                    [general    doc generator]
---       -> vim-typedoc                    [typescript doc generator]
-
---       ## EXTRA
---       -> guess-indent                   [guess-indent]
---       -> neural                         [chatgpt code generator]
---       -> markdown-preview.nvim          [markdown previewer]
---       -> markmap.nvim                   [markdown mindmap]
-```
-
-## Base
-This is the core part of the config. (WIP, make this a table)
-
-* **1-options.lua:** Variables go here.
-* **2-lazy.lua:** Here you can select the channel for updates. "Stable" by default.
-* **3-autocmds.lua:** Hacks to make your life better.
-* **4-mappings.lua:** All keybindings are defined here in one single place with the only exception of LSP, which can be found in [/lua/base/utils/lsp](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/utils/lsp.lua). This is necessary for us to enable/disable lsp features on the fly.
+NormalNvim updates don't have a user space. This is by design. It makes the code considerably more simple. And it also gives you the keys of the house to change anything you desire. The downside is, if you update from this repo, your settings will be overrided, so don't do it unless you know what you ae doing; This is not a distro you are expected to update often from upstream. It is meant to be used as a base to create your own distro. This makes this distro rock solid and reliable.
 
 ## FAQ
 Please before opening an issue, check [the AstroVim manual](https://astronvim.com/) and the [AstroVim Community](https://github.com/AstroNvim/astrocommunity) repos where you can find help about how to install and configure most plugins.
@@ -152,4 +53,3 @@ Originally it took AstroVim as base. But implements [this VIM config](https://gi
 
 ## TODOS
 * The plugins [vim-doxygen](https://github.com/Zeioth/vim-doxygen) and [vim-typedoc](https://github.com/Zeioth/vim-typedoc) are not compatible with windows yet. Is it planned to re-write them on lua with windows support, but in the meantime if you are on windows, please don't use them.
-* Instead of showing every plugin in the readme, show the main ones with a description. That will make easier for people to understand the main features. We can move the details to the wiki. (Also this approach allow us to use images to display whichkeys for every category).
