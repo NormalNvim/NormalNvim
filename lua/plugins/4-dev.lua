@@ -61,7 +61,10 @@ return {
   --  https://github.com/rafamadriz/friendly-snippets
   {
     "L3MON4D3/LuaSnip",
-    dependencies = { "rafamadriz/friendly-snippets" },
+    dependencies = {
+      "rafamadriz/friendly-snippets",
+      "benfowler/telescope-luasnip.nvim",
+    },
     config = function(_, opts)
       if opts then require("luasnip").config.setup(opts) end
       vim.tbl_map(
@@ -69,6 +72,11 @@ return {
         { "vscode", "snipmate", "lua" }
       )
     end,
+  },
+  -- Telescope integration (:Telescope luasnip)
+  {
+    "nvim-telescope/telescope.nvim",
+    opts = function() require("telescope").load_extension "luasnip" end,
   },
 
   --  GIT ---------------------------------------------------------------------
