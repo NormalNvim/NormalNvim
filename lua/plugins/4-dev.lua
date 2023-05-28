@@ -74,6 +74,7 @@ return {
     end,
   },
   -- Telescope integration (:Telescope luasnip)
+  -- Note: It only shows the available snippets for the current language.
   {
     "nvim-telescope/telescope.nvim",
     opts = function() require("telescope").load_extension "luasnip" end,
