@@ -9,28 +9,23 @@
 --       -> search highlighting
 --       -> improved tabulation
 --       -> packages
---       -> buffers/tabs [buffers]
---       -> ui toggles [ui]
+--       -> buffers/tabs                       [buffers]
+--       -> ui toggles                         [ui]
 --
 --       ## Plugin bindings (from astronvim)
 --       -> alpha-nvim
 --       -> comments.nvim
---       -> [git]
+--       -> git                                [git]
 --       -> file browsers
 --       -> session manager
 --       -> smart-splits.nvim
 --       -> aerial.nvim
---       -> telescope.nivm [find]
+--       -> telescope.nivm                     [find]
 --       -> toggleterm.nvim
---       -> dap.nvim [debugger]
---       -> nvim-ufo [code folding]
---
---       ## Plugin bindings (from normalnvim)
---  TODO    We should move Telescope from ui to behaviors actually
---          or should we order plugins based on the keybinding categories?
---  TODO     -> neotest [tests]                  → Dale el icono de... ¿?
---  TODO     -> dooku → cagegoria propia? [docs] → Dale el icono de markdown
---  TODO     -> markdown-preview/markmap  [docs] → Dale el icono de markdown
+--       -> dap.nvim                           [debugger]
+--       -> neotest                            [tests]
+--       -> nvim-ufo
+--       -> code documentation                 [docs]
 --       -> [neural]
 
 --
@@ -71,6 +66,8 @@ local icons = {
   b = { desc = "󰓩 Buffers" },
   bs = { desc = "󰒺 Sort Buffers" },
   d = { desc = " Debugger" },
+  tt = { desc = "󰙨 Test" },
+  dc = { desc = "  Docs" },
   g = { desc = "󰊢 Git" },
   S = { desc = "󱂬 Session" },
   t = { desc = " Terminal" },
@@ -93,7 +90,7 @@ maps.n["<C-q>"] = { "<cmd>q!<cr>", desc = "Force quit" }
 maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
 maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
 maps.i["<C-BS>"] = { "<C-W>", desc = "Enable CTRL+backsace to delete." }
---maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" } -- Disabled by default so we don't exit by accident. To exit do :q
+maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
 
 -- Override nvim default behavior so it doesn't auto-yank when pasting on visual mode.
 maps.v["p"] = { "P", desc = "Paste content you've previourly yanked" }
@@ -830,7 +827,39 @@ if is_available "nvim-dap" then
   end
 end
 
--- nvim-ufo [code folding] -------------------------------------------------
+-- testing [tests] -------------------------------------------------
+if is_available "neotest" then
+  maps.n["<leader>T"] = icons.tt
+  maps.v["<leader>T"] = icons.tt
+  maps.n["<leader>Tu"] = {
+    function() require("neotest").run.run() end,
+    desc = "Unit",
+  }
+  maps.n["<leader>Ts"] = {
+    function() require("neotest").run.stop() end,
+    desc = "Stop unit",
+  }
+  maps.n["<leader>Tf"] = {
+    function() require("neotest").run.run(vim.fn.expand "%") end,
+    desc = "File",
+  }
+  maps.n["<leader>Td"] = {
+    function() require("neotest").run.run { strategy = "dap" } end,
+    desc = "Unit in debugger",
+  }
+end
+
+-- Extra - nodejs testing commands
+maps.n["<leader>Ta"] = {
+  function() vim.cmd "TestNodejs" end,
+  desc = "All",
+}
+maps.n["<leader>Te"] = {
+  function() vim.cmd "TestNodejsE2e" end,
+  desc = "E2e",
+}
+
+-- nvim-ufo [code folding] --------------------------------------------------
 if is_available "nvim-ufo" then
   maps.n["zR"] =
   { function() require("ufo").openAllFolds() end, desc = "Open all folds" }
@@ -848,33 +877,41 @@ if is_available "nvim-ufo" then
   }
 end
 
--- spectre.nvim ------------------------------------------------------------
--- nvim-neoclip ------------------------------------------------------------
--- luasnip
--- fugitive
--- neotest
--- dooku
--- [Code documentation] ----------------------------------------------------
--- if is_available "neural" then
---   maps.n["<leader>m"] = {
---     function() require("neural").prompt() end,
---     desc = "ChatGPT code generator",
---   }
--- end
+-- code docmentation [docs] -------------------------------------------------
 
--- [neural] ------------------------------------------------------------------
+if is_available "markdown-preview.nivm" or is_available "markmap.nvim" then
+  maps.n["<leader>D"] = icons.dc
+
+  -- Markdown preview
+  if is_available "markdown-preview.nvim" then
+    maps.n["<leader>Dp"] = {
+      function() require("markdown-preview").prompt() end,
+      desc = "Md preview",
+    }
+  end
+
+  -- Markdown Mindmap
+  if is_available "markmap.nvim" then
+    maps.n["<leader>Dm"] = {
+      function() vim.cmd ":MarkmapOpen" end,
+      desc = "Md markmap",
+    }
+  end
+
+  -- dooku.nvim → Enable it once ported to lua
+  -- if is_available "markmap.nvim" then
+  --   maps.n["<leader>Dm"] = {
+  --     function() vim.cmd ":MarkmapOpen" end,
+  --     desc = "Markdown mental map",
+  --   }
+  -- end
+end
+
+-- [neural] -----------------------------------------------------------------
 if is_available "neural" then
   maps.n["<leader>m"] = {
     function() require("neural").prompt() end,
     desc = "Ask ChatGPT for code",
   }
 end
---
---       -> nvim-neoclip            → metelo bajo find
---       -> luasnip                 → molaria tenerlo en find (find snippets)
---       -> fugitive [git] → Metelo jungo a gitsigns en [git]
---       -> neotest [tests]                  → Dale el icono de... ¿?
---       -> dooku → cagegoria propia? [docs] → Dale el icono de markdown
---       -> markdown-preview/markmap  [docs] → Dale el icono de markdown
---       -> neural    Suelto → Dale el icono de copilot
 utils.set_mappings(maps)
