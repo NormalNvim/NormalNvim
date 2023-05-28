@@ -28,8 +28,6 @@
 --       ## Plugin bindings (from normalnvim)
 --       NOTE: Should we move Telescope from ui to behaviors actually?
 --             or should we order plugins based on the keybinding categories?
---       -> spectre.nvim            → metelo bajo find
---       -> nvim-neoclip            → metelo bajo find
 --       -> luasnip                 → molaria tenerlo en find (find snippets)
 --       -> fugitive [git] → Metelo jungo a gitsigns en [git]
 --       -> neotest [tests]                  → Dale el icono de... ¿?
@@ -85,13 +83,13 @@ end
 
 -- standard Operations -----------------------------------------------------
 maps.n["j"] =
-  { "v:count == 0 ? 'gj' : 'j'", expr = true, desc = "Move cursor down" }
+{ "v:count == 0 ? 'gj' : 'j'", expr = true, desc = "Move cursor down" }
 maps.n["k"] =
-  { "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Move cursor up" }
+{ "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Move cursor up" }
 maps.n["<leader>w"] = { "<cmd>w<cr>", desc = "Save" }
 maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New File" }
 maps.n["gx"] =
-  { utils.system_open, desc = "Open the file under cursor with system app" }
+{ utils.system_open, desc = "Open the file under cursor with system app" }
 maps.n["<C-s>"] = { "<cmd>w!<cr>", desc = "Force write" }
 maps.n["<C-q>"] = { "<cmd>q!<cr>", desc = "Force quit" }
 maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
@@ -160,15 +158,15 @@ maps.v[">"] = { ">gv", desc = "indent line" }
 -- lazy
 maps.n["<leader>p"] = icons.p
 maps.n["<leader>pi"] =
-  { function() require("lazy").install() end, desc = "Plugins Install" }
+{ function() require("lazy").install() end, desc = "Plugins Install" }
 maps.n["<leader>ps"] =
-  { function() require("lazy").home() end, desc = "Plugins Status" }
+{ function() require("lazy").home() end, desc = "Plugins Status" }
 maps.n["<leader>pS"] =
-  { function() require("lazy").sync() end, desc = "Plugins Sync" }
+{ function() require("lazy").sync() end, desc = "Plugins Sync" }
 maps.n["<leader>pu"] =
-  { function() require("lazy").check() end, desc = "Plugins Check Updates" }
+{ function() require("lazy").check() end, desc = "Plugins Check Updates" }
 maps.n["<leader>pU"] =
-  { function() require("lazy").update() end, desc = "Plugins Update" }
+{ function() require("lazy").update() end, desc = "Plugins Update" }
 
 -- mason
 if is_available "mason.nvim" then
@@ -178,7 +176,7 @@ end
 
 -- nvim updater
 maps.n["<leader>pa"] =
-  { "<cmd>NvimUpdatePackages<cr>", desc = "Update Plugins and Mason" }
+{ "<cmd>NvimUpdatePackages<cr>", desc = "Update Plugins and Mason" }
 maps.n["<leader>pA"] = { "<cmd>NvimUpdate<cr>", desc = "Nvim Update" }
 maps.n["<leader>pv"] = { "<cmd>NvimVersion<cr>", desc = "Nvim Version" }
 maps.n["<leader>pl"] = { "<cmd>NvimChangelog<cr>", desc = "Nvim Changelog" }
@@ -305,7 +303,7 @@ if is_available "nvim-cmp" then
 end
 if is_available "nvim-colorizer.lua" then
   maps.n["<leader>uC"] =
-    { "<cmd>ColorizerToggle<cr>", desc = "Toggle color highlight" }
+  { "<cmd>ColorizerToggle<cr>", desc = "Toggle color highlight" }
 end
 maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "Toggle diagnostics" }
 maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Toggle signcolumn" }
@@ -314,7 +312,7 @@ maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Toggle statusline" }
 maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "Toggle CodeLens" }
 maps.n["<leader>un"] = { ui.change_number, desc = "Change line numbering" }
 maps.n["<leader>uN"] =
-  { ui.toggle_ui_notifications, desc = "Toggle UI notifications" }
+{ ui.toggle_ui_notifications, desc = "Toggle UI notifications" }
 maps.n["<leader>up"] = { ui.toggle_paste, desc = "Toggle paste mode" }
 maps.n["<leader>us"] = { ui.toggle_spell, desc = "Toggle spellcheck" }
 maps.n["<leader>uS"] = { ui.toggle_conceal, desc = "Toggle conceal" }
@@ -336,8 +334,8 @@ if is_available "alpha-nvim" then
     function()
       local wins = vim.api.nvim_tabpage_list_wins(0)
       if
-        #wins > 1
-        and vim.api.nvim_get_option_value("filetype", { win = wins[1] })
+          #wins > 1
+          and vim.api.nvim_get_option_value("filetype", { win = wins[1] })
           == "neo-tree"
       then
         vim.fn.win_gotoid(wins[2]) -- go to non-neo-tree window to toggle alpha
@@ -370,7 +368,7 @@ maps.n["<leader>g"] = icons.g
 if is_available "gitsigns.nvim" then
   maps.n["<leader>g"] = icons.g
   maps.n["]g"] =
-    { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }
+  { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }
   maps.n["[g"] = {
     function() require("gitsigns").prev_hunk() end,
     desc = "Previous Git hunk",
@@ -472,9 +470,9 @@ if is_available "neovim-session-manager" then
     desc = "Save this session",
   }
   maps.n["<leader>Sd"] =
-    { "<cmd>SessionManager! delete_session<cr>", desc = "Delete session" }
+  { "<cmd>SessionManager! delete_session<cr>", desc = "Delete session" }
   maps.n["<leader>Sf"] =
-    { "<cmd>SessionManager! load_session<cr>", desc = "Search sessions" }
+  { "<cmd>SessionManager! load_session<cr>", desc = "Search sessions" }
   maps.n["<leader>S."] = {
     "<cmd>SessionManager! load_current_dir_session<cr>",
     desc = "Load current directory session",
@@ -487,15 +485,15 @@ if is_available "resession.nvim" then
     desc = "Load last session",
   }
   maps.n["<leader>Ss"] =
-    { function() require("resession").save() end, desc = "Save this session" }
+  { function() require("resession").save() end, desc = "Save this session" }
   maps.n["<leader>St"] = {
     function() require("resession").save_tab() end,
     desc = "Save this tab's session",
   }
   maps.n["<leader>Sd"] =
-    { function() require("resession").delete() end, desc = "Delete a session" }
+  { function() require("resession").delete() end, desc = "Delete a session" }
   maps.n["<leader>Sf"] =
-    { function() require("resession").load() end, desc = "Load a session" }
+  { function() require("resession").load() end, desc = "Load a session" }
   maps.n["<leader>S."] = {
     function()
       require("resession").load(vim.fn.getcwd(), { dir = "dirsession" })
@@ -546,16 +544,16 @@ else
   maps.n["<C-Up>"] = { "<cmd>resize -2<CR>", desc = "Resize split up" }
   maps.n["<C-Down>"] = { "<cmd>resize +2<CR>", desc = "Resize split down" }
   maps.n["<C-Left>"] =
-    { "<cmd>vertical resize -2<CR>", desc = "Resize split left" }
+  { "<cmd>vertical resize -2<CR>", desc = "Resize split left" }
   maps.n["<C-Right>"] =
-    { "<cmd>vertical resize +2<CR>", desc = "Resize split right" }
+  { "<cmd>vertical resize +2<CR>", desc = "Resize split right" }
 end
 
 -- aerial.nvimm ------------------------------------------------------------
 if is_available "aerial.nvim" then
   maps.n["<leader>l"] = icons.l
   maps.n["<leader>lS"] =
-    { function() require("aerial").toggle() end, desc = "Symbols outline" }
+  { function() require("aerial").toggle() end, desc = "Symbols outline" }
 end
 
 -- telescope.nvim [find] ----------------------------------------------------
@@ -592,13 +590,13 @@ if is_available "telescope.nvim" then
         cwd = cwd,
       } -- call telescope
     end,
-    desc = "Find Nvim config files",
+    desc = "Find nvim config files",
   }
   maps.n["<leader>fb"] = {
     function() require("telescope.builtin").buffers() end,
     desc = "Find buffers",
   }
-  maps.n["<leader>fc"] = {
+  maps.n["<leader>fw"] = {
     function() require("telescope.builtin").grep_string() end,
     desc = "Find for word under cursor",
   }
@@ -607,14 +605,14 @@ if is_available "telescope.nvim" then
     desc = "Find commands",
   }
   maps.n["<leader>ff"] = {
-    function() require("telescope.builtin").find_files() end,
-    desc = "Find files",
-  }
-  maps.n["<leader>fF"] = {
     function()
       require("telescope.builtin").find_files { hidden = true, no_ignore = true }
     end,
     desc = "Find all files",
+  }
+  maps.n["<leader>fF"] = {
+    function() require("telescope.builtin").find_files() end,
+    desc = "Find files (no hidden)",
   }
   maps.n["<leader>fh"] = {
     function() require("telescope.builtin").help_tags() end,
@@ -638,9 +636,9 @@ if is_available "telescope.nvim" then
     function() require("telescope.builtin").oldfiles() end,
     desc = "Find history",
   }
-  maps.n["<leader>fr"] = {
+  maps.n["<leader>fv"] = {
     function() require("telescope.builtin").registers() end,
-    desc = "Find registers",
+    desc = "Find vim registers",
   }
   maps.n["<leader>ft"] = {
     function()
@@ -648,11 +646,7 @@ if is_available "telescope.nvim" then
     end,
     desc = "Find themes",
   }
-  maps.n["<leader>fw"] = {
-    function() require("telescope.builtin").live_grep() end,
-    desc = "Find words",
-  }
-  maps.n["<leader>fW"] = {
+  maps.n["<leader>fp"] = {
     function()
       require("telescope.builtin").live_grep {
         additional_args = function(args)
@@ -660,8 +654,14 @@ if is_available "telescope.nvim" then
         end,
       }
     end,
-    desc = "Find words in all files",
+    desc = "Find words in project",
   }
+  maps.n["<leader>fP"] = {
+    function() require("telescope.builtin").live_grep() end,
+    desc = "Find words in project (no hidden)",
+  }
+
+  -- Some lsp keymappings are here because they depend on telescope
   maps.n["<leader>l"] = icons.l
   maps.n["<leader>lD"] = {
     function() require("telescope.builtin").diagnostics() end,
@@ -678,13 +678,34 @@ if is_available "telescope.nvim" then
     end,
     desc = "Search symbols",
   }
+
+  -- extra - spectre.nvim (search and replace in project)
+  if is_available "nvim-spectre" then
+    maps.n["<leader>fr"] = {
+      function() require("spectre").open() end,
+      desc = "Find and replace word in project",
+    }
+  end
+
+  -- extra - nvim-neoclip (neovim internal clipboard)
+  --         Specially useful if you disable the shared clipboard in options.
+  if is_available "nvim-neoclip.lua" then
+    maps.n["<leader>fc"] = {
+      function() require("telescope").extensions.neoclip.default() end,
+      desc = "Find recorded macros",
+    }
+    maps.n["<leader>fq"] = {
+      function() require("telescope").extensions.macroscope.default() end,
+      desc = "Find recorded macros",
+    }
+  end
 end
 
 -- toggleterm.nvim ----------------------------------------------------------
 if is_available "toggleterm.nvim" then
   maps.n["<leader>t"] = icons.t
   maps.n["<leader>tt"] =
-    { "<cmd>ToggleTerm direction=float<cr>", desc = "ToggleTerm float" }
+  { "<cmd>ToggleTerm direction=float<cr>", desc = "ToggleTerm float" }
   maps.n["<leader>th"] = {
     "<cmd>ToggleTerm size=10 direction=horizontal<cr>",
     desc = "ToggleTerm horizontal split",
@@ -701,13 +722,13 @@ end
 
 -- extra - improved terminal navigation
 maps.t["<C-h>"] =
-  { "<cmd>wincmd h<cr>", desc = "Terminal left window navigation" }
+{ "<cmd>wincmd h<cr>", desc = "Terminal left window navigation" }
 maps.t["<C-j>"] =
-  { "<cmd>wincmd j<cr>", desc = "Terminal down window navigation" }
+{ "<cmd>wincmd j<cr>", desc = "Terminal down window navigation" }
 maps.t["<C-k>"] =
-  { "<cmd>wincmd k<cr>", desc = "Terminal up window navigation" }
+{ "<cmd>wincmd k<cr>", desc = "Terminal up window navigation" }
 maps.t["<C-l>"] =
-  { "<cmd>wincmd l<cr>", desc = "Terminal right window navigation" }
+{ "<cmd>wincmd l<cr>", desc = "Terminal right window navigation" }
 
 -- dap.nvim [debugger] -----------------------------------------------------
 if is_available "nvim-dap" then
@@ -716,9 +737,9 @@ if is_available "nvim-dap" then
   -- modified function keys found with `showkey -a` in the terminal to get key code
   -- run `nvim -V3log +quit` and search through the "Terminal info" in the `log` file for the correct keyname
   maps.n["<F5>"] =
-    { function() require("dap").continue() end, desc = "Debugger: Start" }
+  { function() require("dap").continue() end, desc = "Debugger: Start" }
   maps.n["<F17>"] =
-    { function() require("dap").terminate() end, desc = "Debugger: Stop" } -- Shift+F5
+  { function() require("dap").terminate() end, desc = "Debugger: Stop" }   -- Shift+F5
   maps.n["<F21>"] = {
     function()
       vim.ui.input({ prompt = "Condition: " }, function(condition)
@@ -732,17 +753,17 @@ if is_available "nvim-dap" then
     desc = "Debugger: Restart",
   } -- Control+F5
   maps.n["<F6>"] =
-    { function() require("dap").pause() end, desc = "Debugger: Pause" }
+  { function() require("dap").pause() end, desc = "Debugger: Pause" }
   maps.n["<F9>"] = {
     function() require("dap").toggle_breakpoint() end,
     desc = "Debugger: Toggle Breakpoint",
   }
   maps.n["<F10>"] =
-    { function() require("dap").step_over() end, desc = "Debugger: Step Over" }
+  { function() require("dap").step_over() end, desc = "Debugger: Step Over" }
   maps.n["<F11>"] =
-    { function() require("dap").step_into() end, desc = "Debugger: Step Into" }
+  { function() require("dap").step_into() end, desc = "Debugger: Step Into" }
   maps.n["<F23>"] =
-    { function() require("dap").step_out() end, desc = "Debugger: Step Out" } -- Shift+F11
+  { function() require("dap").step_out() end, desc = "Debugger: Step Out" }   -- Shift+F11
   maps.n["<leader>db"] = {
     function() require("dap").toggle_breakpoint() end,
     desc = "Toggle Breakpoint (F9)",
@@ -752,7 +773,7 @@ if is_available "nvim-dap" then
     desc = "Clear Breakpoints",
   }
   maps.n["<leader>dc"] =
-    { function() require("dap").continue() end, desc = "Start/Continue (F5)" }
+  { function() require("dap").continue() end, desc = "Start/Continue (F5)" }
   maps.n["<leader>dC"] = {
     function()
       vim.ui.input({ prompt = "Condition: " }, function(condition)
@@ -762,25 +783,25 @@ if is_available "nvim-dap" then
     desc = "Conditional Breakpoint (S-F9)",
   }
   maps.n["<leader>di"] =
-    { function() require("dap").step_into() end, desc = "Step Into (F11)" }
+  { function() require("dap").step_into() end, desc = "Step Into (F11)" }
   maps.n["<leader>do"] =
-    { function() require("dap").step_over() end, desc = "Step Over (F10)" }
+  { function() require("dap").step_over() end, desc = "Step Over (F10)" }
   maps.n["<leader>dO"] =
-    { function() require("dap").step_out() end, desc = "Step Out (S-F11)" }
+  { function() require("dap").step_out() end, desc = "Step Out (S-F11)" }
   maps.n["<leader>dq"] =
-    { function() require("dap").close() end, desc = "Close Session" }
+  { function() require("dap").close() end, desc = "Close Session" }
   maps.n["<leader>dQ"] = {
     function() require("dap").terminate() end,
     desc = "Terminate Session (S-F5)",
   }
   maps.n["<leader>dp"] =
-    { function() require("dap").pause() end, desc = "Pause (F6)" }
+  { function() require("dap").pause() end, desc = "Pause (F6)" }
   maps.n["<leader>dr"] =
-    { function() require("dap").restart_frame() end, desc = "Restart (C-F5)" }
+  { function() require("dap").restart_frame() end, desc = "Restart (C-F5)" }
   maps.n["<leader>dR"] =
-    { function() require("dap").repl.toggle() end, desc = "Toggle REPL" }
+  { function() require("dap").repl.toggle() end, desc = "Toggle REPL" }
   maps.n["<leader>ds"] =
-    { function() require("dap").run_to_cursor() end, desc = "Run To Cursor" }
+  { function() require("dap").run_to_cursor() end, desc = "Run To Cursor" }
 
   if is_available "nvim-dap-ui" then
     maps.n["<leader>dE"] = {
@@ -792,9 +813,9 @@ if is_available "nvim-dap" then
       desc = "Evaluate Input",
     }
     maps.v["<leader>dE"] =
-      { function() require("dapui").eval() end, desc = "Evaluate Input" }
+    { function() require("dapui").eval() end, desc = "Evaluate Input" }
     maps.n["<leader>du"] =
-      { function() require("dapui").toggle() end, desc = "Toggle Debugger UI" }
+    { function() require("dapui").toggle() end, desc = "Toggle Debugger UI" }
     maps.n["<leader>dh"] = {
       function() require("dap.ui.widgets").hover() end,
       desc = "Debugger Hover",
@@ -805,15 +826,15 @@ end
 -- nvim-ufo [code folding] -------------------------------------------------
 if is_available "nvim-ufo" then
   maps.n["zR"] =
-    { function() require("ufo").openAllFolds() end, desc = "Open all folds" }
+  { function() require("ufo").openAllFolds() end, desc = "Open all folds" }
   maps.n["zM"] =
-    { function() require("ufo").closeAllFolds() end, desc = "Close all folds" }
+  { function() require("ufo").closeAllFolds() end, desc = "Close all folds" }
   maps.n["zr"] = {
     function() require("ufo").openFoldsExceptKinds() end,
     desc = "Fold less",
   }
   maps.n["zm"] =
-    { function() require("ufo").closeFoldsWith() end, desc = "Fold more" }
+  { function() require("ufo").closeFoldsWith() end, desc = "Fold more" }
   maps.n["zp"] = {
     function() require("ufo").peekFoldedLinesUnderCursor() end,
     desc = "Peek fold",
@@ -842,7 +863,6 @@ if is_available "neural" then
   }
 end
 --
---       -> spectre.nvim            → metelo bajo find
 --       -> nvim-neoclip            → metelo bajo find
 --       -> luasnip                 → molaria tenerlo en find (find snippets)
 --       -> fugitive [git] → Metelo jungo a gitsigns en [git]
