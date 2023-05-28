@@ -15,6 +15,7 @@ nvim
 ## System dependencies
 ```sh
 pynvim       # Necessary for Rnvimr.
+lcov         # Necessary for code coverage.
 yarn npm     # Necessary for most formatters and parsers.
 ```
 
