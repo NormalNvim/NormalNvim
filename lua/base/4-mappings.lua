@@ -9,22 +9,34 @@
 --       -> search highlighting
 --       -> improved tabulation
 --       -> packages
---       -> buffers/tabs
+--       -> buffers/tabs [buffers]
+--       -> ui toggles [ui]
 --
---       ## Plugin bindings
+--       ## Plugin bindings (from astronvim)
 --       -> alpha-nvim
 --       -> comments.nvim
---       -> gitsigns.nvim
+--       -> [git]
 --       -> file browsers
 --       -> session manager
 --       -> smart-splits.nvim
 --       -> aerial.nvim
---       -> telescope.nivm
+--       -> telescope.nivm [find]
 --       -> toggleterm.nvim
 --       -> dap.nvim [debugger]
 --       -> nvim-ufo [code folding]
---       -> ui toggles
 --
+--       ## Plugin bindings (from normalnvim)
+--       NOTE: Should we move Telescope from ui to behaviors actually?
+--             or should we order plugins based on the keybinding categories?
+--       -> spectre.nvim            → metelo bajo find
+--       -> nvim-neoclip            → metelo bajo find
+--       -> luasnip                 → molaria tenerlo en find (find snippets)
+--       -> fugitive [git] → Metelo jungo a gitsigns en [git]
+--       -> neotest [tests]                  → Dale el icono de... ¿?
+--       -> dooku → cagegoria propia? [docs] → Dale el icono de markdown
+--       -> markdown-preview/markmap  [docs] → Dale el icono de markdown
+--       -> [neural]
+
 --
 --   KEYBINDINGS REFERENCE
 --   -------------------------------------------------------------------
@@ -77,7 +89,6 @@ maps.n["j"] =
 maps.n["k"] =
   { "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Move cursor up" }
 maps.n["<leader>w"] = { "<cmd>w<cr>", desc = "Save" }
-maps.n["<leader>q"] = { "<cmd>bw<cr>", desc = "Quit buffer" }
 maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New File" }
 maps.n["gx"] =
   { utils.system_open, desc = "Open the file under cursor with system app" }
@@ -172,10 +183,10 @@ maps.n["<leader>pA"] = { "<cmd>NvimUpdate<cr>", desc = "Nvim Update" }
 maps.n["<leader>pv"] = { "<cmd>NvimVersion<cr>", desc = "Nvim Version" }
 maps.n["<leader>pl"] = { "<cmd>NvimChangelog<cr>", desc = "Nvim Changelog" }
 
--- buffers/tabs ------------------------------------------------------------
+-- buffers/tabs [buffers ]--------------------------------------------------
 maps.n["<leader>c"] = {
   function() require("base.utils.buffer").close() end,
-  desc = "Close buffer",
+  desc = "Close Buffer",
 }
 maps.n["<leader>C"] = {
   function() require("base.utils.buffer").close(0, true) end,
@@ -283,7 +294,7 @@ maps.n["<leader>b|"] = {
 maps.n["]t"] = { function() vim.cmd.tabnext() end, desc = "Next tab" }
 maps.n["[t"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
 
--- ui toggles ---------------------------------------------------------------
+-- ui toggles [ui ]---------------------------------------------------------
 maps.n["<leader>u"] = icons.u
 if is_available "nvim-autopairs" then
   maps.n["<leader>ua"] = { ui.toggle_autopairs, desc = "Toggle autopairs" }
@@ -353,7 +364,9 @@ if is_available "Comment.nvim" then
   }
 end
 
--- gitsigns.nvim -----------------------------------------------------------
+-- [git] -----------------------------------------------------------
+-- gitsigns.nvim
+maps.n["<leader>g"] = icons.g
 if is_available "gitsigns.nvim" then
   maps.n["<leader>g"] = icons.g
   maps.n["]g"] =
@@ -394,19 +407,47 @@ if is_available "gitsigns.nvim" then
     function() require("gitsigns").undo_stage_hunk() end,
     desc = "Unstage Git hunk",
   }
-  maps.n["<leader>gd"] =
-    { function() require("gitsigns").diffthis() end, desc = "View Git diff" }
+  maps.n["<leader>gd"] = {
+    function() require("gitsigns").diffthis() end,
+    desc = "View Git diff",
+  }
+  if vim.fn.executable "lazygit" == 1 then -- if lazygit exists, show it
+    maps.n["<leader>gg"] = {
+      function()
+        local git_dir = vim.fn.finddir(".git", vim.fn.getcwd() .. ";")
+        if git_dir ~= "" then
+          utils.toggle_term_cmd "lazygit"
+        else
+          utils.notify("Not a git repository", 4)
+        end
+      end,
+      desc = "ToggleTerm lazygit",
+    }
+  end
+  if vim.fn.executable "gitui" == 1 then -- if gitui exists, show it
+    maps.n["<leader>gg"] = {
+      function()
+        local git_dir = vim.fn.finddir(".git", vim.fn.getcwd() .. ";")
+        if git_dir ~= "" then
+          utils.toggle_term_cmd "gitui"
+        else
+          utils.notify("Not a git repository", 4)
+        end
+      end,
+      desc = "ToggleTerm gitui",
+    }
+  end
 end
 
 -- file browsers ------------------------------------
 -- ranger
 if is_available "rnvimr" then
-  maps.n["<leader>r"] = { "<cmd>Rnvimr<cr>", desc = "File Explorer" }
+  maps.n["<leader>r"] = { "<cmd>RnvimrToggle<cr>", desc = "Ranger" }
 end
 
 -- neotree
 if is_available "neo-tree.nvim" then
-  maps.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle Explorer" }
+  maps.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle Neotree" }
   maps.n["<leader>o"] = {
     function()
       if vim.bo.filetype == "neo-tree" then
@@ -415,7 +456,7 @@ if is_available "neo-tree.nvim" then
         vim.cmd.Neotree "focus"
       end
     end,
-    desc = "Toggle Explorer Focus",
+    desc = "Toggle Neotree Focus",
   }
 end
 
@@ -517,10 +558,9 @@ if is_available "aerial.nvim" then
     { function() require("aerial").toggle() end, desc = "Symbols outline" }
 end
 
--- telescope.nvim ----------------------------------------------------------
+-- telescope.nvim [find] ----------------------------------------------------
 if is_available "telescope.nvim" then
   maps.n["<leader>f"] = icons.f
-  maps.n["<leader>g"] = icons.g
   maps.n["<leader>gb"] = {
     function() require("telescope.builtin").git_branches() end,
     desc = "Git branches",
@@ -640,41 +680,10 @@ if is_available "telescope.nvim" then
   }
 end
 
--- toggleterm.nvim
+-- toggleterm.nvim ----------------------------------------------------------
 if is_available "toggleterm.nvim" then
   maps.n["<leader>t"] = icons.t
-  if vim.fn.executable "lazygit" == 1 then
-    maps.n["<leader>g"] = icons.g
-    maps.n["<leader>gg"] = {
-      function() utils.toggle_term_cmd "lazygit" end,
-      desc = "ToggleTerm lazygit",
-    }
-    maps.n["<leader>tl"] = {
-      function() utils.toggle_term_cmd "lazygit" end,
-      desc = "ToggleTerm lazygit",
-    }
-  end
-  if vim.fn.executable "node" == 1 then
-    maps.n["<leader>tn"] =
-      { function() utils.toggle_term_cmd "node" end, desc = "ToggleTerm node" }
-  end
-  if vim.fn.executable "gdu" == 1 then
-    maps.n["<leader>tu"] =
-      { function() utils.toggle_term_cmd "gdu" end, desc = "ToggleTerm gdu" }
-  end
-  if vim.fn.executable "btm" == 1 then
-    maps.n["<leader>tt"] =
-      { function() utils.toggle_term_cmd "btm" end, desc = "ToggleTerm btm" }
-  end
-  local python = vim.fn.executable "python" == 1 and "python"
-    or vim.fn.executable "python3" == 1 and "python3"
-  if python then
-    maps.n["<leader>tp"] = {
-      function() utils.toggle_term_cmd(python) end,
-      desc = "ToggleTerm python",
-    }
-  end
-  maps.n["<leader>tf"] =
+  maps.n["<leader>tt"] =
     { "<cmd>ToggleTerm direction=float<cr>", desc = "ToggleTerm float" }
   maps.n["<leader>th"] = {
     "<cmd>ToggleTerm size=10 direction=horizontal<cr>",
@@ -793,7 +802,7 @@ if is_available "nvim-dap" then
   end
 end
 
--- nvim-ufo [code folding]
+-- nvim-ufo [code folding] -------------------------------------------------
 if is_available "nvim-ufo" then
   maps.n["zR"] =
     { function() require("ufo").openAllFolds() end, desc = "Open all folds" }
@@ -811,4 +820,34 @@ if is_available "nvim-ufo" then
   }
 end
 
+-- spectre.nvim ------------------------------------------------------------
+-- nvim-neoclip ------------------------------------------------------------
+-- luasnip
+-- fugitive
+-- neotest
+-- dooku
+-- [Code documentation] ----------------------------------------------------
+if is_available "neural" then
+  maps.n["<leader>m"] = {
+    function() require("neural").prompt() end,
+    desc = "ChatGPT Ask Code",
+  }
+end
+
+-- [neural] ------------------------------------------------------------------
+if is_available "neural" then
+  maps.n["<leader>m"] = {
+    function() require("neural").prompt() end,
+    desc = "ChatGPT Ask Code",
+  }
+end
+--
+--       -> spectre.nvim            → metelo bajo find
+--       -> nvim-neoclip            → metelo bajo find
+--       -> luasnip                 → molaria tenerlo en find (find snippets)
+--       -> fugitive [git] → Metelo jungo a gitsigns en [git]
+--       -> neotest [tests]                  → Dale el icono de... ¿?
+--       -> dooku → cagegoria propia? [docs] → Dale el icono de markdown
+--       -> markdown-preview/markmap  [docs] → Dale el icono de markdown
+--       -> neural    Suelto → Dale el icono de copilot
 utils.set_mappings(maps)
