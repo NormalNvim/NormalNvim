@@ -92,8 +92,16 @@ return {
 
   --  Git fugitive mergetool + [git commands]
   --  https://github.com/lewis6991/gitsigns.nvim
-  --  We haven't created keybindings for this plugin.
-  --  We only use it as mergetool with "git mergetool"
+  --
+  --  We only want this plugin to use it as mergetool like "git mergetool".
+  --  To enable this feature, add this  to your global .gitconfig:
+  --
+  --  [mergetool "fugitive"]
+  --  	cmd = nvim -c \"Gvdiffsplit!\" \"$MERGED\"
+  --  [merge]
+  --  	tool = fugitive
+  --  [mergetool]
+  --  	keepBackup = false
   {
     "https://github.com/tpope/vim-fugitive",
     enabled = vim.fn.executable "git" == 1,
