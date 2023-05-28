@@ -287,6 +287,12 @@ maps.n["<leader>b|"] = {
 maps.n["]t"] = { function() vim.cmd.tabnext() end, desc = "Next tab" }
 maps.n["[t"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
 
+-- zen mode
+if is_available "zen-mode.nvim" then
+  maps.n["<leader>bz"] =
+  { function() vim.cmd "ZenMode" end, desc = "Zen mode" }
+end
+
 -- ui toggles [ui ]---------------------------------------------------------
 maps.n["<leader>u"] = icons.u
 if is_available "nvim-autopairs" then
@@ -316,6 +322,16 @@ maps.n["<leader>uu"] = { ui.toggle_url_match, desc = "Toggle URL highlight" }
 maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Toggle wrap" }
 maps.n["<leader>uy"] = { ui.toggle_syntax, desc = "Toggle syntax highlight" }
 maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Toggle foldcolumn" }
+maps.n["<leader>ua"] = {
+  function()
+    if vim.g.minianimate_disable then
+      vim.g.minianimate_disable = false
+    else
+      vim.g.minianimate_disable = true
+    end
+  end,
+  desc = "Toggle animations",
+}
 
 -- -------------------------------------------------------------------------
 --
@@ -828,9 +844,9 @@ if is_available "nvim-dap" then
 end
 
 -- testing [tests] -------------------------------------------------
+maps.n["<leader>T"] = icons.tt
+maps.v["<leader>T"] = icons.tt
 if is_available "neotest" then
-  maps.n["<leader>T"] = icons.tt
-  maps.v["<leader>T"] = icons.tt
   maps.n["<leader>Tu"] = {
     function() require("neotest").run.run() end,
     desc = "Unit",
@@ -885,15 +901,15 @@ if is_available "markdown-preview.nivm" or is_available "markmap.nvim" then
   -- Markdown preview
   if is_available "markdown-preview.nvim" then
     maps.n["<leader>Dp"] = {
-      function() require("markdown-preview").prompt() end,
-      desc = "Md preview",
+      function() vim.cmd "MarkdownPreview" end,
+      desc = "Markdown preview",
     }
   end
 
   -- Markdown Mindmap
   if is_available "markmap.nvim" then
     maps.n["<leader>Dm"] = {
-      function() vim.cmd ":MarkmapOpen" end,
+      function() vim.cmd "MarkmapOpen" end,
       desc = "Md markmap",
     }
   end
@@ -909,9 +925,10 @@ end
 
 -- [neural] -----------------------------------------------------------------
 if is_available "neural" then
-  maps.n["<leader>m"] = {
+  maps.n["<leader>a"] = {
     function() require("neural").prompt() end,
-    desc = "Ask ChatGPT for code",
+    desc = "Ask chatgpt",
   }
 end
 utils.set_mappings(maps)
+
