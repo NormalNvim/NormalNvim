@@ -25,12 +25,12 @@
 --       ## CODE DOCUMENTATION
 --       -> vim-doxigen                    [general    doc generator]
 --       -> vim-typedoc                    [typescript doc generator]
-
---       ## EXTRA
---       -> guess-indent                   [guess-indent]
---       -> neural                         [chatgpt code generator]
 --       -> markdown-preview.nvim          [markdown previewer]
 --       -> markmap.nvim                   [markdown mindmap]
+
+--       ## ARTIFICIAL INTELLIGENCE
+--       -> guess-indent                   [guess-indent]
+--       -> neural                         [chatgpt code generator]
 
 --       ## NOT INSTALLED
 --       -> distant.nvim                   [ssh to edit in a remove machine]
@@ -92,6 +92,7 @@ return {
 
   --  Git fugitive mergetool + [git commands]
   --  https://github.com/lewis6991/gitsigns.nvim
+  --  PR needed: Setup keymappings to move quickly when using this feature.
   --
   --  We only want this plugin to use it as mergetool like "git mergetool".
   --  To enable this feature, add this  to your global .gitconfig:
@@ -334,6 +335,30 @@ return {
     },
   },
 
+  --  [markdown previewer]
+  --  https://github.com/iamcco/markdown-preview.nvim
+  --  Note: If you change the build command, wipe ~/.local/data/nvim/lazy
+  {
+    "iamcco/markdown-preview.nvim",
+    ft = "markdown",
+    cmd = {
+      "MarkdownPreview",
+      "MarkdownPreviewStop",
+      "MarkdownPreviewToggle",
+    },
+    build = "cd app && yarn install",
+  },
+
+  --  [markdown markmap]
+  --  https://github.com/Zeioth/markmap.nvim
+  --  Note: If you change the build command, wipe ~/.local/data/nvim/lazy
+  {
+    "Zeioth/markmap.nvim",
+    build = "yarn global add markmap-cli",
+    cmd = { "MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop" },
+    config = function(_, opts) require("markmap").setup(opts) end,
+  },
+
   --  EXTRA ----------------------------------------------------------------
   --  [guess-indent]
   --  https://github.com/NMAC427/guess-indent.nvim
@@ -366,29 +391,5 @@ return {
         },
       }
     end,
-  },
-
-  --  [markdown previewer]
-  --  https://github.com/iamcco/markdown-preview.nvim
-  --  Note: If you change the build command, wipe ~/.local/data/nvim/lazy
-  {
-    "iamcco/markdown-preview.nvim",
-    ft = "markdown",
-    cmd = {
-      "MarkdownPreview",
-      "MarkdownPreviewStop",
-      "MarkdownPreviewToggle",
-    },
-    build = "cd app && yarn install",
-  },
-
-  --  [markdown markmap]
-  --  https://github.com/Zeioth/markmap.nvim
-  --  Note: If you change the build command, wipe ~/.local/data/nvim/lazy
-  {
-    "Zeioth/markmap.nvim",
-    build = "yarn global add markmap-cli",
-    cmd = { "MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop" },
-    config = function(_, opts) require("markmap").setup(opts) end,
   },
 }
