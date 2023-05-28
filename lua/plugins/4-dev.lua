@@ -47,11 +47,11 @@ return {
     },
     opts = function()
       local commentstring_avail, commentstring =
-          pcall(require, "ts_context_commentstring.integrations.comment_nvim")
+        pcall(require, "ts_context_commentstring.integrations.comment_nvim")
       return commentstring_avail
           and commentstring
           and { pre_hook = commentstring.create_pre_hook() }
-          or {}
+        or {}
     end,
   },
 
@@ -92,6 +92,8 @@ return {
 
   --  Git fugitive mergetool + [git commands]
   --  https://github.com/lewis6991/gitsigns.nvim
+  --  We haven't created keybindings for this plugin.
+  --  We only use it as mergetool with "git mergetool"
   {
     "https://github.com/tpope/vim-fugitive",
     enabled = vim.fn.executable "git" == 1,
@@ -176,11 +178,11 @@ return {
   --    :TestNodejsE2e -- Run the e2e tests/suite for this nodejs project.
   {
     "nvim-neotest/neotest",
-    cmd = {             -- All this commands are meant to run in a test file
-      "TestRunBlock",   -- Run the nearest test to the cursor.
-      "TestStopBlock",  -- Stop the test to the cursor.
+    cmd = { -- All this commands are meant to run in a test file
+      "TestRunBlock", -- Run the nearest test to the cursor.
+      "TestStopBlock", -- Stop the test to the cursor.
       "TestDebugBlock", -- Debug the nearest test under the cursor using dap.
-      "TestRunFile",    -- Run all tests in the file.
+      "TestRunFile", -- Run all tests in the file.
     },
     config = function()
       -- get neotest namespace (api call creates or returns namespace)
@@ -189,10 +191,10 @@ return {
         virtual_text = {
           format = function(diagnostic)
             local message = diagnostic.message
-                :gsub("\n", " ")
-                :gsub("\t", " ")
-                :gsub("%s+", " ")
-                :gsub("^%s+", "")
+              :gsub("\n", " ")
+              :gsub("\t", " ")
+              :gsub("%s+", " ")
+              :gsub("^%s+", "")
             return message
           end,
         },
