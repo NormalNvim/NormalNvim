@@ -7,7 +7,8 @@
 --       -> trim.nvim              [auto trim spaces]
 --       -> stickybuf.nvim         [lock special buffers]
 --       -> telescope-undo.nvim    [internal clipboard history]
---       -> nvim-window-picker     [windows]
+--       -> nvim-window-picker     [select buffer with a letter]
+--       -> smart-splits           [move and resize buffers]
 --       -> better-scape.nvim      [esc]
 --       -> toggleterm.nvim        [term]
 --       -> session-manager        [session]
@@ -111,11 +112,22 @@ return {
     opts = function() require("telescope").load_extension "undo" end,
   },
 
-  -- easier window selection  [windows]
+  -- nvim-window-picker  [select buffer with a letter]
   -- https://github.com/s1n7ax/nvim-window-picker
+  -- Warning: currently no keybinding assigned for this plugin.
   {
     "s1n7ax/nvim-window-picker",
     opts = { use_winbar = "smart" },
+  },
+
+  --  smart-splits [move and resize buffers]
+  --  https://github.com/mrjones2014/smart-splits.nvim
+  {
+    "mrjones2014/smart-splits.nvim",
+    opts = {
+      ignored_filetypes = { "nofile", "quickfix", "qf", "prompt" },
+      ignored_buftypes = { "nofile" },
+    },
   },
 
   -- Improved [esc]
@@ -152,7 +164,7 @@ return {
       local autocmd = vim.api.nvim_create_autocmd
 
       local toggleterm_mouse_group =
-        augroup("ToggleTermMouseSupport", { clear = true })
+          augroup("ToggleTermMouseSupport", { clear = true })
 
       -- Enables mouse support for toggleterm
       local function set_mouse_with_toggleterm()
@@ -387,8 +399,8 @@ return {
         parent_or_close = function(state)
           local node = state.tree:get_node()
           if
-            (node.type == "directory" or node:has_children())
-            and node:is_expanded()
+              (node.type == "directory" or node:has_children())
+              and node:is_expanded()
           then
             state.commands.toggle_node(state)
           else
@@ -403,7 +415,7 @@ return {
           if node.type == "directory" or node:has_children() then
             if not node:is_expanded() then -- if unexpanded, expand
               state.commands.toggle_node(state)
-            else -- if expanded and has children, seleect the next child
+            else                           -- if expanded and has children, seleect the next child
               require("neo-tree.ui.renderer").focus_node(
                 state,
                 node:get_child_ids()[1]
@@ -437,9 +449,9 @@ return {
           for i, result in pairs(results) do
             if result.val and result.val ~= "" then
               vim.list_extend(messages, {
-                { ("%s."):format(i), "Identifier" },
+                { ("%s."):format(i),           "Identifier" },
                 { (" %s: "):format(result.msg) },
-                { result.val, "String" },
+                { result.val,                  "String" },
                 { "\n" },
               })
             end
@@ -557,20 +569,20 @@ return {
         end
 
         return (filetype == "" or buftype == "nofile") and "indent" -- only use indent until a file is opened
-          or function(bufnr)
-            return require("ufo")
-              .getFolds(bufnr, "lsp")
-              :catch(
-                function(err)
-                  return handleFallbackException(bufnr, err, "treesitter")
-                end
-              )
-              :catch(
-                function(err)
-                  return handleFallbackException(bufnr, err, "indent")
-                end
-              )
-          end
+            or function(bufnr)
+              return require("ufo")
+                  .getFolds(bufnr, "lsp")
+                  :catch(
+                    function(err)
+                      return handleFallbackException(bufnr, err, "treesitter")
+                    end
+                  )
+                  :catch(
+                    function(err)
+                      return handleFallbackException(bufnr, err, "indent")
+                    end
+                  )
+            end
       end,
     },
   },
