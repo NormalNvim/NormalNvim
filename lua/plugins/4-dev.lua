@@ -301,7 +301,7 @@ return {
     opts = function() require("telescope").load_extension "aerial" end,
   },
 
-  --  CODE DOCUMENTATION ----------------------------------------------------------------
+  --  CODE DOCUMENTATION ------------------------------------------------------
   --  vim-doxygen
   --  https://github.com/Zeioth/vim-doxygen
   {
@@ -359,7 +359,7 @@ return {
     config = function(_, opts) require("markmap").setup(opts) end,
   },
 
-  --  EXTRA ----------------------------------------------------------------
+  --  ARTIFICIAL INTELIGENCE  -------------------------------------------------
   --  [guess-indent]
   --  https://github.com/NMAC427/guess-indent.nvim
   {
