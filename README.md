@@ -7,6 +7,7 @@ A normal NeoVim config
 ## Install
 
 ```sh
+# Fork the project first, then clone from there.
 git clone --depth 1 git@github.com:Zeioth/NormalNVim.git ~/.config/nvim
 nvim
 ```
@@ -28,6 +29,11 @@ yarn npm     # Necessary for most formatters and parsers.
 * 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
 * 📱 **Phone friendly:** Good usability even on smalll screens.
 * ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
+
+## Design decisions
+You are expected to fork the project before cloning it. So you are the one in control.
+
+NormalNvim updates don't use a user space. This is by design. It makes the code considerably more simple. And it also gives you the keys of the house to change anything you desire. The downside is, if you update from this repo, some of your settings will be overrided, so don't do it unless you know what you ae doing; This is not a distro you are expected to update often from upstream. It is meant to be used as a base to create your own distro. This makes this distro rock solid and reliable.
 
 ## FAQ
 Please before opening an issue, check [the AstroVim manual](https://astronvim.com/) and the [AstroVim Community](https://github.com/AstroNvim/astrocommunity) repos where you can find help about how to install and configure most plugins.
