@@ -16,6 +16,7 @@
 --       -> neotree file browser   [neotree]
 --       -> nvim-ufo               [folding mod]
 --       -> nvim-neoclip           [nvim clipboard]
+--       -> suda.vim               [write as sudo]
 
 -- import custom icons
 local get_icon = require("base.utils").get_icon
@@ -542,5 +543,12 @@ return {
       require("telescope").load_extension "neoclip"
       require("telescope").load_extension "macroscope"
     end,
+  },
+
+  --  suda.nvim [write as sudo]
+  --  https://github.com/lambdalisue/suda.vim
+  {
+    "lambdalisue/suda.vim",
+    lazy = false,
   },
 }
