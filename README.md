@@ -7,7 +7,8 @@ A normal NeoVim config
 ## Install
 
 ```sh
-# Fork the project first, then clone from there.
+# Strongly recommended: 
+# Fork the project, and clone the fork instead of this.
 git clone --depth 1 git@github.com:Zeioth/NormalNVim.git ~/.config/nvim
 nvim
 ```
@@ -33,7 +34,7 @@ yarn npm     # Necessary for most formatters and parsers.
 ## Design decissions
 You are expected to fork the project before cloning it. So you are the only one in control.
 
-NormalNvim updates don't have a user space. This is by design. It makes the code considerably more simple. And it also gives you the keys of the house to change anything you desire. The downside is, if you update from this repo, your settings will be overrided, so don't do it unless you know what you ae doing; This is not a distro you are expected to update often from upstream. It is meant to be used as a base to create your own distro. This makes this distro rock solid and reliable.
+NormalNvim updates don't have a user space. This is by design. It makes the code considerably more simple. And it also gives you the keys of the house to change anything you desire. The downside is, if you update from this repo, your settings will be overrided, so don't do it unless you know what you are doing; This is not a distro you are expected to update often from upstream. It is meant to be used as a base to create your own distro. This make this distro more stable than others.
 
 ## FAQ
 Please before opening an issue, check [the AstroVim manual](https://astronvim.com/) and the [AstroVim Community](https://github.com/AstroNvim/astrocommunity) repos where you can find help about how to install and configure most plugins.
@@ -49,7 +50,7 @@ Please before opening an issue, check [the AstroVim manual](https://astronvim.co
   * **e2e testing**: We to not provide a e2e plugin. But we do provide the :TestNodejsE2e command you can customize on [/lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua) along with all the other testing commands. You can also rename the command to anything you want in case you don't use nodejs.
 
 ## Credits
-Originally it took AstroVim as base. But implements [this VIM config](https://github.com/Zeioth/vim-zeioth-config). Code has been simplified while retaining its core features.
+Originally it took AstroVim as base. But implements [this VIM config](https://github.com/amix/vimrc). Code has been simplified while retaining its core features.
 
 ## TODOS
 * The plugins [vim-doxygen](https://github.com/Zeioth/vim-doxygen) and [vim-typedoc](https://github.com/Zeioth/vim-typedoc) are not compatible with windows yet. Is it planned to re-write them on lua with windows support, but in the meantime if you are on windows, please don't use them.
