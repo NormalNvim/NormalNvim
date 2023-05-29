@@ -7,7 +7,7 @@ A normal NeoVim config
 ## Install
 
 ```sh
-# Fork the project first, then clone from there.
+# Strongly recommended: Fork the project, and clone the fork instead of this.
 git clone --depth 1 git@github.com:Zeioth/NormalNVim.git ~/.config/nvim
 nvim
 ```
