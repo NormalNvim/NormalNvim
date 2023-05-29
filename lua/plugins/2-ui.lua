@@ -455,6 +455,8 @@ return {
         local StatusLine =
             get_hlgroup("StatusLine", { fg = C.fg, bg = C.dark_bg })
         local TabLine = get_hlgroup("TabLine", { fg = C.grey, bg = C.none })
+        local TabLineFill =
+            get_hlgroup("TabLineFill", { fg = C.fg, bg = C.dark_bg })
         local TabLineSel =
             get_hlgroup("TabLineSel", { fg = C.fg, bg = C.none })
         local WinBar = get_hlgroup("WinBar", { fg = C.bright_grey, bg = C.bg })
@@ -516,8 +518,8 @@ return {
           winbar_bg = WinBar.bg,
           winbarnc_fg = WinBarNC.fg,
           winbarnc_bg = WinBarNC.bg,
-          tabline_bg = StatusLine.bg,
-          tabline_fg = StatusLine.bg,
+          tabline_bg = TabLineFill.bg,
+          tabline_fg = TabLineFill.bg,
           buffer_fg = Comment.fg,
           buffer_path_fg = WinBarNC.fg,
           buffer_close_fg = Comment.fg,
