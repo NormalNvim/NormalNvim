@@ -273,7 +273,7 @@ return {
   --  Your project must generate coverage/lcov.info for this to work.
   --
   --  On jest, make sure your packages.json file has this:
-  --  "test": "jest --coverage"
+  --  "tests": "jest --coverage"
   --
   --  If you use other framework or language, refer to nvim-coverage docs:
   --  https://github.com/andythigpen/nvim-coverage/blob/main/doc/nvim-coverage.txt
