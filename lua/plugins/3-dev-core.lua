@@ -290,7 +290,6 @@ return {
     --  https://github.com/hrsh7th/nvim-cmp
     {
       "hrsh7th/nvim-cmp",
-      commit = "a9c701fa7e12e9257b3162000e5288a75d280c28", -- https://github.com/hrsh7th/nvim-cmp/issues/1382
       dependencies = {
         "saadparwaiz1/cmp_luasnip",
         "hrsh7th/cmp-buffer",
@@ -320,11 +319,19 @@ return {
 
         return {
           enabled = function()
+            local dap_prompt = require("base.utils").is_available "cmp-dap" -- add interoperability with cmp-dap
+              and vim.tbl_contains(
+                { "dap-repl", "dapui_watches", "dapui_hover" },
+                vim.api.nvim_get_option_value("filetype", { buf = 0 })
+              )
             if
-              vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt"
+              vim.api.nvim_get_option_value("buftype", { buf = 0 })
+                == "prompt"
+              and not dap_prompt
             then
               return false
             end
+
             return vim.g.cmp_enabled
           end,
           preselect = cmp.PreselectMode.None,
