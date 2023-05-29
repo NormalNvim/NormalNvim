@@ -441,7 +441,7 @@ if vim.fn.executable "gitui" == 1 then -- if gitui exists, show it
       local git_dir = vim.fn.finddir(".git", vim.fn.getcwd() .. ";")
       if git_dir ~= "" then
         if vim.fn.executable "keychain" == 1 then
-          vim.cmd "TermExec cmd='zsh -c \"keychain --eval ~/.ssh/github.key && gitui\"'"
+          vim.cmd 'TermExec cmd="eval `keychain --eval ~/.ssh/github.key`; gitui"'
         else
           vim.cmd "TermExec cmd='gitui'"
         end
