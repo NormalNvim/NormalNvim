@@ -17,6 +17,7 @@
 --       -> nvim-ufo               [folding mod]
 --       -> nvim-neoclip           [nvim clipboard]
 --       -> suda.vim               [write as sudo]
+--       -> vim-matchquote         [add quote support to %]
 
 -- import custom icons
 local get_icon = require("base.utils").get_icon
@@ -188,21 +189,23 @@ return {
 
         -- Extra mouse fix for tmux
         -- If tmux mouse mode is enabled
-        local output = vim.fn.system 'tmux display -p "#{mouse}"'
-        if output:sub(1, 1) == "1" then
-          -- Disable tmux mouse while using toggleterm
-          autocmd({ "TermEnter", "WinEnter <buffer>" }, {
-            desc = "Disable tmux mouse while using toggleterm",
-            group = toggleterm_mouse_group,
-            callback = function() vim.fn.system "tmux set mouse off" end,
-          })
+        if os.getenv "TMUX" ~= nil then
+          local output = vim.fn.system 'tmux display -p "#{mouse}"'
+          if output:sub(1, 1) == "1" then
+            -- Disable tmux mouse while using toggleterm
+            autocmd({ "TermEnter", "WinEnter <buffer>" }, {
+              desc = "Disable tmux mouse while using toggleterm",
+              group = toggleterm_mouse_group,
+              callback = function() vim.fn.system "tmux set mouse off" end,
+            })
 
-          -- Enable tmux mouse when mouse leaves toggleterm
-          autocmd({ "WinLeave <buffer>" }, {
-            desc = "Enable tmux mouse when mouse leaves toggleterm",
-            group = toggleterm_mouse_group,
-            callback = function() vim.fn.system "tmux set mouse on" end,
-          })
+            -- Enable tmux mouse when mouse leaves toggleterm
+            autocmd({ "WinLeave <buffer>" }, {
+              desc = "Enable tmux mouse when mouse leaves toggleterm",
+              group = toggleterm_mouse_group,
+              callback = function() vim.fn.system "tmux set mouse on" end,
+            })
+          end
         end
       end
 
@@ -549,6 +552,13 @@ return {
   --  https://github.com/lambdalisue/suda.vim
   {
     "lambdalisue/suda.vim",
+    lazy = false,
+  },
+
+  --  -> vim-matchquote [add quote support to %]
+  -- https://github.com/airblade/vim-matchquotehttps://github.com/airblade/vim-matchquote
+  {
+    "airblade/vim-matchquote",
     lazy = false,
   },
 }
