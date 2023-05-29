@@ -295,6 +295,16 @@ if is_available "neo-tree.nvim" then
       end
     end,
   })
+  autocmd("TermClose", {
+    pattern = { "*lazygit", "*gitui" },
+    desc = "Refresh Neo-Tree git when closing lazygit/gitui",
+    group = augroup("neotree_git_refresh", { clear = true }),
+    callback = function()
+      if package.loaded["neo-tree.sources.git_status"] then
+        require("neo-tree.sources.git_status").refresh()
+      end
+    end,
+  })
 end
 
 -- 15.  Auto reload.
