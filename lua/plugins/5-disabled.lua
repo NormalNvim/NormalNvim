@@ -84,12 +84,4 @@ return {
   --     vim.g.ranger_map_keys = 0
   --   end,
   -- },
-
-  --  vim-matchup [improved % motion]
-  --  https://github.com/andymass/vim-matchup
-  --  TODO: Re-enable instead of vim-matchquote when it is fixed
-  -- {
-  --   "andymass/vim-matchup",
-  --   lazy = false,
-  -- },
 }

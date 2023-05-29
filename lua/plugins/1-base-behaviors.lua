@@ -17,7 +17,7 @@
 --       -> nvim-ufo               [folding mod]
 --       -> nvim-neoclip           [nvim clipboard]
 --       -> suda.vim               [write as sudo]
---       -> vim-matchquote         [add quote support to %]
+--       -> vim-matchup            [Imprived % motion]
 
 -- import custom icons
 local get_icon = require("base.utils").get_icon
@@ -305,6 +305,7 @@ return {
           folder_closed = get_icon "FolderClosed",
           folder_open = get_icon "FolderOpen",
           folder_empty = get_icon "FolderEmpty",
+          folder_empty_open = get_icon "FolderEmpty",
           default = get_icon "DefaultFile",
         },
         modified = { symbol = get_icon "FileModified" },
@@ -555,10 +556,10 @@ return {
     lazy = false,
   },
 
-  --  -> vim-matchquote [add quote support to %] → Temporary disabled due to not detedting lua methods
-  -- https://github.com/airblade/vim-matchquotehttps://github.com/airblade/vim-matchquote
-  -- {
-  --   "airblade/vim-matchquote",
-  --   lazy = false,
-  -- },
+  --  vim-matchup [improved % motion]
+  --  https://github.com/andymass/vim-matchup
+  {
+    "andymass/vim-matchup",
+    lazy = false,
+  },
 }
