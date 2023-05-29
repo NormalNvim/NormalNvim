@@ -110,7 +110,7 @@ return {
         "MasonUninstall",
         "MasonUninstallAll",
         "MasonLog",
-        "MasonUpdate",    -- AstroNvim extension here as well
+        "MasonUpdate", -- AstroNvim extension here as well
         "MasonUpdateAll", -- AstroNvim specific
       },
       opts = {
@@ -245,14 +245,11 @@ return {
           require("base.utils").event "LspSetup"
         end
         if require("base.utils").is_available "mason-lspconfig.nvim" then
-          vim.api.nvim_create_autocmd(
-            "User",
-            {
-              pattern = "BaseMasonLspSetup",
-              once = true,
-              callback = setup_servers,
-            }
-          )
+          vim.api.nvim_create_autocmd("User", {
+            pattern = "BaseMasonLspSetup",
+            once = true,
+            callback = setup_servers,
+          })
         else
           setup_servers()
         end
@@ -314,17 +311,17 @@ return {
         local function has_words_before()
           local line, col = unpack(vim.api.nvim_win_get_cursor(0))
           return col ~= 0
-              and vim.api
-              .nvim_buf_get_lines(0, line - 1, line, true)[1]
-              :sub(col, col)
-              :match "%s"
+            and vim.api
+                .nvim_buf_get_lines(0, line - 1, line, true)[1]
+                :sub(col, col)
+                :match "%s"
               == nil
         end
 
         return {
           enabled = function()
             if
-                vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt"
+              vim.api.nvim_get_option_value("buftype", { buf = 0 }) == "prompt"
             then
               return false
             end
@@ -334,7 +331,7 @@ return {
           formatting = {
             fields = { "kind", "abbr", "menu" },
             format = lspkind_status_ok and lspkind.cmp_format(base.lspkind)
-                or nil,
+              or nil,
           },
           snippet = {
             expand = function(args) luasnip.lsp_expand(args.body) end,
@@ -429,12 +426,12 @@ return {
           },
           sources = cmp.config.sources {
             { name = "nvim_lsp", priority = 1000 },
-            { name = "luasnip",  priority = 750 },
-            { name = "buffer",   priority = 500 },
-            { name = "path",     priority = 250 },
+            { name = "luasnip", priority = 750 },
+            { name = "buffer", priority = 500 },
+            { name = "path", priority = 250 },
           },
         }
       end,
     },
   }, -- end of collection
-}    -- end of return
+} -- end of return
