@@ -25,6 +25,9 @@ vim.opt.backspace:append { "nostop" } -- Don't stop backspace at insert
 if vim.fn.has "nvim-0.9" == 1 then
   vim.opt.diffopt:append "linematch:60" -- enable linematch diff algorithm
 end
+if vim.fn.has "nvim-0.10" == 1 then
+  vim.opt.smoothscroll = true --Scroll by screen line rather than by line when wrap is set. nvim 0.10 only
+end
 
 -- Set
 vim.cmd "set autochdir" -- By default, use current file dir as working dir.
@@ -37,7 +40,6 @@ local options = {
     breakindent = true, -- Wrap indent to match  line start
     cmdheight = 0, -- hide command line unless needed
     completeopt = { "menu", "menuone", "noselect" }, -- Options for insert mode completion
-    completeopt = { "menuone", "noselect" }, -- Options for insert mode completion
     copyindent = true, -- Copy the previous indentation on autoindenting
     cursorline = true, -- Highlight the text line of the cursor
     expandtab = true, -- Enable the use of space in tab
@@ -76,7 +78,6 @@ local options = {
     wrap = true, -- Disable wrapping of lines longer than the width of window.
     colorcolumn = "80", -- PEP8 like character limit vertical bar.
     mouse = "a", -- Enable mouse support.
-    smoothscroll = true, -- Scroll by screen line rather than by line when wrap is set.
     mousescroll = "ver:1,hor:0", -- Disables hozirontal scroll in neovim.
     guicursor = "a:blinkon200", -- Enable cursor blink.
     autochdir = true, -- Use current file dir as working dir (See project.nvim)
