@@ -9,7 +9,6 @@
 -- @copyright 2022
 -- @license GNU General Public License v3.0
 
-
 --    Functions:
 --       -> generate_snapshot   → Snapshot of the plugins installed.
 --       -> version             →
@@ -19,7 +18,6 @@
 --       -> create_rollback     → create rollback file before updating.
 --       -> rollback            → Nvim's rollback to a saved previous version.
 --       -> update              →
-
 
 local git = require "base.utils.git"
 
@@ -34,12 +32,13 @@ local function echo(messages)
   if type(messages) == "table" then vim.api.nvim_echo(messages, false, {}) end
 end
 
-local function confirm_prompt(messages)
-  if messages then echo(messages) end
-  local confirmed = string.lower(vim.fn.input "(y/n)󰁔 ") == "y"
-  echo()
-  echo()
-  return confirmed
+local function confirm_prompt(messages, type)
+  return vim.fn.confirm(
+    messages,
+    "&Yes\n&No",
+    (type == "Error" or type == "Warning") and 2 or 1,
+    type or "Question"
+  ) == 1
 end
 
 --- Helper function to generate Nvim snapshots (For internal use only)
@@ -53,7 +52,8 @@ function M.generate_snapshot(write)
   end
   local plugins = assert(require("lazy").plugins())
   local function git_commit(dir)
-    local commit = assert(utils.cmd("git -C " .. dir .. " rev-parse HEAD", false))
+    local commit =
+      assert(utils.cmd("git -C " .. dir .. " rev-parse HEAD", false))
     if commit then return vim.trim(commit) end
   end
   if write == true then
@@ -61,8 +61,11 @@ function M.generate_snapshot(write)
     file:write "return {\n"
   end
   local snapshot = vim.tbl_map(function(plugin)
-    if not plugin[1] and plugin.name == "lazy.nvim" then plugin[1] = "folke/lazy.nvim" end
-    plugin = { plugin[1], commit = git_commit(plugin.dir), version = plugin.version }
+    if not plugin[1] and plugin.name == "lazy.nvim" then
+      plugin[1] = "folke/lazy.nvim"
+    end
+    plugin =
+      { plugin[1], commit = git_commit(plugin.dir), version = plugin.version }
     if prev_snapshot[plugin[1]] and prev_snapshot[plugin[1]].version then
       plugin.version = prev_snapshot[plugin[1]].version
     end
@@ -81,7 +84,7 @@ function M.generate_snapshot(write)
     file:write "}"
     file:close()
   end
-  notify("Lazy packages locked to the current version.")
+  notify "Lazy packages locked to the current version."
   return snapshot
 end
 
@@ -90,7 +93,9 @@ end
 --- @return string # The current Nvim version string
 function M.version(quiet)
   local version = git.current_version(false) or "unknown"
-  if base.updater.options.channel ~= "stable" then version = ("nightly (%s)"):format(version) end
+  if base.updater.options.channel ~= "stable" then
+    version = ("nightly (%s)"):format(version)
+  end
   if version and not quiet then notify("Version: " .. version) end
   return version
 end
@@ -111,7 +116,7 @@ local function attempt_update(target, opts)
   -- if updating to a new stable version or a specific commit checkout the provided target
   if opts.channel == "stable" or opts.commit then
     return git.checkout(target, false)
-  -- if no target, pull the latest
+    -- if no target, pull the latest
   else
     return git.pull(false)
   end
@@ -137,17 +142,24 @@ function M.create_rollback(write)
 
   if write == true then
     local file = assert(io.open(base.updater.rollback_file, "w"))
-    file:write("return " .. vim.inspect(snapshot, { newline = " ", indent = "" }))
+    file:write(
+      "return " .. vim.inspect(snapshot, { newline = " ", indent = "" })
+    )
     file:close()
   end
   -- Rollback file created
-  notify("Rollback file created in ~/.cache/nvim\n\npointing to commit:\n" .. snapshot.commit  .. "  \n\nYou can use :NvimRollbackRestore to revert ~/.config to this state.")
+  notify(
+    "Rollback file created in ~/.cache/nvim\n\npointing to commit:\n"
+      .. snapshot.commit
+      .. "  \n\nYou can use :NvimRollbackRestore to revert ~/.config to this state."
+  )
   return snapshot
 end
 
 --- Nvim's rollback to saved previous version function
 function M.rollback()
-  local rollback_avail, rollback_opts = pcall(dofile, base.updater.rollback_file)
+  local rollback_avail, rollback_opts =
+    pcall(dofile, base.updater.rollback_file)
   if not rollback_avail then
     notify("No rollback file available", vim.log.levels.ERROR)
     return
@@ -159,7 +171,10 @@ end
 --- @param opts? table the settings to use for the update
 function M.update(opts)
   if not opts then opts = base.updater.options end
-  opts = require("base.utils").extend_tbl({ remote = "origin", show_changelog = true, auto_quit = false }, opts)
+  opts = require("base.utils").extend_tbl(
+    { remote = "origin", show_changelog = true, auto_quit = false },
+    opts
+  )
   -- if the git command is not available, then throw an error
   if not git.available() then
     notify(
@@ -171,7 +186,10 @@ function M.update(opts)
 
   -- if installed with an external package manager, disable the internal updater
   if not git.is_repo() then
-    notify("Updater not available for non-git installations", vim.log.levels.ERROR)
+    notify(
+      "Updater not available for non-git installations",
+      vim.log.levels.ERROR
+    )
     return
   end
   -- set up any remotes defined by the user if they do not exist
@@ -183,7 +201,7 @@ function M.update(opts)
       { remote, "Title" },
       { " which is currently set to " },
       { url, "WarningMsg" },
-      { "..." }
+      { "..." },
     }
   end
   local is_stable = opts.channel == "stable"
@@ -203,19 +221,26 @@ function M.update(opts)
   end
   -- switch to the necessary branch only if not on the stable channel
   if not is_stable then
-    local local_branch = (opts.remote == "origin" and "" or (opts.remote .. "_")) .. opts.branch
+    local local_branch = (
+      opts.remote == "origin" and "" or (opts.remote .. "_")
+    ) .. opts.branch
     if git.current_branch() ~= local_branch then
       echo {
         { "Switching to branch: " },
         { opts.remote .. "/" .. opts.branch .. "\n\n", "String" },
       }
       if not git.checkout(local_branch, false) then
-        git.checkout("-b " .. local_branch .. " " .. opts.remote .. "/" .. opts.branch, false)
+        git.checkout(
+          "-b " .. local_branch .. " " .. opts.remote .. "/" .. opts.branch,
+          false
+        )
       end
     end
     -- check if the branch was switched to successfully
     if git.current_branch() ~= local_branch then
-      vim.api.nvim_err_writeln("Error checking out branch: " .. opts.remote .. "/" .. opts.branch)
+      vim.api.nvim_err_writeln(
+        "Error checking out branch: " .. opts.remote .. "/" .. opts.branch
+      )
       return
     end
   end
@@ -230,7 +255,9 @@ function M.update(opts)
     end
     target = git.tag_commit(opts.version)
   elseif opts.commit then -- if commit specified use it
-    target = git.branch_contains(opts.remote, opts.branch, opts.commit) and opts.commit or nil
+    target = git.branch_contains(opts.remote, opts.branch, opts.commit)
+        and opts.commit
+      or nil
   else -- get most recent commit
     target = git.remote_head(opts.remote, opts.branch)
   end
@@ -242,11 +269,11 @@ function M.update(opts)
     return
   elseif -- prompt user if they want to accept update
     not opts.skip_prompts
-    and not confirm_prompt {
-      { "Update available to ", "Title" },
-      { is_stable and opts.version or target, "String" },
-      { "\nUpdating requires a restart, continue?" },
-    }
+    and not confirm_prompt(
+      ("Update avavilable to %s\nUpdating requires a restart, continue?"):format(
+        is_stable and opts.version or target
+      )
+    )
   then
     echo(cancelled_message)
     return
@@ -256,27 +283,35 @@ function M.update(opts)
     -- calculate and print the changelog
     local changelog = git.get_commit_range(source, target)
     local breaking = git.breaking_changes(changelog)
-    local breaking_prompt = { { "Update contains the following breaking changes:\n", "WarningMsg" } }
-    vim.list_extend(breaking_prompt, git.pretty_changelog(breaking))
-    vim.list_extend(breaking_prompt, { { "\nWould you like to continue?" } })
-    if #breaking > 0 and not opts.skip_prompts and not confirm_prompt(breaking_prompt) then
+    if
+      #breaking > 0
+      and not opts.skip_prompts
+      and not confirm_prompt(
+        ("Update contains the following breaking changes:\n%s\nWould you like to continue?"):format(
+          table.concat(breaking, "\n")
+        ),
+        "Warning"
+      )
+    then
       echo(cancelled_message)
       return
-    end
-    -- attempt an update
+    end -- attempt an update
     local updated = attempt_update(target, opts)
     -- check for local file conflicts and prompt user to continue or abort
     if
       not updated
       and not opts.skip_prompts
       and not confirm_prompt {
-        { "Unable to pull due to local modifications to base files.\n", "ErrorMsg" },
+        {
+          "Unable to pull due to local modifications to base files.\nReset local files and continue?",
+          "Error",
+        },
         { "Reset local files and continue?" },
       }
     then
       echo(cancelled_message)
       return
-    -- if continued and there were errors reset the base config and attempt another update
+      -- if continued and there were errors reset the base config and attempt another update
     elseif not updated then
       git.hard_reset(source)
       updated = attempt_update(target, opts)

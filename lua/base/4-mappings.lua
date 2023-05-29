@@ -423,6 +423,13 @@ if is_available "gitsigns.nvim" then
     desc = "View Git diff",
   }
 end
+-- git fugitive
+if is_available "vim-fugitive" then
+  maps.n["<leader>gP"] = {
+    function() vim.cmd ":GBrowse" end,
+    desc = "Open in github ",
+  }
+end
 -- git client
 if vim.fn.executable "lazygit" == 1 then -- if lazygit exists, show it
   maps.n["<leader>gg"] = {
@@ -682,10 +689,6 @@ if is_available "telescope.nvim" then
 
   -- Some lsp keymappings are here because they depend on telescope
   maps.n["<leader>l"] = icons.l
-  maps.n["<leader>lD"] = {
-    function() require("telescope.builtin").diagnostics() end,
-    desc = "Search diagnostics",
-  }
   maps.n["<leader>ls"] = {
     function()
       local aerial_avail, _ = pcall(require, "aerial")

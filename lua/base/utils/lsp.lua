@@ -112,7 +112,7 @@ function M.has_capability(capability, filter)
   local clients = vim.lsp.get_active_clients(filter)
   return not tbl_isempty(
     vim.tbl_map(
-      function(client) return client.server_capabilities[capability] end,
+      function(client) return client.supports_method(capability) end,
       clients
     )
   )
@@ -121,7 +121,7 @@ end
 local function add_buffer_autocmd(augroup, bufnr, autocmds)
   if not vim.tbl_islist(autocmds) then autocmds = { autocmds } end
   local cmds_found, cmds =
-      pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
+    pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
   if not cmds_found or vim.tbl_isempty(cmds) then
     vim.api.nvim_create_augroup(augroup, { clear = false })
     for _, autocmd in ipairs(autocmds) do
@@ -136,7 +136,7 @@ end
 
 local function del_buffer_autocmd(augroup, bufnr)
   local cmds_found, cmds =
-      pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
+    pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
   if cmds_found then
     vim.tbl_map(function(cmd) vim.api.nvim_del_autocmd(cmd.id) end, cmds)
   end
@@ -147,7 +147,6 @@ end
 ---@param bufnr number The buffer that the LSP client is attaching to
 M.on_attach = function(client, bufnr)
   -- Default: LSP mappings
-  local capabilities = client.server_capabilities
   local lsp_mappings = {
     n = {
       ["<leader>ld"] = {
@@ -170,17 +169,24 @@ M.on_attach = function(client, bufnr)
     v = {},
   }
 
+  if is_available "telescope.nvim" then
+    lsp_mappings.n["<leader>lD"] = {
+      function() require("telescope.builtin").diagnostics() end,
+      desc = "Search diagnostics",
+    }
+  end
+
   if is_available "mason-lspconfig.nvim" then
     lsp_mappings.n["<leader>li"] =
-    { "<cmd>LspInfo<cr>", desc = "LSP information" }
+      { "<cmd>LspInfo<cr>", desc = "LSP information" }
   end
 
   if is_available "null-ls.nvim" then
     lsp_mappings.n["<leader>lI"] =
-    { "<cmd>NullLsInfo<cr>", desc = "Null-ls information" }
+      { "<cmd>NullLsInfo<cr>", desc = "Null-ls information" }
   end
 
-  if capabilities.codeActionProvider then
+  if client.supports_method "textDocument/codeAction" then
     lsp_mappings.n["<leader>la"] = {
       function() vim.lsp.buf.code_action() end,
       desc = "LSP code action",
@@ -188,12 +194,14 @@ M.on_attach = function(client, bufnr)
     lsp_mappings.v["<leader>la"] = lsp_mappings.n["<leader>la"]
   end
 
-  if capabilities.codeLensProvider then
+  if client.supports_method "textDocument/codeLens" then
     add_buffer_autocmd("lsp_codelens_refresh", bufnr, {
       events = { "InsertLeave", "BufEnter" },
       desc = "Refresh codelens",
       callback = function()
-        if not M.has_capability("codeLensProvider", { bufnr = bufnr }) then
+        if
+          not M.has_capability("textDocument/codeLens", { bufnr = bufnr })
+        then
           del_buffer_autocmd("lsp_codelens_refresh", bufnr)
           return
         end
@@ -211,14 +219,14 @@ M.on_attach = function(client, bufnr)
     }
   end
 
-  if capabilities.declarationProvider then
+  if client.supports_method "textDocument/declaration" then
     lsp_mappings.n["gD"] = {
       function() vim.lsp.buf.declaration() end,
       desc = "Declaration of current symbol",
     }
   end
 
-  if capabilities.definitionProvider then
+  if client.supports_method "textDocument/definition" then
     lsp_mappings.n["gd"] = {
       function() vim.lsp.buf.definition() end,
       desc = "Show the definition of current symbol",
@@ -226,8 +234,8 @@ M.on_attach = function(client, bufnr)
   end
 
   if
-      capabilities.documentFormattingProvider
-      and not tbl_contains(M.formatting.disabled, client.name)
+    client.supports_method "textDocument/formatting"
+    and not tbl_contains(M.formatting.disabled, client.name)
   then
     lsp_mappings.n["<leader>lf"] = {
       function() vim.lsp.buf.format(M.format_opts) end,
@@ -244,25 +252,22 @@ M.on_attach = function(client, bufnr)
     local autoformat = M.formatting.format_on_save
     local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
     if
-        autoformat.enabled
-        and (tbl_isempty(autoformat.allow_filetypes or {}) or tbl_contains(
-          autoformat.allow_filetypes,
-          filetype
-        ))
-        and (
-          tbl_isempty(autoformat.ignore_filetypes or {})
-          or not tbl_contains(autoformat.ignore_filetypes, filetype)
-        )
+      autoformat.enabled
+      and (tbl_isempty(autoformat.allow_filetypes or {}) or tbl_contains(
+        autoformat.allow_filetypes,
+        filetype
+      ))
+      and (
+        tbl_isempty(autoformat.ignore_filetypes or {})
+        or not tbl_contains(autoformat.ignore_filetypes, filetype)
+      )
     then
       add_buffer_autocmd("lsp_auto_format", bufnr, {
         events = "BufWritePre",
         desc = "autoformat on save",
         callback = function()
           if
-              not M.has_capability(
-                "documentFormattingProvider",
-                { bufnr = bufnr }
-              )
+            not M.has_capability("textDocument/formatting", { bufnr = bufnr })
           then
             del_buffer_autocmd("lsp_auto_format", bufnr)
             return
@@ -272,8 +277,8 @@ M.on_attach = function(client, bufnr)
             autoformat_enabled = vim.g.autoformat_enabled
           end
           if
-              autoformat_enabled
-              and ((not autoformat.filter) or autoformat.filter(bufnr))
+            autoformat_enabled
+            and ((not autoformat.filter) or autoformat.filter(bufnr))
           then
             vim.lsp.buf.format(
               require("base.utils").extend_tbl(
@@ -295,17 +300,17 @@ M.on_attach = function(client, bufnr)
     end
   end
 
-  if capabilities.documentHighlightProvider then
+  if client.supports_method "textDocument/documentHighlight" then
     add_buffer_autocmd("lsp_document_highlight", bufnr, {
       {
         events = { "CursorHold", "CursorHoldI" },
         desc = "highlight references when cursor holds",
         callback = function()
           if
-              not M.has_capability(
-                "documentHighlightProvider",
-                { bufnr = bufnr }
-              )
+            not M.has_capability(
+              "textDocument/documentHighlight",
+              { bufnr = bufnr }
+            )
           then
             del_buffer_autocmd("lsp_document_highlight", bufnr)
             return
@@ -321,21 +326,21 @@ M.on_attach = function(client, bufnr)
     })
   end
 
-  if capabilities.hoverProvider then
+  if client.supports_method "textDocument/hover" then
     lsp_mappings.n["K"] = {
       function() vim.lsp.buf.hover() end,
       desc = "Hover symbol details",
     }
   end
 
-  if capabilities.implementationProvider then
+  if client.supports_method "textDocument/implementation" then
     lsp_mappings.n["gI"] = {
       function() vim.lsp.buf.implementation() end,
       desc = "Implementation of current symbol",
     }
   end
 
-  if capabilities.referencesProvider then
+  if client.supports_method "textDocument/references" then
     lsp_mappings.n["gr"] = {
       function() vim.lsp.buf.references() end,
       desc = "References of current symbol",
@@ -346,14 +351,14 @@ M.on_attach = function(client, bufnr)
     }
   end
 
-  if capabilities.renameProvider then
+  if client.supports_method "textDocument/rename" then
     lsp_mappings.n["<leader>lr"] = {
       function() vim.lsp.buf.rename() end,
       desc = "Rename current symbol",
     }
   end
 
-  if capabilities.signatureHelpProvider then
+  if client.supports_method "textDocument/signatureHelp" then
     lsp_mappings.n["<leader>lh"] = {
       function() vim.lsp.buf.signature_help() end,
       desc = "Code help",
@@ -364,21 +369,24 @@ M.on_attach = function(client, bufnr)
     }
   end
 
-  if capabilities.typeDefinitionProvider then
+  if client.supports_method "textDocument/typeDefinition" then
     lsp_mappings.n["gT"] = {
       function() vim.lsp.buf.type_definition() end,
       desc = "Definition of current type",
     }
   end
 
-  if capabilities.workspaceSymbolProvider then
+  if client.supports_method "workspace/symbol" then
     lsp_mappings.n["<leader>lG"] = {
       function() vim.lsp.buf.workspace_symbol() end,
       desc = "Search workspace symbols",
     }
   end
 
-  if capabilities.semanticTokensProvider and vim.lsp.semantic_tokens then
+  if
+    client.supports_method "textDocument/semanticTokens"
+    and vim.lsp.semantic_tokens
+  then
     lsp_mappings.n["<leader>uY"] = {
       function() require("base.utils.ui").toggle_buffer_semantic_tokens(bufnr) end,
       desc = "Toggle LSP semantic highlight (buffer)",
@@ -424,7 +432,7 @@ M.on_attach = function(client, bufnr)
 
   if not vim.tbl_isempty(lsp_mappings.v) then
     lsp_mappings.v["<leader>l"] =
-    { desc = (vim.g.icons_enabled and " " or "") .. "LSP" }
+      { desc = (vim.g.icons_enabled and " " or "") .. "LSP" }
   end
   utils.set_mappings(lsp_mappings, { buffer = bufnr })
 
@@ -435,22 +443,22 @@ end
 --- The default Nvim LSP capabilities
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem.documentationFormat =
-{ "markdown", "plaintext" }
+  { "markdown", "plaintext" }
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 M.capabilities.textDocument.completion.completionItem.preselectSupport = true
 M.capabilities.textDocument.completion.completionItem.insertReplaceSupport =
-    true
+  true
 M.capabilities.textDocument.completion.completionItem.labelDetailsSupport =
-    true
+  true
 M.capabilities.textDocument.completion.completionItem.deprecatedSupport = true
 M.capabilities.textDocument.completion.completionItem.commitCharactersSupport =
-    true
+  true
 M.capabilities.textDocument.completion.completionItem.tagSupport =
-{ valueSet = { 1 } }
+  { valueSet = { 1 } }
 M.capabilities.textDocument.completion.completionItem.resolveSupport =
-{ properties = { "documentation", "detail", "additionalTextEdits" } }
+  { properties = { "documentation", "detail", "additionalTextEdits" } }
 M.capabilities.textDocument.foldingRange =
-{ dynamicRegistration = false, lineFoldingOnly = true }
+  { dynamicRegistration = false, lineFoldingOnly = true }
 M.capabilities = M.capabilities
 M.flags = {}
 
