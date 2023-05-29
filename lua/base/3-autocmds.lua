@@ -84,7 +84,6 @@ autocmd("BufDelete", {
 autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   desc = "URL Highlighting",
   group = augroup("highlighturl", { clear = true }),
-  pattern = "*",
   callback = function() utils.set_url_match() end,
 })
 
