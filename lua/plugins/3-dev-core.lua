@@ -58,6 +58,10 @@ return {
           return vim.api.nvim_buf_line_count(bufnr) > 10000
         end,
       },
+      matchup = {
+        enable = true,
+        enable_quotes = true,
+      },
       incremental_selection = { enable = true },
       indent = { enable = true },
       autotag = { enable = true },
@@ -110,7 +114,7 @@ return {
         "MasonUninstall",
         "MasonUninstallAll",
         "MasonLog",
-        "MasonUpdate", -- AstroNvim extension here as well
+        "MasonUpdate",    -- AstroNvim extension here as well
         "MasonUpdateAll", -- AstroNvim specific
       },
       opts = {
@@ -310,24 +314,24 @@ return {
         local function has_words_before()
           local line, col = unpack(vim.api.nvim_win_get_cursor(0))
           return col ~= 0
-            and vim.api
-                .nvim_buf_get_lines(0, line - 1, line, true)[1]
-                :sub(col, col)
-                :match "%s"
+              and vim.api
+              .nvim_buf_get_lines(0, line - 1, line, true)[1]
+              :sub(col, col)
+              :match "%s"
               == nil
         end
 
         return {
           enabled = function()
             local dap_prompt = require("base.utils").is_available "cmp-dap" -- add interoperability with cmp-dap
-              and vim.tbl_contains(
-                { "dap-repl", "dapui_watches", "dapui_hover" },
-                vim.api.nvim_get_option_value("filetype", { buf = 0 })
-              )
+                and vim.tbl_contains(
+                  { "dap-repl", "dapui_watches", "dapui_hover" },
+                  vim.api.nvim_get_option_value("filetype", { buf = 0 })
+                )
             if
-              vim.api.nvim_get_option_value("buftype", { buf = 0 })
+                vim.api.nvim_get_option_value("buftype", { buf = 0 })
                 == "prompt"
-              and not dap_prompt
+                and not dap_prompt
             then
               return false
             end
@@ -338,7 +342,7 @@ return {
           formatting = {
             fields = { "kind", "abbr", "menu" },
             format = lspkind_status_ok and lspkind.cmp_format(base.lspkind)
-              or nil,
+                or nil,
           },
           snippet = {
             expand = function(args) luasnip.lsp_expand(args.body) end,
@@ -433,12 +437,12 @@ return {
           },
           sources = cmp.config.sources {
             { name = "nvim_lsp", priority = 1000 },
-            { name = "luasnip", priority = 750 },
-            { name = "buffer", priority = 500 },
-            { name = "path", priority = 250 },
+            { name = "luasnip",  priority = 750 },
+            { name = "buffer",   priority = 500 },
+            { name = "path",     priority = 250 },
           },
         }
       end,
     },
   }, -- end of collection
-} -- end of return
+}    -- end of return
