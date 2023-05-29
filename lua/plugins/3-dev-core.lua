@@ -66,8 +66,12 @@ return {
       indent = { enable = true },
       autotag = { enable = true },
       context_commentstring = { enable = true, enable_autocmd = false },
+      auto_install = true, -- Install a parser for the current language if not present.
     },
-    config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
+    config = function(_, opts)
+      require("nvim-treesitter.configs").setup(opts)
+      vim.cmd ""
+    end,
   },
 
   --  [hex colors]
