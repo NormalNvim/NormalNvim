@@ -27,6 +27,7 @@
 --       -> nvim-ufo
 --       -> code documentation                 [docs]
 --       -> [neural]
+--       -> hop.nvim
 
 --
 --   KEYBINDINGS REFERENCE
@@ -283,6 +284,28 @@ maps.n["<leader>b|"] = {
     end)
   end,
   desc = "Vertical split buffer from tabline",
+}
+
+-- quick movement aliases
+maps.n["<C-k>"] = {
+  function()
+    require("base.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1)
+  end,
+  desc = "Next buffer",
+}
+maps.n["<C-j>"] = {
+  function()
+    require("base.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1))
+  end,
+  desc = "Previous buffer",
+}
+maps.n["<S-Down>"] = {
+  function() vim.api.nvim_feedkeys("5j", "n", true) end,
+  desc = "Fast move down",
+}
+maps.n["<S-Up>"] = {
+  function() vim.api.nvim_feedkeys("5k", "n", true) end,
+  desc = "Fast move up",
 }
 
 -- tabs
@@ -971,4 +994,16 @@ if is_available "neural" then
     desc = "Ask chatgpt",
   }
 end
+
+-- hop.nivm ----------------------------------------------------------------
+if is_available "hop.nvim" then
+  maps.n["<C-m>"] = {
+    function()
+      require "hop"
+      vim.cmd "HopWord"
+    end,
+    desc = "Hop to word",
+  }
+end
+
 utils.set_mappings(maps)

@@ -558,14 +558,23 @@ return {
 
   --  vim-matchup [improved % motion]
   --  https://github.com/andymass/vim-matchup
-  --
-  --  You can set the options of this plugin under
-  --  treesitter.opts.matchup
   {
     "andymass/vim-matchup",
     lazy = false,
     init = function()
       vim.g.matchup_matchparen_deferred = 1 -- work async
+    end,
+  },
+
+  --  hop.nvim [go to word visually]
+  --  https://github.com/phaazon/hop.nvim
+  {
+    "phaazon/hop.nvim",
+    lazy = false,
+    opts = { keys = "etovxqpdygfblzhckisuran" },
+    config = function(_, opts)
+      -- you can configure Hop the way you like here; see :h hop-config
+      require("hop").setup(opts)
     end,
   },
 }
