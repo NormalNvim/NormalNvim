@@ -56,7 +56,7 @@ For more info, [read the wiki](https://github.com/Zeioth/NormalNvim/wiki).
 ## FAQ
 Please before opening an issue, check [the AstroVim manual](https://astronvim.com/) and the [AstroVim Community](https://github.com/AstroNvim/astrocommunity) repos where you can find help about how to install and configure most plugins.
 
-* **NormalNvim is not working ok. How can I know why?**
+* **NormalNvim is not working. How can I know why?**
 
     :healthcheck base
 
