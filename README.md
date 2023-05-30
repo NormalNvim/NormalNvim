@@ -36,7 +36,7 @@ __You are expected to fork the project before cloning it. So you are the only on
 
 NormalNvim updates don't have a user space. This is by design. It makes the code considerably more simple. And it also gives you the keys of the house to change anything you desire. This is not a distro you are expected to update often from upstream. It is meant to be used as a base to create your own distro.
 
-[NormalNvim](https://github.com/Zeioth/NormalNvim) won't be the next /r/UnixPorn sensation. It is a normal nvim config you can trust to work without unexpected breakage. Nothing flashy. Nothing brightful. Just bread and butter.
+[NormalNvim](https://github.com/Zeioth/NormalNvim) won't be the next [/r/UnixPorn](https://www.reddit.com/r/unixporn/) sensation. It is a normal nvim config you can trust to work without unexpected breakage. Nothing flashy. Nothing brightful. Just bread and butter.
 
 ## FAQ
 Please before opening an issue, check [the AstroVim manual](https://astronvim.com/) and the [AstroVim Community](https://github.com/AstroNvim/astrocommunity) repos where you can find help about how to install and configure most plugins.
