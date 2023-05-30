@@ -50,7 +50,6 @@ NormalNvim updates don't have a user space. This is by design. It makes the code
 | **:NvimUpdateConfig** | Pull the latest changes from the current git repository of the distro. Useful when you have your distro installed in more than one machine. |
 | **:NvimUpdatePlugins** | Uses lazy to update the plugins. |
 | **:NvimVersion** | Prints the commit number of the current NormalNvim version. |
---------------
 
 ## FAQ
 Please before opening an issue, check [the AstroVim manual](https://astronvim.com/) and the [AstroVim Community](https://github.com/AstroNvim/astrocommunity) repos where you can find help about how to install and configure most plugins.
