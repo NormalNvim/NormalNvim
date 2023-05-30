@@ -69,7 +69,7 @@ Please before opening an issue, check [the AstroVim manual](https://astronvim.co
   * **Compiling and running tasks**: This is planned for the future. In the meantime we recommend [overseer.nvim](https://github.com/stevearc/overseer.nvim).
 
 ## Credits
-Originally it took AstroVim as base. But implements [this VIM config](https://github.com/amix/vimrc). Code has been simplified while retaining its core features.
+Originally it took AstroVim as base. But implements [this VIM config](https://github.com/amix/vimrc) with some extras. Code has been simplified while retaining its core features.
 
 ## TODOS
 * The plugins [vim-doxygen](https://github.com/Zeioth/vim-doxygen) and [vim-typedoc](https://github.com/Zeioth/vim-typedoc) are not compatible with windows yet. Is it planned to re-write them on lua with windows support, but in the meantime if you are on windows, please don't use them.
