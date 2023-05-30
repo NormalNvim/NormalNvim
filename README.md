@@ -34,7 +34,7 @@ yarn npm     # Necessary for most formatters and parsers.
 ## Philosophy and design decissions
 __You are expected to fork the project before cloning it. So you are the only one in control. It is also recommended to use [neovim's appimage](https://github.com/neovim/neovim/releases).__
 
-This is not a distro you are expected to update often from upstream. It is meant to be used as a base to create your own distro.
+> This is not a distro you are expected to update often from upstream. It is meant to be used as a base to create your own distro.
 
 [NormalNvim](https://github.com/Zeioth/NormalNvim) won't be the next [/r/UnixPorn](https://www.reddit.com/r/unixporn/) sensation. It is a normal nvim config you can trust to work without unexpected breakage. Nothing flashy. Nothing brightful. Just bread and butter.
 
