@@ -36,7 +36,7 @@ __You are expected to fork the project before cloning it. So you are the only on
 
 > This is not a distro you are expected to update often from upstream. It is meant to be used as a base to create your own distro.
 
-[NormalNvim](https://github.com/Zeioth/NormalNvim) won't be the next [/r/UnixPorn](https://www.reddit.com/r/unixporn/) sensation. It is a normal nvim config you can trust to work without unexpected breakage. Nothing flashy. Nothing brightful. Just bread and butter.
+[NormalNvim](https://github.com/Zeioth/NormalNvim) won't be the next [/r/UnixPorn](https://www.reddit.com/r/unixporn/) sensation. It is a normal nvim config you can trust 100% will never break unexpectedly while you are working. Nothing flashy. Nothing brightful. Just bread and butter.
 
 ## Commands
 
