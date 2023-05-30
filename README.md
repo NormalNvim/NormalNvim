@@ -38,15 +38,26 @@ NormalNvim updates don't have a user space. This is by design. It makes the code
 
 [NormalNvim](https://github.com/Zeioth/NormalNvim) won't be the next [/r/UnixPorn](https://www.reddit.com/r/unixporn/) sensation. It is a normal nvim config you can trust to work without unexpected breakage. Nothing flashy. Nothing brightful. Just bread and butter.
 
+## Commands
+
+|  Command            | Description                             |
+|---------------------|-----------------------------------------|
+| **:healthcheck base**   | Look for errors in NormalNvim. |
+| **:NvimFreezePluginVersions** | Creates `lazy_versions`.lua in your config directory containing the current pugin versions. If you are using the stable updates channel, this file willl be used to decide what plugin versions will be instlaed. If you are using the nighty channel, the file will be ignored. |
+| **:NvimReload** | Hot reloads nvim without leaving nvim. I can cause unexpected issues sometimes. | 
+| **:NvimRollbackCreate** | Creates a recovery point. It is triggered automatically when uptading running `:NvimUpdateConfig`. | 
+| **:NvimRollbackRestore** | Uses git to bring your config to the state it had when `:NvimRollbackCreate` was called. | 
+| **:NvimUpdateConfig** | Pull the latest changes from the current git repository of the distro. Useful when you have your distro installed in more than one machine. |
+| **:NvimUpdatePlugins** | Uses lazy to update the plugins. |
+| **:NvimVersion** | Prints the commit number of the current NormalNvim version. |
+--------------
+
 ## FAQ
 Please before opening an issue, check [the AstroVim manual](https://astronvim.com/) and the [AstroVim Community](https://github.com/AstroNvim/astrocommunity) repos where you can find help about how to install and configure most plugins.
 
 * **NormalNvim is not working ok. How can I know why?**
 
     :healthcheck base
-
-* **What is the command :NvimUpdate for?**
-It updates your distro from your config's github repository. This is very useful when you are own more than one machine.
 
 * **How do I disable the tabline?** On the options file, set showtabline=0. If you wanna remove the functionality completely from nvim check the plugin heirline. Here is where we implement the tab logic. Also check the ./lua/base/3-autocmds.lua and ./lua/base/utils/status.lua.
 
