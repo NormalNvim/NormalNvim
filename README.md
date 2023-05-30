@@ -58,7 +58,7 @@ Please before opening an issue, check [the AstroVim manual](https://astronvim.co
 
 * **NormalNvim is not working. How can I know why?**
 
-    :healthcheck base
+    `:healthcheck base`
 
 * **How do I disable the tabline?** On the options file, set `showtabline=0`. If you wanna remove the functionality completely from nvim check the plugin heirline. Here is where we implement the tab logic. Also check the [./lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua) and [./lua/base/utils/status.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/utils/status.lua).
 
