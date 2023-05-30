@@ -31,10 +31,12 @@ yarn npm     # Necessary for most formatters and parsers.
 * 📱 **Phone friendly:** Good usability even on smalll screens.
 * ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
 
-## Design decissions
-You are expected to fork the project before cloning it. So you are the only one in control.
+## Philosophy and design decissions
+__You are expected to fork the project before cloning it. So you are the only one in control.__
 
-NormalNvim updates don't have a user space. This is by design. It makes the code considerably more simple. And it also gives you the keys of the house to change anything you desire. The downside is, if you update from this repo, your settings will be overrided, so don't do it unless you know what you are doing; This is not a distro you are expected to update often from upstream. It is meant to be used as a base to create your own distro. This make this distro more stable than others.
+NormalNvim updates don't have a user space. This is by design. It makes the code considerably more simple. And it also gives you the keys of the house to change anything you desire. This is not a distro you are expected to update often from upstream. It is meant to be used as a base to create your own distro.
+
+[NormalNvim](https://github.com/Zeioth/NormalNvim) won't be the next /r/UnixPorn sensation. It is a normal nvim config you can trust to work without unexpected breakage. Nothing flashy. Nothing brightful. Just bread and butter.
 
 ## FAQ
 Please before opening an issue, check [the AstroVim manual](https://astronvim.com/) and the [AstroVim Community](https://github.com/AstroNvim/astrocommunity) repos where you can find help about how to install and configure most plugins.
@@ -42,6 +44,9 @@ Please before opening an issue, check [the AstroVim manual](https://astronvim.co
 * **NormalNvim is not working ok. How can I know why?**
 
     :healthcheck base
+
+* **What is the command :NvimUpdateFor?**
+It updates your distro from your config github repository. This is very useful when you are own more than one machine.
 
 * **How do I disable the tabline?** On the options file, set showtabline=0. If you wanna remove the functionality completely from nvim check the plugin heirline. Here is where we implement the tab logic. Also check the ./lua/base/3-autocmds.lua and ./lua/base/utils/status.lua.
 
@@ -54,3 +59,4 @@ Originally it took AstroVim as base. But implements [this VIM config](https://gi
 
 ## TODOS
 * The plugins [vim-doxygen](https://github.com/Zeioth/vim-doxygen) and [vim-typedoc](https://github.com/Zeioth/vim-typedoc) are not compatible with windows yet. Is it planned to re-write them on lua with windows support, but in the meantime if you are on windows, please don't use them.
+* Create a wiki page.
