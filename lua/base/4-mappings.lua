@@ -646,7 +646,7 @@ if is_available "telescope.nvim" then
   }
   maps.n["<leader>fw"] = {
     function() require("telescope.builtin").grep_string() end,
-    desc = "Find for word under cursor",
+    desc = "Find word under cursor in project",
   }
   maps.n["<leader>fC"] = {
     function() require("telescope.builtin").commands() end,
@@ -974,7 +974,7 @@ if is_available "markdown-preview.nivm" or is_available "markmap.nvim" then
   if is_available "markmap.nvim" then
     maps.n["<leader>Dm"] = {
       function() vim.cmd "MarkmapOpen" end,
-      desc = "Md markmap",
+      desc = "Markmap",
     }
   end
 
