@@ -32,7 +32,7 @@ yarn npm     # Necessary for most formatters and parsers.
 * ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
 
 ## Philosophy and design decissions
-__You are expected to fork the project before cloning it. So you are the only one in control. It is also advised, but not necessary, to use [neovim's appimage](https://github.com/neovim/neovim/releases).__
+__You are expected to fork the project before cloning it. So you are the only one in control. It is also recommended to use [neovim's appimage](https://github.com/neovim/neovim/releases).__
 
 NormalNvim updates don't have a user space. This is by design. It makes the code considerably more simple. And it also gives you the keys of the house to change anything you desire. This is not a distro you are expected to update often from upstream. It is meant to be used as a base to create your own distro.
 
