@@ -8,9 +8,19 @@
 -- @copyright 2022
 -- @license GNU General Public License v3.0
 
-local M = { hl = {}, init = {}, provider = {}, condition = {}, component = {}, utils = {}, env = {}, heirline = {} }
+local M = {
+  hl = {},
+  init = {},
+  provider = {},
+  condition = {},
+  component = {},
+  utils = {},
+  env = {},
+  heirline = {},
+}
 
 local utils = require "base.utils"
+local buffer_utils = require "base.utils.buffer"
 local extend_tbl = utils.extend_tbl
 local get_icon = utils.get_icon
 local is_available = utils.is_available
@@ -105,10 +115,17 @@ local function pattern_match(str, pattern_list)
 end
 
 M.env.buf_matchers = {
-  filetype = function(pattern_list, bufnr) return pattern_match(vim.bo[bufnr or 0].filetype, pattern_list) end,
-  buftype = function(pattern_list, bufnr) return pattern_match(vim.bo[bufnr or 0].buftype, pattern_list) end,
+  filetype = function(pattern_list, bufnr)
+    return pattern_match(vim.bo[bufnr or 0].filetype, pattern_list)
+  end,
+  buftype = function(pattern_list, bufnr)
+    return pattern_match(vim.bo[bufnr or 0].buftype, pattern_list)
+  end,
   bufname = function(pattern_list, bufnr)
-    return pattern_match(vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr or 0), ":t"), pattern_list)
+    return pattern_match(
+      vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr or 0), ":t"),
+      pattern_list
+    )
   end,
 }
 
@@ -118,9 +135,17 @@ local gitsigns = function(_)
   local gitsigns_avail, gitsigns = pcall(require, "gitsigns")
   if gitsigns_avail then vim.schedule(gitsigns.preview_hunk) end
 end
-for _, sign in ipairs { "Topdelete", "Untracked", "Add", "Changedelete", "Delete" } do
+for _, sign in ipairs {
+  "Topdelete",
+  "Untracked",
+  "Add",
+  "Changedelete",
+  "Delete",
+} do
   local name = "GitSigns" .. sign
-  if not M.env.sign_handlers[name] then M.env.sign_handlers[name] = gitsigns end
+  if not M.env.sign_handlers[name] then
+    M.env.sign_handlers[name] = gitsigns
+  end
 end
 -- diagnostic handlers
 local diagnostics = function(args)
@@ -132,7 +157,9 @@ local diagnostics = function(args)
 end
 for _, sign in ipairs { "Error", "Hint", "Info", "Warn" } do
   local name = "DiagnosticSign" .. sign
-  if not M.env.sign_handlers[name] then M.env.sign_handlers[name] = diagnostics end
+  if not M.env.sign_handlers[name] then
+    M.env.sign_handlers[name] = diagnostics
+  end
 end
 -- DAP handlers
 local dap_breakpoint = function(_)
@@ -141,7 +168,9 @@ local dap_breakpoint = function(_)
 end
 for _, sign in ipairs { "", "Rejected", "Condition" } do
   local name = "DapBreakpoint" .. sign
-  if not M.env.sign_handlers[name] then M.env.sign_handlers[name] = dap_breakpoint end
+  if not M.env.sign_handlers[name] then
+    M.env.sign_handlers[name] = dap_breakpoint
+  end
 end
 
 --- Get the highlight background color of the lualine theme for the current colorscheme
@@ -150,9 +179,11 @@ end
 ---@return string # The background color of the lualine theme or the fallback parameter if one doesn't exist
 function M.hl.lualine_mode(mode, fallback)
   if not vim.g.colors_name then return fallback end
-  local lualine_avail, lualine = pcall(require, "lualine.themes." .. vim.g.colors_name)
+  local lualine_avail, lualine =
+    pcall(require, "lualine.themes." .. vim.g.colors_name)
   local lualine_opts = lualine_avail and lualine[mode]
-  return lualine_opts and type(lualine_opts.a) == "table" and lualine_opts.a.bg or fallback
+  return lualine_opts and type(lualine_opts.a) == "table" and lualine_opts.a.bg
+    or fallback
 end
 
 --- Get the highlight for the current mode
@@ -173,7 +204,10 @@ function M.hl.filetype_color(self)
   local devicons_avail, devicons = pcall(require, "nvim-web-devicons")
   if not devicons_avail then return {} end
   local _, color = devicons.get_icon_color(
-    vim.fn.fnamemodify(vim.api.nvim_buf_get_name(self and self.bufnr or 0), ":t"),
+    vim.fn.fnamemodify(
+      vim.api.nvim_buf_get_name(self and self.bufnr or 0),
+      ":t"
+    ),
     nil,
     { default = true }
   )
@@ -199,7 +233,10 @@ end
 function M.hl.file_icon(name)
   local hl_enabled = M.env.icon_highlights.file_icon[name]
   return function(self)
-    if hl_enabled == true or (type(hl_enabled) == "function" and hl_enabled(self)) then
+    if
+      hl_enabled == true
+      or (type(hl_enabled) == "function" and hl_enabled(self))
+    then
       return M.hl.filetype_color(self)
     end
   end
@@ -221,25 +258,37 @@ function M.init.breadcrumbs(opts)
     local children = {}
     -- add prefix if needed, use the separator if true, or use the provided character
     if opts.prefix and not vim.tbl_isempty(data) then
-      table.insert(children, { provider = opts.prefix == true and opts.separator or opts.prefix })
+      table.insert(
+        children,
+        { provider = opts.prefix == true and opts.separator or opts.prefix }
+      )
     end
     local start_idx = 0
     if opts.max_depth and opts.max_depth > 0 then
       start_idx = #data - opts.max_depth
       if start_idx > 0 then
-        table.insert(children, { provider = require("base.utils").get_icon "Ellipsis" .. opts.separator })
+        table.insert(children, {
+          provider = require("base.utils").get_icon "Ellipsis"
+            .. opts.separator,
+        })
       end
     end
     -- create a child for each level
     for i, d in ipairs(data) do
       if i > start_idx then
         local child = {
-          { provider = string.gsub(d.name, "%%", "%%%%"):gsub("%s*->%s*", "") }, -- add symbol name
-          on_click = { -- add on click function
+          {
+            provider = string.gsub(d.name, "%%", "%%%%"):gsub("%s*->%s*", ""),
+          }, -- add symbol name
+          on_click = {
+            -- add on click function
             minwid = M.utils.encode_pos(d.lnum, d.col, self.winnr),
             callback = function(_, minwid)
               local lnum, col, winnr = M.utils.decode_pos(minwid)
-              vim.api.nvim_win_set_cursor(vim.fn.win_getid(winnr), { lnum, col })
+              vim.api.nvim_win_set_cursor(
+                vim.fn.win_getid(winnr),
+                { lnum, col }
+              )
             end,
             name = "heirline_breadcrumbs",
           },
@@ -253,15 +302,24 @@ function M.init.breadcrumbs(opts)
             hl = (hl and vim.fn.hlexists(hlgroup) == 1) and hlgroup or nil,
           })
         end
-        if #data > 1 and i < #data then table.insert(child, { provider = opts.separator }) end -- add a separator only if needed
+        if #data > 1 and i < #data then
+          table.insert(child, { provider = opts.separator })
+        end -- add a separator only if needed
         table.insert(children, child)
       end
     end
     if opts.padding.left > 0 then -- add left padding
-      table.insert(children, 1, { provider = M.pad_string(" ", { left = opts.padding.left - 1 }) })
+      table.insert(
+        children,
+        1,
+        { provider = M.pad_string(" ", { left = opts.padding.left - 1 }) }
+      )
     end
     if opts.padding.right > 0 then -- add right padding
-      table.insert(children, { provider = M.pad_string(" ", { right = opts.padding.right - 1 }) })
+      table.insert(
+        children,
+        { provider = M.pad_string(" ", { right = opts.padding.right - 1 }) }
+      )
     end
     -- instantiate the new child
     self[1] = self:new(children, 1)
@@ -288,13 +346,19 @@ function M.init.separated_path(opts)
     local children = {}
     -- add prefix if needed, use the separator if true, or use the provided character
     if opts.prefix and not vim.tbl_isempty(data) then
-      table.insert(children, { provider = opts.prefix == true and opts.separator or opts.prefix })
+      table.insert(
+        children,
+        { provider = opts.prefix == true and opts.separator or opts.prefix }
+      )
     end
     local start_idx = 0
     if opts.max_depth and opts.max_depth > 0 then
       start_idx = #data - opts.max_depth
       if start_idx > 0 then
-        table.insert(children, { provider = require("base.utils").get_icon "Ellipsis" .. opts.separator })
+        table.insert(children, {
+          provider = require("base.utils").get_icon "Ellipsis"
+            .. opts.separator,
+        })
       end
     end
     -- create a child for each level
@@ -307,10 +371,17 @@ function M.init.separated_path(opts)
       end
     end
     if opts.padding.left > 0 then -- add left padding
-      table.insert(children, 1, { provider = M.pad_string(" ", { left = opts.padding.left - 1 }) })
+      table.insert(
+        children,
+        1,
+        { provider = M.pad_string(" ", { left = opts.padding.left - 1 }) }
+      )
     end
     if opts.padding.right > 0 then -- add right padding
-      table.insert(children, { provider = M.pad_string(" ", { right = opts.padding.right - 1 }) })
+      table.insert(
+        children,
+        { provider = M.pad_string(" ", { right = opts.padding.right - 1 }) }
+      )
     end
     -- instantiate the new child
     self[1] = self:new(children, 1)
@@ -361,7 +432,8 @@ end
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.numbercolumn }
 -- @see base.utils.status.utils.stylize
 function M.provider.numbercolumn(opts)
-  opts = extend_tbl({ thousands = false, culright = true, escape = false }, opts)
+  opts =
+    extend_tbl({ thousands = false, culright = true, escape = false }, opts)
   return function()
     local lnum, rnum, virtnum = vim.v.lnum, vim.v.relnum, vim.v.virtnum
     local num, relnum = vim.opt.number:get(), vim.opt.relativenumber:get()
@@ -373,9 +445,14 @@ function M.provider.numbercolumn(opts)
     else
       local cur = relnum and (rnum > 0 and rnum or (num and lnum or 0)) or lnum
       if opts.thousands and cur > 999 then
-        cur = string.reverse(cur):gsub("%d%d%d", "%1" .. opts.thousands):reverse():gsub("^%" .. opts.thousands, "")
+        cur = string
+          .reverse(cur)
+          :gsub("%d%d%d", "%1" .. opts.thousands)
+          :reverse()
+          :gsub("^%" .. opts.thousands, "")
       end
-      str = (rnum == 0 and not opts.culright and relnum) and cur .. "%=" or "%=" .. cur
+      str = (rnum == 0 and not opts.culright and relnum) and cur .. "%="
+        or "%=" .. cur
     end
     return M.utils.stylize(str, opts)
   end
@@ -397,7 +474,8 @@ function M.provider.foldcolumn(opts)
     local wp = ffi.C.find_window_by_handle(0, ffi.new "Error") -- get window handler
     local width = ffi.C.compute_foldcolumn(wp, 0) -- get foldcolumn width
     -- get fold info of current line
-    local foldinfo = width > 0 and ffi.C.fold_info(wp, vim.v.lnum) or { start = 0, level = 0, llevel = 0, lines = 0 }
+    local foldinfo = width > 0 and ffi.C.fold_info(wp, vim.v.lnum)
+      or { start = 0, level = 0, llevel = 0, lines = 0 }
 
     local str = ""
     if width ~= 0 then
@@ -432,7 +510,11 @@ end
 ---@return function # the statusline function to return a string for a tab number
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.tabnr() }
 function M.provider.tabnr()
-  return function(self) return (self and self.tabnr) and "%" .. self.tabnr .. "T " .. self.tabnr .. " %T" or "" end
+  return function(self)
+    return (self and self.tabnr)
+        and "%" .. self.tabnr .. "T " .. self.tabnr .. " %T"
+      or ""
+  end
 end
 
 --- A provider function for showing if spellcheck is on
@@ -441,8 +523,13 @@ end
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.spell() }
 -- @see base.utils.status.utils.stylize
 function M.provider.spell(opts)
-  opts = extend_tbl({ str = "", icon = { kind = "Spellcheck" }, show_empty = true }, opts)
-  return function() return M.utils.stylize(vim.wo.spell and opts.str or nil, opts) end
+  opts = extend_tbl(
+    { str = "", icon = { kind = "Spellcheck" }, show_empty = true },
+    opts
+  )
+  return function()
+    return M.utils.stylize(vim.wo.spell and opts.str or nil, opts)
+  end
 end
 
 --- A provider function for showing if paste is enabled
@@ -451,7 +538,10 @@ end
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.paste() }
 -- @see base.utils.status.utils.stylize
 function M.provider.paste(opts)
-  opts = extend_tbl({ str = "", icon = { kind = "Paste" }, show_empty = true }, opts)
+  opts = extend_tbl(
+    { str = "", icon = { kind = "Paste" }, show_empty = true },
+    opts
+  )
   local paste = vim.opt.paste
   if type(paste) ~= "boolean" then paste = paste:get() end
   return function() return M.utils.stylize(paste and opts.str or nil, opts) end
@@ -478,7 +568,10 @@ end
 -- @see base.utils.status.utils.stylize
 function M.provider.showcmd(opts)
   opts = extend_tbl({ minwid = 0, maxwid = 5, escape = false }, opts)
-  return M.utils.stylize(("%%%d.%d(%%S%%)"):format(opts.minwid, opts.maxwid), opts)
+  return M.utils.stylize(
+    ("%%%d.%d(%%S%%)"):format(opts.minwid, opts.maxwid),
+    opts
+  )
 end
 
 --- A provider function for displaying the current search count
@@ -487,7 +580,8 @@ end
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.search_count() }
 -- @see base.utils.status.utils.stylize
 function M.provider.search_count(opts)
-  local search_func = vim.tbl_isempty(opts or {}) and function() return vim.fn.searchcount() end
+  local search_func = vim.tbl_isempty(opts or {})
+      and function() return vim.fn.searchcount() end
     or function() return vim.fn.searchcount(opts) end
   return function()
     local search_ok, search = pcall(search_func)
@@ -512,7 +606,14 @@ end
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.mode_text() }
 -- @see base.utils.status.utils.stylize
 function M.provider.mode_text(opts)
-  local max_length = math.max(unpack(vim.tbl_map(function(str) return #str[1] end, vim.tbl_values(M.env.modes))))
+  local max_length = math.max(
+    unpack(
+      vim.tbl_map(
+        function(str) return #str[1] end,
+        vim.tbl_values(M.env.modes)
+      )
+    )
+  )
   return function()
     local text = M.env.modes[vim.fn.mode()][1]
     if opts and opts.pad_text then
@@ -522,7 +623,9 @@ function M.provider.mode_text(opts)
       elseif opts.pad_text == "left" then
         text = text .. string.rep(" ", padding)
       elseif opts.pad_text == "center" then
-        text = string.rep(" ", math.floor(padding / 2)) .. text .. string.rep(" ", math.ceil(padding / 2))
+        text = string.rep(" ", math.floor(padding / 2))
+          .. text
+          .. string.rep(" ", math.ceil(padding / 2))
       end
     end
     return M.utils.stylize(text, opts)
@@ -535,9 +638,12 @@ end
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.percentage() }
 -- @see base.utils.status.utils.stylize
 function M.provider.percentage(opts)
-  opts = extend_tbl({ escape = false, fixed_width = true, edge_text = true }, opts)
+  opts =
+    extend_tbl({ escape = false, fixed_width = true, edge_text = true }, opts)
   return function()
-    local text = "%" .. (opts.fixed_width and (opts.edge_text and "2" or "3") or "") .. "p%%"
+    local text = "%"
+      .. (opts.fixed_width and (opts.edge_text and "2" or "3") or "")
+      .. "p%%"
     if opts.edge_text then
       local current_line = vim.fn.line "."
       if current_line == 1 then
@@ -557,7 +663,8 @@ end
 -- @see base.utils.status.utils.stylize
 function M.provider.ruler(opts)
   opts = extend_tbl({ pad_ruler = { line = 3, char = 2 } }, opts)
-  local padding_str = string.format("%%%dd:%%-%dd", opts.pad_ruler.line, opts.pad_ruler.char)
+  local padding_str =
+    string.format("%%%dd:%%-%dd", opts.pad_ruler.line, opts.pad_ruler.char)
   return function()
     local line = vim.fn.line "."
     local char = vim.fn.virtcol "."
@@ -614,8 +721,12 @@ function M.provider.filename(opts)
     modify = ":t",
   }, opts)
   return function(self)
-    local filename = vim.fn.fnamemodify(opts.fname(self and self.bufnr or 0), opts.modify)
-    return M.utils.stylize((filename == "" and opts.fallback or filename), opts)
+    local filename =
+      vim.fn.fnamemodify(opts.fname(self and self.bufnr or 0), opts.modify)
+    return M.utils.stylize(
+      (filename == "" and opts.fallback or filename),
+      opts
+    )
   end
 end
 
@@ -626,13 +737,17 @@ end
 -- @see base.utils.status.utils.stylize
 function M.provider.unique_path(opts)
   opts = extend_tbl({
-    buf_name = function(bufnr) return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":t") end,
+    buf_name = function(bufnr)
+      return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":t")
+    end,
     bufnr = 0,
     max_length = 16,
   }, opts)
   local function path_parts(bufnr)
     local parts = {}
-    for match in (vim.api.nvim_buf_get_name(bufnr) .. "/"):gmatch("(.-)" .. "/") do
+    for match in
+      (vim.api.nvim_buf_get_name(bufnr) .. "/"):gmatch("(.-)" .. "/")
+    do
       table.insert(parts, match)
     end
     return parts
@@ -660,7 +775,9 @@ function M.provider.unique_path(opts)
       (
         opts.max_length > 0
         and #unique_path > opts.max_length
-        and string.sub(unique_path, 1, opts.max_length - 2) .. get_icon "Ellipsis" .. "/"
+        and string.sub(unique_path, 1, opts.max_length - 2)
+          .. get_icon "Ellipsis"
+          .. "/"
       ) or unique_path,
       opts
     )
@@ -673,8 +790,16 @@ end
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.file_modified() }
 -- @see base.utils.status.utils.stylize
 function M.provider.file_modified(opts)
-  opts = extend_tbl({ str = "", icon = { kind = "FileModified" }, show_empty = true }, opts)
-  return function(self) return M.utils.stylize(M.condition.file_modified((self or {}).bufnr) and opts.str or nil, opts) end
+  opts = extend_tbl(
+    { str = "", icon = { kind = "FileModified" }, show_empty = true },
+    opts
+  )
+  return function(self)
+    return M.utils.stylize(
+      M.condition.file_modified((self or {}).bufnr) and opts.str or nil,
+      opts
+    )
+  end
 end
 
 --- A provider function for showing if the current file is read-only
@@ -683,8 +808,16 @@ end
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.file_read_only() }
 -- @see base.utils.status.utils.stylize
 function M.provider.file_read_only(opts)
-  opts = extend_tbl({ str = "", icon = { kind = "FileReadOnly" }, show_empty = true }, opts)
-  return function(self) return M.utils.stylize(M.condition.file_read_only((self or {}).bufnr) and opts.str or nil, opts) end
+  opts = extend_tbl(
+    { str = "", icon = { kind = "FileReadOnly" }, show_empty = true },
+    opts
+  )
+  return function(self)
+    return M.utils.stylize(
+      M.condition.file_read_only((self or {}).bufnr) and opts.str or nil,
+      opts
+    )
+  end
 end
 
 --- A provider function for showing the current filetype icon
@@ -697,7 +830,10 @@ function M.provider.file_icon(opts)
     local devicons_avail, devicons = pcall(require, "nvim-web-devicons")
     if not devicons_avail then return "" end
     local ft_icon, _ = devicons.get_icon(
-      vim.fn.fnamemodify(vim.api.nvim_buf_get_name(self and self.bufnr or 0), ":t"),
+      vim.fn.fnamemodify(
+        vim.api.nvim_buf_get_name(self and self.bufnr or 0),
+        ":t"
+      ),
       nil,
       { default = true }
     )
@@ -711,7 +847,12 @@ end
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.git_branch() }
 -- @see base.utils.status.utils.stylize
 function M.provider.git_branch(opts)
-  return function(self) return M.utils.stylize(vim.b[self and self.bufnr or 0].gitsigns_head or "", opts) end
+  return function(self)
+    return M.utils.stylize(
+      vim.b[self and self.bufnr or 0].gitsigns_head or "",
+      opts
+    )
+  end
 end
 
 --- A provider function for showing the current git diff count of a specific type
@@ -724,7 +865,11 @@ function M.provider.git_diff(opts)
   return function(self)
     local status = vim.b[self and self.bufnr or 0].gitsigns_status_dict
     return M.utils.stylize(
-      status and status[opts.type] and status[opts.type] > 0 and tostring(status[opts.type]) or "",
+      status
+          and status[opts.type]
+          and status[opts.type] > 0
+          and tostring(status[opts.type])
+        or "",
       opts
     )
   end
@@ -739,7 +884,10 @@ function M.provider.diagnostics(opts)
   if not opts or not opts.severity then return end
   return function(self)
     local bufnr = self and self.bufnr or 0
-    local count = #vim.diagnostic.get(bufnr, opts.severity and { severity = vim.diagnostic.severity[opts.severity] })
+    local count = #vim.diagnostic.get(
+      bufnr,
+      opts.severity and { severity = vim.diagnostic.severity[opts.severity] }
+    )
     return M.utils.stylize(count ~= 0 and tostring(count) or "", opts)
   end
 end
@@ -755,7 +903,11 @@ function M.provider.lsp_progress(opts)
     return M.utils.stylize(
       Lsp
         and (
-          get_icon("LSP" .. ((Lsp.percentage or 0) >= 70 and { "Loaded", "Loaded", "Loaded" } or {
+          get_icon("LSP" .. ((Lsp.percentage or 0) >= 70 and {
+            "Loaded",
+            "Loaded",
+            "Loaded",
+          } or {
             "Loading1",
             "Loading2",
             "Loading3",
@@ -778,11 +930,15 @@ function M.provider.lsp_client_names(opts)
   opts = extend_tbl({ expand_null_ls = true, truncate = 0.25 }, opts)
   return function(self)
     local buf_client_names = {}
-    for _, client in pairs(vim.lsp.get_active_clients { bufnr = self and self.bufnr or 0 }) do
+    for _, client in
+      pairs(vim.lsp.get_active_clients { bufnr = self and self.bufnr or 0 })
+    do
       if client.name == "null-ls" and opts.expand_null_ls then
         local null_ls_sources = {}
         for _, type in ipairs { "FORMATTING", "DIAGNOSTICS" } do
-          for _, source in ipairs(M.utils.null_ls_sources(vim.bo.filetype, type)) do
+          for _, source in
+            ipairs(M.utils.null_ls_sources(vim.bo.filetype, type))
+          do
             null_ls_sources[source] = true
           end
         end
@@ -806,7 +962,12 @@ end
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.treesitter_status() }
 -- @see base.utils.status.utils.stylize
 function M.provider.treesitter_status(opts)
-  return function() return M.utils.stylize(require("nvim-treesitter.parser").has_parser() and "TS" or "", opts) end
+  return function()
+    return M.utils.stylize(
+      require("nvim-treesitter.parser").has_parser() and "TS" or "",
+      opts
+    )
+  end
 end
 
 --- A provider function for displaying a single string
@@ -822,7 +983,9 @@ end
 --- A condition function if the window is currently active
 ---@return boolean # whether or not the window is currently actie
 -- @usage local heirline_component = { provider = "Example Provider", condition = require("base.utils.status").condition.is_active }
-function M.condition.is_active() return vim.api.nvim_get_current_win() == tonumber(vim.g.actual_curwin) end
+function M.condition.is_active()
+  return vim.api.nvim_get_current_win() == tonumber(vim.g.actual_curwin)
+end
 
 --- A condition function if the buffer filetype,buftype,bufname match a pattern
 ---@param patterns table the table of patterns to match
@@ -850,7 +1013,8 @@ function M.condition.is_hlsearch() return vim.v.hlsearch ~= 0 end
 ---@return boolean # whether or not statusline showcmd is enabled
 -- @usage local heirline_component = { provider = "Example Provider", condition = require("base.utils.status").condition.is_statusline_showcmd }
 function M.condition.is_statusline_showcmd()
-  return vim.fn.has "nvim-0.9" == 1 and vim.opt.showcmdloc:get() == "statusline"
+  return vim.fn.has "nvim-0.9" == 1
+    and vim.opt.showcmdloc:get() == "statusline"
 end
 
 --- A condition function if the current file is in a git repo
@@ -859,7 +1023,8 @@ end
 -- @usage local heirline_component = { provider = "Example Provider", condition = require("base.utils.status").condition.is_git_repo }
 function M.condition.is_git_repo(bufnr)
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
-  return vim.b[bufnr or 0].gitsigns_head or vim.b[bufnr or 0].gitsigns_status_dict
+  return vim.b[bufnr or 0].gitsigns_head
+    or vim.b[bufnr or 0].gitsigns_status_dict
 end
 
 --- A condition function if there are any git changes
@@ -869,7 +1034,11 @@ end
 function M.condition.git_changed(bufnr)
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
   local git_status = vim.b[bufnr or 0].gitsigns_status_dict
-  return git_status and (git_status.added or 0) + (git_status.removed or 0) + (git_status.changed or 0) > 0
+  return git_status
+    and (git_status.added or 0)
+        + (git_status.removed or 0)
+        + (git_status.changed or 0)
+      > 0
 end
 
 --- A condition function if the current buffer is modified
@@ -906,7 +1075,9 @@ end
 -- @usage local heirline_component = { provider = "Example Provider", condition = require("base.utils.status").condition.has_filetype }
 function M.condition.has_filetype(bufnr)
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
-  return vim.fn.empty(vim.fn.expand "%:t") ~= 1 and vim.bo[bufnr or 0].filetype and vim.bo[bufnr or 0].filetype ~= ""
+  return vim.fn.empty(vim.fn.expand "%:t") ~= 1
+    and vim.bo[bufnr or 0].filetype
+    and vim.bo[bufnr or 0].filetype ~= ""
 end
 
 --- A condition function if Aerial is available
@@ -932,16 +1103,22 @@ function M.condition.treesitter_available(bufnr)
   if not package.loaded["nvim-treesitter"] then return false end
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
   local parsers = require "nvim-treesitter.parsers"
-  return parsers.has_parser(parsers.get_buf_lang(bufnr or vim.api.nvim_get_current_buf()))
+  return parsers.has_parser(
+    parsers.get_buf_lang(bufnr or vim.api.nvim_get_current_buf())
+  )
 end
 
 --- A condition function if the foldcolumn is enabled
 ---@return boolean # true if vim.opt.foldcolumn > 0, false if vim.opt.foldcolumn == 0
-function M.condition.foldcolumn_enabled() return vim.opt.foldcolumn:get() ~= "0" end
+function M.condition.foldcolumn_enabled()
+  return vim.opt.foldcolumn:get() ~= "0"
+end
 
 --- A condition function if the number column is enabled
 ---@return boolean # true if vim.opt.number or vim.opt.relativenumber, false if neither
-function M.condition.numbercolumn_enabled() return vim.opt.number:get() or vim.opt.relativenumber:get() end
+function M.condition.numbercolumn_enabled()
+  return vim.opt.number:get() or vim.opt.relativenumber:get()
+end
 
 local function escape(str) return str:gsub("%%", "%%%%") end
 
@@ -961,7 +1138,10 @@ function M.utils.stylize(str, opts)
   local icon = M.pad_string(get_icon(opts.icon.kind), opts.icon.padding)
   return str
       and (str ~= "" or opts.show_empty)
-      and opts.separator.left .. M.pad_string(icon .. (opts.escape and escape(str) or str), opts.padding) .. opts.separator.right
+      and opts.separator.left .. M.pad_string(
+        icon .. (opts.escape and escape(str) or str),
+        opts.padding
+      ) .. opts.separator.right
     or ""
 end
 
@@ -969,7 +1149,9 @@ end
 ---@param opts? table options for configuring the other fields of the heirline component
 ---@return table # The heirline component table
 -- @usage local heirline_component = require("base.utils.status").component.fill()
-function M.component.fill(opts) return extend_tbl({ provider = M.provider.fill() }, opts) end
+function M.component.fill(opts)
+  return extend_tbl({ provider = M.provider.fill() }, opts)
+end
 
 --- A function to build a set of children components for an entire file information section
 ---@param opts? table options for configuring file_icon, filename, filetype, file_modified, file_read_only, and the overall padding
@@ -977,11 +1159,18 @@ function M.component.fill(opts) return extend_tbl({ provider = M.provider.fill()
 -- @usage local heirline_component = require("base.utils.status").component.file_info()
 function M.component.file_info(opts)
   opts = extend_tbl({
-    file_icon = { hl = M.hl.file_icon "statusline", padding = { left = 1, right = 1 } },
+    file_icon = {
+      hl = M.hl.file_icon "statusline",
+      padding = { left = 1, right = 1 },
+    },
     filename = {},
     file_modified = { padding = { left = 1 } },
     file_read_only = { padding = { left = 1 } },
-    surround = { separator = "left", color = "file_info_bg", condition = M.condition.has_filetype },
+    surround = {
+      separator = "left",
+      color = "file_info_bg",
+      condition = M.condition.has_filetype,
+    },
     hl = M.hl.get_attributes "file_info",
   }, opts)
   return M.component.builder(M.utils.setup_providers(opts, {
@@ -1009,10 +1198,12 @@ function M.component.tabline_file_info(opts)
       hl = function(self) return M.hl.get_attributes(self.tab_type .. "_path") end,
     },
     close_button = {
-      hl = function(self) return M.hl.get_attributes(self.tab_type .. "_close") end, -- Close X color
+      hl = function(self)
+        return M.hl.get_attributes(self.tab_type .. "_close")
+      end, -- Close X color
       padding = { left = 1, right = 1 }, -- Mimimum tab size
       on_click = {
-        callback = function(_, minwid) require("base.utils.buffer").close(minwid) end,
+        callback = function(_, minwid) buffer_utils.close(minwid) end,
         minwid = function(self) return self.bufnr end,
         name = "heirline_tabline_close_buffer_callback",
       },
@@ -1020,7 +1211,9 @@ function M.component.tabline_file_info(opts)
     padding = { left = 1, right = 1 },
     hl = function(self)
       local tab_type = self.tab_type
-      if self._show_picker and self.tab_type ~= "buffer_active" then tab_type = "buffer_visible" end
+      if self._show_picker and self.tab_type ~= "buffer_active" then
+        tab_type = "buffer_visible"
+      end
       return M.hl.get_attributes(tab_type)
     end,
     surround = false,
@@ -1040,7 +1233,9 @@ function M.component.nav(opts)
     hl = M.hl.get_attributes "nav",
     update = { "CursorMoved", "CursorMovedI", "BufEnter" },
   }, opts)
-  return M.component.builder(M.utils.setup_providers(opts, { "ruler", "percentage", "scrollbar" }))
+  return M.component.builder(
+    M.utils.setup_providers(opts, { "ruler", "percentage", "scrollbar" })
+  )
 end
 
 --- A function to build a set of children components for information shown in the cmdline
@@ -1071,13 +1266,20 @@ function M.component.cmd_info(opts)
       separator = "center",
       color = "cmd_info_bg",
       condition = function()
-        return M.condition.is_hlsearch() or M.condition.is_macro_recording() or M.condition.is_statusline_showcmd()
+        return M.condition.is_hlsearch()
+          or M.condition.is_macro_recording()
+          or M.condition.is_statusline_showcmd()
       end,
     },
     condition = function() return vim.opt.cmdheight:get() == 0 end,
     hl = M.hl.get_attributes "cmd_info",
   }, opts)
-  return M.component.builder(M.utils.setup_providers(opts, { "macro_recording", "search_count", "showcmd" }))
+  return M.component.builder(
+    M.utils.setup_providers(
+      opts,
+      { "macro_recording", "search_count", "showcmd" }
+    )
+  )
 end
 
 --- A function to build a set of children components for a mode section
@@ -1098,7 +1300,9 @@ function M.component.mode(opts)
     },
   }, opts)
   if not opts["mode_text"] then opts.str = { str = " " } end
-  return M.component.builder(M.utils.setup_providers(opts, { "mode_text", "str", "paste", "spell" }))
+  return M.component.builder(
+    M.utils.setup_providers(opts, { "mode_text", "str", "paste", "spell" })
+  )
 end
 
 --- A function to build a set of children components for an LSP breadcrumbs section
@@ -1106,7 +1310,11 @@ end
 ---@return table # The Heirline component table
 -- @usage local heirline_component = require("base.utils.status").component.breadcumbs()
 function M.component.breadcrumbs(opts)
-  opts = extend_tbl({ padding = { left = 1 }, condition = M.condition.aerial_available, update = "CursorMoved" }, opts)
+  opts = extend_tbl({
+    padding = { left = 1 },
+    condition = M.condition.aerial_available,
+    update = "CursorMoved",
+  }, opts)
   opts.init = M.init.breadcrumbs(opts)
   return opts
 end
@@ -1116,7 +1324,10 @@ end
 ---@return table # The Heirline component table
 -- @usage local heirline_component = require("base.utils.status").component.separated_path()
 function M.component.separated_path(opts)
-  opts = extend_tbl({ padding = { left = 1 }, update = { "BufEnter", "DirChanged" } }, opts)
+  opts = extend_tbl(
+    { padding = { left = 1 }, update = { "BufEnter", "DirChanged" } },
+    opts
+  )
   opts.init = M.init.separated_path(opts)
   return opts
 end
@@ -1128,13 +1339,20 @@ end
 function M.component.git_branch(opts)
   opts = extend_tbl({
     git_branch = { icon = { kind = "GitBranch", padding = { right = 1 } } },
-    surround = { separator = "left", color = "git_branch_bg", condition = M.condition.is_git_repo },
+    surround = {
+      separator = "left",
+      color = "git_branch_bg",
+      condition = M.condition.is_git_repo,
+    },
     hl = M.hl.get_attributes "git_branch",
     on_click = {
       name = "heirline_branch",
       callback = function()
         if is_available "telescope.nvim" then
-          vim.defer_fn(function() require("telescope.builtin").git_branches() end, 100)
+          vim.defer_fn(
+            function() require("telescope.builtin").git_branches() end,
+            100
+          )
         end
       end,
     },
@@ -1151,30 +1369,47 @@ end
 function M.component.git_diff(opts)
   opts = extend_tbl({
     added = { icon = { kind = "GitAdd", padding = { left = 1, right = 1 } } },
-    changed = { icon = { kind = "GitChange", padding = { left = 1, right = 1 } } },
-    removed = { icon = { kind = "GitDelete", padding = { left = 1, right = 1 } } },
+    changed = {
+      icon = { kind = "GitChange", padding = { left = 1, right = 1 } },
+    },
+    removed = {
+      icon = { kind = "GitDelete", padding = { left = 1, right = 1 } },
+    },
     hl = M.hl.get_attributes "git_diff",
     on_click = {
       name = "heirline_git",
       callback = function()
         if is_available "telescope.nvim" then
-          vim.defer_fn(function() require("telescope.builtin").git_status() end, 100)
+          vim.defer_fn(
+            function() require("telescope.builtin").git_status() end,
+            100
+          )
         end
       end,
     },
-    surround = { separator = "left", color = "git_diff_bg", condition = M.condition.git_changed },
+    surround = {
+      separator = "left",
+      color = "git_diff_bg",
+      condition = M.condition.git_changed,
+    },
     update = { "User", pattern = "GitSignsUpdate" },
     init = M.init.update_events { "BufEnter" },
   }, opts)
-  return M.component.builder(M.utils.setup_providers(opts, { "added", "changed", "removed" }, function(p_opts, provider)
-    local out = M.utils.build_provider(p_opts, provider)
-    if out then
-      out.provider = "git_diff"
-      out.opts.type = provider
-      if out.hl == nil then out.hl = { fg = "git_" .. provider } end
-    end
-    return out
-  end))
+  return M.component.builder(
+    M.utils.setup_providers(
+      opts,
+      { "added", "changed", "removed" },
+      function(p_opts, provider)
+        local out = M.utils.build_provider(p_opts, provider)
+        if out then
+          out.provider = "git_diff"
+          out.opts.type = provider
+          if out.hl == nil then out.hl = { fg = "git_" .. provider } end
+        end
+        return out
+      end
+    )
+  )
 end
 
 --- A function to build a set of children components for a diagnostics section
@@ -1183,32 +1418,51 @@ end
 -- @usage local heirline_component = require("base.utils.status").component.diagnostics()
 function M.component.diagnostics(opts)
   opts = extend_tbl({
-    ERROR = { icon = { kind = "DiagnosticError", padding = { left = 1, right = 1 } } },
-    WARN = { icon = { kind = "DiagnosticWarn", padding = { left = 1, right = 1 } } },
-    INFO = { icon = { kind = "DiagnosticInfo", padding = { left = 1, right = 1 } } },
-    HINT = { icon = { kind = "DiagnosticHint", padding = { left = 1, right = 1 } } },
-    surround = { separator = "left", color = "diagnostics_bg", condition = M.condition.has_diagnostics },
+    ERROR = {
+      icon = { kind = "DiagnosticError", padding = { left = 1, right = 1 } },
+    },
+    WARN = {
+      icon = { kind = "DiagnosticWarn", padding = { left = 1, right = 1 } },
+    },
+    INFO = {
+      icon = { kind = "DiagnosticInfo", padding = { left = 1, right = 1 } },
+    },
+    HINT = {
+      icon = { kind = "DiagnosticHint", padding = { left = 1, right = 1 } },
+    },
+    surround = {
+      separator = "left",
+      color = "diagnostics_bg",
+      condition = M.condition.has_diagnostics,
+    },
     hl = M.hl.get_attributes "diagnostics",
     on_click = {
       name = "heirline_diagnostic",
       callback = function()
         if is_available "telescope.nvim" then
-          vim.defer_fn(function() require("telescope.builtin").diagnostics() end, 100)
+          vim.defer_fn(
+            function() require("telescope.builtin").diagnostics() end,
+            100
+          )
         end
       end,
     },
     update = { "DiagnosticChanged", "BufEnter" },
   }, opts)
   return M.component.builder(
-    M.utils.setup_providers(opts, { "ERROR", "WARN", "INFO", "HINT" }, function(p_opts, provider)
-      local out = M.utils.build_provider(p_opts, provider)
-      if out then
-        out.provider = "diagnostics"
-        out.opts.severity = provider
-        if out.hl == nil then out.hl = { fg = "diag_" .. provider } end
+    M.utils.setup_providers(
+      opts,
+      { "ERROR", "WARN", "INFO", "HINT" },
+      function(p_opts, provider)
+        local out = M.utils.build_provider(p_opts, provider)
+        if out then
+          out.provider = "diagnostics"
+          out.opts.severity = provider
+          if out.hl == nil then out.hl = { fg = "diag_" .. provider } end
+        end
+        return out
       end
-      return out
-    end)
+    )
   )
 end
 
@@ -1257,7 +1511,11 @@ function M.component.lsp(opts)
       icon = { kind = "ActiveLSP", padding = { right = 2 } },
     },
     hl = M.hl.get_attributes "lsp",
-    surround = { separator = "right", color = "lsp_bg", condition = M.condition.lsp_attached },
+    surround = {
+      separator = "right",
+      color = "lsp_bg",
+      condition = M.condition.lsp_attached,
+    },
     on_click = {
       name = "heirline_lsp",
       callback = function()
@@ -1340,7 +1598,11 @@ function M.component.signcolumn(opts)
       name = "sign_click",
       callback = function(...)
         local args = M.utils.statuscolumn_clickargs(...)
-        if args.sign and args.sign.name and M.env.sign_handlers[args.sign.name] then
+        if
+          args.sign
+          and args.sign.name
+          and M.env.sign_handlers[args.sign.name]
+        then
           M.env.sign_handlers[args.sign.name](args)
         end
       end,
@@ -1357,7 +1619,10 @@ function M.component.builder(opts)
   opts = extend_tbl({ padding = { left = 0, right = 0 } }, opts)
   local children = {}
   if opts.padding.left > 0 then -- add left padding
-    table.insert(children, { provider = M.pad_string(" ", { left = opts.padding.left - 1 }) })
+    table.insert(
+      children,
+      { provider = M.pad_string(" ", { left = opts.padding.left - 1 }) }
+    )
   end
   for key, entry in pairs(opts) do
     if
@@ -1371,10 +1636,18 @@ function M.component.builder(opts)
     children[key] = entry
   end
   if opts.padding.right > 0 then -- add right padding
-    table.insert(children, { provider = M.pad_string(" ", { right = opts.padding.right - 1 }) })
+    table.insert(
+      children,
+      { provider = M.pad_string(" ", { right = opts.padding.right - 1 }) }
+    )
   end
   return opts.surround
-      and M.utils.surround(opts.surround.separator, opts.surround.color, children, opts.surround.condition)
+      and M.utils.surround(
+        opts.surround.separator,
+        opts.surround.color,
+        children,
+        opts.surround.condition
+      )
     or children
 end
 
@@ -1412,7 +1685,8 @@ end
 ---@param is_winbar? boolean true if you want the width of the winbar, false if you want the statusline width
 ---@return integer # the width of the specified bar
 function M.utils.width(is_winbar)
-  return vim.o.laststatus == 3 and not is_winbar and vim.o.columns or vim.api.nvim_win_get_width(0)
+  return vim.o.laststatus == 3 and not is_winbar and vim.o.columns
+    or vim.api.nvim_win_get_width(0)
 end
 
 --- Add left and/or right padding to a string
@@ -1421,7 +1695,13 @@ end
 ---@return string # the padded string
 function M.pad_string(str, padding)
   padding = padding or {}
-  return str and str ~= "" and string.rep(" ", padding.left or 0) .. str .. string.rep(" ", padding.right or 0) or ""
+  return str
+      and str ~= ""
+      and string.rep(" ", padding.left or 0) .. str .. string.rep(
+        " ",
+        padding.right or 0
+      )
+    or ""
 end
 
 --- Surround component with separator and color adjustment
@@ -1436,7 +1716,8 @@ function M.utils.surround(separator, color, component, condition)
     return type(colors) == "string" and { main = colors } or colors
   end
 
-  separator = type(separator) == "string" and M.env.separators[separator] or separator
+  separator = type(separator) == "string" and M.env.separators[separator]
+    or separator
   local surrounded = { condition = condition }
   if separator[1] ~= "" then
     table.insert(surrounded, {
@@ -1471,12 +1752,16 @@ end
 ---@param col integer column number of position
 ---@param winnr integer a window number
 ---@return integer the encoded position
-function M.utils.encode_pos(line, col, winnr) return bit.bor(bit.lshift(line, 16), bit.lshift(col, 6), winnr) end
+function M.utils.encode_pos(line, col, winnr)
+  return bit.bor(bit.lshift(line, 16), bit.lshift(col, 6), winnr)
+end
 
 --- Decode a previously encoded position to it's sub parts
 ---@param c integer the encoded position
 ---@return integer line, integer column, integer window
-function M.utils.decode_pos(c) return bit.rshift(c, 16), bit.band(bit.rshift(c, 6), 1023), bit.band(c, 63) end
+function M.utils.decode_pos(c)
+  return bit.rshift(c, 16), bit.band(bit.rshift(c, 6), 1023), bit.band(c, 63)
+end
 
 --- Get a list of registered null-ls providers for a given filetype
 ---@param filetype string the filetype to search null-ls for
@@ -1505,7 +1790,9 @@ end
 ---@return string[] # the available sources for the given filetype and method
 function M.utils.null_ls_sources(filetype, method)
   local methods_avail, methods = pcall(require, "null-ls.methods")
-  return methods_avail and M.utils.null_ls_providers(filetype)[methods.internal[method]] or {}
+  return methods_avail
+      and M.utils.null_ls_providers(filetype)[methods.internal[method]]
+    or {}
 end
 
 --- A helper function for decoding statuscolumn click events with mouse click pressed, modifier keys, as well as which signcolumn sign was clicked if any
@@ -1525,12 +1812,18 @@ function M.utils.statuscolumn_clickargs(self, minwid, clicks, button, mods)
     mousepos = vim.fn.getmousepos(),
   }
   if not self.signs then self.signs = {} end
-  args.char = vim.fn.screenstring(args.mousepos.screenrow, args.mousepos.screencol)
-  if args.char == " " then args.char = vim.fn.screenstring(args.mousepos.screenrow, args.mousepos.screencol - 1) end
+  args.char =
+    vim.fn.screenstring(args.mousepos.screenrow, args.mousepos.screencol)
+  if args.char == " " then
+    args.char =
+      vim.fn.screenstring(args.mousepos.screenrow, args.mousepos.screencol - 1)
+  end
   args.sign = self.signs[args.char]
   if not args.sign then -- update signs if not found on first click
     for _, sign_def in ipairs(vim.fn.sign_getdefined()) do
-      if sign_def.text then self.signs[sign_def.text:gsub("%s", "")] = sign_def end
+      if sign_def.text then
+        self.signs[sign_def.text:gsub("%s", "")] = sign_def
+      end
     end
     args.sign = self.signs[args.char]
   end
@@ -1568,14 +1861,17 @@ M.heirline.make_buflist = function(component)
           right = "tabline_bg",
         }
       end,
-      { -- bufferlist
+      {
+        -- bufferlist
         init = function(self) self.tab_type = M.heirline.tab_type(self) end,
-        on_click = { -- add clickable component to each buffer
+        on_click = {
+          -- add clickable component to each buffer
           callback = function(_, minwid) vim.api.nvim_win_set_buf(0, minwid) end,
           minwid = function(self) return self.bufnr end,
           name = "heirline_tabline_buffer_callback",
         },
-        { -- add buffer picker functionality to each buffer
+        {
+          -- add buffer picker functionality to each buffer
           condition = function(self) return self._show_picker end,
           update = false,
           init = function(self)
@@ -1592,12 +1888,17 @@ M.heirline.make_buflist = function(component)
               self.label = label
             end
           end,
-          provider = function(self) return M.provider.str { str = self.label, padding = { left = 1, right = 1 } } end,
+          provider = function(self)
+            return M.provider.str {
+              str = self.label,
+              padding = { left = 1, right = 1 },
+            }
+          end,
           hl = M.hl.get_attributes "buffer_picker",
         },
         component, -- create buffer component
       },
-      false -- disable surrounding
+      function(self) return buffer_utils.is_valid(self.bufnr) end -- disable surrounding
     ),
     { provider = get_icon "ArrowLeft" .. " ", hl = overflow_hl },
     { provider = get_icon "ArrowRight" .. " ", hl = overflow_hl },
@@ -1607,7 +1908,9 @@ M.heirline.make_buflist = function(component)
 end
 
 --- Alias to require("heirline.utils").make_tablist
-function M.heirline.make_tablist(...) return require("heirline.utils").make_tablist(...) end
+function M.heirline.make_tablist(...)
+  return require("heirline.utils").make_tablist(...)
+end
 
 --- Run the buffer picker and execute the callback function on the selected buffer
 ---@param callback function with a single parameter of the buffer number

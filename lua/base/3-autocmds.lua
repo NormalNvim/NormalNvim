@@ -193,10 +193,9 @@ autocmd("BufEnter", {
 
 -- 11. Open the greeter on opening vim
 if is_available "alpha-nvim" then
-  local group_name = augroup("alpha_settings", { clear = true })
   autocmd({ "User", "BufEnter" }, {
     desc = "Disable status and tablines for alpha",
-    group = group_name,
+    group = augroup("alpha_settings", { clear = true }),
     callback = function(event)
       if
         (
@@ -230,7 +229,7 @@ if is_available "alpha-nvim" then
   })
   autocmd("VimEnter", {
     desc = "Start Alpha when vim is opened with no arguments",
-    group = group_name,
+    group = augroup("alpha_autostart", { clear = true }),
     callback = function()
       local should_skip = false
       if

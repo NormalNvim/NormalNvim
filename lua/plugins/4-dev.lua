@@ -47,11 +47,11 @@ return {
     },
     opts = function()
       local commentstring_avail, commentstring =
-          pcall(require, "ts_context_commentstring.integrations.comment_nvim")
+        pcall(require, "ts_context_commentstring.integrations.comment_nvim")
       return commentstring_avail
           and commentstring
           and { pre_hook = commentstring.create_pre_hook() }
-          or {}
+        or {}
     end,
   },
 
@@ -62,10 +62,10 @@ return {
   {
     "L3MON4D3/LuaSnip",
     build = vim.fn.has "win32" ~= 0
-        and "echo -e 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
-        or nil,
+        and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
+      or nil,
     dependencies = {
-      "rafamadriz/friendly-snippets",
+      "zeioth/friendly-snippets",
       "benfowler/telescope-luasnip.nvim",
     },
     config = function(_, opts)
@@ -74,6 +74,9 @@ return {
         function(type) require("luasnip.loaders.from_" .. type).lazy_load() end,
         { "vscode", "snipmate", "lua" }
       )
+      -- Enable friently-snippets opt in snippets
+      require("luasnip").filetype_extend("typescript", { "tsdoc" })
+      require("luasnip").filetype_extend("javascript", { "jsdoc" })
     end,
   },
   -- Telescope integration (:Telescope luasnip)
@@ -214,11 +217,11 @@ return {
   --    :TestNodejsE2e -- Run the e2e tests/suite for this nodejs project.
   {
     "nvim-neotest/neotest",
-    cmd = {             -- All this commands are meant to run in a test file
-      "TestRunBlock",   -- Run the nearest test to the cursor.
-      "TestStopBlock",  -- Stop the test to the cursor.
+    cmd = { -- All this commands are meant to run in a test file
+      "TestRunBlock", -- Run the nearest test to the cursor.
+      "TestStopBlock", -- Stop the test to the cursor.
       "TestDebugBlock", -- Debug the nearest test under the cursor using dap.
-      "TestRunFile",    -- Run all tests in the file.
+      "TestRunFile", -- Run all tests in the file.
     },
     config = function()
       -- get neotest namespace (api call creates or returns namespace)
@@ -227,10 +230,10 @@ return {
         virtual_text = {
           format = function(diagnostic)
             local message = diagnostic.message
-                :gsub("\n", " ")
-                :gsub("\t", " ")
-                :gsub("%s+", " ")
-                :gsub("^%s+", "")
+              :gsub("\n", " ")
+              :gsub("\t", " ")
+              :gsub("%s+", " ")
+              :gsub("^%s+", "")
             return message
           end,
         },
