@@ -53,7 +53,7 @@ function M.generate_snapshot(write)
   local plugins = assert(require("lazy").plugins())
   local function git_commit(dir)
     local commit =
-      assert(utils.cmd("git -C " .. dir .. " rev-parse HEAD", false))
+        assert(utils.cmd("git -C " .. dir .. " rev-parse HEAD", false))
     if commit then return vim.trim(commit) end
   end
   if write == true then
@@ -65,7 +65,7 @@ function M.generate_snapshot(write)
       plugin[1] = "folke/lazy.nvim"
     end
     plugin =
-      { plugin[1], commit = git_commit(plugin.dir), version = plugin.version }
+    { plugin[1], commit = git_commit(plugin.dir), version = plugin.version }
     if prev_snapshot[plugin[1]] and prev_snapshot[plugin[1]].version then
       plugin.version = prev_snapshot[plugin[1]].version
     end
@@ -84,7 +84,7 @@ function M.generate_snapshot(write)
     file:write "}"
     file:close()
   end
-  notify "Lazy packages locked to the current version."
+  notify "Lazy packages locked to their current version."
   return snapshot
 end
 
@@ -150,8 +150,8 @@ function M.create_rollback(write)
   -- Rollback file created
   notify(
     "Rollback file created in ~/.cache/nvim\n\npointing to commit:\n"
-      .. snapshot.commit
-      .. "  \n\nYou can use :NvimRollbackRestore to revert ~/.config to this state."
+    .. snapshot.commit
+    .. "  \n\nYou can use :NvimRollbackRestore to revert ~/.config to this state."
   )
   return snapshot
 end
@@ -159,7 +159,7 @@ end
 --- Nvim's rollback to saved previous version function
 function M.rollback()
   local rollback_avail, rollback_opts =
-    pcall(dofile, base.updater.rollback_file)
+      pcall(dofile, base.updater.rollback_file)
   if not rollback_avail then
     notify("No rollback file available", vim.log.levels.ERROR)
     return
@@ -198,9 +198,9 @@ function M.update(opts)
     -- Show remote we are using
     echo {
       { "Checking remote " },
-      { remote, "Title" },
+      { remote,                       "Title" },
       { " which is currently set to " },
-      { url, "WarningMsg" },
+      { url,                          "WarningMsg" },
       { "..." },
     }
   end
@@ -245,8 +245,8 @@ function M.update(opts)
     end
   end
   local source = git.local_head() -- calculate current commit
-  local target -- calculate target commit
-  if is_stable then -- if stable get tag commit
+  local target                    -- calculate target commit
+  if is_stable then               -- if stable get tag commit
     local version_search = opts.version or "latest"
     opts.version = git.latest_version(git.get_versions(version_search))
     if not opts.version then -- continue only if stable version is found
@@ -257,7 +257,7 @@ function M.update(opts)
   elseif opts.commit then -- if commit specified use it
     target = git.branch_contains(opts.remote, opts.branch, opts.commit)
         and opts.commit
-      or nil
+        or nil
   else -- get most recent commit
     target = git.remote_head(opts.remote, opts.branch)
   end
@@ -268,30 +268,30 @@ function M.update(opts)
     echo { { "No changes available", "String" } }
     return
   elseif -- prompt user if they want to accept update
-    not opts.skip_prompts
-    and not confirm_prompt(
-      ("Update avavilable to %s\nUpdating requires a restart, continue?"):format(
-        is_stable and opts.version or target
+      not opts.skip_prompts
+      and not confirm_prompt(
+        ("Update avavilable to %s\nUpdating requires a restart, continue?"):format(
+          is_stable and opts.version or target
+        )
       )
-    )
   then
     echo(cancelled_message)
     return
-  else -- perform update
+  else                      -- perform update
     M.create_rollback(true) -- create rollback file before updating
 
     -- calculate and print the changelog
     local changelog = git.get_commit_range(source, target)
     local breaking = git.breaking_changes(changelog)
     if
-      #breaking > 0
-      and not opts.skip_prompts
-      and not confirm_prompt(
-        ("Update contains the following breaking changes:\n%s\nWould you like to continue?"):format(
-          table.concat(breaking, "\n")
-        ),
-        "Warning"
-      )
+        #breaking > 0
+        and not opts.skip_prompts
+        and not confirm_prompt(
+          ("Update contains the following breaking changes:\n%s\nWould you like to continue?"):format(
+            table.concat(breaking, "\n")
+          ),
+          "Warning"
+        )
     then
       echo(cancelled_message)
       return
@@ -299,15 +299,15 @@ function M.update(opts)
     local updated = attempt_update(target, opts)
     -- check for local file conflicts and prompt user to continue or abort
     if
-      not updated
-      and not opts.skip_prompts
-      and not confirm_prompt {
-        {
-          "Unable to pull due to local modifications to base files.\nReset local files and continue?",
-          "Error",
-        },
-        { "Reset local files and continue?" },
-      }
+        not updated
+        and not opts.skip_prompts
+        and not confirm_prompt {
+          {
+            "Unable to pull due to local modifications to base files.\nReset local files and continue?",
+            "Error",
+          },
+          { "Reset local files and continue?" },
+        }
     then
       echo(cancelled_message)
       return
@@ -324,11 +324,11 @@ function M.update(opts)
     -- print a summary of the update with the changelog
     local summary = {
       { "Nvim updated successfully to ", "Title" },
-      { git.current_version(), "String" },
-      { "!\n", "Title" },
+      { git.current_version(),           "String" },
+      { "!\n",                           "Title" },
       {
         opts.auto_quit and "Nvim will now update plugins and quit.\n\n"
-          or "After plugins update, please restart.\n\n",
+        or "After plugins update, please restart.\n\n",
         "WarningMsg",
       },
     }
@@ -347,7 +347,7 @@ function M.update(opts)
       })
     end
 
-    require("lazy.core.plugin").load() -- force immediate reload of lazy
+    require("lazy.core.plugin").load()   -- force immediate reload of lazy
     require("lazy").sync { wait = true } -- sync new plugin spec changes
     utils.event "UpdateComplete"
   end

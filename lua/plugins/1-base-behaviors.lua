@@ -553,14 +553,14 @@ return {
   --  https://github.com/lambdalisue/suda.vim
   {
     "lambdalisue/suda.vim",
-    lazy = false,
+    cmd = { "Suda" },
   },
 
   --  vim-matchup [improved % motion]
   --  https://github.com/andymass/vim-matchup
   {
     "andymass/vim-matchup",
-    lazy = false,
+    event = "CursorMoved",
     init = function()
       vim.g.matchup_matchparen_deferred = 1 -- work async
     end,
@@ -570,7 +570,7 @@ return {
   --  https://github.com/phaazon/hop.nvim
   {
     "phaazon/hop.nvim",
-    lazy = false,
+    cmd = { "HopWord" },
     opts = { keys = "etovxqpdygfblzhckisuran" },
     config = function(_, opts)
       -- you can configure Hop the way you like here; see :h hop-config
