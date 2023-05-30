@@ -46,7 +46,7 @@ Please before opening an issue, check [the AstroVim manual](https://astronvim.co
     :healthcheck base
 
 * **What is the command :NvimUpdate for?**
-It updates your distro from your config github repository. This is very useful when you are own more than one machine.
+It updates your distro from your config's github repository. This is very useful when you are own more than one machine.
 
 * **How do I disable the tabline?** On the options file, set showtabline=0. If you wanna remove the functionality completely from nvim check the plugin heirline. Here is where we implement the tab logic. Also check the ./lua/base/3-autocmds.lua and ./lua/base/utils/status.lua.
 
