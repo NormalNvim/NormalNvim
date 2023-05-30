@@ -60,7 +60,7 @@ Please before opening an issue, check [the AstroVim manual](https://astronvim.co
 
     `:healthcheck base`
 
-* **How can I disable the tabline?** On the options file, search for `showtabline` and set it to 0. If you wanna remove the functionality completely from nvim check the plugin heirline. Here is where we implement the tab logic. Also check the [./lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua) and [./lua/base/utils/status.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/utils/status.lua).
+* **How can I disable the tabline?** On the options file, search for `showtabline` and set it to 0. If instead you want to remove the functionality completely from nvim, then check the plugin heirline. Here is where we implement the tab logic. Also check the [./lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua) and [./lua/base/utils/status.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/utils/status.lua).
 
 * **What scenarios are not covered by this distro?**
   * **Kubernetes**: We do not provide a kubernetes plugin. There is not much neovim can do for you if you work with Kubernetes apart from the features provided by Mason (LSP, Hightighing, autocompletion..).
