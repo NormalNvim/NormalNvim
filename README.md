@@ -51,6 +51,8 @@ __You are expected to fork the project before cloning it. So you are the only on
 | **:NvimUpdatePlugins** | Uses lazy to update the plugins. |
 | **:NvimVersion** | Prints the commit number of the current NormalNvim version. |
 
+For more info, read the [wiki](https://github.com/Zeioth/NormalNvim/wiki).
+
 ## FAQ
 Please before opening an issue, check [the AstroVim manual](https://astronvim.com/) and the [AstroVim Community](https://github.com/AstroNvim/astrocommunity) repos where you can find help about how to install and configure most plugins.
 
