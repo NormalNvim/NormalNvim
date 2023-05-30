@@ -29,7 +29,7 @@ yarn npm     # Necessary for most formatters and parsers.
 * 🔙 **Rollbacks:** You can easily recover from a nvim distro update using :NvimRollbackRestore
 * 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
 * 📱 **Phone friendly:** Good usability even on smalll screens.
-* ⌨️ **Input is important:** Choose between qwerty, colemak, or colemak-dh mappings. [See wiki](https://github.com/Zeioth/NormalNvim/wiki). Mouse is fully supported too.
+* ⌨️ **Alternative layout friendly:** Choose between qwerty and colemak-dh mappings. [See wiki](https://github.com/Zeioth/NormalNvim/wiki). Mouse is fully supported too, as much as neovim allows.
 * ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
 
 ## Philosophy and design decissions
@@ -69,7 +69,7 @@ Please before opening an issue, check [the AstroVim manual](https://astronvim.co
   * **Compiling and running tasks**: This is planned for the future. In the meantime we recommend [overseer.nvim](https://github.com/stevearc/overseer.nvim).
 
 ## Credits
-Originally it took AstroVim as base. But implements [this VIM config](https://github.com/amix/vimrc). Code has been simplified while retaining its core features.
+Originally it took AstroVim as base. But implements [this VIM config](https://github.com/amix/vimrc) with some extras. Code has been simplified while retaining its core features.
 
 ## TODOS
 * The plugins [vim-doxygen](https://github.com/Zeioth/vim-doxygen) and [vim-typedoc](https://github.com/Zeioth/vim-typedoc) are not compatible with windows yet. Is it planned to re-write them on lua with windows support, but in the meantime if you are on windows, please don't use them.
