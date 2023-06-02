@@ -6,6 +6,7 @@
 --       -> stay-centered
 --       -> ranger.vim
 --       -> vin-matchups
+--       -> guess-indent
 
 return {
   --  [autopairs] auto closes (), "", '', [], {}
@@ -82,6 +83,20 @@ return {
   --     vim.g.ranger_terminal = "foot"
   --     vim.g.ranger_command_override = 'LC_ALL=es_ES.UTF8 TERMCMD="foot -a "scratchpad"" ranger'
   --     vim.g.ranger_map_keys = 0
+  --   end,
+  -- },
+  --  [guess-indent]
+  --  https://github.com/NMAC427/guess-indent.nvim
+  --  Disabled, as messes PRs by moving stuff it shouldn't often.
+  -- {
+  --   "NMAC427/guess-indent.nvim",
+  --   event = "User BaseFile",
+  --   config = function(_, opts)
+  --     require("guess-indent").setup(opts)
+  --     vim.cmd.lua {
+  --       args = { "require('guess-indent').set_from_buffer('auto_cmd')" },
+  --       mods = { silent = true },
+  --     }
   --   end,
   -- },
 }
