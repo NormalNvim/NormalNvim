@@ -26,7 +26,7 @@
 --       -> tests                              [tests]
 --       -> nvim-ufo
 --       -> code documentation                 [docs]
---       -> [neural]
+--       -> ask chatgpt                        [neural]
 --       -> hop.nvim
 
 --
