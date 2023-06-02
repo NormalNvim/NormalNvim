@@ -12,7 +12,7 @@
 --       -> buffers/tabs                       [buffers]
 --       -> ui toggles                         [ui]
 --
---       ## Plugin bindings (from astronvim)
+--       ## Plugin bindings
 --       -> alpha-nvim
 --       -> comments.nvim
 --       -> git                                [git]
