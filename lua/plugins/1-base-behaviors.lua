@@ -31,16 +31,8 @@ return {
     cmd = { "RnvimrToggle" },
     init = function()
       -- vim.g.rnvimr_vanilla = 1 → Often solves many issues
-      vim.g.rnvimr_enable_picker = 1 -- if 1, will replace the current buffer
-      vim.g.rnvimr_ranger_cmd = { "ranger" }
-
-      -- Known bug: We cannot set a custom terminal for rnvimr.
-      --            (now even through a wrapper)
-      --            Doing so will provoke rnvimr RPC to not close correctly.
-      --            If you need that feature, use ranger.vim instead.
-      --
-      -- Check: https://github.com/kevinhwang91/rnvimr/issues/149
-      -- vim.g.rnvimr_ranger_cmd = { "ranger-custom" } -- Currently broken
+      vim.g.rnvimr_enable_picker = 1         -- if 1, will close rnvimr after choosing a file.
+      vim.g.rnvimr_ranger_cmd = { "ranger" } -- by using a shell script like TERM=foot ranger "$@" we can open terminals inside ranger.
     end,
   },
 
@@ -119,7 +111,14 @@ return {
   -- Warning: currently no keybinding assigned for this plugin.
   {
     "s1n7ax/nvim-window-picker",
-    opts = { use_winbar = "smart" },
+    name = "window-picker",
+    opts = {
+      picker_config = {
+        statusline_winbar_picker = {
+          use_winbar = "smart",
+        },
+      },
+    },
   },
 
   --  smart-splits [move and resize buffers]
@@ -158,6 +157,73 @@ return {
         highlights = { border = "Normal", background = "Normal" },
       },
     },
+    init = function()
+      -- PATCH: Enable mouse support while on ToggleTerm.
+      -- EXPERIMENTAL: If you get mouse issues, comment the patch.
+      -- This patch only enable mouse support for the terminal.
+      -- If you want to have mouse support in terminal programs first you must:
+      -- * TERM=xterm-256color
+      -- * printf "\x1b[?1000h"
+      -- Read more:
+      -- https://github.com/akinsho/toggleterm.nvim/wiki/Mouse-support
+      -- https://github.com/neovim/neovim/issues/21106
+      local augroup = vim.api.nvim_create_augroup
+      local autocmd = vim.api.nvim_create_autocmd
+
+      local toggleterm_mouse_group =
+          augroup("ToggleTermMouseSupport", { clear = true })
+
+      -- Enables mouse support for toggleterm
+      local function toggleterm_enable_mouse_support()
+        local n_mouse = vim.o.mouse
+
+        -- Disable nvim mouse support while we are on the toggleterm buffer
+        if string.match(n_mouse, "[a|h|n]") then
+          autocmd({ "TermEnter" }, {
+            desc = "Disable nvim mouse support while we are on the toggleterm buffer",
+            group = toggleterm_mouse_group,
+            callback = function() vim.api.nvim_set_option("mouse", "") end,
+          })
+          -- Restore mouse mode on exiting toggleterm
+          autocmd({ "TermLeave", "VimLeave" }, {
+            desc = "Disable nvim mouse support while we are on the toggleterm buffer",
+            group = toggleterm_mouse_group,
+            callback = function() vim.api.nvim_set_option("mouse", n_mouse) end,
+          })
+        end
+
+        -- Extra mouse fix for tmux
+        -- If tmux mouse mode is enabled
+        if vim.env.TMUX then
+          local output = vim.fn.system 'tmux display -p "#{mouse}"'
+          if output:sub(1, 1) == "1" then
+            -- Disable tmux mouse while using toggleterm
+            autocmd({ "TermEnter" }, {
+              desc = "Disable tmux mouse while using toggleterm",
+              group = toggleterm_mouse_group,
+              callback = function() vim.fn.system "tmux set mouse off" end,
+            })
+
+            -- Enable tmux mouse when mouse leaves toggleterm
+            autocmd({ "TermLeave", "VimLeave" }, {
+              desc = "Enable tmux mouse when mouse leaves toggleterm",
+              group = toggleterm_mouse_group,
+              callback = function() vim.fn.system "tmux set mouse on" end,
+            })
+          end
+        end
+      end
+
+      -- Entry point
+      autocmd({ "FileType toggleterm" }, {
+        desc = "If we are on the rnvimr buffer, execute the callback",
+        group = toggleterm_mouse_group,
+        callback = function()
+          -- Apply only to toggleterm
+          toggleterm_enable_mouse_support()
+        end,
+      })
+    end,
   },
 
   -- Session management [session]
@@ -267,8 +333,8 @@ return {
         parent_or_close = function(state)
           local node = state.tree:get_node()
           if
-            (node.type == "directory" or node:has_children())
-            and node:is_expanded()
+              (node.type == "directory" or node:has_children())
+              and node:is_expanded()
           then
             state.commands.toggle_node(state)
           else
@@ -283,7 +349,7 @@ return {
           if node.type == "directory" or node:has_children() then
             if not node:is_expanded() then -- if unexpanded, expand
               state.commands.toggle_node(state)
-            else -- if expanded and has children, seleect the next child
+            else                           -- if expanded and has children, seleect the next child
               require("neo-tree.ui.renderer").focus_node(
                 state,
                 node:get_child_ids()[1]
@@ -317,9 +383,9 @@ return {
           for i, result in pairs(results) do
             if result.val and result.val ~= "" then
               vim.list_extend(messages, {
-                { ("%s."):format(i), "Identifier" },
+                { ("%s."):format(i),           "Identifier" },
                 { (" %s: "):format(result.msg) },
-                { result.val, "String" },
+                { result.val,                  "String" },
                 { "\n" },
               })
             end
@@ -437,20 +503,20 @@ return {
         end
 
         return (filetype == "" or buftype == "nofile") and "indent" -- only use indent until a file is opened
-          or function(bufnr)
-            return require("ufo")
-              .getFolds(bufnr, "lsp")
-              :catch(
-                function(err)
-                  return handleFallbackException(bufnr, err, "treesitter")
-                end
-              )
-              :catch(
-                function(err)
-                  return handleFallbackException(bufnr, err, "indent")
-                end
-              )
-          end
+            or function(bufnr)
+              return require("ufo")
+                  .getFolds(bufnr, "lsp")
+                  :catch(
+                    function(err)
+                      return handleFallbackException(bufnr, err, "treesitter")
+                    end
+                  )
+                  :catch(
+                    function(err)
+                      return handleFallbackException(bufnr, err, "indent")
+                    end
+                  )
+            end
       end,
     },
   },
@@ -498,8 +564,9 @@ return {
   {
     "andymass/vim-matchup",
     event = "CursorMoved",
-    init = function()
-      vim.g.matchup_matchparen_deferred = 1 -- work async
+    config = function()
+      vim.g.matchup_matchparen_deferred = 1   -- work async
+      vim.g.matchup_matchparen_offscreen = {} -- disable status bar icon
     end,
   },
 
