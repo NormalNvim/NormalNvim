@@ -35,6 +35,7 @@
 --       ## NOT INSTALLED
 --       -> distant.nvim                   [ssh to edit in a remove machine]
 
+local get_icon = require("astronvim.utils").get_icon
 return {
   --  COMMENTS ----------------------------------------------------------------
   --  Advanced comment features [adv. comments]
@@ -47,11 +48,11 @@ return {
     },
     opts = function()
       local commentstring_avail, commentstring =
-        pcall(require, "ts_context_commentstring.integrations.comment_nvim")
+          pcall(require, "ts_context_commentstring.integrations.comment_nvim")
       return commentstring_avail
           and commentstring
           and { pre_hook = commentstring.create_pre_hook() }
-        or {}
+          or {}
     end,
   },
 
@@ -63,7 +64,7 @@ return {
     "L3MON4D3/LuaSnip",
     build = vim.fn.has "win32" ~= 0
         and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
-      or nil,
+        or nil,
     dependencies = {
       "zeioth/friendly-snippets",
       "benfowler/telescope-luasnip.nvim",
@@ -95,12 +96,12 @@ return {
     event = "User BaseGitFile",
     opts = {
       signs = {
-        add = { text = "▎" },
-        change = { text = "▎" },
-        delete = { text = "▎" },
-        topdelete = { text = "󰐊" },
-        changedelete = { text = "▎" },
-        untracked = { text = "▎" },
+        add = { text = get_icon "GitSign" },
+        change = { text = get_icon "GitSign" },
+        delete = { text = get_icon "GitSign" },
+        topdelete = { text = get_icon "GitSign" },
+        changedelete = { text = get_icon "GitSign" },
+        untracked = { text = get_icon "GitSign" },
       },
     },
   },
@@ -217,11 +218,11 @@ return {
   --    :TestNodejsE2e -- Run the e2e tests/suite for this nodejs project.
   {
     "nvim-neotest/neotest",
-    cmd = { -- All this commands are meant to run in a test file
-      "TestRunBlock", -- Run the nearest test to the cursor.
-      "TestStopBlock", -- Stop the test to the cursor.
+    cmd = {             -- All this commands are meant to run in a test file
+      "TestRunBlock",   -- Run the nearest test to the cursor.
+      "TestStopBlock",  -- Stop the test to the cursor.
       "TestDebugBlock", -- Debug the nearest test under the cursor using dap.
-      "TestRunFile", -- Run all tests in the file.
+      "TestRunFile",    -- Run all tests in the file.
     },
     config = function()
       -- get neotest namespace (api call creates or returns namespace)
@@ -230,10 +231,10 @@ return {
         virtual_text = {
           format = function(diagnostic)
             local message = diagnostic.message
-              :gsub("\n", " ")
-              :gsub("\t", " ")
-              :gsub("%s+", " ")
-              :gsub("^%s+", "")
+                :gsub("\n", " ")
+                :gsub("\t", " ")
+                :gsub("%s+", " ")
+                :gsub("^%s+", "")
             return message
           end,
         },

@@ -180,10 +180,10 @@ end
 function M.hl.lualine_mode(mode, fallback)
   if not vim.g.colors_name then return fallback end
   local lualine_avail, lualine =
-    pcall(require, "lualine.themes." .. vim.g.colors_name)
+      pcall(require, "lualine.themes." .. vim.g.colors_name)
   local lualine_opts = lualine_avail and lualine[mode]
   return lualine_opts and type(lualine_opts.a) == "table" and lualine_opts.a.bg
-    or fallback
+      or fallback
 end
 
 --- Get the highlight for the current mode
@@ -234,8 +234,8 @@ function M.hl.file_icon(name)
   local hl_enabled = M.env.icon_highlights.file_icon[name]
   return function(self)
     if
-      hl_enabled == true
-      or (type(hl_enabled) == "function" and hl_enabled(self))
+        hl_enabled == true
+        or (type(hl_enabled) == "function" and hl_enabled(self))
     then
       return M.hl.filetype_color(self)
     end
@@ -269,7 +269,7 @@ function M.init.breadcrumbs(opts)
       if start_idx > 0 then
         table.insert(children, {
           provider = require("base.utils").get_icon "Ellipsis"
-            .. opts.separator,
+              .. opts.separator,
         })
       end
     end
@@ -357,7 +357,7 @@ function M.init.separated_path(opts)
       if start_idx > 0 then
         table.insert(children, {
           provider = require("base.utils").get_icon "Ellipsis"
-            .. opts.separator,
+              .. opts.separator,
         })
       end
     end
@@ -433,7 +433,7 @@ end
 -- @see base.utils.status.utils.stylize
 function M.provider.numbercolumn(opts)
   opts =
-    extend_tbl({ thousands = false, culright = true, escape = false }, opts)
+      extend_tbl({ thousands = false, culright = true, escape = false }, opts)
   return function()
     local lnum, rnum, virtnum = vim.v.lnum, vim.v.relnum, vim.v.virtnum
     local num, relnum = vim.opt.number:get(), vim.opt.relativenumber:get()
@@ -446,13 +446,13 @@ function M.provider.numbercolumn(opts)
       local cur = relnum and (rnum > 0 and rnum or (num and lnum or 0)) or lnum
       if opts.thousands and cur > 999 then
         cur = string
-          .reverse(cur)
-          :gsub("%d%d%d", "%1" .. opts.thousands)
-          :reverse()
-          :gsub("^%" .. opts.thousands, "")
+            .reverse(cur)
+            :gsub("%d%d%d", "%1" .. opts.thousands)
+            :reverse()
+            :gsub("^%" .. opts.thousands, "")
       end
       str = (rnum == 0 and not opts.culright and relnum) and cur .. "%="
-        or "%=" .. cur
+          or "%=" .. cur
     end
     return M.utils.stylize(str, opts)
   end
@@ -470,12 +470,12 @@ function M.provider.foldcolumn(opts)
   local foldopen = fillchars.foldopen or get_icon "FoldOpened"
   local foldclosed = fillchars.foldclose or get_icon "FoldClosed"
   local foldsep = fillchars.foldsep or get_icon "FoldSeparator"
-  return function() -- move to M.provider.fold_indicator
+  return function()                                            -- move to M.provider.fold_indicator
     local wp = ffi.C.find_window_by_handle(0, ffi.new "Error") -- get window handler
-    local width = ffi.C.compute_foldcolumn(wp, 0) -- get foldcolumn width
+    local width = ffi.C.compute_foldcolumn(wp, 0)              -- get foldcolumn width
     -- get fold info of current line
     local foldinfo = width > 0 and ffi.C.fold_info(wp, vim.v.lnum)
-      or { start = 0, level = 0, llevel = 0, lines = 0 }
+        or { start = 0, level = 0, llevel = 0, lines = 0 }
 
     local str = ""
     if width ~= 0 then
@@ -489,12 +489,12 @@ function M.provider.foldcolumn(opts)
 
         for col = 1, width do
           str = str
-            .. (
-              (vim.v.virtnum ~= 0 and foldsep)
-              or ((closed and (col == foldinfo.level or col == width)) and foldclosed)
-              or ((foldinfo.start == vim.v.lnum and first_level + col > foldinfo.llevel) and foldopen)
-              or foldsep
-            )
+              .. (
+                (vim.v.virtnum ~= 0 and foldsep)
+                or ((closed and (col == foldinfo.level or col == width)) and foldclosed)
+                or ((foldinfo.start == vim.v.lnum and first_level + col > foldinfo.llevel) and foldopen)
+                or foldsep
+              )
           if col == foldinfo.level then
             str = str .. (" "):rep(width - col)
             break
@@ -513,7 +513,7 @@ function M.provider.tabnr()
   return function(self)
     return (self and self.tabnr)
         and "%" .. self.tabnr .. "T " .. self.tabnr .. " %T"
-      or ""
+        or ""
   end
 end
 
@@ -582,7 +582,7 @@ end
 function M.provider.search_count(opts)
   local search_func = vim.tbl_isempty(opts or {})
       and function() return vim.fn.searchcount() end
-    or function() return vim.fn.searchcount(opts) end
+      or function() return vim.fn.searchcount(opts) end
   return function()
     local search_ok, search = pcall(search_func)
     if search_ok and type(search) == "table" and search.total then
@@ -624,8 +624,8 @@ function M.provider.mode_text(opts)
         text = text .. string.rep(" ", padding)
       elseif opts.pad_text == "center" then
         text = string.rep(" ", math.floor(padding / 2))
-          .. text
-          .. string.rep(" ", math.ceil(padding / 2))
+            .. text
+            .. string.rep(" ", math.ceil(padding / 2))
       end
     end
     return M.utils.stylize(text, opts)
@@ -639,11 +639,11 @@ end
 -- @see base.utils.status.utils.stylize
 function M.provider.percentage(opts)
   opts =
-    extend_tbl({ escape = false, fixed_width = true, edge_text = true }, opts)
+      extend_tbl({ escape = false, fixed_width = true, edge_text = true }, opts)
   return function()
     local text = "%"
-      .. (opts.fixed_width and (opts.edge_text and "2" or "3") or "")
-      .. "p%%"
+        .. (opts.fixed_width and (opts.edge_text and "2" or "3") or "")
+        .. "p%%"
     if opts.edge_text then
       local current_line = vim.fn.line "."
       if current_line == 1 then
@@ -664,7 +664,7 @@ end
 function M.provider.ruler(opts)
   opts = extend_tbl({ pad_ruler = { line = 3, char = 2 } }, opts)
   local padding_str =
-    string.format("%%%dd:%%-%dd", opts.pad_ruler.line, opts.pad_ruler.char)
+      string.format("%%%dd:%%-%dd", opts.pad_ruler.line, opts.pad_ruler.char)
   return function()
     local line = vim.fn.line "."
     local char = vim.fn.virtcol "."
@@ -722,7 +722,7 @@ function M.provider.filename(opts)
   }, opts)
   return function(self)
     local filename =
-      vim.fn.fnamemodify(opts.fname(self and self.bufnr or 0), opts.modify)
+        vim.fn.fnamemodify(opts.fname(self and self.bufnr or 0), opts.modify)
     return M.utils.stylize(
       (filename == "" and opts.fallback or filename),
       opts
@@ -746,7 +746,7 @@ function M.provider.unique_path(opts)
   local function path_parts(bufnr)
     local parts = {}
     for match in
-      (vim.api.nvim_buf_get_name(bufnr) .. "/"):gmatch("(.-)" .. "/")
+    (vim.api.nvim_buf_get_name(bufnr) .. "/"):gmatch("(.-)" .. "/")
     do
       table.insert(parts, match)
     end
@@ -776,8 +776,8 @@ function M.provider.unique_path(opts)
         opts.max_length > 0
         and #unique_path > opts.max_length
         and string.sub(unique_path, 1, opts.max_length - 2)
-          .. get_icon "Ellipsis"
-          .. "/"
+        .. get_icon "Ellipsis"
+        .. "/"
       ) or unique_path,
       opts
     )
@@ -866,10 +866,10 @@ function M.provider.git_diff(opts)
     local status = vim.b[self and self.bufnr or 0].gitsigns_status_dict
     return M.utils.stylize(
       status
-          and status[opts.type]
-          and status[opts.type] > 0
-          and tostring(status[opts.type])
-        or "",
+      and status[opts.type]
+      and status[opts.type] > 0
+      and tostring(status[opts.type])
+      or "",
       opts
     )
   end
@@ -902,20 +902,20 @@ function M.provider.lsp_progress(opts)
     local Lsp = vim.lsp.util.get_progress_messages()[1]
     return M.utils.stylize(
       Lsp
-        and (
-          get_icon("LSP" .. ((Lsp.percentage or 0) >= 70 and {
-            "Loaded",
-            "Loaded",
-            "Loaded",
-          } or {
-            "Loading1",
-            "Loading2",
-            "Loading3",
-          })[math.floor(vim.loop.hrtime() / 12e7) % 3 + 1])
-          .. (Lsp.title and " " .. Lsp.title or "")
-          .. (Lsp.message and " " .. Lsp.message or "")
-          .. (Lsp.percentage and " (" .. Lsp.percentage .. "%)" or "")
-        ),
+      and (
+        get_icon("LSP" .. ((Lsp.percentage or 0) >= 70 and {
+          "Loaded",
+          "Loaded",
+          "Loaded",
+        } or {
+          "Loading1",
+          "Loading2",
+          "Loading3",
+        })[math.floor(vim.loop.hrtime() / 12e7) % 3 + 1])
+        .. (Lsp.title and " " .. Lsp.title or "")
+        .. (Lsp.message and " " .. Lsp.message or "")
+        .. (Lsp.percentage and " (" .. Lsp.percentage .. "%)" or "")
+      ),
       opts
     )
   end
@@ -931,13 +931,13 @@ function M.provider.lsp_client_names(opts)
   return function(self)
     local buf_client_names = {}
     for _, client in
-      pairs(vim.lsp.get_active_clients { bufnr = self and self.bufnr or 0 })
+    pairs(vim.lsp.get_active_clients { bufnr = self and self.bufnr or 0 })
     do
       if client.name == "null-ls" and opts.expand_null_ls then
         local null_ls_sources = {}
         for _, type in ipairs { "FORMATTING", "DIAGNOSTICS" } do
           for _, source in
-            ipairs(M.utils.null_ls_sources(vim.bo.filetype, type))
+          ipairs(M.utils.null_ls_sources(vim.bo.filetype, type))
           do
             null_ls_sources[source] = true
           end
@@ -1014,7 +1014,7 @@ function M.condition.is_hlsearch() return vim.v.hlsearch ~= 0 end
 -- @usage local heirline_component = { provider = "Example Provider", condition = require("base.utils.status").condition.is_statusline_showcmd }
 function M.condition.is_statusline_showcmd()
   return vim.fn.has "nvim-0.9" == 1
-    and vim.opt.showcmdloc:get() == "statusline"
+      and vim.opt.showcmdloc:get() == "statusline"
 end
 
 --- A condition function if the current file is in a git repo
@@ -1024,7 +1024,7 @@ end
 function M.condition.is_git_repo(bufnr)
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
   return vim.b[bufnr or 0].gitsigns_head
-    or vim.b[bufnr or 0].gitsigns_status_dict
+      or vim.b[bufnr or 0].gitsigns_status_dict
 end
 
 --- A condition function if there are any git changes
@@ -1035,9 +1035,9 @@ function M.condition.git_changed(bufnr)
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
   local git_status = vim.b[bufnr or 0].gitsigns_status_dict
   return git_status
-    and (git_status.added or 0)
-        + (git_status.removed or 0)
-        + (git_status.changed or 0)
+      and (git_status.added or 0)
+      + (git_status.removed or 0)
+      + (git_status.changed or 0)
       > 0
 end
 
@@ -1076,8 +1076,8 @@ end
 function M.condition.has_filetype(bufnr)
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
   return vim.fn.empty(vim.fn.expand "%:t") ~= 1
-    and vim.bo[bufnr or 0].filetype
-    and vim.bo[bufnr or 0].filetype ~= ""
+      and vim.bo[bufnr or 0].filetype
+      and vim.bo[bufnr or 0].filetype ~= ""
 end
 
 --- A condition function if Aerial is available
@@ -1142,7 +1142,7 @@ function M.utils.stylize(str, opts)
         icon .. (opts.escape and escape(str) or str),
         opts.padding
       ) .. opts.separator.right
-    or ""
+      or ""
 end
 
 --- A Heirline component for filling in the empty space of the bar
@@ -1200,7 +1200,7 @@ function M.component.tabline_file_info(opts)
     close_button = {
       hl = function(self)
         return M.hl.get_attributes(self.tab_type .. "_close")
-      end, -- Close X color
+      end,                               -- Close X color
       padding = { left = 1, right = 1 }, -- Mimimum tab size
       on_click = {
         callback = function(_, minwid) buffer_utils.close(minwid) end,
@@ -1267,8 +1267,8 @@ function M.component.cmd_info(opts)
       color = "cmd_info_bg",
       condition = function()
         return M.condition.is_hlsearch()
-          or M.condition.is_macro_recording()
-          or M.condition.is_statusline_showcmd()
+            or M.condition.is_macro_recording()
+            or M.condition.is_statusline_showcmd()
       end,
     },
     condition = function() return vim.opt.cmdheight:get() == 0 end,
@@ -1534,7 +1534,7 @@ function M.component.lsp(opts)
               M.utils.build_provider(p_opts, M.provider[provider](p_opts)),
               M.utils.build_provider(p_opts, M.provider.str(p_opts)),
             }
-          or false
+            or false
       end
     )
   )
@@ -1599,9 +1599,9 @@ function M.component.signcolumn(opts)
       callback = function(...)
         local args = M.utils.statuscolumn_clickargs(...)
         if
-          args.sign
-          and args.sign.name
-          and M.env.sign_handlers[args.sign.name]
+            args.sign
+            and args.sign.name
+            and M.env.sign_handlers[args.sign.name]
         then
           M.env.sign_handlers[args.sign.name](args)
         end
@@ -1626,10 +1626,10 @@ function M.component.builder(opts)
   end
   for key, entry in pairs(opts) do
     if
-      type(key) == "number"
-      and type(entry) == "table"
-      and M.provider[entry.provider]
-      and (entry.opts == nil or type(entry.opts) == "table")
+        type(key) == "number"
+        and type(entry) == "table"
+        and M.provider[entry.provider]
+        and (entry.opts == nil or type(entry.opts) == "table")
     then
       entry.provider = M.provider[entry.provider](entry.opts)
     end
@@ -1648,7 +1648,7 @@ function M.component.builder(opts)
         children,
         opts.surround.condition
       )
-    or children
+      or children
 end
 
 --- Convert a component parameter table to a table that can be used with the component builder
@@ -1665,7 +1665,7 @@ function M.utils.build_provider(opts, provider, _)
         update = opts.update,
         hl = opts.hl,
       }
-    or false
+      or false
 end
 
 --- Convert key/value table of options to an array of providers for the component builder
@@ -1686,7 +1686,7 @@ end
 ---@return integer # the width of the specified bar
 function M.utils.width(is_winbar)
   return vim.o.laststatus == 3 and not is_winbar and vim.o.columns
-    or vim.api.nvim_win_get_width(0)
+      or vim.api.nvim_win_get_width(0)
 end
 
 --- Add left and/or right padding to a string
@@ -1701,7 +1701,7 @@ function M.pad_string(str, padding)
         " ",
         padding.right or 0
       )
-    or ""
+      or ""
 end
 
 --- Surround component with separator and color adjustment
@@ -1717,7 +1717,7 @@ function M.utils.surround(separator, color, component, condition)
   end
 
   separator = type(separator) == "string" and M.env.separators[separator]
-    or separator
+      or separator
   local surrounded = { condition = condition }
   if separator[1] ~= "" then
     table.insert(surrounded, {
@@ -1792,7 +1792,7 @@ function M.utils.null_ls_sources(filetype, method)
   local methods_avail, methods = pcall(require, "null-ls.methods")
   return methods_avail
       and M.utils.null_ls_providers(filetype)[methods.internal[method]]
-    or {}
+      or {}
 end
 
 --- A helper function for decoding statuscolumn click events with mouse click pressed, modifier keys, as well as which signcolumn sign was clicked if any
@@ -1813,10 +1813,10 @@ function M.utils.statuscolumn_clickargs(self, minwid, clicks, button, mods)
   }
   if not self.signs then self.signs = {} end
   args.char =
-    vim.fn.screenstring(args.mousepos.screenrow, args.mousepos.screencol)
+      vim.fn.screenstring(args.mousepos.screenrow, args.mousepos.screencol)
   if args.char == " " then
     args.char =
-      vim.fn.screenstring(args.mousepos.screenrow, args.mousepos.screencol - 1)
+        vim.fn.screenstring(args.mousepos.screenrow, args.mousepos.screencol - 1)
   end
   args.sign = self.signs[args.char]
   if not args.sign then -- update signs if not found on first click
@@ -1896,14 +1896,14 @@ M.heirline.make_buflist = function(component)
           end,
           hl = M.hl.get_attributes "buffer_picker",
         },
-        component, -- create buffer component
+        component,                                                -- create buffer component
       },
       function(self) return buffer_utils.is_valid(self.bufnr) end -- disable surrounding
     ),
     { provider = get_icon "ArrowLeft" .. " ", hl = overflow_hl },
     { provider = get_icon "ArrowRight" .. " ", hl = overflow_hl },
     function() return vim.t.bufs end, -- use nvim bufs variable
-    false -- disable internal caching
+    false                             -- disable internal caching
   )
 end
 
