@@ -25,14 +25,18 @@ end
 ---@param quiet? boolean Whether or not to notify on completion of reloading
 ---@return boolean # True if the reload was successful, False otherwise
 function M.reload(quiet)
-
   -- Reload options, mappings and plugins (this is managed automatically by lazy).
   -- Never reload base.3-autocmds to avoid issues.
   local core_modules = { "base.1-options", "base.4-mappings" }
-  local modules = vim.tbl_filter(function(module) return module:find "^user%." end, vim.tbl_keys(package.loaded))
+  local modules = vim.tbl_filter(
+    function(module) return module:find "^user%." end,
+    vim.tbl_keys(package.loaded)
+  )
 
-
-  vim.tbl_map(require("plenary.reload").reload_module, vim.list_extend(modules, core_modules))
+  vim.tbl_map(
+    require("plenary.reload").reload_module,
+    vim.list_extend(modules, core_modules)
+  )
   local success = true
   for _, module in ipairs(core_modules) do
     local status_ok, fault = pcall(require, module)
@@ -85,13 +89,15 @@ end
 --- Get an icon from `lspkind` if it is available and return it
 ---@param kind string The kind of icon in `lspkind` to retrieve
 ---@return string icon
-function M.get_icon(kind)
+function M.get_icon(kind, padding, no_fallback)
+  if not vim.g.icons_enabled and no_fallback then return "" end
   local icon_pack = vim.g.icons_enabled and "icons" or "text_icons"
   if not M[icon_pack] then
     M.icons = require "base.icons.nerd_font"
     M.text_icons = require "base.icons.text"
   end
-  return M[icon_pack] and M[icon_pack][kind] or ""
+  local icon = M[icon_pack] and M[icon_pack][kind]
+  return icon and icon .. string.rep(" ", padding or 0) or ""
 end
 
 --- Get highlight properties for a given highlight name
@@ -123,13 +129,19 @@ end
 ---@param type number|nil The type of the notification (:help vim.log.levels)
 ---@param opts? table The nvim-notify options to use (:help notify-options)
 function M.notify(msg, type, opts)
-  vim.schedule(function() vim.notify(msg, type, M.extend_tbl({ title = "Nvim" }, opts)) end)
+  vim.schedule(
+    function() vim.notify(msg, type, M.extend_tbl({ title = "Nvim" }, opts)) end
+  )
 end
 
 --- Trigger an Nvim event
 ---@param event string The event name to be appended to NVim
 function M.event(event)
-  vim.schedule(function() vim.api.nvim_exec_autocmds("User", { pattern = "Base" .. event }) end)
+  vim.schedule(
+    function()
+      vim.api.nvim_exec_autocmds("User", { pattern = "Base" .. event })
+    end
+  )
 end
 
 --- Open a URL under the cursor with the current operating system
@@ -140,11 +152,19 @@ function M.system_open(path)
     cmd = { "cmd.exe", "/K", "explorer" }
   elseif vim.fn.has "unix" == 1 and vim.fn.executable "xdg-open" == 1 then
     cmd = { "xdg-open" }
-  elseif (vim.fn.has "mac" == 1 or vim.fn.has "unix" == 1) and vim.fn.executable "open" == 1 then
+  elseif
+    (vim.fn.has "mac" == 1 or vim.fn.has "unix" == 1)
+    and vim.fn.executable "open" == 1
+  then
     cmd = { "open" }
   end
-  if not cmd then M.notify("Available system opening tool not found!", vim.log.levels.ERROR) end
-  vim.fn.jobstart(vim.fn.extend(cmd, { path or vim.fn.expand "<cfile>" }), { detach = true })
+  if not cmd then
+    M.notify("Available system opening tool not found!", vim.log.levels.ERROR)
+  end
+  vim.fn.jobstart(
+    vim.fn.extend(cmd, { path or vim.fn.expand "<cfile>" }),
+    { detach = true }
+  )
 end
 
 --- Toggle a user terminal if it exists, if not then create a new one and save it
@@ -158,7 +178,9 @@ function M.toggle_term_cmd(opts)
   if not terms[opts.cmd] then terms[opts.cmd] = {} end
   if not terms[opts.cmd][num] then
     if not opts.count then opts.count = vim.tbl_count(terms) * 100 + num end
-    if not opts.on_exit then opts.on_exit = function() terms[opts.cmd][num] = nil end end
+    if not opts.on_exit then
+      opts.on_exit = function() terms[opts.cmd][num] = nil end
+    end
     terms[opts.cmd][num] = require("toggleterm.terminal").Terminal:new(opts)
   end
   -- toggle the terminal
@@ -173,7 +195,9 @@ function M.alpha_button(sc, txt)
   -- replace <leader> in shortcut text with LDR for nicer printing
   local sc_ = sc:gsub("%s", ""):gsub("LDR", "<leader>")
   -- if the leader is set, replace the text with the actual leader key for nicer printing
-  if vim.g.mapleader then sc = sc:gsub("LDR", vim.g.mapleader == " " and "SPC" or vim.g.mapleader) end
+  if vim.g.mapleader then
+    sc = sc:gsub("LDR", vim.g.mapleader == " " and "SPC" or vim.g.mapleader)
+  end
   -- return the button entity to display the correct text and send the correct keybinding on press
   return {
     type = "button",
@@ -277,7 +301,9 @@ end
 --- Add syntax matching rules for highlighting URLs/URIs
 function M.set_url_match()
   M.delete_url_match()
-  if vim.g.highlighturl_enabled then vim.fn.matchadd("HighlightURL", url_matcher, 15) end
+  if vim.g.highlighturl_enabled then
+    vim.fn.matchadd("HighlightURL", url_matcher, 15)
+  end
 end
 
 --- Run a shell command and capture the output and if the command succeeded or failed
@@ -290,9 +316,13 @@ function M.cmd(cmd, show_error)
   local result = vim.fn.system(wind32_cmd or cmd)
   local success = vim.api.nvim_get_vvar "shell_error" == 0
   if not success and (show_error == nil or show_error) then
-    vim.api.nvim_err_writeln("Error running command: " .. cmd .. "\nError message:\n" .. result)
+    vim.api.nvim_err_writeln(
+      "Error running command: " .. cmd .. "\nError message:\n" .. result
+    )
   end
-  return success and result:gsub("[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]", "") or nil
+  return success
+      and result:gsub("[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]", "")
+    or nil
 end
 
 return M
