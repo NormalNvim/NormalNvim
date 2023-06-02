@@ -1,11 +1,9 @@
 -- Global objects
 globals = {
-  "PACKER_BOOTSTRAP",
   "base",
   "vim",
   "bit",
   "C",
-  "packer_plugins",
 }
 
 -- Rerun tests only if their modification time changed
