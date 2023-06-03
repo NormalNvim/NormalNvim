@@ -209,9 +209,9 @@ return {
 
       ---- Vertical margins
       dashboard.config.layout[1].val =
-        vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) } -- Above header
+          vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) } -- Above header
       dashboard.config.layout[3].val =
-        vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) } -- Above buttons
+          vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) } -- Above buttons
 
       -- Disablel autocmd and return
       dashboard.config.opts.noautocmd = true
@@ -410,11 +410,11 @@ return {
             hl = { bg = "tabline_bg" },
           },
           status.heirline.make_buflist(status.component.tabline_file_info()), -- component for each buffer tab
-          status.component.fill { hl = { bg = "tabline_bg" } }, -- fill the rest of the tabline with background color
+          status.component.fill { hl = { bg = "tabline_bg" } },               -- fill the rest of the tabline with background color
           {
             -- tab list
             condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
-            status.heirline.make_tablist { -- component for each tab
+            status.heirline.make_tablist {                                        -- component for each tab
               provider = status.provider.tabnr(),
               hl = function(self)
                 return status.hl.get_attributes(
@@ -454,52 +454,52 @@ return {
       local function setup_colors()
         local Normal = get_hlgroup("Normal", { fg = C.fg, bg = C.bg })
         local Comment =
-          get_hlgroup("Comment", { fg = C.bright_grey, bg = C.bg })
+            get_hlgroup("Comment", { fg = C.bright_grey, bg = C.bg })
         local Error = get_hlgroup("Error", { fg = C.red, bg = C.bg })
         local StatusLine =
-          get_hlgroup("StatusLine", { fg = C.fg, bg = C.dark_bg })
+            get_hlgroup("StatusLine", { fg = C.fg, bg = C.dark_bg })
         local TabLine = get_hlgroup("TabLine", { fg = C.grey, bg = C.none })
         local TabLineFill =
-          get_hlgroup("TabLineFill", { fg = C.fg, bg = C.dark_bg })
+            get_hlgroup("TabLineFill", { fg = C.fg, bg = C.dark_bg })
         local TabLineSel =
-          get_hlgroup("TabLineSel", { fg = C.fg, bg = C.none })
+            get_hlgroup("TabLineSel", { fg = C.fg, bg = C.none })
         local WinBar = get_hlgroup("WinBar", { fg = C.bright_grey, bg = C.bg })
         local WinBarNC = get_hlgroup("WinBarNC", { fg = C.grey, bg = C.bg })
         local Conditional =
-          get_hlgroup("Conditional", { fg = C.bright_purple, bg = C.dark_bg })
+            get_hlgroup("Conditional", { fg = C.bright_purple, bg = C.dark_bg })
         local String = get_hlgroup("String", { fg = C.green, bg = C.dark_bg })
         local TypeDef =
-          get_hlgroup("TypeDef", { fg = C.yellow, bg = C.dark_bg })
+            get_hlgroup("TypeDef", { fg = C.yellow, bg = C.dark_bg })
         local GitSignsAdd =
-          get_hlgroup("GitSignsAdd", { fg = C.green, bg = C.dark_bg })
+            get_hlgroup("GitSignsAdd", { fg = C.green, bg = C.dark_bg })
         local GitSignsChange =
-          get_hlgroup("GitSignsChange", { fg = C.orange, bg = C.dark_bg })
+            get_hlgroup("GitSignsChange", { fg = C.orange, bg = C.dark_bg })
         local GitSignsDelete =
-          get_hlgroup("GitSignsDelete", { fg = C.bright_red, bg = C.dark_bg })
+            get_hlgroup("GitSignsDelete", { fg = C.bright_red, bg = C.dark_bg })
         local DiagnosticError =
-          get_hlgroup("DiagnosticError", { fg = C.bright_red, bg = C.dark_bg })
+            get_hlgroup("DiagnosticError", { fg = C.bright_red, bg = C.dark_bg })
         local DiagnosticWarn =
-          get_hlgroup("DiagnosticWarn", { fg = C.orange, bg = C.dark_bg })
+            get_hlgroup("DiagnosticWarn", { fg = C.orange, bg = C.dark_bg })
         local DiagnosticInfo =
-          get_hlgroup("DiagnosticInfo", { fg = C.white, bg = C.dark_bg })
+            get_hlgroup("DiagnosticInfo", { fg = C.white, bg = C.dark_bg })
         local DiagnosticHint = get_hlgroup(
           "DiagnosticHint",
           { fg = C.bright_yellow, bg = C.dark_bg }
         )
         local HeirlineInactive = get_hlgroup("HeirlineInactive", { bg = nil }).bg
-          or status.hl.lualine_mode("inactive", C.dark_grey)
+            or status.hl.lualine_mode("inactive", C.dark_grey)
         local HeirlineNormal = get_hlgroup("HeirlineNormal", { bg = nil }).bg
-          or status.hl.lualine_mode("normal", C.blue)
+            or status.hl.lualine_mode("normal", C.blue)
         local HeirlineInsert = get_hlgroup("HeirlineInsert", { bg = nil }).bg
-          or status.hl.lualine_mode("insert", C.green)
+            or status.hl.lualine_mode("insert", C.green)
         local HeirlineVisual = get_hlgroup("HeirlineVisual", { bg = nil }).bg
-          or status.hl.lualine_mode("visual", C.purple)
+            or status.hl.lualine_mode("visual", C.purple)
         local HeirlineReplace = get_hlgroup("HeirlineReplace", { bg = nil }).bg
-          or status.hl.lualine_mode("replace", C.bright_red)
+            or status.hl.lualine_mode("replace", C.bright_red)
         local HeirlineCommand = get_hlgroup("HeirlineCommand", { bg = nil }).bg
-          or status.hl.lualine_mode("command", C.bright_yellow)
+            or status.hl.lualine_mode("command", C.bright_yellow)
         local HeirlineTerminal = get_hlgroup("HeirlineTerminal", { bg = nil }).bg
-          or status.hl.lualine_mode("insert", HeirlineInsert)
+            or status.hl.lualine_mode("insert", HeirlineInsert)
 
         local colors = {
           close_fg = Error.fg,
@@ -751,8 +751,8 @@ return {
     opts = {
       handlers = {
         gitsigns = true, -- gitsigns integration (display hunks)
-        ale = true, -- lsp integration (display errors/warnings)
-        search = false, -- hlslens integration (display search result)
+        ale = true,      -- lsp integration (display errors/warnings)
+        search = false,  -- hlslens integration (display search result)
       },
     },
     event = "User BaseFile",

@@ -48,11 +48,11 @@ return {
     },
     opts = function()
       local commentstring_avail, commentstring =
-          pcall(require, "ts_context_commentstring.integrations.comment_nvim")
+        pcall(require, "ts_context_commentstring.integrations.comment_nvim")
       return commentstring_avail
           and commentstring
           and { pre_hook = commentstring.create_pre_hook() }
-          or {}
+        or {}
     end,
   },
 
@@ -64,7 +64,7 @@ return {
     "L3MON4D3/LuaSnip",
     build = vim.fn.has "win32" ~= 0
         and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
-        or nil,
+      or nil,
     dependencies = {
       "zeioth/friendly-snippets",
       "benfowler/telescope-luasnip.nvim",
@@ -220,11 +220,11 @@ return {
   --    :TestNodejsE2e -- Run the e2e tests/suite for this nodejs project.
   {
     "nvim-neotest/neotest",
-    cmd = {             -- All this commands are meant to run in a test file
-      "TestRunBlock",   -- Run the nearest test to the cursor.
-      "TestStopBlock",  -- Stop the test to the cursor.
+    cmd = { -- All this commands are meant to run in a test file
+      "TestRunBlock", -- Run the nearest test to the cursor.
+      "TestStopBlock", -- Stop the test to the cursor.
       "TestDebugBlock", -- Debug the nearest test under the cursor using dap.
-      "TestRunFile",    -- Run all tests in the file.
+      "TestRunFile", -- Run all tests in the file.
     },
     config = function()
       -- get neotest namespace (api call creates or returns namespace)
@@ -233,10 +233,10 @@ return {
         virtual_text = {
           format = function(diagnostic)
             local message = diagnostic.message
-                :gsub("\n", " ")
-                :gsub("\t", " ")
-                :gsub("%s+", " ")
-                :gsub("^%s+", "")
+              :gsub("\n", " ")
+              :gsub("\t", " ")
+              :gsub("%s+", " ")
+              :gsub("^%s+", "")
             return message
           end,
         },
@@ -402,6 +402,22 @@ return {
   },
 
   --  ARTIFICIAL INTELIGENCE  -------------------------------------------------
+  -- [guess-indent]
+  -- https://github.com/NMAC427/guess-indent.nvim
+  -- Note that this plugin don't autoformat the code.
+  -- It just changes the way the TAB key works for the buffer.
+  {
+    "NMAC427/guess-indent.nvim",
+    event = "User BaseFile",
+    config = function(_, opts)
+      require("guess-indent").setup(opts)
+      vim.cmd.lua {
+        args = { "require('guess-indent').set_from_buffer('auto_cmd')" },
+        mods = { silent = true },
+      }
+    end,
+  },
+
   --  neural [chatgpt code generator]
   --  https://github.com/dense-analysis/neural
   {
