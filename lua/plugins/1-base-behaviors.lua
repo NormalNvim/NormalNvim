@@ -157,80 +157,13 @@ return {
         highlights = { border = "Normal", background = "Normal" },
       },
     },
-    init = function()
-      -- PATCH: Enable mouse support while on ToggleTerm.
-      -- EXPERIMENTAL: If you get mouse issues, comment the patch.
-      -- This patch only enable mouse support for the terminal.
-      -- If you want to have mouse support in terminal programs first you must:
-      -- * TERM=xterm-256color
-      -- * printf "\x1b[?1000h"
-      -- Read more:
-      -- https://github.com/akinsho/toggleterm.nvim/wiki/Mouse-support
-      -- https://github.com/neovim/neovim/issues/21106
-      local augroup = vim.api.nvim_create_augroup
-      local autocmd = vim.api.nvim_create_autocmd
-
-      local toggleterm_mouse_group =
-          augroup("ToggleTermMouseSupport", { clear = true })
-
-      -- Enables mouse support for toggleterm
-      local function toggleterm_enable_mouse_support()
-        local n_mouse = vim.o.mouse
-
-        -- Disable nvim mouse support while we are on the toggleterm buffer
-        if string.match(n_mouse, "[a|h|n]") then
-          autocmd({ "TermEnter" }, {
-            desc = "Disable nvim mouse support while we are on the toggleterm buffer",
-            group = toggleterm_mouse_group,
-            callback = function() vim.api.nvim_set_option("mouse", "") end,
-          })
-          -- Restore mouse mode on exiting toggleterm
-          autocmd({ "TermLeave", "VimLeave" }, {
-            desc = "Disable nvim mouse support while we are on the toggleterm buffer",
-            group = toggleterm_mouse_group,
-            callback = function() vim.api.nvim_set_option("mouse", n_mouse) end,
-          })
-        end
-
-        -- Extra mouse fix for tmux
-        -- If tmux mouse mode is enabled
-        if vim.env.TMUX then
-          local output = vim.fn.system 'tmux display -p "#{mouse}"'
-          if output:sub(1, 1) == "1" then
-            -- Disable tmux mouse while using toggleterm
-            autocmd({ "TermEnter" }, {
-              desc = "Disable tmux mouse while using toggleterm",
-              group = toggleterm_mouse_group,
-              callback = function() vim.fn.system "tmux set mouse off" end,
-            })
-
-            -- Enable tmux mouse when mouse leaves toggleterm
-            autocmd({ "TermLeave", "VimLeave" }, {
-              desc = "Enable tmux mouse when mouse leaves toggleterm",
-              group = toggleterm_mouse_group,
-              callback = function() vim.fn.system "tmux set mouse on" end,
-            })
-          end
-        end
-      end
-
-      -- Entry point
-      autocmd({ "FileType toggleterm" }, {
-        desc = "If we are on the rnvimr buffer, execute the callback",
-        group = toggleterm_mouse_group,
-        callback = function()
-          -- Apply only to toggleterm
-          toggleterm_enable_mouse_support()
-        end,
-      })
-    end,
   },
 
   -- Session management [session]
   -- TODO: Replace both for procession or similar.
   -- Check: https://github.com/gennaro-tedesco/nvim-possession
   {
-    "Shatur/neovim-session-manager",
+    "Zeioth/neovim-session-manager", -- PR that silence errors on swap
     event = "BufWritePost",
     cmd = "SessionManager",
     enabled = vim.g.resession_enabled ~= true,
