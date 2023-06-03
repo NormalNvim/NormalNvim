@@ -144,6 +144,8 @@ return {
 
   -- Toggle floating terminal on <F7> [term]
   -- https://github.com/akinsho/toggleterm.nvim
+  -- neovim bug → https://github.com/neovim/neovim/issues/21106
+  -- workarounds → https://github.com/akinsho/toggleterm.nvim/wiki/Mouse-support
   {
     "akinsho/toggleterm.nvim",
     cmd = { "ToggleTerm", "TermExec" },
@@ -160,7 +162,6 @@ return {
   },
 
   -- Session management [session]
-  -- TODO: Replace both for procession or similar.
   -- Check: https://github.com/gennaro-tedesco/nvim-possession
   {
     "Zeioth/neovim-session-manager", -- PR that silence errors on swap
