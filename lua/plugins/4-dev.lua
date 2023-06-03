@@ -404,8 +404,8 @@ return {
   --  ARTIFICIAL INTELIGENCE  -------------------------------------------------
   -- [guess-indent]
   -- https://github.com/NMAC427/guess-indent.nvim
-  -- Note that this plugin don't autoformat the code.
-  -- It just changes the way the TAB key works for the buffer.
+  -- Note that this plugin won't autoformat the code.
+  -- It just set the buffer options to tabuate in a certain way.
   {
     "NMAC427/guess-indent.nvim",
     event = "User BaseFile",

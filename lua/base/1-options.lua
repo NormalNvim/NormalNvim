@@ -69,6 +69,7 @@ local options = {
     termguicolors = true,                                   -- Enable 24-bit RGB color in the TUI
     timeoutlen = 500,                                       -- Shorten key timeout length a little bit for which-key
     undofile = true,                                        -- Enable persistent undo
+    undodir = vim.fn.stdpath "data" .. "/undodir",          -- Chooses where to store the undodir
     updatetime = 300,                                       -- Length of time to wait before triggering the plugin
     virtualedit = "block",                                  -- allow going past end of line in visual block mode
     writebackup = false,                                    -- Disable making a backup before overwriting a file
