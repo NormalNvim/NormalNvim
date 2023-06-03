@@ -31,7 +31,7 @@ return {
     cmd = { "RnvimrToggle" },
     init = function()
       -- vim.g.rnvimr_vanilla = 1 → Often solves many issues
-      vim.g.rnvimr_enable_picker = 1         -- if 1, will close rnvimr after choosing a file.
+      vim.g.rnvimr_enable_picker = 1 -- if 1, will close rnvimr after choosing a file.
       vim.g.rnvimr_ranger_cmd = { "ranger" } -- by using a shell script like TERM=foot ranger "$@" we can open terminals inside ranger.
     end,
   },
@@ -91,14 +91,6 @@ return {
   -- https://github.com/debugloop/telescope-undo.nvim
   {
     "debugloop/telescope-undo.nvim",
-    -- opts = { -- currently this plugin doesn't support opts.
-    --   use_delta = false,
-    --   side_by_side = true,
-    --   layout_strategy = "vertical",
-    --   layout_config = {
-    --     preview_height = 0.8,
-    --   },
-    -- }
   },
   -- Telescope integration (:Telescope projects)
   {
@@ -163,8 +155,11 @@ return {
 
   -- Session management [session]
   -- Check: https://github.com/gennaro-tedesco/nvim-possession
+  --
+  -- BUG: Swap disabled on options because of this bug
+  -- https://github.com/Shatur/neovim-session-manager/issues/72
   {
-    "Zeioth/neovim-session-manager", -- PR that silence errors on swap
+    "Shatur/neovim-session-manager",
     event = "BufWritePost",
     cmd = "SessionManager",
     enabled = vim.g.resession_enabled ~= true,
@@ -267,8 +262,8 @@ return {
         parent_or_close = function(state)
           local node = state.tree:get_node()
           if
-              (node.type == "directory" or node:has_children())
-              and node:is_expanded()
+            (node.type == "directory" or node:has_children())
+            and node:is_expanded()
           then
             state.commands.toggle_node(state)
           else
@@ -283,7 +278,7 @@ return {
           if node.type == "directory" or node:has_children() then
             if not node:is_expanded() then -- if unexpanded, expand
               state.commands.toggle_node(state)
-            else                           -- if expanded and has children, seleect the next child
+            else -- if expanded and has children, seleect the next child
               require("neo-tree.ui.renderer").focus_node(
                 state,
                 node:get_child_ids()[1]
@@ -317,9 +312,9 @@ return {
           for i, result in pairs(results) do
             if result.val and result.val ~= "" then
               vim.list_extend(messages, {
-                { ("%s."):format(i),           "Identifier" },
+                { ("%s."):format(i), "Identifier" },
                 { (" %s: "):format(result.msg) },
-                { result.val,                  "String" },
+                { result.val, "String" },
                 { "\n" },
               })
             end
@@ -437,20 +432,20 @@ return {
         end
 
         return (filetype == "" or buftype == "nofile") and "indent" -- only use indent until a file is opened
-            or function(bufnr)
-              return require("ufo")
-                  .getFolds(bufnr, "lsp")
-                  :catch(
-                    function(err)
-                      return handleFallbackException(bufnr, err, "treesitter")
-                    end
-                  )
-                  :catch(
-                    function(err)
-                      return handleFallbackException(bufnr, err, "indent")
-                    end
-                  )
-            end
+          or function(bufnr)
+            return require("ufo")
+              .getFolds(bufnr, "lsp")
+              :catch(
+                function(err)
+                  return handleFallbackException(bufnr, err, "treesitter")
+                end
+              )
+              :catch(
+                function(err)
+                  return handleFallbackException(bufnr, err, "indent")
+                end
+              )
+          end
       end,
     },
   },
@@ -499,7 +494,7 @@ return {
     "andymass/vim-matchup",
     event = "CursorMoved",
     config = function()
-      vim.g.matchup_matchparen_deferred = 1   -- work async
+      vim.g.matchup_matchparen_deferred = 1 -- work async
       vim.g.matchup_matchparen_offscreen = {} -- disable status bar icon
     end,
   },
