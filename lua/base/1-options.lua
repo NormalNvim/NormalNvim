@@ -74,7 +74,7 @@ local options = {
     writebackup = false,                                    -- Disable making a backup before overwriting a file
 
     -- Aditions
-    history = 1000,              -- Number of commands to remember in a history table.
+    history = 5000,              -- Number of commands to remember in a history table.
     wrap = true,                 -- Disable wrapping of lines longer than the width of window.
     colorcolumn = "80",          -- PEP8 like character limit vertical bar.
     mouse = "a",                 -- Enable mouse support.
