@@ -1,6 +1,6 @@
--- On neovim you can run:
+-- On neovim you can run
 -- :healthcheck base
--- To know possible causes in case NormalNVim is nor working correctly.
+-- To know possible causes in case NormalNvim is nor working correctly.
 
 local M = {}
 
@@ -14,10 +14,10 @@ local health = {
 }
 
 function M.check()
-  health.start "NormalNVim"
+  health.start "NormalNvim"
 
   health.info(
-    "NormalNVim Version: " .. require("base.utils.updater").version(true)
+    "NormalNvim Version: " .. require("base.utils.updater").version(true)
   )
   health.info(
     "Neovim Version: v"
@@ -35,11 +35,6 @@ function M.check()
   local programs = {
     {
       cmd = "git",
-      type = "error",
-      msg = "Used for core functionality such as updater and plugin management",
-    },
-    {
-      cmd = { "git" },
       type = "error",
       msg = "Used for core functionality such as updater and plugin management",
     },
