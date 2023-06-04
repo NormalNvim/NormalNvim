@@ -169,10 +169,13 @@ M.on_attach = function(client, bufnr)
     v = {},
   }
 
+  -- NOTE: Telescope has no method for project level diagnostics anymore.
+  -- https://github.com/nvim-telescope/telescope.nvim/blob/6d3fbffe426794296a77bb0b37b6ae0f4f14f807/doc/telescope_changelog.txt#L158
+  -- Run your project to know the next issue to fix instead.
   if is_available "telescope.nvim" then
     lsp_mappings.n["<leader>lD"] = {
       function() require("telescope.builtin").diagnostics() end,
-      desc = "Search diagnostics",
+      desc = "Diagnostics",
     }
   end
 
@@ -379,7 +382,7 @@ M.on_attach = function(client, bufnr)
   if client.supports_method "workspace/symbol" then
     lsp_mappings.n["<leader>lG"] = {
       function() vim.lsp.buf.workspace_symbol() end,
-      desc = "Search workspace symbols",
+      desc = "Symbols in project",
     }
   end
 

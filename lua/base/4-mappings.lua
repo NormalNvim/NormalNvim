@@ -93,6 +93,7 @@ maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
 maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
 maps.i["<C-BS>"] = { "<C-W>", desc = "Enable CTRL+backsace to delete." }
 maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
+maps.n["0"] = { "^", desc = "Go to the fist character of the line (aliases 0 to ^)" }
 
 -- Override nvim default behavior so it doesn't auto-yank when pasting on visual mode.
 maps.v["p"] = { "P", desc = "Paste content you've previourly yanked" }
@@ -600,7 +601,7 @@ end
 if is_available "aerial.nvim" then
   maps.n["<leader>l"] = icons.l
   maps.n["<leader>lS"] =
-    { function() require("aerial").toggle() end, desc = "Symbols outline" }
+    { function() require("aerial").toggle() end, desc = "Toggle symbols tree" }
 end
 
 -- telescope.nvim [find] ----------------------------------------------------
