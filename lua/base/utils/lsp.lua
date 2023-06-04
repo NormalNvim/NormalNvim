@@ -380,9 +380,9 @@ M.on_attach = function(client, bufnr)
   end
 
   if client.supports_method "workspace/symbol" then
-    lsp_mappings.n["<leader>lG"] = {
+    lsp_mappings.n["<leader>lS"] = {
       function() vim.lsp.buf.workspace_symbol() end,
-      desc = "Symbols in project",
+      desc = "Search symbols in project",
     }
   end
 

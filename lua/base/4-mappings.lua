@@ -84,7 +84,7 @@ maps.n["k"] =
 maps.n["<leader>w"] = { "<cmd>w<cr>", desc = "Save" }
 maps.n["<leader>W"] =
   { function() vim.cmd "SudaWrite" end, desc = "Save as sudo" }
-maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New File" }
+maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New file" }
 maps.n["gx"] =
   { utils.system_open, desc = "Open the file under cursor with system app" }
 maps.n["<C-s>"] = { "<cmd>w!<cr>", desc = "Force write" }
@@ -182,7 +182,7 @@ maps.n["<leader>pl"] = { "<cmd>NvimChangelog<cr>", desc = "Nvim Changelog" }
 -- buffers/tabs [buffers ]--------------------------------------------------
 maps.n["<leader>c"] = {
   function() require("base.utils.buffer").close() end,
-  desc = "Close Buffer",
+  desc = "Close buffer",
 }
 maps.n["<leader>C"] = {
   function() require("base.utils.buffer").close(0, true) end,
@@ -378,7 +378,7 @@ if is_available "alpha-nvim" then
       end
       require("alpha").start(false, require("alpha").default_config)
     end,
-    desc = "Home Screen",
+    desc = "Home screen",
   }
 end
 
@@ -493,7 +493,7 @@ end
 
 -- neotree
 if is_available "neo-tree.nvim" then
-  maps.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle Neotree" }
+  maps.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle neotree" }
   maps.n["<leader>o"] = {
     function()
       if vim.bo.filetype == "neo-tree" then
@@ -712,7 +712,7 @@ if is_available "telescope.nvim" then
 
   -- Some lsp keymappings are here because they depend on telescope
   maps.n["<leader>l"] = icons.l
-  maps.n["<leader>ls"] = {
+  maps.n["<leader>lt"] = {
     function()
       local aerial_avail, _ = pcall(require, "aerial")
       if aerial_avail then
@@ -777,11 +777,11 @@ if is_available "toggleterm.nvim" then
     { "<cmd>ToggleTerm direction=float<cr>", desc = "ToggleTerm float" }
   maps.n["<leader>th"] = {
     "<cmd>ToggleTerm size=10 direction=horizontal<cr>",
-    desc = "ToggleTerm horizontal split",
+    desc = "Toggleterm horizontal split",
   }
   maps.n["<leader>tv"] = {
     "<cmd>ToggleTerm size=80 direction=vertical<cr>",
-    desc = "ToggleTerm vertical split",
+    desc = "Toggleterm vertical split",
   }
   maps.n["<F7>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" }
   maps.t["<F7>"] = maps.n["<F7>"]
