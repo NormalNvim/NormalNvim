@@ -1,6 +1,8 @@
 # NormalNvim
 A normal NeoVim config
 
+![screenshot_2023-06-06_00-28-47_834904951](https://github.com/Zeioth/NormalNvim/assets/3357792/97134700-0bde-4628-93aa-de0bf95b83cd)
+
 ![screenshot_2023-05-27_16-41-26_120206834](https://github.com/Zeioth/NormalNvim/assets/3357792/8f3b76c8-3ceb-4b8d-a0e1-50f73c94eb00)
 
 
