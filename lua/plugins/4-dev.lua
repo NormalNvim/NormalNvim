@@ -80,6 +80,7 @@ return {
       require("luasnip").filetype_extend("javascript", { "jsdoc" })
       require("luasnip").filetype_extend("lua", { "luadoc" })
       require("luasnip").filetype_extend("csharp", { "csharpdoc" })
+      require("luasnip").filetype_extend("python", { "python-docstring" })
     end,
   },
   -- Telescope integration (:Telescope luasnip)
