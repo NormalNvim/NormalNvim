@@ -141,7 +141,7 @@ function M.event(event)
     function()
       vim.api.nvim_exec_autocmds(
         "User",
-        { pattern = "Base" .. event, modelline = false }
+        { pattern = "Base" .. event, modeline = false }
       )
     end
   )
