@@ -6,7 +6,7 @@
 --       -> project.nvim           [project search + auto cd]
 --       -> trim.nvim              [auto trim spaces]
 --       -> stickybuf.nvim         [lock special buffers]
---       -> telescope-undo.nvim    [internal clipboard history]
+--       -> telescope-undo.nvim    [undo history]
 --       -> nvim-window-picker     [select buffer with a letter]
 --       -> smart-splits           [move and resize buffers]
 --       -> better-scape.nvim      [esc]
@@ -40,7 +40,6 @@ return {
   -- https://github.com/ahmedkhalf/project.nvim
   {
     "ahmedkhalf/project.nvim",
-    event = "VeryLazy",
     cmd = "ProjectRoot",
     opts = {
       -- How to find root directory
@@ -62,6 +61,8 @@ return {
   -- Telescope integration (:Telescope projects)
   {
     "nvim-telescope/telescope.nvim",
+    dependencies = {"ahmedkhalf/project.nvim"},
+    cmd = {"ProjectRoot", "Telescope projects"},
     opts = function() require("telescope").load_extension "projects" end,
   },
 
@@ -87,14 +88,20 @@ return {
     "stevearc/stickybuf.nvim",
   },
 
-  -- telescope-undo.nvim [internal clipboard history]
+  -- telescope-undo.nvim [undo history]
   -- https://github.com/debugloop/telescope-undo.nvim
+  -- BUG: We are using a fork because of a bug where options are ignored.
+  --      You can use the original repo once this is fixed.
+  -- https://github.com/debugloop/telescope-undo.nvim/issues/30#issuecomment-1575753897
   {
-    "debugloop/telescope-undo.nvim",
+    "Zeioth/telescope-undo.nvim",
+    cmd = { "Telescope undo" },
   },
-  -- Telescope integration (:Telescope projects)
+  -- Telescope integration (:Telescope undo)
   {
     "nvim-telescope/telescope.nvim",
+    dependencies = {"Zeioth/telescope-undo.nvim"},
+    cmd = { "Telescope undo" },
     opts = function() require("telescope").load_extension "undo" end,
   },
 
@@ -469,12 +476,13 @@ return {
     "AckslD/nvim-neoclip.lua",
     cmd = { "Telescope neoclip", "Telescope macroscope" },
     dependencies = { "nvim-telescope/telescope.nvim" },
-    opts = {},
     config = function() require("neoclip").setup() end,
   },
   -- Telescope integration (:Telescope neoclip amd :Telescope macroscope)
   {
     "nvim-telescope/telescope.nvim",
+    cmd = { "Telescope neoclip", "Telescope macroscope" },
+    dependencies = {"AckslD/nvim-neoclip.lua"},
     opts = function()
       require("telescope").load_extension "neoclip"
       require("telescope").load_extension "macroscope"

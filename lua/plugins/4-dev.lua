@@ -340,6 +340,14 @@ return {
   -- Telescope integration (:Telescope aerial)
   {
     "nvim-telescope/telescope.nvim",
+    dependencies = {"stevearc/aerial.nvim"},
+    cmd = {
+      "AerialToggle",
+      "AerialOpen",
+      "AerialNavOpen",
+      "AerialInfo",
+      "AerialClose",
+    },
     opts = function() require("telescope").load_extension "aerial" end,
   },
 
