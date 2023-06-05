@@ -68,6 +68,11 @@ function M.check()
       type = "warn",
       msg = "Used to enable ranger file browser (Optional)",
     },
+    {
+      cmd = { "delta" },
+      type = "warn",
+      msg = "Used by undotree to show a diff (Optional)",
+    },
   }
 
   for _, program in ipairs(programs) do
