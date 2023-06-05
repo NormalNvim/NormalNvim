@@ -139,7 +139,10 @@ end
 function M.event(event)
   vim.schedule(
     function()
-      vim.api.nvim_exec_autocmds("User", { pattern = "Base" .. event })
+      vim.api.nvim_exec_autocmds(
+        "User",
+        { pattern = "Base" .. event, modelline = false }
+      )
     end
   )
 end
