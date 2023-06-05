@@ -100,7 +100,7 @@ maps.v["p"] = { "P", desc = "Paste content you've previourly yanked" }
 maps.v["P"] = { "p", desc = "Yank what you are going to override, then paste" }
 
 -- clipboard ---------------------------------------------------------------
--- only useful when the option clipboard is commented on ./1-options.lua
+-- only useful when the option 'clipboard' is commented on ./1-options.lua
 maps.n["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
 maps.v["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
 maps.n["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
