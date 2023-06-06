@@ -61,7 +61,8 @@ end
 ---@param tabnr number The position of the buffer to navigate to
 function M.nav_to(tabnr) vim.cmd.b(vim.t.bufs[tabnr]) end
 
---- Close a given buffer
+--- Close a given buffer,
+--- asking for confirmation if unsaved.
 ---@param bufnr? number The buffer to close or the current buffer if not provided
 ---@param force? boolean Whether or not to force close the buffers or confirm changes (default: false)
 function M.close(bufnr, force)
@@ -70,6 +71,21 @@ function M.close(bufnr, force)
     require("bufdelete").bufdelete(bufnr, force)
   else
     vim.cmd((force and "bd!" or "confirm bd") .. (bufnr == nil and "" or bufnr))
+  end
+end
+
+--- Close the current window and the specified buffer,
+--- asking for confirmation if unsaved.
+---@param bufnr? number The buffer to close or the current buffer if not provided
+---@param force? boolean Whether or not to force close the buffers or confirm changes (default: false)
+function M.wipe(bufnr, force)
+  if force == nil then force = false end
+  if require("base.utils").is_available "bufdelete.nvim" then
+    require("bufdelete").bufdelete(bufnr, force) -- close buffer(s)
+    vim.cmd("silent! close")                             -- close current window
+  else
+    vim.cmd((force and "bd!" or "confirm bd") .. (bufnr == nil and "" or bufnr))
+    vim.cmd("silent! close")                             -- close current window
   end
 end
 

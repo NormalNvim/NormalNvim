@@ -181,11 +181,11 @@ maps.n["<leader>pv"] = { "<cmd>NvimVersion<cr>", desc = "Nvim Version" }
 maps.n["<leader>pl"] = { "<cmd>NvimChangelog<cr>", desc = "Nvim Changelog" }
 
 -- buffers/tabs [buffers ]--------------------------------------------------
-maps.n["<leader>c"] = { -- Asks for confirmation if unsaved
+maps.n["<leader>c"] = { -- Asks for confirmation if unsaved.
   function() require("base.utils.buffer").close() end,
   desc = "Close buffer",
 }
--- maps.n["<leader>C"] = { -- Without confirmation
+-- maps.n["<leader>C"] = { -- Closes withoud confirmation
 --   function() require("base.utils.buffer").close(0, true) end,
 --   desc = "Force close buffer",
 -- }
