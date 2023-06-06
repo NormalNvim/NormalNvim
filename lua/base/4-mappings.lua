@@ -1,4 +1,5 @@
--- nvim keybindings (qwerty)
+-- nvim keybindings (qwerty).
+-- note that "../utils/lsp.lua" will always prevail over "mappings.lua".
 
 --    Sections:
 --
@@ -180,13 +181,16 @@ maps.n["<leader>pv"] = { "<cmd>NvimVersion<cr>", desc = "Nvim Version" }
 maps.n["<leader>pl"] = { "<cmd>NvimChangelog<cr>", desc = "Nvim Changelog" }
 
 -- buffers/tabs [buffers ]--------------------------------------------------
-maps.n["<leader>c"] = {
+maps.n["<leader>c"] = { -- Asks for confirmation if unsaved
   function() require("base.utils.buffer").close() end,
   desc = "Close buffer",
 }
-maps.n["<leader>C"] = {
-  function() require("base.utils.buffer").close(0, true) end,
-  desc = "Force close buffer",
+-- maps.n["<leader>C"] = { -- Without confirmation
+--   function() require("base.utils.buffer").close(0, true) end,
+--   desc = "Force close buffer",
+-- }
+maps.n["<leader>C"] = { -- Closes window and buffer at the same time (use it to close man)
+  "<cmd>bw<cr>", desc = "Wipe buffer"
 }
 maps.n["]b"] = {
   function()
