@@ -12,6 +12,7 @@
 --       -> packages
 --       -> buffers/tabs                       [buffers]
 --       -> ui toggles                         [ui]
+--       -> shifted movement keys
 --
 --       ## Plugin bindings
 --       -> alpha-nvim
@@ -99,10 +100,6 @@ maps.n["<leader>q"] = {
   desc = "Quit"
 }
 
--- Override nvim default behavior so it doesn't auto-yank when pasting on visual mode.
-maps.v["p"] = { "P", desc = "Paste content you've previourly yanked" }
-maps.v["P"] = { "p", desc = "Yank what you are going to override, then paste" }
-
 -- clipboard ---------------------------------------------------------------
 -- only useful when the option 'clipboard' is commented on ./1-options.lua
 maps.n["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
@@ -130,6 +127,10 @@ maps.n["x"] = {
   desc = "Delete character without yanking it.",
 }
 maps.v["x"] = { '"_x', desc = "Delete character without yanking it." }
+
+-- Override nvim default behavior so it doesn't auto-yank when pasting on visual mode.
+maps.v["p"] = { "P", desc = "Paste content you've previourly yanked" }
+maps.v["P"] = { "p", desc = "Yank what you are going to override, then paste" }
 
 -- search highlighing ------------------------------------------------------
 -- use ESC to clear hlsearch, while preserving its original functionality.
@@ -366,6 +367,37 @@ maps.n["<leader>ua"] = {
   end,
   desc = "Toggle animations",
 }
+
+-- fast movement (shifted) -------------------------------------------------
+maps.n["<S-Down>"] = {
+  function() vim.api.nvim_feedkeys("7j", "n", true) end,
+  desc = "Fast move down",
+}
+maps.n["<S-Up>"] = {
+  function() vim.api.nvim_feedkeys("7k", "n", true) end,
+  desc = "Fast move up",
+}
+maps.n["<S-PageDown>"] = {
+  function()
+    local current_line = vim.fn.line('.')
+    local total_lines = vim.fn.line('$')
+    local target_line = current_line + 1 + math.floor(total_lines * 0.20)
+    if target_line > total_lines then target_line = total_lines end
+    vim.api.nvim_win_set_cursor(0, {target_line, 0})
+    vim.cmd('normal! zz')  end,
+  desc = "Page down exactly a 20% of the total size of the buffer",
+}
+maps.n["<S-PageUp>"] = {
+  function()
+    local current_line = vim.fn.line('.')
+    local target_line = current_line - 1 - math.floor(vim.fn.line('$') * 0.20)
+    if target_line < 1 then target_line = 1 end
+    vim.api.nvim_win_set_cursor(0, {target_line, 0})
+    vim.cmd('normal! zz')
+  end,
+  desc = "Page up exactly 20% of the total size of the buffer",
+}
+
 
 -- -------------------------------------------------------------------------
 --
