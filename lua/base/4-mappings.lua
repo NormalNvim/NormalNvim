@@ -89,19 +89,22 @@ maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New file" }
 maps.n["gx"] =
   { utils.system_open, desc = "Open the file under cursor with system app" }
 maps.n["<C-s>"] = { "<cmd>w!<cr>", desc = "Force write" }
-maps.n["<C-q>"] = { "<cmd>q!<cr>", desc = "Force quit" }
 maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
 maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
 maps.i["<C-BS>"] = { "<C-W>", desc = "Enable CTRL+backsace to delete." }
-maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
 maps.n["0"] = { "^", desc = "Go to the fist character of the line (aliases 0 to ^)" }
+maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
+maps.n["<leader>q"] = {
+  function() require("base.utils").confirm_quit() end,
+  desc = "Quit"
+}
 
 -- Override nvim default behavior so it doesn't auto-yank when pasting on visual mode.
 maps.v["p"] = { "P", desc = "Paste content you've previourly yanked" }
 maps.v["P"] = { "p", desc = "Yank what you are going to override, then paste" }
 
 -- clipboard ---------------------------------------------------------------
--- only useful when the option clipboard is commented on ./1-options.lua
+-- only useful when the option 'clipboard' is commented on ./1-options.lua
 maps.n["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
 maps.v["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
 maps.n["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
@@ -181,17 +184,25 @@ maps.n["<leader>pv"] = { "<cmd>NvimVersion<cr>", desc = "Nvim Version" }
 maps.n["<leader>pl"] = { "<cmd>NvimChangelog<cr>", desc = "Nvim Changelog" }
 
 -- buffers/tabs [buffers ]--------------------------------------------------
-maps.n["<leader>c"] = { -- Asks for confirmation if unsaved.
+maps.n["<leader>c"] = { -- Closes window and buffer at the same time.
+  function() require("base.utils.buffer").wipe() end,
+  desc = "Wipe buffer",
+}
+maps.n["<leader>C"] = { -- Closes buffer while keeping the window
   function() require("base.utils.buffer").close() end,
   desc = "Close buffer",
 }
--- maps.n["<leader>C"] = { -- Closes withoud confirmation
+maps.n["<leader>bw"] = { -- Closes the window
+  function()
+    vim.cmd("silent! close") -- Be aware you can't close the last window
+  end,
+  desc = "Close window",
+}
+-- Closes buffer while keeping the window. Without confirmation.
+-- maps.n["<leader>X"] = {
 --   function() require("base.utils.buffer").close(0, true) end,
 --   desc = "Force close buffer",
 -- }
-maps.n["<leader>C"] = { -- Closes window and buffer at the same time (use it to close man)
-  "<cmd>bw<cr>", desc = "Wipe buffer"
-}
 maps.n["]b"] = {
   function()
     require("base.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1)
