@@ -32,7 +32,7 @@ yarn npm     # Necessary for most formatters and parsers.
 * 🔙 **Rollbacks:** You can easily recover from a nvim distro update using :NvimRollbackRestore
 * 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
 * 📱 **Phone friendly:** Good usability even on smalll screens.
-* ⌨️ **Alternative layout friendly:** Choose between qwerty and colemak-dh mappings. [See wiki](https://github.com/Zeioth/NormalNvim/wiki). Mouse is fully supported too, as much as neovim allows it.
+* ⌨️ **Alternative layout friendly:** Choose between qwerty and colemak-dh mappings. [See wiki](https://github.com/Zeioth/NormalNvim/wiki/colemak). Mouse is fully supported too, as much as neovim allows it.
 * ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
 
 ## Philosophy and design decissions
