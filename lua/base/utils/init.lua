@@ -328,4 +328,13 @@ function M.cmd(cmd, show_error)
     or nil
 end
 
+--- Always ask before exiting nvim, even if there is nothing to be saved.
+function M.confirm_quit()
+  local choice = vim.fn.confirm("Do you really want to exit vim?.", "&Yes\n&No", 2)
+  if choice == 1 then
+    -- If user confirms, but there are still files to be saved: Ask
+    vim.cmd('confirm quit')
+  end
+end
+
 return M
