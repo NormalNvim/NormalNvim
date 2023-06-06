@@ -82,10 +82,10 @@ function M.wipe(bufnr, force)
   if force == nil then force = false end
   if require("base.utils").is_available "bufdelete.nvim" then
     require("bufdelete").bufdelete(bufnr, force) -- close buffer(s)
-    vim.cmd("close")                             -- close current window
+    vim.cmd("silent! close")                     -- close current window
   else
     vim.cmd((force and "bd!" or "confirm bd") .. (bufnr == nil and "" or bufnr))
-    vim.cmd("bw %")
+    vim.cmd("silent! close")
   end
 end
 
