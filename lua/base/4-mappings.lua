@@ -94,7 +94,10 @@ maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
 maps.i["<C-BS>"] = { "<C-W>", desc = "Enable CTRL+backsace to delete." }
 maps.n["0"] = { "^", desc = "Go to the fist character of the line (aliases 0 to ^)" }
 maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
-maps.n["<C-q>"] = { "<cmd>q!<cr>", desc = "Force quit" }
+maps.n["<leader>q"] = {
+  function() require("base.utils").confirm_quit() end,
+  desc = "Quit"
+}
 
 -- Override nvim default behavior so it doesn't auto-yank when pasting on visual mode.
 maps.v["p"] = { "P", desc = "Paste content you've previourly yanked" }
