@@ -329,12 +329,49 @@ M.on_attach = function(client, bufnr)
     })
   end
 
+  -- Work on any symbol
   if client.supports_method "textDocument/hover" then
-    lsp_mappings.n["K"] = {
+    lsp_mappings.n["<leader>lh"] = {
+      function() vim.lsp.buf.hover() end,
+      desc = "Hover symbol details",
+    }
+    lsp_mappings.n["gh"] = {
       function() vim.lsp.buf.hover() end,
       desc = "Hover symbol details",
     }
   end
+
+  -- Reduced version of the former, only for methods and parameters
+  if client.supports_method "textDocument/signatureHelp" then
+    lsp_mappings.n["<leader>lH"] = {
+      function() vim.lsp.buf.signature_help() end,
+      desc = "Hover signature details",
+    }
+    lsp_mappings.n["gH"] = {
+      function() vim.lsp.buf.signature_help() end,
+      desc = "Hover signature details",
+    }
+  end
+
+  -- Open man under the cursor (We also keep the default keymap 'E')
+  if client.supports_method "textDocument/hover" then
+    lsp_mappings.n["<leader>lm"] = {
+      function() vim.api.nvim_feedkeys("K", "n", false) end,
+      desc = "Hover man",
+    }
+    lsp_mappings.n["gm"] = {
+      function() vim.api.nvim_feedkeys("K", "n", false) end,
+      desc = "Hover man",
+    }
+  end
+
+  -- Force LSP refresh (We also keep the default keymap 'U')
+  -- if client then
+  --   lsp_mappings.n["<leader>lF"] = {
+  --     function() vim.api.nvim_feedkeys("U", "n", false) end,
+  --     desc = "Hover man",
+  --   }
+  -- end
 
   if client.supports_method "textDocument/implementation" then
     lsp_mappings.n["gI"] = {
@@ -358,17 +395,6 @@ M.on_attach = function(client, bufnr)
     lsp_mappings.n["<leader>lr"] = {
       function() vim.lsp.buf.rename() end,
       desc = "Rename current symbol",
-    }
-  end
-
-  if client.supports_method "textDocument/signatureHelp" then
-    lsp_mappings.n["<leader>lh"] = {
-      function() vim.lsp.buf.signature_help() end,
-      desc = "Code help",
-    }
-    lsp_mappings.n["gh"] = {
-      function() vim.lsp.buf.signature_help() end,
-      desc = "Code help",
     }
   end
 
