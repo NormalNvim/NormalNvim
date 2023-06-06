@@ -89,12 +89,12 @@ maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New file" }
 maps.n["gx"] =
   { utils.system_open, desc = "Open the file under cursor with system app" }
 maps.n["<C-s>"] = { "<cmd>w!<cr>", desc = "Force write" }
-maps.n["<C-q>"] = { "<cmd>q!<cr>", desc = "Force quit" }
 maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
 maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
 maps.i["<C-BS>"] = { "<C-W>", desc = "Enable CTRL+backsace to delete." }
-maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
 maps.n["0"] = { "^", desc = "Go to the fist character of the line (aliases 0 to ^)" }
+maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
+maps.n["<C-q>"] = { "<cmd>q!<cr>", desc = "Force quit" }
 
 -- Override nvim default behavior so it doesn't auto-yank when pasting on visual mode.
 maps.v["p"] = { "P", desc = "Paste content you've previourly yanked" }
