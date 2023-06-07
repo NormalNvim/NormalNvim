@@ -161,6 +161,8 @@ maps.v[">"] = { ">gv", desc = "indent line" }
 -- improved gg --------------------------------------------------------------
 maps.n["gg"] = { "gg<Home>", desc = "gg and go to the first position" }
 maps.n["G"] = { "G<End>", desc = "G and go to the last position" }
+maps.n["<C-a>"] = { "gg<Home>vG<End>", desc = "Visually select all" }
+
 
 -- packages -----------------------------------------------------------------
 -- lazy
