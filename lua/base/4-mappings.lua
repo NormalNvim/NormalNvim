@@ -9,6 +9,7 @@
 --       -> clipboard
 --       -> search highlighting
 --       -> improved tabulation
+--       -> improved gg
 --       -> packages
 --       -> buffers/tabs                       [buffers]
 --       -> ui toggles                         [ui]
@@ -156,6 +157,10 @@ maps.v["<S-Tab>"] = { "<gv", desc = "unindent line" }
 maps.v["<Tab>"] = { ">gv", desc = "indent line" }
 maps.v["<"] = { "<gv", desc = "unindent line" }
 maps.v[">"] = { ">gv", desc = "indent line" }
+
+-- improved gg --------------------------------------------------------------
+maps.n["gg"] = { "gg<Home>", desc = "gg and go to the first position" }
+maps.n["G"] = { "G<End>", desc = "G and go to the last position" }
 
 -- packages -----------------------------------------------------------------
 -- lazy
@@ -724,7 +729,7 @@ if is_available "telescope.nvim" then
   end
   maps.n["<leader>fo"] = {
     function() require("telescope.builtin").oldfiles() end,
-    desc = "Find history",
+    desc = "Find recent",
   }
   maps.n["<leader>fv"] = {
     function() require("telescope.builtin").registers() end,
@@ -761,6 +766,7 @@ if is_available "telescope.nvim" then
       else
         require("telescope.builtin").lsp_document_symbols()
       end
+
     end,
     desc = "Search symbols",
   }
