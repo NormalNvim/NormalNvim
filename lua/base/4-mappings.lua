@@ -174,13 +174,30 @@ maps.n["G"] = {
     vim.g.minianimate_disable = false
   end,
   desc = "G and go to the last position" }
+maps.v["gg"] = {
+  function()
+    vim.g.minianimate_disable = true
+    vim.cmd("normal! gg0")
+    vim.g.minianimate_disable = false
+  end,
+  desc = "gg and go to the first position (visual)"
+}
+maps.v["G"] = {
+  function()
+    vim.g.minianimate_disable = true
+    vim.cmd("normal! G$")
+    vim.g.minianimate_disable = false
+  end,
+  desc = "G and go to the last position (visual)"
+}
 maps.n["<C-a>"] = { -- to move to the previous position press ctrl + oo
   function()
     vim.g.minianimate_disable = true
     vim.cmd("normal! gg0vG$")
     vim.g.minianimate_disable = false
   end,
-  desc = "Visually select all" }
+  desc = "Visually select all"
+}
 
 -- packages -----------------------------------------------------------------
 -- lazy
