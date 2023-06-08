@@ -753,6 +753,8 @@ return {
 
   --  mini.animate [animations]
   --  https://github.com/echasnovski/mini.animate
+  --  HINT: if one of your personal keymappings fail due to mini.animate, try to
+  --        disable it during the keybinding using vim.g.minianimate_disable = true
   {
     "echasnovski/mini.animate",
     event = "VeryLazy",

@@ -159,10 +159,28 @@ maps.v["<"] = { "<gv", desc = "unindent line" }
 maps.v[">"] = { ">gv", desc = "indent line" }
 
 -- improved gg --------------------------------------------------------------
-maps.n["gg"] = { "gg<Home>", desc = "gg and go to the first position" }
-maps.n["G"] = { "G<End>", desc = "G and go to the last position" }
-maps.n["<C-a>"] = { "gg<Home>vG<End>", desc = "Visually select all" }
-
+maps.n["gg"] = {
+  function()
+    vim.g.minianimate_disable = true
+    vim.cmd("normal! gg0")
+    vim.g.minianimate_disable = false
+  end,
+  desc = "gg and go to the first position"
+}
+maps.n["G"] = {
+  function()
+    vim.g.minianimate_disable = true
+    vim.cmd("normal! G$")
+    vim.g.minianimate_disable = false
+  end,
+  desc = "G and go to the last position" }
+maps.n["<C-a>"] = { -- to move to the previous position press ctrl + oo
+  function()
+    vim.g.minianimate_disable = true
+    vim.cmd("normal! gg0vG$")
+    vim.g.minianimate_disable = false
+  end,
+  desc = "Visually select all" }
 
 -- packages -----------------------------------------------------------------
 -- lazy
