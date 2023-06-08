@@ -21,8 +21,9 @@ nvim
 
 ## System dependencies
 ```sh
+ranger       # Necessary for Rnvimr.
 pynvim       # Necessary for Rnvimr.
-yarn npm     # Necessary for most formatters and parsers.
+yarn         # Necessary for Markmap.
 ```
 
 
