@@ -85,6 +85,7 @@ local options = {
     autochdir = true, -- Use current file dir as working dir (See project.nvim)
     scrolloff = 1000, -- Number of lines to leave before/after the cursor when scrolling. Setting a high value keep the cusros centered.
     sidescrolloff = 8, -- Same but for side scrolling.
+    selection = "old" -- Don't select the newline symbol when using <End> on visual mode
   },
   g = {
     mapleader = " ", -- set leader key
