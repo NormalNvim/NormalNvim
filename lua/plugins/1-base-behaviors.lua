@@ -187,14 +187,17 @@ return {
 
   -- spectre.nvim [search and replace in project]
   -- https://github.com/nvim-pack/nvim-spectre
+  -- INSTRUCTIONS:
+  -- To insert text press 'a'.
+  -- To start the search press <ESC>.
   -- It doesn't have ctrl-z so please always commit before using it.
   {
-    "nvim-pack/nvim-spectre",
+    "zeioth/nvim-spectre",
     cmd = "Spectre",
     opts = {
       find_engine = {
         default = {
-          find = {
+         find = {
             --pick one of item in find_engine [ag, rg ]
             cmd = "ag",
             options = { "ignore-case" },
@@ -203,6 +206,82 @@ return {
             -- If you install oxi with cargo you can use it instead.
             cmd = "sed",
           },
+        },
+      },
+      is_insert_mode = true,  -- start open panel on is_insert_mode
+      line_sep_start = '┌──────────────────────────────────────────────────────',
+      result_padding = '│  ',
+      line_sep       = '└──────────────────────────────────────────────────────',
+      mapping = {
+        ['toggle_line'] = {
+            map = "d",
+            cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
+            desc = "toggle current item."
+        },
+        ['enter_file'] = {
+            map = "<S-cr>",
+            cmd = "<cmd>lua require('spectre.actions').select_entry()<CR>",
+            desc = "open current file."
+        },
+        ['send_to_qf'] = {
+            map = "sq",
+            cmd = "<cmd>lua require('spectre.actions').send_to_qf()<CR>",
+            desc = "send all item to quickfix."
+        },
+        ['replace_cmd'] = {
+            map = "sc",
+            cmd = "<cmd>lua require('spectre.actions').replace_cmd()<CR>",
+            desc = "input replace vim command."
+        },
+        ['show_option_menu'] = {
+            map = "so",
+            cmd = "<cmd>lua require('spectre').show_options()<CR>",
+            desc = "show option."
+        },
+        ['run_current_replace'] = {
+          map = "c",
+          cmd = "<cmd>lua require('spectre.actions').run_current_replace()<CR>",
+          desc = "replace current line."
+        },
+        ['run_replace'] = {
+            map = "R",
+            cmd = "<cmd>lua require('spectre.actions').run_replace()<CR>",
+            desc = "replace all."
+        },
+        ['change_view_mode'] = {
+            map = "sv",
+            cmd = "<cmd>lua require('spectre').change_view()<CR>",
+            desc = "change result view mode."
+        },
+        ['change_replace_sed'] = {
+          map = "srs",
+          cmd = "<cmd>lua require('spectre').change_engine_replace('sed')<CR>",
+          desc = "use sed to replace."
+        },
+        ['change_replace_oxi'] = {
+          map = "sro",
+          cmd = "<cmd>lua require('spectre').change_engine_replace('oxi')<CR>",
+          desc = "use oxi to replace."
+        },
+        ['toggle_live_update']={
+          map = "su",
+          cmd = "<cmd>lua require('spectre').toggle_live_update()<CR>",
+          desc = "update change when vim write file."
+        },
+        ['toggle_ignore_case'] = {
+          map = "si",
+          cmd = "<cmd>lua require('spectre').change_options('ignore-case')<CR>",
+          desc = "toggle ignore case."
+        },
+        ['toggle_ignore_hidden'] = {
+          map = "sh",
+          cmd = "<cmd>lua require('spectre').change_options('hidden')<CR>",
+          desc = "toggle search hidden."
+        },
+        ['resume_last_search'] = {
+          map = "sl",
+          cmd = "<cmd>lua require('spectre').resume_last_search()<CR>",
+          desc = "resume last search before close."
         },
       },
     },
