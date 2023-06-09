@@ -283,6 +283,16 @@ return {
           cmd = "<cmd>lua require('spectre').resume_last_search()<CR>",
           desc = "resume last search before close."
         },
+        ['insert_qwerty'] = {
+          map = "i",
+          cmd = "<cmd>startinsert<CR>",
+          desc = "insert (qwerty)."
+        },
+        ['insert_colemak'] = {
+          map = "o",
+          cmd = "<cmd>startinsert<CR>",
+          desc = "insert (colemak)."
+        },
       },
     },
   },
