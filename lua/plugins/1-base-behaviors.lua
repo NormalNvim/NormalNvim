@@ -188,7 +188,7 @@ return {
   -- spectre.nvim [search and replace in project]
   -- https://github.com/nvim-pack/nvim-spectre
   -- INSTRUCTIONS:
-  -- To insert text press 'a'.
+  -- To see the instructions press '?'
   -- To start the search press <ESC>.
   -- It doesn't have ctrl-z so please always commit before using it.
   {
@@ -282,6 +282,16 @@ return {
           map = "sl",
           cmd = "<cmd>lua require('spectre').resume_last_search()<CR>",
           desc = "resume last search before close."
+        },
+        ['insert_qwerty'] = {
+          map = "i",
+          cmd = "<cmd>startinsert<CR>",
+          desc = "insert (qwerty)."
+        },
+        ['insert_colemak'] = {
+          map = "o",
+          cmd = "<cmd>startinsert<CR>",
+          desc = "insert (colemak)."
         },
       },
     },
