@@ -72,6 +72,8 @@ Please before opening an issue, check [the AstroVim manual](https://astronvim.co
 
 * **How can I disable the animations?** You can delete the plugin [mini.animate](https://github.com/echasnovski/mini.animate). In case you only want to disable some animations look into the plugin docs.
 
+* **How can I use `Ask ChatGPT`?** On your operative system, set the env var CHATGPT_API_KEY="my_key_here". You can get the API key from chatgpt's website.
+
 * **What scenarios are not covered by this distro?**
   * **Kubernetes**: We do not provide a kubernetes plugin. There is not much neovim can do for you if you work with Kubernetes apart from the features provided by Mason (LSP, Hightighing, autocompletion..).
   * **e2e testing**: We do not provide a e2e plugin. But we do provide the :TestNodejsE2e command you can customize on [/lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua) along with all the other testing commands. You can also rename the commands to anything you want in case you don't use nodejs.
