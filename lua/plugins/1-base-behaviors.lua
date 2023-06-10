@@ -216,32 +216,32 @@ return {
         ['toggle_line'] = {
             map = "d",
             cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
-            desc = "toggle current item."
+            desc = "toggle item."
         },
         ['enter_file'] = {
-            map = "<S-cr>",
+            map = "<cr>",
             cmd = "<cmd>lua require('spectre.actions').select_entry()<CR>",
-            desc = "open current file."
+            desc = "open file."
         },
         ['send_to_qf'] = {
-            map = "sq",
+            map = "sqf",
             cmd = "<cmd>lua require('spectre.actions').send_to_qf()<CR>",
-            desc = "send all item to quickfix."
+            desc = "send all items to quickfix."
         },
         ['replace_cmd'] = {
-            map = "sc",
+            map = "src",
             cmd = "<cmd>lua require('spectre.actions').replace_cmd()<CR>",
-            desc = "input replace vim command."
+            desc = "replace command."
         },
         ['show_option_menu'] = {
             map = "so",
             cmd = "<cmd>lua require('spectre').show_options()<CR>",
-            desc = "show option."
+            desc = "show options."
         },
         ['run_current_replace'] = {
           map = "c",
           cmd = "<cmd>lua require('spectre.actions').run_current_replace()<CR>",
-          desc = "replace current line."
+          desc = "confirm item."
         },
         ['run_replace'] = {
             map = "R",
@@ -251,7 +251,7 @@ return {
         ['change_view_mode'] = {
             map = "sv",
             cmd = "<cmd>lua require('spectre').change_view()<CR>",
-            desc = "change result view mode."
+            desc = "results view mode."
         },
         ['change_replace_sed'] = {
           map = "srs",
@@ -264,24 +264,14 @@ return {
           desc = "use oxi to replace."
         },
         ['toggle_live_update']={
-          map = "su",
+          map = "sar",
           cmd = "<cmd>lua require('spectre').toggle_live_update()<CR>",
-          desc = "update change when vim write file."
-        },
-        ['toggle_ignore_case'] = {
-          map = "si",
-          cmd = "<cmd>lua require('spectre').change_options('ignore-case')<CR>",
-          desc = "toggle ignore case."
-        },
-        ['toggle_ignore_hidden'] = {
-          map = "sh",
-          cmd = "<cmd>lua require('spectre').change_options('hidden')<CR>",
-          desc = "toggle search hidden."
+          desc = "auto refresh changes when nvim writes a file."
         },
         ['resume_last_search'] = {
           map = "sl",
           cmd = "<cmd>lua require('spectre').resume_last_search()<CR>",
-          desc = "resume last search before close."
+          desc = "repeat last search."
         },
         ['insert_qwerty'] = {
           map = "i",
@@ -328,7 +318,7 @@ return {
         },
       },
       default_component_configs = {
-        indent = { padding = 0, indent_size = 1 },
+        indent = { padding = 0 },
         icon = {
           folder_closed = get_icon "FolderClosed",
           folder_open = get_icon "FolderOpen",
