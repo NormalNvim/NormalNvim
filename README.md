@@ -72,7 +72,7 @@ Please before opening an issue, check [the AstroVim manual](https://astronvim.co
 
 * **How can I disable the animations?** You can delete the plugin [mini.animate](https://github.com/echasnovski/mini.animate). In case you only want to disable some animations look into the plugin docs.
 
-* **How can I use `Ask ChatGPT`?** On your operative system, set the next env var. You can get an API key from chatgpt's website.
+* **How can I use `Ask chatgpt`?** On your operative system, set the next env var. You can get an API key from chatgpt's website.
 
 ```sh
 CHATGPT_API_KEY="my_key_here"
