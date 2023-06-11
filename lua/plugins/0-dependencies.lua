@@ -42,9 +42,5 @@ return {
   -- removing/modifying the plugin heirline in:
   -- ../plugins/2-ui.lua
   --
-  --
-  -- BUG FOUND: It's safe to change the repo back to famiu/bufdelete.nvim
-  --            once this PR has been merged:
-  --            https://github.com/famiu/bufdelete.nvim/pull/42
-  { "Zeioth/bufdelete.nvim", cmd = { "Bdelete", "Bwipeout" } },
+  { "famui/bufdelete.nvim", cmd = { "Bdelete", "Bwipeout" } },
 }
