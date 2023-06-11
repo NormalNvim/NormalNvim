@@ -87,7 +87,7 @@ CHATGPT_API_KEY="my_key_here"
 ## 🌟 Support the project
 If you want to help me, please star this repository to increase the visibility of the project.
 
-## 🌟 Stars over time
+### Stars over time
 
 [![Stargazers over time](https://starchart.cc/NormalNvim/NormalNvim.svg)](https://starchart.cc/NormalNvim/NormalNvim)
 
