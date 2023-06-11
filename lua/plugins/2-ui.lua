@@ -16,6 +16,7 @@
 --       -> lspkind.nvim                [icons | lsp]
 --       -> nvim-scrollbar              [scrollbar]
 --       -> mini.animate                [animations]
+--       -> highlight-undo              [highlights]
 --       -> which-key                   [on-screen keybinding]
 
 local utils = require "base.utils"
@@ -795,6 +796,25 @@ return {
     end,
   },
 
+  --  highlight-undo
+  --  https://github.com/tzachar/highlight-undo.nvim
+  --  BUG: Currently only works for redo.
+  {
+    'tzachar/highlight-undo.nvim',
+    lazy = false,
+    opts = {
+      hlgroup = 'CurSearch',
+      duration = 150,
+      keymaps = {
+        {'n', 'u', 'undo', {}},     -- If you remap undo/redo, change this
+        {'n', '<C-r>', 'redo', {}},
+      },
+    },
+    config = function(_, opts)
+      require('highlight-undo').setup(opts)
+    end
+  },
+
   --  [on-screen keybindings]
   --  https://github.com/folke/which-key.nvim
   {
@@ -809,4 +829,5 @@ return {
       require("base.utils").which_key_register()
     end,
   },
+
 }
