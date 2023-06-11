@@ -94,4 +94,5 @@ If you want to help me, please star this repository to increase the visibility o
 
 ## 🌟 Stars over time
 
-[![Stargazers over time](https://starchart.cc/Zeioth/markmap.nvim.svg)](https://starchart.cc/NormalNvim/NormalNvim)
+[![Stargazers over time](https://starchart.cc/NormalNvim/NormalNvim.svg)](https://starchart.cc/NormalNvim/NormalNvim)
+
