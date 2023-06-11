@@ -1096,6 +1096,13 @@ if is_available "hop.nvim" then
     end,
     desc = "Hop to word",
   }
+  maps.n["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
+    function()
+      require "hop"
+      vim.cmd "HopWord"
+    end,
+    desc = "Hop to word",
+  }
 end
 
 utils.set_mappings(maps)
