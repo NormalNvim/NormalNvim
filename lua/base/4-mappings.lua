@@ -819,8 +819,8 @@ if is_available "telescope.nvim" then
   -- extra - spectre.nvim (search and replace in project)
   if is_available "nvim-spectre" then
     maps.n["<leader>fr"] = {
-      function() require("spectre").open() end,
-      desc = "Find and replace word in project",
+      function() require("spectre").toggle() end,
+      desc = "Toggle find and replace word in project",
     }
   end
 
