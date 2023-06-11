@@ -24,7 +24,7 @@
 -- Extra info:
 -- This method is used by lazy.lua and updater.lua to lock package versions.
 base.updater = {
-  options = { remote = "origin", channel = "nightly" },
+  options = { remote = "origin", channel = "stable" },
   snapshot = { module = "lazy_snapshot", path = vim.fn.stdpath "config" .. "/lua/lazy_snapshot.lua" },
   rollback_file = vim.fn.stdpath "cache" .. "/rollback.lua",
 }
