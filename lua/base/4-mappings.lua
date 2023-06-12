@@ -100,6 +100,11 @@ maps.n["<leader>q"] = {
   function() require("base.utils").confirm_quit() end,
   desc = "Quit"
 }
+maps.n["<Tab>"] = {
+  "<Tab>",
+  noremap = true, silent = true, expr = false,
+  desc = "FIX: Prevent TAB from behaving like <C-i>, as they share the same internal code"
+}
 
 -- clipboard ---------------------------------------------------------------
 -- only useful when the option 'clipboard' is commented on ./1-options.lua
