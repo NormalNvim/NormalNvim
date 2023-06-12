@@ -66,7 +66,7 @@ return {
         and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
       or nil,
     dependencies = {
-      "rafamadriz/friendly-snippets",
+      "zeioth/friendly-snippets",
       "benfowler/telescope-luasnip.nvim",
     },
     config = function(_, opts)
@@ -79,9 +79,9 @@ return {
       require("luasnip").filetype_extend("typescript", { "tsdoc" })
       require("luasnip").filetype_extend("javascript", { "jsdoc" })
       require("luasnip").filetype_extend("lua", { "luadoc" })
-      require("luasnip").filetype_extend("csharp", { "csharpdoc" })
       require("luasnip").filetype_extend("python", { "python-docstring" })
       require("luasnip").filetype_extend("rust", { "rustdoc" })
+      require("luasnip").filetype_extend("cs", { "csharpdoc" })
     end,
   },
   -- Telescope integration (:Telescope luasnip)
