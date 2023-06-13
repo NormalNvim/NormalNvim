@@ -75,7 +75,7 @@ return {
         function(type) require("luasnip.loaders.from_" .. type).lazy_load() end,
         { "vscode", "snipmate", "lua" }
       )
-      -- friently-snippets - enable official comment blocks
+      -- friently-snippets - enable standardized comments snippets
       require("luasnip").filetype_extend("typescript", { "tsdoc" })
       require("luasnip").filetype_extend("javascript", { "jsdoc" })
       require("luasnip").filetype_extend("lua", { "luadoc" })
@@ -88,7 +88,7 @@ return {
       require("luasnip").filetype_extend("php", { "phpdoc" })
       require("luasnip").filetype_extend("kotlin", { "kdoc" })
       require("luasnip").filetype_extend("ruby", { "rdoc" })
-      require("luasnip").filetype_extend("shell", { "shelldoc" })
+      require("luasnip").filetype_extend("sh", { "shelldoc" })
       --require("luasnip").filetype_extend("shell", { "doxygen" })
     end,
   },
