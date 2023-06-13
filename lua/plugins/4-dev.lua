@@ -75,13 +75,16 @@ return {
         function(type) require("luasnip.loaders.from_" .. type).lazy_load() end,
         { "vscode", "snipmate", "lua" }
       )
-      -- Enable friently-snippets opt in stuff
+      -- friently-snippets - enable official comment blocks
       require("luasnip").filetype_extend("typescript", { "tsdoc" })
       require("luasnip").filetype_extend("javascript", { "jsdoc" })
       require("luasnip").filetype_extend("lua", { "luadoc" })
       require("luasnip").filetype_extend("python", { "python-docstring" })
       require("luasnip").filetype_extend("rust", { "rustdoc" })
       require("luasnip").filetype_extend("cs", { "csharpdoc" })
+      require("luasnip").filetype_extend("java", { "javadoc" })
+      require("luasnip").filetype_extend("shell", { "shelldoc" })
+      require("luasnip").filetype_extend("c", { "cdoc" })
     end,
   },
   -- Telescope integration (:Telescope luasnip)
