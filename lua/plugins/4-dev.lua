@@ -83,10 +83,13 @@ return {
       require("luasnip").filetype_extend("rust", { "rustdoc" })
       require("luasnip").filetype_extend("cs", { "csharpdoc" })
       require("luasnip").filetype_extend("java", { "javadoc" })
-      require("luasnip").filetype_extend("shell", { "shelldoc" })
       require("luasnip").filetype_extend("c", { "cdoc" })
       require("luasnip").filetype_extend("cpp", { "cppdoc" })
       require("luasnip").filetype_extend("php", { "phpdoc" })
+      require("luasnip").filetype_extend("kotlin", { "kdoc" })
+      require("luasnip").filetype_extend("ruby", { "rdoc" })
+      require("luasnip").filetype_extend("shell", { "shelldoc" })
+      --require("luasnip").filetype_extend("shell", { "doxygen" })
     end,
   },
   -- Telescope integration (:Telescope luasnip)
