@@ -85,6 +85,7 @@ return {
       require("luasnip").filetype_extend("java", { "javadoc" })
       require("luasnip").filetype_extend("shell", { "shelldoc" })
       require("luasnip").filetype_extend("c", { "cdoc" })
+      require("luasnip").filetype_extend("cpp", { "cppdoc" })
     end,
   },
   -- Telescope integration (:Telescope luasnip)
