@@ -572,7 +572,7 @@ return {
   --  https://github.com/lambdalisue/suda.vim
   {
     "lambdalisue/suda.vim",
-    cmd = { "Suda" },
+    cmd = { "SudaRead", "SudaWrite" },
   },
 
   --  vim-matchup [improved % motion]

@@ -66,7 +66,7 @@ return {
         and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
       or nil,
     dependencies = {
-      "rafamadriz/friendly-snippets",
+      "zeioth/friendly-snippets",
       "benfowler/telescope-luasnip.nvim",
     },
     config = function(_, opts)
@@ -75,13 +75,21 @@ return {
         function(type) require("luasnip.loaders.from_" .. type).lazy_load() end,
         { "vscode", "snipmate", "lua" }
       )
-      -- Enable friently-snippets opt in stuff
+      -- friently-snippets - enable official comment blocks
       require("luasnip").filetype_extend("typescript", { "tsdoc" })
       require("luasnip").filetype_extend("javascript", { "jsdoc" })
       require("luasnip").filetype_extend("lua", { "luadoc" })
-      require("luasnip").filetype_extend("csharp", { "csharpdoc" })
       require("luasnip").filetype_extend("python", { "python-docstring" })
       require("luasnip").filetype_extend("rust", { "rustdoc" })
+      require("luasnip").filetype_extend("cs", { "csharpdoc" })
+      require("luasnip").filetype_extend("java", { "javadoc" })
+      require("luasnip").filetype_extend("c", { "cdoc" })
+      require("luasnip").filetype_extend("cpp", { "cppdoc" })
+      require("luasnip").filetype_extend("php", { "phpdoc" })
+      require("luasnip").filetype_extend("kotlin", { "kdoc" })
+      require("luasnip").filetype_extend("ruby", { "rdoc" })
+      require("luasnip").filetype_extend("shell", { "shelldoc" })
+      --require("luasnip").filetype_extend("shell", { "doxygen" })
     end,
   },
   -- Telescope integration (:Telescope luasnip)
