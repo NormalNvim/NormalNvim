@@ -827,6 +827,10 @@ if is_available "telescope.nvim" then
       function() require("spectre").toggle() end,
       desc = "Toggle find and replace word in project",
     }
+    maps.n["<leader>fb"] = {
+      function() require("spectre").toggle({path=vim.fn.expand('%:t:p')}) end,
+      desc = "Toggle find and replace word in buffer",
+    }
   end
 
   -- extra - luasnip
