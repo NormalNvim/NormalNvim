@@ -457,7 +457,18 @@ end
 -- @see base.utils.status.utils.stylize
 function M.lsp_progress(opts)
   return function()
-    local Lsp = vim.lsp.util.get_progress_messages()[1]
+    local Lsp
+    if vim.lsp.status then
+      for _, client in ipairs(vim.lsp.get_active_clients()) do
+        if client.progress:peek() then
+          Lsp = client.progress:pop().value
+          client.progress:clear()
+          break
+        end
+      end
+    else
+      Lsp = vim.lsp.util.get_progress_messages()[1]
+    end
     return status_utils.stylize(
       Lsp
         and (
