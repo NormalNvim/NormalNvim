@@ -55,7 +55,7 @@ __You are expected to fork the project before cloning it. So you are the only on
 | **:NvimReload** | Hot reloads nvim without leaving nvim. It can cause unexpected issues sometimes. | 
 | **:NvimRollbackCreate** | Creates a recovery point. It is triggered automatically when running `:NvimUpdateConfig`. | 
 | **:NvimRollbackRestore** | Uses git to bring your config to the state it had when `:NvimRollbackCreate` was called. | 
-| **:NvimUpdateConfig** | Pull the latest changes from the current git repository of the distro. Useful when you have your distro installed in more than one machine. |
+| **:NvimUpdateConfig** | Pulls the latest changes from the current git repository of the distro. Useful to keep your config updated when you have your distro installed in more than one machine. If the updates channel is `stable` it will update from the main branch of your github repository. If the channel is `nightly` it will update from the nightly branch. Note that uncommited local changes in your config will be lost after an update, so it's important you commit before updating your distro config.|
 | **:NvimUpdatePlugins** | Uses lazy to update the plugins. |
 | **:NvimVersion** | Prints the commit number of the current NormalNvim version. |
 
