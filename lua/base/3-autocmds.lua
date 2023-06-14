@@ -381,13 +381,7 @@ cmd(
   { desc = "Lock package versions (only lazy, not mason)." }
 )
 cmd(
-  "NvimUpdateConfig",
-  function()
-    require("base.utils.updater").update({
-      version = vim.g.stable_version or "stable"
-    })
-  end,
-
+  "NvimUpdateConfig", function() require("base.utils.updater").update() end,
   { desc = "Update Nvim distro" }
 )
 cmd(

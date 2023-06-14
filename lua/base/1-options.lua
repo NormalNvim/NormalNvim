@@ -99,7 +99,6 @@ local options = {
     icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available)
     lsp_handlers_enabled = true, -- enable or disable default vim.lsp.handlers (hover and signatureHelp)
     ui_notifications_enabled = true, -- disable notifications when toggling UI elements
-    stable_version = nil, -- tag version to download when using the :NvimUpdateConfig with the stable channel. If not specified, the latest available remote tag version will be used. Example: "v1.0"
   },
   t = vim.t.bufs and vim.t.bufs or { bufs = vim.api.nvim_list_bufs() }, -- initialize buffers for the current tab
 }
