@@ -37,7 +37,8 @@ function git.pull(...) return git.cmd("pull --rebase", ...) end
 --- Checkout git target
 ---@param dest string the target to checkout
 ---@return string|nil # The result of the command
-function git.checkout(dest, ...) return git.cmd("checkout " .. dest, ...) end
+function git.checkout(dest, ...) return git.cmd("checkout -f " .. dest, ...) end
+
 
 --- Hard reset to a git target
 -- @param dest the target to hard reset to
