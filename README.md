@@ -10,7 +10,7 @@
 Tokyo Night (Night) theme by default
 ![screenshot_2023-05-27_16-41-26_120206834](https://github.com/Zeioth/NormalNvim/assets/3357792/8f3b76c8-3ceb-4b8d-a0e1-50f73c94eb00)
 
-Space shows [all you can do](https://github.com/Zeioth/NormalNvim/wiki/basic-mappings)
+The space key shows [all you can do](https://github.com/Zeioth/NormalNvim/wiki/basic-mappings)
 ![screenshot_2023-06-14_11-41-03_398515538](https://github.com/NormalNvim/NormalNvim/assets/3357792/af73f0b2-b56e-47d8-9bb8-f68b76e4b577)
 
 
