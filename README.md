@@ -10,7 +10,7 @@
 Tokyo Night (Night) theme by default
 ![screenshot_2023-05-27_16-41-26_120206834](https://github.com/Zeioth/NormalNvim/assets/3357792/8f3b76c8-3ceb-4b8d-a0e1-50f73c94eb00)
 
-[The features you were going to add anyway](https://github.com/NormalNvim/NormalNvim/wiki/features)
+[All the features you were going to add anyway](https://github.com/NormalNvim/NormalNvim/wiki/features)
 ![screenshot_2023-06-14_11-45-53_931344419](https://github.com/NormalNvim/NormalNvim/assets/3357792/d1e5aae5-cf40-4f2e-9204-6a2b510aad6d)
 
 
