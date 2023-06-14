@@ -1,5 +1,5 @@
 # NormalNvim
-A normal NeoVim configarst
+A normal NeoVim configarstarst
 
 ![screenshot_2023-06-06_00-29-48_707187891](https://github.com/Zeioth/NormalNvim/assets/3357792/84255589-0afe-49ff-b3a2-38f2ffad459b)
 
