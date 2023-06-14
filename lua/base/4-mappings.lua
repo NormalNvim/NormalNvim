@@ -167,7 +167,8 @@ maps.v[">"] = { ">gv", desc = "indent line" }
 maps.n["gg"] = {
   function()
     vim.g.minianimate_disable = true
-    vim.cmd("normal! gg0")
+    if vim.v.count > 0 then vim.cmd("normal! " .. vim.v.count .. "gg")
+    else vim.cmd("normal! gg0") end
     vim.g.minianimate_disable = false
   end,
   desc = "gg and go to the first position"
@@ -182,7 +183,8 @@ maps.n["G"] = {
 maps.v["gg"] = {
   function()
     vim.g.minianimate_disable = true
-    vim.cmd("normal! gg0")
+    if vim.v.count > 0 then vim.cmd("normal! " .. vim.v.count .. "gg")
+    else vim.cmd("normal! gg0") end
     vim.g.minianimate_disable = false
   end,
   desc = "gg and go to the first position (visual)"
