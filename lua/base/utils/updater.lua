@@ -247,7 +247,7 @@ function M.update(opts)
   local source = git.local_head() -- calculate current commit
   local target                    -- calculate target commit
   if is_stable then               -- if stable get tag commit
-    local version_search = opts.version or "latest"
+    local version_search = base.updater.nvim_config_stable_version or "latest"
     opts.version = git.latest_version(git.get_versions(version_search))
     if not opts.version then -- continue only if stable version is found
       vim.api.nvim_err_writeln("Error finding version: " .. version_search)
