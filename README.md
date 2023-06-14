@@ -51,7 +51,7 @@ __You are expected to fork the project before cloning it. So you are the only on
 |  Command            | Description                             |
 |---------------------|-----------------------------------------|
 | **:healthcheck base**   | Look for errors in NormalNvim. |
-| **:NvimFreezePluginVersions** | Creates `lazy_versions.lua` in your config directory containing the current pugin versions. If you are using the stable updates channel, this file willl be used to decide what plugin versions will be instlaed. If you are using the nighty channel, the file will be ignored. |
+| **:NvimFreezePluginVersions** | Creates `lazy_versions.lua` in your config directory containing the current pugin versions. If you are using the `stable` updates channel, this file willl be used to decide what plugin versions will be installed, and even if you manually try to update your plugins, the versions file will be respected. If you are using the `nighty` channel, the first time you open nvim, the versions from `lazy_versions.lua` will be installed, but it will be possible to get the latests versions when manually updating with lazy.nivm. Note that after running this command, you can manually modify `lazy_versions.lua` in case you only want to freeze some plugins. |
 | **:NvimReload** | Hot reloads nvim without leaving nvim. It can cause unexpected issues sometimes. | 
 | **:NvimRollbackCreate** | Creates a recovery point. It is triggered automatically when running `:NvimUpdateConfig`. | 
 | **:NvimRollbackRestore** | Uses git to bring your config to the state it had when `:NvimRollbackCreate` was called. | 
