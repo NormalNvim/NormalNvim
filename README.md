@@ -2,9 +2,11 @@
 
 
 <div align="center">
-  <img src="https://github.com/NormalNvim/NormalNvim/assets/3357792/51e26b7e-6796-45c3-8266-7891865e1ad7" alt="Image" />
+<img src="https://github.com/NormalNvim/NormalNvim/assets/3357792/76197752-0947-4392-a6bd-a59d64319028"></img>
+
   <p><strong>A normal NeoVim config</strong></p>
 </div>
+
 
 Tokyo Night (Night) theme by default
 ![screenshot_2023-05-27_16-41-26_120206834](https://github.com/Zeioth/NormalNvim/assets/3357792/8f3b76c8-3ceb-4b8d-a0e1-50f73c94eb00)
