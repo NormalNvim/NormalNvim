@@ -79,7 +79,7 @@ return {
       require("luasnip").filetype_extend("typescript", { "tsdoc" })
       require("luasnip").filetype_extend("javascript", { "jsdoc" })
       require("luasnip").filetype_extend("lua", { "luadoc" })
-      require("luasnip").filetype_extend("python", { "python-docstring" })
+      require("luasnip").filetype_extend("python", { "pydoc" })
       require("luasnip").filetype_extend("rust", { "rustdoc" })
       require("luasnip").filetype_extend("cs", { "csharpdoc" })
       require("luasnip").filetype_extend("java", { "javadoc" })
