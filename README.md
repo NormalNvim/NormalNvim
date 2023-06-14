@@ -1,5 +1,12 @@
 # NormalNvim
-A normal NeoVim config
+
+
+<div align="center">
+  <p>A normal NeoVim config</p>
+  <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/3357792/245737132-14bbb57c-3175-458a-aeaf-20f541a0be13.png" alt="Image" />
+</div>
+
+
 
 ![screenshot_2023-06-06_00-29-48_707187891](https://github.com/Zeioth/NormalNvim/assets/3357792/84255589-0afe-49ff-b3a2-38f2ffad459b)
 
