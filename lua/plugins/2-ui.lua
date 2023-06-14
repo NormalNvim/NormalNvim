@@ -801,7 +801,7 @@ return {
   --  BUG: Currently only works for redo.
   {
     'tzachar/highlight-undo.nvim',
-    lazy = false,
+    event = "VeryLazy",
     opts = {
       hlgroup = 'CurSearch',
       duration = 150,
