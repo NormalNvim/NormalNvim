@@ -382,7 +382,12 @@ cmd(
 )
 cmd(
   "NvimUpdateConfig",
-  function() require("base.utils.updater").update() end,
+  function()
+    require("base.utils.updater").update({
+      version = vim.g.stable_version or "stable"
+    })
+  end,
+
   { desc = "Update Nvim distro" }
 )
 cmd(
