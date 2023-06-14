@@ -2,8 +2,8 @@
 
 
 <div align="center">
-  <p>A normal NeoVim config</p>
   <img src="https://github-production-user-asset-6210df.s3.amazonaws.com/3357792/245737132-14bbb57c-3175-458a-aeaf-20f541a0be13.png" alt="Image" />
+  <p><strong>A normal NeoVim config</strong></p>
 </div>
 
 
