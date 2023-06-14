@@ -1,5 +1,5 @@
 # NormalNvim
-A normal NeoVim configr
+A normal NeoVim config
 
 ![screenshot_2023-06-06_00-29-48_707187891](https://github.com/Zeioth/NormalNvim/assets/3357792/84255589-0afe-49ff-b3a2-38f2ffad459b)
 
@@ -55,7 +55,7 @@ __You are expected to fork the project before cloning it. So you are the only on
 | **:NvimReload** | Hot reloads nvim without leaving nvim. It can cause unexpected issues sometimes. | 
 | **:NvimRollbackCreate** | Creates a recovery point. It is triggered automatically when running `:NvimUpdateConfig`. | 
 | **:NvimRollbackRestore** | Uses git to bring your config to the state it had when `:NvimRollbackCreate` was called. | 
-| **:NvimUpdateConfig** | Pulls the latest changes from the current git repository of the distro. Useful to keep your config fresh when you have your distro installed in more than one machine. If the updates channel is `stable`, this command will pull from the HEAD of the main branch of your github repository. If the channel is `nightly` it will pull from the nightly branch. Note that uncommited local changes in your config will be lost after an update, so it's important you commit before updating your distro config.|
+| **:NvimUpdateConfig** | Pulls the latest changes from the current git repository of the distro. Useful to keep your config fresh when you have your distro installed in more than one machine. If the updates channel is `stable`, this command will pull from the latest tag release in your github repository. Your tag release must start by 'v', such as v1.0 or v1.0.0. Versions not starting by 'v' will be ignored. It is also possible to choose an specific version for the stable channel in `options.lua`. If the channel is `nightly` it will pull from the nightly branch. Note that uncommited local changes in your config will be lost after an update, so it's important you commit before updating your distro config. |
 | **:NvimUpdatePlugins** | Uses lazy to update the plugins. |
 | **:NvimVersion** | Prints the commit number of the current NormalNvim version. |
 
