@@ -118,8 +118,8 @@ return {
         "MasonUninstall",
         "MasonUninstallAll",
         "MasonLog",
-        "MasonUpdate", -- AstroNvim extension here as well
-        "MasonUpdateAll", -- AstroNvim specific
+        "MasonUpdate",
+        "MasonUpdateAll",
       },
       opts = {
         ui = {
