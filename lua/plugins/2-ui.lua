@@ -20,32 +20,24 @@
 --       -> which-key                   [on-screen keybinding]
 
 local utils = require "base.utils"
-local conditional_func = utils.conditional_func
-local is_available = utils.is_available
-local colorcheme_group = vim.api.nvim_create_augroup("LoadColorSchemes", { clear = true })
 
 return {
   --  astrotheme [theme]
   --  https://github.com/AstroNvim/astrotheme
   {
     "AstroNvim/astrotheme",
+    event = "User LoadColorSchemes",
     opts = {
       palette = "astrodark",
       plugins = { ["dashboard-nvim"] = true },
     },
-    init = function()
-      vim.api.nvim_create_autocmd("User", {
-        group = colorcheme_group,
-        desc = "Manual event that loads the colorscheme when presing <leader>ft",
-        callback = function() require("astrotheme") end,
-      })
-    end
   },
 
   -- tokyonight [theme]
   -- https://github.com/folke/tokyonight.nvim
   {
     "folke/tokyonight.nvim",
+    event = "User LoadColorSchemes",
     opts = {
       plugins = { ["dashboard-nvim"] = true },
       dim_inactive = true, -- dims inactive windows
@@ -138,13 +130,6 @@ return {
         -- }
       end,
     },
-    init = function()
-      vim.api.nvim_create_autocmd("User", {
-        group = colorcheme_group,
-        desc = "Manual event that loads the colorscheme when presing <leader>ft",
-        callback = function() require("tokyonight") end,
-      })
-    end
   },
 
   --  alpha-nvim [greeter]

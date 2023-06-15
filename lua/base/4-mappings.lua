@@ -782,8 +782,7 @@ if is_available "telescope.nvim" then
   maps.n["<leader>ft"] = {
     function()
       -- load color schemes before listing them
-      pcall(vim.api.nvim_command, "doautocmd LoadColorSchemes")
-      pcall(vim.api.nvim_del_augroup_by_name, "LoadColorSchemes")
+      pcall(vim.api.nvim_command, "doautocmd User LoadColorSchemes")
 
       -- Open telescope
       pcall(require("telescope.builtin").colorscheme, { enable_preview = true })
