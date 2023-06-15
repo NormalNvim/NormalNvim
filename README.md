@@ -85,8 +85,6 @@ CHATGPT_API_KEY="my_key_here"
 * **What scenarios are not covered by this distro?**
   * **Kubernetes**: We do not provide a kubernetes plugin. But we recommend using friendly-snippets, to quickly write code, and [overseer.nvim](https://github.com/stevearc/overseer.nvim) to run kubernetes commands from within nvim without having to wait for the server response.
   * **e2e testing**: We do not provide a e2e plugin. But we do provide the :TestNodejsE2e command you can customize on [/lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua) along with all the other testing commands. You can also rename the commands to anything you want in case you don't use nodejs.
-  * **Compiling and running tasks**: This is planned for the future. In the meantime we recommend [overseer.nvim](https://github.com/stevearc/overseer.nvim).
-
 
 ## 🌟 Support the project
 If you want to help me, please star this repository to increase the visibility of the project.
