@@ -594,7 +594,6 @@ return {
 
       local augroup = vim.api.nvim_create_augroup("Heirline", { clear = true })
       vim.api.nvim_create_autocmd("User", {
-        pattern = "BaseColorScheme", -- This is an autocmd event
         group = augroup,
         desc = "Refresh heirline colors",
         callback = function()

@@ -782,6 +782,8 @@ if is_available "telescope.nvim" then
   maps.n["<leader>ft"] = {
     function()
       require("telescope.builtin").colorscheme { enable_preview = true }
+      -- Refresh heirline by manually triggeing its autocmd group.
+      vim.api.nvim_command("doautocmd Heirline")
     end,
     desc = "Find themes",
   }
