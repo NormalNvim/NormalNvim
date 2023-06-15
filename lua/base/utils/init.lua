@@ -100,6 +100,22 @@ function M.get_icon(kind, padding, no_fallback)
   return icon and icon .. string.rep(" ", padding or 0) or ""
 end
 
+
+--- Get a icon spinner table if it is available in the AstroNvim icons. Icons in format `kind1`,`kind2`, `kind3`, ...
+---@param kind string The kind of icon to check for sequential entries of
+---@return string[]|nil spinners # A collected table of spinning icons in sequential order or nil if none exist
+function M.get_spinner(kind, ...)
+  local spinner = {}
+  local counter = 1
+  repeat
+    local icon = M.get_icon(("%s%d"):format(kind, counter), ...)
+    if icon ~= "" then spinner[counter] = icon end
+    counter = counter + 1
+  until not icon or icon == ""
+  if #spinner > 0 then return spinner end
+end
+
+
 --- Get highlight properties for a given highlight name
 ---@param name string The highlight group name
 ---@param fallback? table The fallback highlight properties
