@@ -22,6 +22,7 @@
 local utils = require "base.utils"
 local conditional_func = utils.conditional_func
 local is_available = utils.is_available
+local colorcheme_group = vim.api.nvim_create_augroup("LoadColorSchemes", { clear = true })
 
 return {
   --  astrotheme [theme]
@@ -32,6 +33,13 @@ return {
       palette = "astrodark",
       plugins = { ["dashboard-nvim"] = true },
     },
+    init = function()
+      vim.api.nvim_create_autocmd("User", {
+        group = colorcheme_group,
+        desc = "Manual event that loads the colorscheme when presing <leader>ft",
+        callback = function() require("astrotheme") end,
+      })
+    end
   },
 
   -- tokyonight [theme]
@@ -130,6 +138,13 @@ return {
         -- }
       end,
     },
+    init = function()
+      vim.api.nvim_create_autocmd("User", {
+        group = colorcheme_group,
+        desc = "Manual event that loads the colorscheme when presing <leader>ft",
+        callback = function() require("tokyonight") end,
+      })
+    end
   },
 
   --  alpha-nvim [greeter]
