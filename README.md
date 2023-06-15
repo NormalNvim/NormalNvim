@@ -93,3 +93,5 @@ If you want to help me, please star this repository to increase the visibility o
 
 ## Credits
 Originally it took AstroVim as base. But implements [this VIM config](https://github.com/amix/vimrc) with some extras. Code has been simplified while retaining its core features. NormalNvim has also contributed to the code of many of the plugins included, on order to debug them and make them better.
+
+Logo designed by [LeoRed04](https://www.reddit.com/r/neovim/comments/13sgo34/just_some_design_practice_took_neovim_to_make/)
