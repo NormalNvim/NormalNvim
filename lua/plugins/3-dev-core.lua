@@ -118,8 +118,8 @@ return {
         "MasonUninstall",
         "MasonUninstallAll",
         "MasonLog",
-        "MasonUpdate", -- AstroNvim extension here as well
-        "MasonUpdateAll", -- AstroNvim specific
+        "MasonUpdate",
+        "MasonUpdateAll",
       },
       opts = {
         ui = {
@@ -136,15 +136,19 @@ return {
 
         -- TODO: change these auto command names to not conflict with core Mason commands
         local cmd = vim.api.nvim_create_user_command
-        cmd(
-          "MasonUpdate",
-          function(options) require("base.utils.mason").update(options.fargs) end,
-          {
-            nargs = "*",
-            desc = "Update Mason Package",
-            complete = "custom,v:lua.mason_completion.available_package_completion",
-          }
-        )
+        cmd("MasonUpdate", function(options) require("base.utils.mason").update(options.fargs) end, {
+          nargs = "*",
+          desc = "Update Mason Package",
+          ---@param arg_lead string
+          complete = function(arg_lead)
+            local _ = require "mason-core.functional"
+            return _.sort_by(
+              _.identity,
+              ---@diagnostic disable-next-line: param-type-mismatch
+              _.filter(_.starts_with(arg_lead), require("mason-registry").get_installed_package_names())
+            )
+          end,
+        })
         cmd(
           "MasonUpdateAll",
           function() require("base.utils.mason").update_all() end,

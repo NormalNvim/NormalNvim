@@ -42,5 +42,5 @@ return {
   -- removing/modifying the plugin heirline in:
   -- ../plugins/2-ui.lua
   --
-  { "famiu/bufdelete.nvim", cmd = { "Bdelete", "Bwipeout" } },
+  { "zeioth/bufdelete.nvim", cmd = { "Bdelete", "Bwipeout" } },
 }

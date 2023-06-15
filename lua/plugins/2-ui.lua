@@ -264,11 +264,10 @@ return {
   -- Telescope integration (:Telescope notify)
   {
     "nvim-telescope/telescope.nvim",
-    dependency = {"rcarriga/nvim-notify"},
+    dependency = { "rcarriga/nvim-notify" },
     cmd = "Telescope notify",
     opts = function() require("telescope").load_extension "notify" end,
   },
-
 
   --  Code identation [guides]
   --  https://github.com/lukas-reineke/indent-blankline.nvim
@@ -335,20 +334,27 @@ return {
         opts = {
           -- Disable the winbar for the next special buffers
           disable_winbar_cb = function(args)
-            return status.condition.buffer_matches({
-              buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
-              filetype = {
-                "NvimTree",
-                "neo%-tree",
-                "dashboard",
-                "Outline",
-                "aerial",
-              },
-            }, args.buf)
+            return not require("base.utils.buffer").is_valid(args.buf)
+                or status.condition.buffer_matches({
+                  buftype = {
+                    "terminal",
+                    "prompt",
+                    "nofile",
+                    "help",
+                    "quickfix",
+                  },
+                  filetype = {
+                    "NvimTree",
+                    "neo%-tree",
+                    "dashboard",
+                    "Outline",
+                    "aerial",
+                  },
+                }, args.buf)
           end,
         },
         statusline = {
-          -- statusline
+                       -- statusline
           hl = { fg = "fg", bg = "bg" },
           status.component.mode(),
           status.component.git_branch(),
@@ -368,12 +374,12 @@ return {
           status.component.mode { surround = { separator = "right" } },
         },
         winbar = {
-          -- winbar is where breadcrubms are displayed
+                   -- winbar
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
           fallthrough = false,
           {
-            condition = function() -- Condition to show breadcrumrs
-              return not status.condition.is_active()
+            condition = function()
+              return not status.condition.is_active() -- Condition to show breadcrumrs
             end,
             status.component.separated_path(),
             -- Comment the block below to hide the breadcrumbs while unfocused.
@@ -397,7 +403,7 @@ return {
         },
         tabline = { -- bufferline
           {
-            -- file tree padding
+                    -- file tree padding
             condition = function(self)
               self.winid = vim.api.nvim_tabpage_list_wins(0)[1]
               return status.condition.buffer_matches(
@@ -413,12 +419,15 @@ return {
             end,
             hl = { bg = "tabline_bg" },
           },
-          status.heirline.make_buflist(status.component.tabline_file_info()), -- component for each buffer tab
-          status.component.fill { hl = { bg = "tabline_bg" } },               -- fill the rest of the tabline with background color
+          -- component for each buffer tab
+          status.heirline.make_buflist(status.component.tabline_file_info()),
+          -- fill the rest of the tabline with background color
+          status.component.fill { hl = { bg = "tabline_bg" } },
           {
             -- tab list
-            condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
-            status.heirline.make_tablist {                                        -- component for each tab
+            -- only show tabs if there are more than one
+            condition = function() return #vim.api.nvim_list_tabpages() >= 2 end,
+            status.heirline.make_tablist { -- component for each tab
               provider = status.provider.tabnr(),
               hl = function(self)
                 return status.hl.get_attributes(
@@ -451,8 +460,8 @@ return {
     end,
     config = function(_, opts)
       local heirline = require "heirline"
-      local status = require "base.utils.status"
-      local C = status.env.fallback_colors
+      local hl = require "base.utils.status.hl"
+      local C = require("base.utils.status.env").fallback_colors
       local get_hlgroup = require("base.utils").get_hlgroup
 
       local function setup_colors()
@@ -491,19 +500,19 @@ return {
           { fg = C.bright_yellow, bg = C.dark_bg }
         )
         local HeirlineInactive = get_hlgroup("HeirlineInactive", { bg = nil }).bg
-            or status.hl.lualine_mode("inactive", C.dark_grey)
+            or hl.lualine_mode("inactive", C.dark_grey)
         local HeirlineNormal = get_hlgroup("HeirlineNormal", { bg = nil }).bg
-            or status.hl.lualine_mode("normal", C.blue)
+            or hl.lualine_mode("normal", C.blue)
         local HeirlineInsert = get_hlgroup("HeirlineInsert", { bg = nil }).bg
-            or status.hl.lualine_mode("insert", C.green)
+            or hl.lualine_mode("insert", C.green)
         local HeirlineVisual = get_hlgroup("HeirlineVisual", { bg = nil }).bg
-            or status.hl.lualine_mode("visual", C.purple)
+            or hl.lualine_mode("visual", C.purple)
         local HeirlineReplace = get_hlgroup("HeirlineReplace", { bg = nil }).bg
-            or status.hl.lualine_mode("replace", C.bright_red)
+            or hl.lualine_mode("replace", C.bright_red)
         local HeirlineCommand = get_hlgroup("HeirlineCommand", { bg = nil }).bg
-            or status.hl.lualine_mode("command", C.bright_yellow)
+            or hl.lualine_mode("command", C.bright_yellow)
         local HeirlineTerminal = get_hlgroup("HeirlineTerminal", { bg = nil }).bg
-            or status.hl.lualine_mode("insert", HeirlineInsert)
+            or hl.lualine_mode("insert", HeirlineInsert)
 
         local colors = {
           close_fg = Error.fg,
@@ -585,7 +594,6 @@ return {
 
       local augroup = vim.api.nvim_create_augroup("Heirline", { clear = true })
       vim.api.nvim_create_autocmd("User", {
-        pattern = "ColorScheme", -- This is an autocmd event
         group = augroup,
         desc = "Refresh heirline colors",
         callback = function()
@@ -800,19 +808,17 @@ return {
   --  https://github.com/tzachar/highlight-undo.nvim
   --  BUG: Currently only works for redo.
   {
-    'tzachar/highlight-undo.nvim',
+    "tzachar/highlight-undo.nvim",
     event = "VeryLazy",
     opts = {
-      hlgroup = 'CurSearch',
+      hlgroup = "CurSearch",
       duration = 150,
       keymaps = {
-        {'n', 'u', 'undo', {}},     -- If you remap undo/redo, change this
-        {'n', '<C-r>', 'redo', {}},
+        { "n", "u",     "undo", {} }, -- If you remap undo/redo, change this
+        { "n", "<C-r>", "redo", {} },
       },
     },
-    config = function(_, opts)
-      require('highlight-undo').setup(opts)
-    end
+    config = function(_, opts) require("highlight-undo").setup(opts) end,
   },
 
   --  [on-screen keybindings]
@@ -829,5 +835,4 @@ return {
       require("base.utils").which_key_register()
     end,
   },
-
 }

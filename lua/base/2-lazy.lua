@@ -27,8 +27,10 @@ base.updater = {
   options = { remote = "origin", channel = "stable" },
   snapshot = { module = "lazy_snapshot", path = vim.fn.stdpath "config" .. "/lua/lazy_snapshot.lua" },
   rollback_file = vim.fn.stdpath "cache" .. "/rollback.lua",
+
+
   -- if nil, :NvimConfigUpdate wil use the latest available tag release of your
-  -- nvim config starting by v. Fr example, "v1.0"
+  -- git repository, starting by 'v', for example, "v1.0"
   nvim_config_stable_version = nil,
 }
 
