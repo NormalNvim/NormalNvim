@@ -300,10 +300,6 @@ function M.lsp(opts)
         "LspProgress",
         "LspRequest",
         callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
-      } or {
-        "User",
-        pattern = { "LspProgressUpdate", "LspRequest" },
-        callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
       },
     },
     lsp_client_names = {
