@@ -4,12 +4,13 @@
 -- -------------------------------------
 -- Here you can define your nvim options.
 --
--- You can update this nvim distro with :NvimUpdate
+-- You can update this nvim distro with :NvimUpdateConfig
 -- you can easily revert to the previous version with :NvimRollbackRestore
 --
 -- For plugin updates
--- Check ./lazy.lua to know more about "stable" and "nightly" channels.
+-- Check ./2-lazy.lua to know more about "stable" and "nightly" channels.
 -- And how to lock your package versions.
+
 
 -- Global that will contain this Nvim distro options (updater... etc)
 _G.base = {}
