@@ -139,14 +139,12 @@ return {
         cmd("MasonUpdate", function(options) require("base.utils.mason").update(options.fargs) end, {
           nargs = "*",
           desc = "Update Mason Package",
-          ---@param arg_lead string
           complete = function(arg_lead)
             local _ = require "mason-core.functional"
             return _.sort_by(
               _.identity,
-              ---@diagnostic disable-next-line: param-type-mismatch
               _.filter(_.starts_with(arg_lead), require("mason-registry").get_installed_package_names())
-            )
+             )
           end,
         })
         cmd(
@@ -188,6 +186,7 @@ return {
       event = "User BaseFile",
       config = function(_, _)
         local lsp = require "base.utils.lsp"
+        local utils = require "base.utils"
         local get_icon = require("base.utils").get_icon
         local signs = {
           {
@@ -241,6 +240,20 @@ return {
           vim.fn.sign_define(sign.name, sign)
         end
         lsp.setup_diagnostics(signs)
+
+        local orig_handler = vim.lsp.handlers["$/progress"]
+        vim.lsp.handlers["$/progress"] = function(_, msg, info)
+          local progress, id = base.lsp.progress, ("%s.%s"):format(info.client_id, msg.token)
+          progress[id] = progress[id] and utils.extend_tbl(progress[id], msg.value) or msg.value
+          if progress[id].kind == "end" then
+            vim.defer_fn(function()
+              progress[id] = nil
+              utils.event "LspProgress"
+            end, 100)
+          end
+          utils.event "LspProgress"
+          orig_handler(_, msg, info)
+        end
 
         if vim.g.lsp_handlers_enabled then
           vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(

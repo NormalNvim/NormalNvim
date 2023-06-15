@@ -28,6 +28,7 @@ local setup_handlers = {
   function(server, opts) require("lspconfig")[server].setup(opts) end,
 }
 
+base.lsp = { progress = {} }             -- globally accesible
 M.diagnostics = { [0] = {}, {}, {}, {} } -- For diagnostics toggle in ./ui.lua
 
 -- LSP settings
@@ -93,7 +94,6 @@ end
 --- Helper function to set up a given server with the Neovim LSP client
 ---@param server string The name of the server to be setup
 M.setup = function(server)
-  -- if server doesn't exist, set it up from user server definition
   local opts = M.config(server)
   local setup_handler = setup_handlers[server] or setup_handlers[1]
   if setup_handler then setup_handler(server, opts) end
@@ -462,6 +462,9 @@ M.on_attach = function(client, bufnr)
   end
   utils.set_mappings(lsp_mappings, { buffer = bufnr })
 
+  for id, _ in pairs(base.lsp.progress) do -- clear lingering progress messages
+    if not next(vim.lsp.get_active_clients { id = tonumber(id:match "^%d+") }) then base.lsp.progress[id] = nil end
+  end
   local on_attach_override = nil -- todo: clean this
   conditional_func(on_attach_override, true, client, bufnr)
 end

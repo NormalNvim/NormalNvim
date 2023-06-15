@@ -296,9 +296,9 @@ function M.lsp(opts)
     lsp_progress = {
       str = "",
       padding = { right = 1 },
-      update = vim.lsp.status and {
-        "LspProgress",
-        "LspRequest",
+      update = {
+        "User",
+        pattern = "BaseLspProgress",
         callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
       },
     },
