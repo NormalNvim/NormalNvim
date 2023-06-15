@@ -466,8 +466,6 @@ function M.lsp_progress(opts)
           break
         end
       end
-    else
-      Lsp = vim.lsp.util.get_progress_messages()[1]
     end
     return status_utils.stylize(
       Lsp
