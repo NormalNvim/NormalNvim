@@ -283,6 +283,11 @@ return {
           cmd = "<cmd>startinsert<CR>",
           desc = "insert (colemak)."
         },
+        ['quit'] = {
+            map = "q",
+            cmd = "<cmd>lua require('spectre').close()<CR>",
+            desc = "quit."
+        },
       },
     },
   },
