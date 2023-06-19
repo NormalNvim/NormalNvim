@@ -8,23 +8,23 @@
 --       -> setup using spec          → actual setup.
 
 
--- nvim lazy packager options
+-- lazy.nvim packager options
 -- Here you can lock/unlock your package versions.
 --
--- Take a look to base.updater:
 -- When setting channel to "stable", package versions will taken from:
 -- ~/.config/nvim/lua/lazy_snapshot.lua
--- This snapshot can be updated by manually running :NvimLockPluginVersions
--- This opertion is never performed automatically.
+-- This snapshot can be updated by manually running :NvimFreezePluginVersions
+-- This operation is never performed automatically.
 --
 -- When setting channel to "nightly", the snapshot will be ignored.
 -- And you will get always the latest available versions.
 -- But this can be unstable!!
---
--- Extra info:
--- This collection is used by lazy.lua and updater.lua to lock package versions.
+
+--- This collection is used  to lock package versions.
+--  Please don't manually delete lazy_snapshop.lua or you will get errors.
+--  Instead just run :NvimFreezePluginVersions
 base.updater = {
-  options = { remote = "origin", channel = "stable" },
+  options = { remote = "origin", channel = "nightly" },
   snapshot = { module = "lazy_snapshot", path = vim.fn.stdpath "config" .. "/lua/lazy_snapshot.lua" },
   rollback_file = vim.fn.stdpath "cache" .. "/rollback.lua",
 
