@@ -41,7 +41,7 @@ yarn         # Necessary for Markmap.
 * 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
 * 📱 **Phone friendly:** Good usability even on smalll screens.
 * ⌨️ **Alternative mappings:** By default the distro uses qwerty, but colemak-dh can be found [here](https://github.com/Zeioth/NormalNvim/wiki/colemak-dh).
-* ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. We will never hide or abstract stuff from you.
+* ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. [We will never hide or abstract stuff from you](https://i.imgur.com/FCiZvp2.png).
 
 ## Philosophy and design decissions
 __You are expected to fork the project before cloning it. So you are the only one in control. It is also recommended to use [neovim's appimage](https://github.com/neovim/neovim/releases).__
