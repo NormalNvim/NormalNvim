@@ -3,7 +3,7 @@
 
 --    Sections:
 --
---       ## Core bindings
+--       ## Base bindings
 --       -> icons displayed on which-key.nvim
 --       -> standard operations
 --       -> clipboard
