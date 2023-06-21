@@ -3,7 +3,7 @@
   <h1>NormalNvim</h1>
   <h3>*✨ ~ ⭐ - A normal NeoVim config - ⭐ ~ ✨*</h3>
   <a href="https://discord.gg/ymcMaSnq7d" rel="nofollow">
-      <img src="https://img.shields.io/discord/1121138836525813760?color=azure&labelColor=olive&logo=discord&logoColor=black&label=Join the discord server" data-canonical-src="https://img.shields.io/discord/1121138836525813760">
+      <img src="https://img.shields.io/discord/1121138836525813760?color=azure&labelColor=6DC2A4&logo=discord&logoColor=black&label=Join the discord server&style=for-the-badge" data-canonical-src="https://img.shields.io/discord/1121138836525813760">
     </a>
 </div>
 
