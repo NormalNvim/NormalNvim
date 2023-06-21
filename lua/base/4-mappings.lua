@@ -391,8 +391,8 @@ if is_available "nvim-colorizer.lua" then
     { "<cmd>ColorizerToggle<cr>", desc = "Toggle color highlight" }
 end
 maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "Toggle diagnostics" }
+maps.n["<leader>uD"] = { ui.set_indent, desc = "Change indent setting" }
 maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Toggle signcolumn" }
-maps.n["<leader>uI"] = { ui.set_indent, desc = "Change indent setting" }
 maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Toggle statusline" }
 maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "Toggle CodeLens" }
 maps.n["<leader>un"] = { ui.change_number, desc = "Change line numbering" }
@@ -892,7 +892,6 @@ if is_available "telescope.nvim" then
     }
   end
 end
-
 
 -- toggleterm.nvim ----------------------------------------------------------
 if is_available "toggleterm.nvim" then
