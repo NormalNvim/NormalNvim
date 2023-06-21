@@ -82,7 +82,19 @@ function M.toggle_buffer_autoformat()
 end
 
 --- Toggle buffer semantic token highlighting for all language servers that support it
----@param bufnr? number the buffer to toggle the clients on
+--@param bufnr? number the buffer to toggle the clients on
+function M.toggle_buffer_semantic_tokens(bufnr)
+  vim.b.semantic_tokens_enabled = not vim.b.semantic_tokens_enabled
+  for _, client in ipairs(vim.lsp.get_active_clients()) do
+    if client.server_capabilities.semanticTokensProvider then
+      vim.lsp.semantic_tokens[vim.b.semantic_tokens_enabled and "start" or "stop"](bufnr or 0, client.id)
+      notify(string.format("Buffer lsp semantic highlighting %s", bool2str(vim.b.semantic_tokens_enabled)))
+    end
+  end
+end
+
+--- Toggle buffer semantic token highlighting for all language servers that support it
+--@param bufnr? number the buffer to toggle the clients on
 function M.toggle_buffer_semantic_tokens(bufnr)
   vim.b.semantic_tokens_enabled = vim.b.semantic_tokens_enabled == false
 
@@ -219,19 +231,21 @@ function M.toggle_foldcolumn()
   ui_notify(string.format("foldcolumn=%s", vim.wo.foldcolumn))
 end
 
---- Toggle inlay hints
+--- Toggle LSP inlay hints (buffer)
+-- @param bufnr? number the buffer to toggle the clients on
+function M.toggle_buffer_inlay_hints(bufnr)
+  vim.b.inlay_hints_enabled = not vim.b.inlay_hints_enabled     -- flip buffer state
+  vim.lsp.buf.inlay_hint(bufnr or 0, vim.b.inlay_hints_enabled) -- apply state
+  ui_notify(string.format("Buffer inlay hints %s", bool2str(vim.b.inlay_hints_enabled)))
+end
+
+--- Toggle LSP inlay hints (global)
+-- @param bufnr? number the buffer to toggle the clients on
 function M.toggle_inlay_hints(bufnr)
-  local status = vim.g.inlay_hints_enabled
-  if status == true or status == nil then
-    vim.lsp.buf.inlay_hint(bufnr, false)
-    vim.g.inlay_hints_enabled = false
-    ui_notify("inlay hints off")
-  end
-  if status == false then
-    vim.lsp.buf.inlay_hint(bufnr, true)
-    vim.g.inlay_hints_enabled = true
-    ui_notify("inlay hints on")
-  end
+  vim.g.inlay_hints_enabled = not vim.g.inlay_hints_enabled     -- flip global state
+  vim.b.inlay_hints_enabled = not vim.g.inlay_hints_enabled     -- sync buffer state
+  vim.lsp.buf.inlay_hint(bufnr or 0, vim.g.inlay_hints_enabled) -- apply state
+  ui_notify(string.format("Global inlay hints %s", bool2str(vim.g.inlay_hints_enabled)))
 end
 
 return M

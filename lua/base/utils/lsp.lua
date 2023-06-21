@@ -166,12 +166,15 @@ M.on_attach = function(client, bufnr)
     v = {},
   }
 
-  if client.server_capabilities.inlayHntProvider then
-    vim.lsp.buf.inlay_hint(bufnr, vim.g.inlay_hints_enabled)
-    lsp_mappings.n["<leader>ui"] = {
-      function() require("base.utils.ui").toggle_inlay_hints(bufnr) end,
-      desc = "Toggle inlay hints",
-    }
+  if client.supports_method "textDocument/inlayHint" then
+    vim.lsp.buf.inlay_hint(bufnr, vim.g.inlay_hints_enabled) -- enable on startup
+    vim.b.inlay_hints_enabled = vim.g.inlay_hints_enabled    -- sync buffer toggle
+   lsp_mappings.n["<leader>ui"] = {
+      function() require("base.utils.ui").toggle_buffer_inlay_hints() end,
+      desc = "Toggle LSP inlay hints (buffer)"}
+    lsp_mappings.n["<leader>uI"] = {
+      function() require("base.utils.ui").toggle_inlay_hints() end,
+      desc = "Toggle LSP inlay hints (global)"}
   end
 
   -- NOTE: Telescope has no method for project level diagnostics anymore.
@@ -462,6 +465,15 @@ M.on_attach = function(client, bufnr)
         end)
       end
     end
+  end
+
+  if client.supports_method "textDocument/semanticTokens" and vim.lsp.semantic_tokens then
+    if vim.b.semantic_tokens_enabled == nil then vim.b.semantic_tokens_enabled = vim.g.semantic_tokens_enabled end
+    vim.lsp.semantic_tokens[vim.b.semantic_tokens_enabled and "start" or "stop"](bufnr, client.id)
+    lsp_mappings.n["<leader>uY"] = {
+      function() require("base.utils.ui").toggle_buffer_semantic_tokens(bufnr) end,
+      desc = "Toggle LSP semantic highlight (buffer)",
+    }
   end
 
   if not vim.tbl_isempty(lsp_mappings.v) then
