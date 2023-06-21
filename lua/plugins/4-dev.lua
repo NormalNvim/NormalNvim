@@ -231,7 +231,7 @@ return {
           ["q"] = function() vim.cmd("OverseerClose") end ,
         }
       },
-      -- component_aliases = { -- undomment this to disable notifications
+      -- component_aliases = { -- uncomment this to disable notifications
       --   -- Components included in default will apply to all tasks
       --   default = {
       --     { "display_duration", detail_level = 2 },

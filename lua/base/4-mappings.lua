@@ -944,7 +944,7 @@ if is_available "nvim-dap" then
     function() require("dap").restart_frame() end,
     desc = "Debugger: Restart",
   } -- Control+F5
-  maps.n["<F6>"] =
+  maps.n["<F4>"] =
     { function() require("dap").pause() end, desc = "Debugger: Pause" }
   maps.n["<F9>"] = {
     function() require("dap").toggle_breakpoint() end,
