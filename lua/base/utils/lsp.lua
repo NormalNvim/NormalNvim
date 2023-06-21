@@ -166,6 +166,14 @@ M.on_attach = function(client, bufnr)
     v = {},
   }
 
+  if client.server_capabilities.inlayHntProvider then
+    vim.lsp.buf.inlay_hint(bufnr, vim.g.inlay_hints_enabled)
+    lsp_mappings.n["<leader>ui"] = {
+      function() require("base.utils.ui").toggle_inlay_hints(bufnr) end,
+      desc = "Toggle inlay hints",
+    }
+  end
+
   -- NOTE: Telescope has no method for project level diagnostics anymore.
   -- https://github.com/nvim-telescope/telescope.nvim/blob/6d3fbffe426794296a77bb0b37b6ae0f4f14f807/doc/telescope_changelog.txt#L158
   -- Run your project to know the next issue to fix instead.
@@ -462,6 +470,7 @@ M.on_attach = function(client, bufnr)
   end
   utils.set_mappings(lsp_mappings, { buffer = bufnr })
 
+
   for id, _ in pairs(base.lsp.progress) do -- clear lingering progress messages
     if not next(vim.lsp.get_active_clients { id = tonumber(id:match "^%d+") }) then base.lsp.progress[id] = nil end
   end
@@ -500,6 +509,23 @@ function M.config(server_name)
     { capabilities = server.capabilities, flags = server.flags },
     { capabilities = M.capabilities, flags = M.flags }
   )
+
+  -- For all languages
+  lsp_opts = {
+    init_options = {
+      preferences = { -- inlayhints options (actually enabled in M.on_attach)
+          includeInlayParameterNameHints = "all",
+          includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+          includeInlayFunctionParameterTypeHints = true,
+          includeInlayVariableTypeHints = true,
+          includeInlayPropertyDeclarationTypeHints = true,
+          includeInlayFunctionLikeReturnTypeHints = true,
+          includeInlayEnumMemberValueHints = true,
+          importModuleSpecifierPreference = 'non-relative'
+      },
+    },
+  }
+
   if server_name == "jsonls" then -- by default add json schemas
     local schemastore_avail, schemastore = pcall(require, "schemastore")
     if schemastore_avail then
@@ -529,6 +555,7 @@ function M.config(server_name)
     end
     lsp_opts.settings = { Lua = { workspace = { checkThirdParty = false } } }
   end
+
   local opts = lsp_opts
   local old_on_attach = server.on_attach
   local user_on_attach = opts.on_attach
