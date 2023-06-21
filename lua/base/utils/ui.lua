@@ -219,4 +219,19 @@ function M.toggle_foldcolumn()
   ui_notify(string.format("foldcolumn=%s", vim.wo.foldcolumn))
 end
 
+--- Toggle inlay hints
+function M.toggle_inlay_hints(bufnr)
+  local status = vim.g.inlay_hints_enabled
+  if status == true or status == nil then
+    vim.lsp.buf.inlay_hint(bufnr, false)
+    vim.g.inlay_hints_enabled = false
+    ui_notify("inlay hints off")
+  end
+  if status == false then
+    vim.lsp.buf.inlay_hint(bufnr, true)
+    vim.g.inlay_hints_enabled = true
+    ui_notify("inlay hints on")
+  end
+end
+
 return M

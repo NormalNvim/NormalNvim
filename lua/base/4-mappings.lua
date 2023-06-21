@@ -392,7 +392,7 @@ if is_available "nvim-colorizer.lua" then
 end
 maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "Toggle diagnostics" }
 maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Toggle signcolumn" }
-maps.n["<leader>ui"] = { ui.set_indent, desc = "Change indent setting" }
+maps.n["<leader>uI"] = { ui.set_indent, desc = "Change indent setting" }
 maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Toggle statusline" }
 maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "Toggle CodeLens" }
 maps.n["<leader>un"] = { ui.change_number, desc = "Change line numbering" }
@@ -870,7 +870,29 @@ if is_available "telescope.nvim" then
       desc = "Find in undo tree",
     }
   end
+
+    -- extra - compiler
+  if is_available "compiler.nvim" and
+     is_available "overseer.nvim"  then
+    maps.n["<leader>lc"] = {
+      function() vim.cmd("CompilerOpen") end,
+      desc = "Open compiler",
+    }
+    maps.n["<leader>lC"] = {
+      function() vim.cmd("CompilerOpen") end,
+      desc = "Toggle compiler results",
+    }
+    maps.n["<F6>"] = {
+      function() vim.cmd("CompilerOpen") end,
+      desc = "Open compiler",
+    }
+    maps.n["<S-F6>"] = {
+      function() vim.cmd("CompilerToggleResults") end,
+      desc = "Toggle compiler resume",
+    }
+  end
 end
+
 
 -- toggleterm.nvim ----------------------------------------------------------
 if is_available "toggleterm.nvim" then
