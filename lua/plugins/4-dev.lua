@@ -211,8 +211,9 @@ return {
 
   --  COMPILER ----------------------------------------------------------------
   {
-    "https://github.com/Zeioth/compiler.nvim",
+    "Zeioth/Compiler.nvim",
     cmd = {"CompilerOpen", "CompilerToggleResults"},
+    dependencies = { "stevearc/overseer.nvim" },
     config = function(_, opts) require("compiler").setup(opts) end,
   },
   {
