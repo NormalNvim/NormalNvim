@@ -101,7 +101,7 @@ function M.get_icon(kind, padding, no_fallback)
 end
 
 
---- Get a icon spinner table if it is available in the AstroNvim icons. Icons in format `kind1`,`kind2`, `kind3`, ...
+--- Get a icon spinner table if it is available in the Nvim icons. Icons in format `kind1`,`kind2`, `kind3`, ...
 ---@param kind string The kind of icon to check for sequential entries of
 ---@return string[]|nil spinners # A collected table of spinning icons in sequential order or nil if none exist
 function M.get_spinner(kind, ...)
@@ -330,18 +330,14 @@ end
 ---@param show_error? boolean Whether or not to show an unsuccessful command as an error to the user
 ---@return string|nil # The result of a successfully executed command or nil
 function M.cmd(cmd, show_error)
-  local wind32_cmd
-  if vim.fn.has "win32" == 1 then wind32_cmd = { "cmd.exe", "/C", cmd } end
-  local result = vim.fn.system(wind32_cmd or cmd)
+  if type(cmd) == "string" then cmd = vim.split(cmd, " ") end
+  if vim.fn.has "win32" == 1 then cmd = vim.list_extend({ "cmd.exe", "/C" }, cmd) end
+  local result = vim.fn.system(cmd)
   local success = vim.api.nvim_get_vvar "shell_error" == 0
   if not success and (show_error == nil or show_error) then
-    vim.api.nvim_err_writeln(
-      "Error running command: " .. cmd .. "\nError message:\n" .. result
-    )
+    vim.api.nvim_err_writeln(("Error running command %s\nError message:\n%s"):format(table.concat(cmd, " "), result))
   end
-  return success
-      and result:gsub("[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]", "")
-    or nil
+  return success and result:gsub("[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]", "") or nil
 end
 
 --- Always ask before exiting nvim, even if there is nothing to be saved.

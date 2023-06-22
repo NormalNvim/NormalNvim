@@ -253,6 +253,8 @@ return {
     opts = {
       on_open = function(win)
         vim.api.nvim_win_set_config(win, { zindex = 1000 })
+        -- close notification immediately if notifications disabled
+        if not vim.g.notifications_enabled then vim.api.nvim_win_close(win, true) end
       end,
     },
     config = function(_, opts)
@@ -738,6 +740,7 @@ return {
         TypeParameter = "󰊄",
         Unit = "",
       },
+      menu = {},
     },
     enabled = vim.g.icons_enabled,
     config = function(_, opts)
