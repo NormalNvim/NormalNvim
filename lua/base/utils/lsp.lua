@@ -420,16 +420,6 @@ M.on_attach = function(client, bufnr)
     }
   end
 
-  if
-    client.supports_method "textDocument/semanticTokens"
-    and vim.lsp.semantic_tokens
-  then
-    lsp_mappings.n["<leader>uY"] = {
-      function() require("base.utils.ui").toggle_buffer_semantic_tokens(bufnr) end,
-      desc = "Toggle LSP semantic highlight (buffer)",
-    }
-  end
-
   if is_available "telescope.nvim" then -- setup telescope mappings if available
     if lsp_mappings.n.gd then
       lsp_mappings.n.gd[1] = function()
@@ -467,11 +457,16 @@ M.on_attach = function(client, bufnr)
     end
   end
 
-  if client.supports_method "textDocument/semanticTokens" and vim.lsp.semantic_tokens then
+  if
+    (
+      client.supports_method "textDocument/semanticTokens/full"
+      or client.supports_method "textDocument/semanticTokens/full/delta"
+    ) and vim.lsp.semantic_tokens
+  then
     if vim.b.semantic_tokens_enabled == nil then vim.b.semantic_tokens_enabled = vim.g.semantic_tokens_enabled end
     vim.lsp.semantic_tokens[vim.b.semantic_tokens_enabled and "start" or "stop"](bufnr, client.id)
     lsp_mappings.n["<leader>uY"] = {
-      function() require("base.utils.ui").toggle_buffer_semantic_tokens(bufnr) end,
+      function() require("astronvim.utils.ui").toggle_buffer_semantic_tokens(bufnr) end,
       desc = "Toggle LSP semantic highlight (buffer)",
     }
   end
