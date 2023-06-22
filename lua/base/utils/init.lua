@@ -101,7 +101,7 @@ function M.get_icon(kind, padding, no_fallback)
 end
 
 
---- Get a icon spinner table if it is available in the AstroNvim icons. Icons in format `kind1`,`kind2`, `kind3`, ...
+--- Get a icon spinner table if it is available in the Nvim icons. Icons in format `kind1`,`kind2`, `kind3`, ...
 ---@param kind string The kind of icon to check for sequential entries of
 ---@return string[]|nil spinners # A collected table of spinning icons in sequential order or nil if none exist
 function M.get_spinner(kind, ...)

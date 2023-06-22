@@ -871,7 +871,7 @@ if is_available "telescope.nvim" then
     }
   end
 
-    -- extra - compiler
+  -- extra - compiler
   if is_available "compiler.nvim" and
      is_available "overseer.nvim"  then
     maps.n["<leader>lc"] = {
@@ -891,6 +891,7 @@ if is_available "telescope.nvim" then
       desc = "Toggle compiler resume",
     }
   end
+
 end
 
 -- toggleterm.nvim ----------------------------------------------------------
