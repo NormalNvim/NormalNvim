@@ -112,13 +112,8 @@ function M.aerial_available() return package.loaded["aerial"] end
 -- @usage local heirline_component = { provider = "Example Provider", condition = require("base.utils.status").condition.lsp_attached }
 function M.lsp_attached(bufnr)
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
-
-  -- Hotfix: Stack trace on empty buffer
-  -- Not setting the lsp status for files without a filetype we avoid the error
-  if vim.bo.filetype == '' then return end
-
-  local is_attached = next(vim.lsp.get_active_clients { bufnr = bufnr or 0 }) ~= nil
-  return is_attached
+  if bufnr == nil and vim.bo.filetype == '' then return false end
+  return next(vim.lsp.get_active_clients { bufnr = bufnr or 0 }) ~= nil
 end
 
 --- A condition function if treesitter is in use
