@@ -288,8 +288,8 @@ function M.treesitter(opts)
 end
 
 --- A function to build a set of children components for an LSP section
----@param opts? table options for configuring lsp progress and client_name providers and the overall padding
----@return table # The Heirline component table
+-- @param opts? table options for configuring lsp progress and client_name providers and the overall padding
+-- @return table # The Heirline component table
 -- @usage local heirline_component = require("base.utils.status").component.lsp()
 function M.lsp(opts)
   opts = extend_tbl({
@@ -298,7 +298,7 @@ function M.lsp(opts)
       padding = { right = 1 },
       update = {
         "User",
-        pattern = "BaseLspProgress",
+        pattern = { "LspProgressUpdate", "LspRequest" },
         callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
       },
     },
