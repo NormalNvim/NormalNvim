@@ -247,7 +247,7 @@ return {
          find = {
             --pick one of item in find_engine [ag, rg ]
             cmd = "ag",
-            options = { "ignore-case" },
+            options = { },
           },
           replace = {
             -- If you install oxi with cargo you can use it instead.

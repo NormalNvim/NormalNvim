@@ -690,7 +690,7 @@ end
 -- aerial.nvimm ------------------------------------------------------------
 if is_available "aerial.nvim" then
   maps.n["<leader>l"] = icons.l
-  maps.n["<leader>lS"] =
+  maps.n["<leader>ls"] =
     { function() require("aerial").toggle() end, desc = "Toggle symbols tree" }
 end
 
