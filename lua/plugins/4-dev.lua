@@ -404,38 +404,39 @@ return {
   },
 
   --  CODE DOCUMENTATION ------------------------------------------------------
+  --  Temporary removed until re-implemented in LUA
   --  vim-doxygen
   --  https://github.com/Zeioth/vim-doxygen
-  {
-    "Zeioth/vim-doxygen",
-    tf = {
-      "c",
-      "cpp",
-      "cs",
-      "python",
-      "d",
-      "fortran",
-      "java",
-      "perl",
-      "vhdl",
-      "objc",
-      "php",
-    },
-    cmd = {
-      "TypedocOpen",
-      "TypedocRegen",
-    },
-  },
-  --  vim-typedoc
-  --  https://github.com/Zeioth/vim-typedoc
-  {
-    "Zeioth/vim-doxygen",
-    tf = { "typescript" },
-    cmd = {
-      "DoxygenOpen",
-      "DoxygenRegen",
-    },
-  },
+  -- {
+  --   "Zeioth/vim-doxygen",
+  --   tf = {
+  --     "c",
+  --     "cpp",
+  --     "cs",
+  --     "python",
+  --     "d",
+  --     "fortran",
+  --     "java",
+  --     "perl",
+  --     "vhdl",
+  --     "objc",
+  --     "php",
+  --   },
+  --   cmd = {
+  --     "TypedocOpen",
+  --     "TypedocRegen",
+  --   },
+  -- },
+  -- --  vim-typedoc
+  -- --  https://github.com/Zeioth/vim-typedoc
+  -- {
+  --   "Zeioth/vim-doxygen",
+  --   tf = { "typescript" },
+  --   cmd = {
+  --     "DoxygenOpen",
+  --     "DoxygenRegen",
+  --   },
+  -- },
 
   --  [markdown previewer]
   --  https://github.com/iamcco/markdown-preview.nvim
