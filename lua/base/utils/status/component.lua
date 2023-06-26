@@ -313,7 +313,7 @@ function M.lsp(opts)
       icon = { kind = "ActiveLSP", padding = { right = 2 } },
     },
     hl = hl.get_attributes "lsp",
-    surround = { separator = "right", color = "lsp_bg", condition = condition.lsp_attached },
+    surround = { separator = "right", color = "lsp_bg", condition = (condition.lsp_attached or function() return end) },
     on_click = {
       name = "heirline_lsp",
       callback = function()
