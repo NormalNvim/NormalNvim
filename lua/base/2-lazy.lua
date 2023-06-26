@@ -29,7 +29,7 @@ base.updater = {
   rollback_file = vim.fn.stdpath "cache" .. "/rollback.lua",
 
 
-  -- You can use this stable_version to specify the releate version to install.
+  -- You can use this release_stable_version to specify the stable version to install.
   -- if nil, :NvimConfigUpdate wil use the latest available tag release of your
   -- git repository, starting by 'v', for example, "v1.0"
   release_release_version = nil,
