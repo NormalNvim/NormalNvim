@@ -44,14 +44,19 @@ autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
   desc = "Update buffers when adding new buffers",
   group = bufferline_group,
   callback = function(args)
+    local buf_utils = require "base.utils.buffer"
+    if not buf_utils.is_valid(args.buf) then return end
+    if args.buf ~= buf_utils.current_buf then
+      buf_utils.last_buf = buf_utils.current_buf
+      buf_utils.current_buf = args.buf
+    end
     if not vim.t.bufs then vim.t.bufs = {} end
     local bufs = vim.t.bufs
     if not vim.tbl_contains(bufs, args.buf) then
       table.insert(bufs, args.buf)
       vim.t.bufs = bufs
     end
-    vim.t.bufs =
-      vim.tbl_filter(require("base.utils.buffer").is_valid, vim.t.bufs)
+    vim.t.bufs = vim.tbl_filter(buf_utils.is_valid, vim.t.bufs)
     baseevent "BufsUpdated"
   end,
 })
@@ -61,11 +66,13 @@ autocmd("BufDelete", {
   desc = "Update buffers when deleting buffers",
   group = bufferline_group,
   callback = function(args)
+    local removed
     for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
       local bufs = vim.t[tab].bufs
       if bufs then
         for i, bufnr in ipairs(bufs) do
           if bufnr == args.buf then
+            removed = true
             table.remove(bufs, i)
             vim.t[tab].bufs = bufs
             break
@@ -73,9 +80,8 @@ autocmd("BufDelete", {
         end
       end
     end
-    vim.t.bufs =
-      vim.tbl_filter(require("base.utils.buffer").is_valid, vim.t.bufs)
-    baseevent "BufsUpdated"
+    vim.t.bufs = vim.tbl_filter(require("base.utils.buffer").is_valid, vim.t.bufs)
+    if removed then baseevent "BufsUpdated" end
     vim.cmd.redrawtabline()
   end,
 })
@@ -333,22 +339,15 @@ autocmd("VimEnter", {
 })
 
 -- 17. Nvim user events for file detection (BaseFile and BaseGitFile)
-autocmd({ "BufReadPost", "BufNewFile" }, {
+autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
   desc = "Nvim user events for file detection (BaseFile and BaseGitFile)",
   group = augroup("file_user_events", { clear = true }),
   callback = function(args)
-    if
-      not (
-        vim.fn.expand "%" == ""
-        or vim.api.nvim_get_option_value("buftype", { buf = args.buf })
-          == "nofile"
-      )
-    then
+    if not (vim.fn.expand "%" == "" or vim.api.nvim_get_option_value("buftype", { buf = args.buf }) == "nofile") then
       utils.event "File"
-      if
-        utils.cmd('git -C "' .. vim.fn.expand "%:p:h" .. '" rev-parse', false)
-      then
+      if utils.cmd({ "git", "-C", vim.fn.expand "%:p:h", "rev-parse" }, false) then
         utils.event "GitFile"
+        vim.api.nvim_del_augroup_by_name "file_user_events"
       end
     end
   end,
