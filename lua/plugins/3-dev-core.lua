@@ -22,14 +22,13 @@
 --       -> cmp-luasnip                    [auto completion snippets]
 
 return {
-  {
-    --  PURE CORE -------------------------------------------------------------
+    --  TREE SITTER ---------------------------------------------------------
     --  [syntax highlight] + [treesitter understand html tags] + [comments]
     --  https://github.com/nvim-treesitter/nvim-treesitter
     --  https://github.com/windwp/nvim-ts-autotag
     --  https://github.com/windwp/nvim-treesitter-textobjects
     --  https://github.com/JoosepAlviste/nvim-ts-context-commentstring
-
+  {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       "windwp/nvim-ts-autotag",
@@ -154,7 +153,7 @@ return {
   --  LSP -------------------------------------------------------------------
   --  Schema Store [lsp schema manager]
   --  https://github.com/b0o/SchemaStore.nvim
-  {
+
     "b0o/SchemaStore.nvim",
     {
       "folke/neodev.nvim",
@@ -529,5 +528,4 @@ return {
         }
       end,
     },
-  }, -- end of collection
 } -- end of return

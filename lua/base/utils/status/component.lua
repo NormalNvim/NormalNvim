@@ -288,8 +288,8 @@ function M.treesitter(opts)
 end
 
 --- A function to build a set of children components for an LSP section
--- @param opts? table options for configuring lsp progress and client_name providers and the overall padding
--- @return table # The Heirline component table
+---@param opts? table options for configuring lsp progress and client_name providers and the overall padding
+---@return table # The Heirline component table
 -- @usage local heirline_component = require("base.utils.status").component.lsp()
 function M.lsp(opts)
   opts = extend_tbl({
@@ -313,7 +313,8 @@ function M.lsp(opts)
       icon = { kind = "ActiveLSP", padding = { right = 2 } },
     },
     hl = hl.get_attributes "lsp",
-    surround = { separator = "right", color = "lsp_bg", condition = condition.lsp_attached },
+    surround = { separator = "right", color = "lsp_bg", condition = (
+      condition.lsp_attached or function() return nil end) },
     on_click = {
       name = "heirline_lsp",
       callback = function()
