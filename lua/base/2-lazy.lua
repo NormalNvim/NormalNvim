@@ -28,13 +28,11 @@ base.updater = {
   snapshot = { module = "lazy_snapshot", path = vim.fn.stdpath "config" .. "/lua/lazy_snapshot.lua" },
   rollback_file = vim.fn.stdpath "cache" .. "/rollback.lua",
 
-
   -- You can use this release_stable_version to specify the stable version to install.
   -- if nil, :NvimConfigUpdate wil use the latest available tag release of your
   -- git repository, starting by 'v', for example, "v1.0"
   release_release_version = nil,
 }
-
 
 --- lazyload extra behavior (notifications and stuff)
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
