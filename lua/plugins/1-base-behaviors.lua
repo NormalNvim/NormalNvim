@@ -161,19 +161,19 @@ return {
   },
 
   -- Session management [session]
-  -- Check: https://github.com/gennaro-tedesco/nvim-possession
+  -- https://github.com/Shatur/Shatur/neovim-session-manager
+  -- https://github.com/stevearc/resession.nvim
+  -- Alternatively use: https://github.com/gennaro-tedesco/nvim-possession
   --
-  -- BUG: Swap disabled on options because of this bug
+  -- INFO: Swap disabled on options because of the bug
   -- https://github.com/Shatur/neovim-session-manager/issues/72
-  {
+  --
+  { -- This plugin is Telescope menu to restore saved sessions.
     "Shatur/neovim-session-manager",
-    event = "BufWritePost",
     cmd = "SessionManager",
-    enabled = vim.g.resession_enabled ~= true,
   },
-  {
+  { -- This plugin auto save your current session when you write a buffer.
     "stevearc/resession.nvim",
-    enabled = vim.g.resession_enabled == true,
     opts = {
       buf_filter = function(bufnr)
         return require("base.utils.buffer").is_valid(bufnr)
@@ -181,7 +181,54 @@ return {
       tab_buf_filter = function(tabpage, bufnr)
         return vim.tbl_contains(vim.t[tabpage].bufs, bufnr)
       end,
-      extensions = { base = {} },
+      extensions = {
+        function()
+          local M = {}
+          M.on_save = function()
+            -- initiate astronvim data
+            local data = { bufnrs = {}, tabs = {} }
+
+            local buf_utils = require "base.utils.buffer"
+
+            data.current_buf = buf_utils.current_buf
+            data.last_buf = buf_utils.last_buf
+
+            -- save tab scoped buffers and buffer numbers from buffer name
+            for new_tabpage, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
+              data.tabs[new_tabpage] = vim.t[tabpage].bufs
+              for _, bufnr in ipairs(data.tabs[new_tabpage]) do
+                data.bufnrs[vim.api.nvim_buf_get_name(bufnr)] = bufnr
+              end
+            end
+
+            return data
+          end
+
+          M.on_load = function(data)
+            -- create map from old buffer numbers to new buffer numbers
+            local new_bufnrs = {}
+            for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+              local bufname = vim.api.nvim_buf_get_name(bufnr)
+              if bufname and data.bufnrs[bufname] then new_bufnrs[data.bufnrs[bufname]] = bufnr end
+            end
+            -- build new tab scoped buffer lists
+            for tabpage, tabs in pairs(data.tabs) do
+              vim.t[tabpage].bufs = vim.tbl_map(function(bufnr) return new_bufnrs[bufnr] end, tabs)
+            end
+
+            local buf_utils = require "base.utils.buffer"
+            buf_utils.current_buf = new_bufnrs[data.current_buf]
+            buf_utils.last_buf = new_bufnrs[data.last_buf]
+
+            require("base.utils").event "BufsUpdated"
+
+            if vim.fn.bufnr() ~= buf_utils.current_buf then vim.cmd.b(buf_utils.current_buf) end
+          end
+
+          return M
+
+        end -- end of the extension
+      },
     },
   },
 
@@ -209,9 +256,6 @@ return {
         },
       },
       is_insert_mode = true,  -- start open panel on is_insert_mode
-      line_sep_start = '┌──────────────────────────────────────────────────────',
-      result_padding = '│  ',
-      line_sep       = '└──────────────────────────────────────────────────────',
       mapping = {
         ['toggle_line'] = {
             map = "d",
@@ -546,11 +590,6 @@ return {
   {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
-    opts = {
-      -- your configuration comes here
-      -- or leave it empty to use the default settings
-      -- refer to the configuration section below
-    },
   },
 
   --  nvim-neoclip [nvim clipboard]
