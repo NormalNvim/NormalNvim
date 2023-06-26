@@ -1,4 +1,4 @@
---- ### base Status Conditions
+--- ### base status conditions
 --
 -- Statusline related condition functions to use with Heirline
 --
@@ -112,12 +112,7 @@ function M.aerial_available() return package.loaded["aerial"] end
 -- @usage local heirline_component = { provider = "Example Provider", condition = require("base.utils.status").condition.lsp_attached }
 function M.lsp_attached(bufnr)
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
-
-  -- Hotfix: This patch prevent stack trace issues when adding the lsp load indicator
-  -- to heirline when certain plugins that interact with treesitter
-  -- like 'vim-matchupts' are active.
   if bufnr == nil and vim.bo.filetype == '' then return false end
-
   return next(vim.lsp.get_active_clients { bufnr = bufnr or 0 }) ~= nil
 end
 

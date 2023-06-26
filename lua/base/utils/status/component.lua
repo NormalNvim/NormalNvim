@@ -298,7 +298,7 @@ function M.lsp(opts)
       padding = { right = 1 },
       update = {
         "User",
-        pattern = "BaseLspProgress",
+        pattern = { "LspProgressUpdate", "LspRequest" },
         callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
       },
     },
@@ -313,7 +313,8 @@ function M.lsp(opts)
       icon = { kind = "ActiveLSP", padding = { right = 2 } },
     },
     hl = hl.get_attributes "lsp",
-    surround = { separator = "right", color = "lsp_bg", condition = (condition.lsp_attached or function() return end) },
+    surround = { separator = "right", color = "lsp_bg", condition = (
+      condition.lsp_attached or function() return nil end) },
     on_click = {
       name = "heirline_lsp",
       callback = function()
