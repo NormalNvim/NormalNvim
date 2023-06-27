@@ -162,74 +162,12 @@ return {
 
   -- Session management [session]
   -- https://github.com/Shatur/Shatur/neovim-session-manager
-  -- https://github.com/stevearc/resession.nvim
-  -- Alternatively use: https://github.com/gennaro-tedesco/nvim-possession
-  --
-  -- INFO: Swap disabled on options because of the bug
-  -- https://github.com/Shatur/neovim-session-manager/issues/72
-  --
-  { -- This plugin is Telescope menu to restore saved sessions.
+  -- This plugin save your session when leaving nvim.
+  -- It also display a Telescope menu to restore saved sessions.
+  -- Sessions are saved by directory.
+  {
     "Shatur/neovim-session-manager",
     cmd = "SessionManager",
-  },
-  { -- This plugin auto save your current session when you write a buffer.
-    "stevearc/resession.nvim",
-    opts = {
-      buf_filter = function(bufnr)
-        return require("base.utils.buffer").is_valid(bufnr)
-      end,
-      tab_buf_filter = function(tabpage, bufnr)
-        return vim.tbl_contains(vim.t[tabpage].bufs, bufnr)
-      end,
-      extensions = {
-        function()
-          local M = {}
-          M.on_save = function()
-            -- initiate astronvim data
-            local data = { bufnrs = {}, tabs = {} }
-
-            local buf_utils = require "base.utils.buffer"
-
-            data.current_buf = buf_utils.current_buf
-            data.last_buf = buf_utils.last_buf
-
-            -- save tab scoped buffers and buffer numbers from buffer name
-            for new_tabpage, tabpage in ipairs(vim.api.nvim_list_tabpages()) do
-              data.tabs[new_tabpage] = vim.t[tabpage].bufs
-              for _, bufnr in ipairs(data.tabs[new_tabpage]) do
-                data.bufnrs[vim.api.nvim_buf_get_name(bufnr)] = bufnr
-              end
-            end
-
-            return data
-          end
-
-          M.on_load = function(data)
-            -- create map from old buffer numbers to new buffer numbers
-            local new_bufnrs = {}
-            for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
-              local bufname = vim.api.nvim_buf_get_name(bufnr)
-              if bufname and data.bufnrs[bufname] then new_bufnrs[data.bufnrs[bufname]] = bufnr end
-            end
-            -- build new tab scoped buffer lists
-            for tabpage, tabs in pairs(data.tabs) do
-              vim.t[tabpage].bufs = vim.tbl_map(function(bufnr) return new_bufnrs[bufnr] end, tabs)
-            end
-
-            local buf_utils = require "base.utils.buffer"
-            buf_utils.current_buf = new_bufnrs[data.current_buf]
-            buf_utils.last_buf = new_bufnrs[data.last_buf]
-
-            require("base.utils").event "BufsUpdated"
-
-            if vim.fn.bufnr() ~= buf_utils.current_buf then vim.cmd.b(buf_utils.current_buf) end
-          end
-
-          return M
-
-        end -- end of the extension
-      },
-    },
   },
 
   -- spectre.nvim [search and replace in project]
