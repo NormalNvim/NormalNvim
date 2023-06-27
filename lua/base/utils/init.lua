@@ -148,8 +148,10 @@ function M.notify(msg, type, opts)
   )
 end
 
---- Trigger an Nvim event
----@param event string The event name to be appended to NVim
+--- Trigger an internal NormalNvim event
+---@param event string The event name to be appended to Base
+-- @usage If you pass the event 'Foo' to this method, it will trigger
+--        the autocmds including the pattern 'BaseFoo'.
 function M.event(event)
   vim.schedule(
     function()

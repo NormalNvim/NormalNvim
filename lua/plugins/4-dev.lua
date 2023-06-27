@@ -109,7 +109,7 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     enabled = vim.fn.executable "git" == 1,
-    event = "User BaseGitFile",
+    event = "VeryLazy",
     opts = {
       signs = {
         add = { text = get_icon "GitSign" },
@@ -155,7 +155,7 @@ return {
       "Git",
       "Gstatus",
     },
-    event = "User BaseGitFile",
+    event = "VeryLazy",
     init = function() vim.g.fugitive_no_maps = 1 end,
   },
 
@@ -206,7 +206,7 @@ return {
         end,
       },
     },
-    event = "User BaseFile",
+    event = "VeryLazy",
   },
 
   --  COMPILER ----------------------------------------------------------------
@@ -356,7 +356,7 @@ return {
   --  https://github.com/stevearc/aerial.nvim
   {
     "stevearc/aerial.nvim",
-    event = "User BaseFile",
+    event = "VeryLazy",
     cmd = {
       "AerialToggle",
       "AerialOpen",
@@ -469,7 +469,7 @@ return {
   -- It just set the buffer options to tabuate in a certain way.
   {
     "NMAC427/guess-indent.nvim",
-    event = "User BaseFile",
+    event = "VeryLazy",
     config = function(_, opts)
       require("guess-indent").setup(opts)
       vim.cmd.lua {

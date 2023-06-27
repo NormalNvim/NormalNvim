@@ -13,7 +13,7 @@ local M = {}
 
 local utils = require "base.utils"
 local notify = utils.notify
-local astroevent = utils.event
+local baseevent = utils.event
 
 --- Update specified mason packages, or just update the registries if no packages are listed
 ---@param pkg_names? string|string[] The package names as defined in Mason (Not mason-lspconfig or mason-null-ls) if the value is nil then it will just update the registries
@@ -81,7 +81,7 @@ function M.update_all()
 
       if no_pkgs then
         notify "Mason: No updates available"
-        astroevent "MasonUpdateCompleted"
+        baseevent "MasonUpdateCompleted"
       else
         local updated = false
         for _, pkg in ipairs(installed_pkgs) do
@@ -93,7 +93,7 @@ function M.update_all()
                 running = running - 1
                 if running == 0 then
                   notify "Mason: Update Complete"
-                  astroevent "MasonUpdateCompleted"
+                  basevent "MasonUpdateCompleted"
                 end
               end)
             else
@@ -104,7 +104,7 @@ function M.update_all()
                 else
                   notify "Mason: No updates available"
                 end
-                astroevent "MasonUpdateCompleted"
+                basevent "MasonUpdateCompleted"
               end
             end
           end)

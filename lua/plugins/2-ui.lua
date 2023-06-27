@@ -187,7 +187,7 @@ return {
   --  https://github.com/lukas-reineke/indent-blankline.nvim
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = "User BaseFile",
+    event = "VeryLazy",
     opts = {
       buftype_exclude = {
         "nofile",
@@ -669,14 +669,22 @@ return {
   --  https://github.com/petertriho/nvim-scrollbar
   {
     "petertriho/nvim-scrollbar",
+    event = "VeryLazy",
     opts = {
       handlers = {
         gitsigns = true, -- gitsigns integration (display hunks)
         ale = true,      -- lsp integration (display errors/warnings)
         search = false,  -- hlslens integration (display search result)
       },
+      excluded_filetypes = {
+        "cmp_docs",
+        "cmp_menu",
+        "noice",
+        "prompt",
+        "TelescopePrompt",
+        "alpha",
+      },
     },
-    event = "User BaseFile",
   },
 
   --  mini.animate [animations]
