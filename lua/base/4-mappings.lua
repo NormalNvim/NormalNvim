@@ -14,6 +14,7 @@
 --       -> buffers/tabs                       [buffers]
 --       -> ui toggles                         [ui]
 --       -> shifted movement keys
+--       -> special cases
 --
 --       ## Plugin bindings
 --       -> alpha-nvim
@@ -447,6 +448,25 @@ maps.n["<S-PageUp>"] = {
   desc = "Page up exactly 20% of the total size of the buffer",
 }
 
+-- special cases -------------------------------------------------
+vim.api.nvim_create_autocmd("BufWinEnter", {
+  desc = "Make q close help, man, quickfix, dap floats",
+  group = vim.api.nvim_create_augroup("q_close_windows", { clear = true }),
+  callback = function(event)
+    local filetype =
+      vim.api.nvim_get_option_value("filetype", { buf = event.buf })
+    local buftype =
+      vim.api.nvim_get_option_value("buftype", { buf = event.buf })
+    if buftype == "nofile" or filetype == "help" then
+      vim.keymap.set(
+        "n",
+        "q",
+        "<cmd>close<cr>",
+        { buffer = event.buf, silent = true, nowait = true }
+      )
+    end
+  end,
+})
 
 -- -------------------------------------------------------------------------
 --
