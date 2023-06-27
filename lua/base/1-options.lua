@@ -26,9 +26,6 @@ vim.opt.backspace:append { "nostop" } -- Don't stop backspace at insert
 if vim.fn.has "nvim-0.9" == 1 then
   vim.opt.diffopt:append "linematch:60" -- enable linematch diff algorithm
 end
-if vim.fn.has "nvim-0.10" == 1 then
-  vim.opt.smoothscroll = true --Scroll by screen line rather than by line when wrap is set. nvim 0.10 only
-end
 
 -- Set
 vim.cmd "set autochdir" -- By default, use current file dir as working dir.
