@@ -14,6 +14,7 @@
 --       -> buffers/tabs                       [buffers]
 --       -> ui toggles                         [ui]
 --       -> shifted movement keys
+--       -> special cases
 --
 --       ## Plugin bindings
 --       -> alpha-nvim
@@ -447,6 +448,25 @@ maps.n["<S-PageUp>"] = {
   desc = "Page up exactly 20% of the total size of the buffer",
 }
 
+-- special cases -------------------------------------------------
+vim.api.nvim_create_autocmd("BufWinEnter", {
+  desc = "Make q close help, man, quickfix, dap floats",
+  group = vim.api.nvim_create_augroup("q_close_windows", { clear = true }),
+  callback = function(event)
+    local filetype =
+      vim.api.nvim_get_option_value("filetype", { buf = event.buf })
+    local buftype =
+      vim.api.nvim_get_option_value("buftype", { buf = event.buf })
+    if buftype == "nofile" or filetype == "help" then
+      vim.keymap.set(
+        "n",
+        "q",
+        "<cmd>close<cr>",
+        { buffer = event.buf, silent = true, nowait = true }
+      )
+    end
+  end,
+})
 
 -- -------------------------------------------------------------------------
 --
@@ -1129,13 +1149,6 @@ end
 
 -- hop.nivm ----------------------------------------------------------------
 if is_available "hop.nvim" then
-  maps.n["<C-m>"] = {
-    function()
-      require "hop"
-      vim.cmd "HopWord"
-    end,
-    desc = "Hop to word",
-  }
   maps.n["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
     function()
       require "hop"
@@ -1143,6 +1156,23 @@ if is_available "hop.nvim" then
     end,
     desc = "Hop to word",
   }
+  maps.v["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
+    function()
+      require "hop"
+      vim.cmd "HopWord"
+    end,
+    desc = "Hop to word",
+  }
+  -- You can remove these mappings for the desired filetypes like this.
+  vim.api.nvim_create_autocmd("FileType", {
+    desc = "Delete hop mapping for the desired filetypes",
+    group = vim.api.nvim_create_augroup("hop", { clear = true }),
+    callback = function()
+      if vim.bo.filetype == 'qf' then -- quickfix
+        vim.api.nvim_buf_set_keymap(0, 'n', '<C-m>', '<C-m>', { silent = true })
+      end
+    end,
+  })
 end
 
 utils.set_mappings(maps)

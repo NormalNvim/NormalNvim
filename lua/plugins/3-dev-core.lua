@@ -35,7 +35,7 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects",
       "JoosepAlviste/nvim-ts-context-commentstring",
     },
-    event = "User BaseFile",
+    event = "VeryLazy",
     cmd = {
       "TSBufDisable",
       "TSBufEnable",
@@ -140,7 +140,7 @@ return {
   --  https://github.com/NvChad/nvim-colorizer.lua
   {
     "NvChad/nvim-colorizer.lua",
-    event = "User BaseFile",
+    event = "VeryLazy",
     cmd = {
       "ColorizerToggle",
       "ColorizerAttachToBuffer",
@@ -245,7 +245,7 @@ return {
           end,
         },
       },
-      event = "User BaseFile",
+      event = "VeryLazy",
       config = function(_, _)
         local lsp = require "base.utils.lsp"
         local utils = require "base.utils"

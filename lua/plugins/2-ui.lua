@@ -187,7 +187,7 @@ return {
   --  https://github.com/lukas-reineke/indent-blankline.nvim
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = "User BaseFile",
+    event = "VeryLazy",
     opts = {
       buftype_exclude = {
         "nofile",
@@ -323,6 +323,59 @@ return {
           status.component.signcolumn(),
         } or nil,
       }
+    end,
+    init = function() -- Autocmds to update tabs on add/delete
+      local augroup = vim.api.nvim_create_augroup
+      local autocmd = vim.api.nvim_create_autocmd
+      local baseevent = utils.event
+
+      -- 1. Update tabs when adding new buffers
+      local bufferline_group = augroup("bufferline", { clear = true })
+      autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
+        desc = "Update buffers when adding new buffers",
+        group = bufferline_group,
+        callback = function(args)
+          local buf_utils = require "base.utils.buffer"
+          if not buf_utils.is_valid(args.buf) then return end
+          if args.buf ~= buf_utils.current_buf then
+            buf_utils.last_buf = buf_utils.current_buf
+            buf_utils.current_buf = args.buf
+          end
+          if not vim.t.bufs then vim.t.bufs = {} end
+          local bufs = vim.t.bufs
+          if not vim.tbl_contains(bufs, args.buf) then
+            table.insert(bufs, args.buf)
+            vim.t.bufs = bufs
+          end
+          vim.t.bufs = vim.tbl_filter(buf_utils.is_valid, vim.t.bufs)
+          baseevent "BufsUpdated"
+        end,
+      })
+
+      -- 2. Update tabs when deleting buffers
+      autocmd("BufDelete", {
+        desc = "Update buffers when deleting buffers",
+        group = bufferline_group,
+        callback = function(args)
+          local removed
+          for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
+            local bufs = vim.t[tab].bufs
+            if bufs then
+              for i, bufnr in ipairs(bufs) do
+                if bufnr == args.buf then
+                  removed = true
+                  table.remove(bufs, i)
+                  vim.t[tab].bufs = bufs
+                  break
+                end
+              end
+            end
+          end
+          vim.t.bufs = vim.tbl_filter(require("base.utils.buffer").is_valid, vim.t.bufs)
+          if removed then baseevent "BufsUpdated" end
+          vim.cmd.redrawtabline()
+        end,
+      })
     end,
     config = function(_, opts)
       local heirline = require "heirline"
@@ -616,14 +669,22 @@ return {
   --  https://github.com/petertriho/nvim-scrollbar
   {
     "petertriho/nvim-scrollbar",
+    event = "VeryLazy",
     opts = {
       handlers = {
         gitsigns = true, -- gitsigns integration (display hunks)
         ale = true,      -- lsp integration (display errors/warnings)
         search = false,  -- hlslens integration (display search result)
       },
+      excluded_filetypes = {
+        "cmp_docs",
+        "cmp_menu",
+        "noice",
+        "prompt",
+        "TelescopePrompt",
+        "alpha",
+      },
     },
-    event = "User BaseFile",
   },
 
   --  mini.animate [animations]
