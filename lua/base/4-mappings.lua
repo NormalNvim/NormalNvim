@@ -1129,13 +1129,6 @@ end
 
 -- hop.nivm ----------------------------------------------------------------
 if is_available "hop.nvim" then
-  maps.n["<C-m>"] = {
-    function()
-      require "hop"
-      vim.cmd "HopWord"
-    end,
-    desc = "Hop to word",
-  }
   maps.n["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
     function()
       require "hop"
@@ -1143,6 +1136,23 @@ if is_available "hop.nvim" then
     end,
     desc = "Hop to word",
   }
+  maps.v["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
+    function()
+      require "hop"
+      vim.cmd "HopWord"
+    end,
+    desc = "Hop to word",
+  }
+  -- You can remove these mappings for the desired filetypes like this.
+  vim.api.nvim_create_autocmd("FileType", {
+    desc = "Delete hop mapping for the desired filetypes",
+    group = vim.api.nvim_create_augroup("hop", { clear = true }),
+    callback = function()
+      if vim.bo.filetype == 'qf' then -- quickfix
+        vim.api.nvim_buf_set_keymap(0, 'n', '<C-m>', '<C-m>', { silent = true })
+      end
+    end,
+  })
 end
 
 utils.set_mappings(maps)
