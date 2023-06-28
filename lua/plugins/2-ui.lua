@@ -479,12 +479,12 @@ return {
         group = bufferline_group,
         callback = function(args)
           local buf_utils = require "base.utils.buffer"
+          if not vim.t.bufs then vim.t.bufs = {} end
           if not buf_utils.is_valid(args.buf) then return end
           if args.buf ~= buf_utils.current_buf then
             buf_utils.last_buf = buf_utils.current_buf
             buf_utils.current_buf = args.buf
           end
-          if not vim.t.bufs then vim.t.bufs = {} end
           local bufs = vim.t.bufs
           if not vim.tbl_contains(bufs, args.buf) then
             table.insert(bufs, args.buf)
