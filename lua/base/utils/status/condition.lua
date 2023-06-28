@@ -112,7 +112,8 @@ function M.aerial_available() return package.loaded["aerial"] end
 -- @usage local heirline_component = { provider = "Example Provider", condition = require("base.utils.status").condition.lsp_attached }
 function M.lsp_attached(bufnr)
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
-  return next(vim.lsp.get_active_clients { bufnr = bufnr or 0 }) ~= nil
+  return package.loaded["base.utils.lsp"] and
+    next(vim.lsp.get_active_clients { bufnr = bufnr or 0 }) ~= nil
 end
 
 --- A condition function if treesitter is in use
