@@ -10,7 +10,7 @@
 
 --       ## COOL HACKS
 --       -> 5. Effect: URL underline.
---       -> 6. Effect: Briefly flash on yank.
+--       -> 6. Effect: Flash on yank.
 --       -> 7. Disable right click contextual menu warning message.
 --       -> 8. Unlist quickfist buffers if the filetype changes.
 --
@@ -167,7 +167,7 @@ autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   callback = function() utils.set_url_match() end,
 })
 
--- 6. Effect: Briefly flash on yank.
+-- 6. Effect: Flash on yank.
 autocmd("TextYankPost", {
   desc = "Highlight yanked text",
   group = augroup("highlightyank", { clear = true }),
