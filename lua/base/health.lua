@@ -1,10 +1,9 @@
 -- On neovim you can run
 -- :healthcheck base
--- To know possible causes in case NormalNvim is nor working correctly.
+-- to know possible causes in case NormalNvim is not working correctly.
 
 local M = {}
 
--- TODO: remove deprecated method check after dropping support for neovim v0.9
 local health = {
   start = vim.health.start or vim.health.report_start,
   ok = vim.health.ok or vim.health.report_ok,
@@ -32,9 +31,10 @@ function M.check()
     health.error "Neovim >= 0.8.0 is required"
   end
 
+  -- Checks to perform.
   local programs = {
     {
-      cmd = "git",
+      cmd = { "git" },
       type = "error",
       msg = "Used for core functionality such as updater and plugin management",
     },
@@ -59,11 +59,6 @@ function M.check()
       msg = "Used for mappings to pull up git TUI (Optional)",
     },
     {
-      cmd = { "python", "python3" },
-      type = "warn",
-      msg = "Used for mappings to pull up python REPL (Optional)",
-    },
-    {
       cmd = { "pynvim", "ranger" },
       type = "warn",
       msg = "Used to enable ranger file browser (Optional)",
@@ -75,6 +70,7 @@ function M.check()
     },
   }
 
+  -- Actually perform the checks we defined above.
   for _, program in ipairs(programs) do
     if type(program.cmd) == "string" then program.cmd = { program.cmd } end
     local name = table.concat(program.cmd, "/")
@@ -95,6 +91,8 @@ function M.check()
       )
     end
   end
+  health.info("")
+  health.info("Write `:bw` to close `:checkhealth` gracefuly.")
 end
 
 return M
