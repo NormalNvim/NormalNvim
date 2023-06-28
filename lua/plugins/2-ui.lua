@@ -187,7 +187,7 @@ return {
   --  https://github.com/lukas-reineke/indent-blankline.nvim
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = "VeryLazy",
+    event = "BufEnter",
     opts = {
       buftype_exclude = {
         "nofile",
@@ -737,7 +737,7 @@ return {
   --  BUG: Currently only works for redo.
   {
     "tzachar/highlight-undo.nvim",
-    event = "VeryLazy",
+    cmd='Telescope undo',
     opts = {
       hlgroup = "CurSearch",
       duration = 150,
