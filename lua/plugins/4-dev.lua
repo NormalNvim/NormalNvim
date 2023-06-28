@@ -109,7 +109,7 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     enabled = vim.fn.executable "git" == 1,
-    event = "VeryLazy",
+    event = "BufEnter",
     opts = {
       signs = {
         add = { text = get_icon "GitSign" },
@@ -155,7 +155,6 @@ return {
       "Git",
       "Gstatus",
     },
-    event = "VeryLazy",
     init = function() vim.g.fugitive_no_maps = 1 end,
   },
 
