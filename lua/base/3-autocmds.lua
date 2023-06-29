@@ -28,8 +28,8 @@ local is_available = utils.is_available
 
 -- ## EXTRA LOGIC -----------------------------------------------------------
 -- 1. Events to load plugins faster → 'BaseFile'/'BaseGitFile':
---    You can use these events to load critical plugins asap
---    without increasing the startup time displayed in the greeter.
+--    this is pretty much the same thing as the event 'BufEnter',
+--    but without increasing the startup time displayed in the greeter.
 autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
   desc = "Nvim user events for file detection (BaseFile and BaseGitFile)",
   group = augroup("file_user_events", { clear = true }),
@@ -94,7 +94,7 @@ if is_available "alpha-nvim" then
     group = alpha_group,
     callback = function(event)
       local is_filetype_alpha = vim.api.nvim_get_option_value(
-        "filetype", { buf = event.buf }) ~= "alpha"
+      "filetype",{ buf = event.buf }) == "alpha"
 
       if ((event.event == "User" and event.file == "AlphaReady") or
          (event.event == "BufEnter" and is_filetype_alpha)) and
@@ -107,8 +107,7 @@ if is_available "alpha-nvim" then
         vim.opt.showtabline, vim.opt.laststatus = 0, 0
       elseif
         vim.g.before_alpha
-        and event.event == "BufEnter"
-        and is_filetype_alpha
+        and event.event == "BufEnter" and not is_filetype_alpha
       then
         vim.opt.laststatus, vim.opt.showtabline =
           vim.g.before_alpha.laststatus, vim.g.before_alpha.showtabline
@@ -147,6 +146,8 @@ if is_available "alpha-nvim" then
   })
 end
 
+
+
 -- 4. Hot reload on config change.
 autocmd({ "BufWritePost" }, {
   desc = "When writing a buffer, :NvimReload if the buffer is a config file.",
@@ -154,7 +155,8 @@ autocmd({ "BufWritePost" }, {
   callback = function()
     local filesThatTriggerReload = {
       vim.fn.stdpath "config" .. "lua/base/1-options.lua",
-      vim.fn.stdpath "config" .. "lua/base/4-mappings.lua",}
+      vim.fn.stdpath "config" .. "lua/base/4-mappings.lua",
+    }
 
     local bufPath = vim.fn.expand "%:p"
     for _, filePath in ipairs(filesThatTriggerReload) do
