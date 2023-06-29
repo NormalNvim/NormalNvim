@@ -187,7 +187,7 @@ return {
   --  https://github.com/lukas-reineke/indent-blankline.nvim
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = "BufEnter",
+    event = "VeryLazy",
     opts = {
       buftype_exclude = {
         "nofile",
@@ -241,7 +241,7 @@ return {
   --  https://github.com/rebelot/heirline.nvim
   {
     "rebelot/heirline.nvim",
-    event = "BufEnter",
+    event = "VeryLazy",
     opts = function()
       local status = require "base.utils.status"
       return {
