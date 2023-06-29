@@ -484,7 +484,7 @@ return {
   --  https://github.com/kevinhwang91/promise-async
   {
     "kevinhwang91/nvim-ufo",
-    event = { "VeryLazy" },
+    event = { "User BaseFile" },
     dependencies = { "kevinhwang91/promise-async" },
     opts = {
       preview = {

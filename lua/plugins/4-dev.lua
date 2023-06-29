@@ -109,7 +109,7 @@ return {
   {
     "lewis6991/gitsigns.nvim",
     enabled = vim.fn.executable "git" == 1,
-    event = "VeryLazy",
+    event = "User BaseGitFile",
     opts = {
       signs = {
         add = { text = get_icon "GitSign" },
@@ -205,7 +205,7 @@ return {
         end,
       },
     },
-    event = "VeryLazy",
+    event = "User BaseFile",
   },
 
   --  COMPILER ----------------------------------------------------------------
