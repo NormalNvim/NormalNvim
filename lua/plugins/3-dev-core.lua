@@ -35,7 +35,7 @@ return {
       "nvim-treesitter/nvim-treesitter-textobjects",
       "JoosepAlviste/nvim-ts-context-commentstring",
     },
-    event = "BufEnter",
+    event = "VeryLazy",
     cmd = {
       "TSBufDisable",
       "TSBufEnable",
@@ -241,7 +241,7 @@ return {
           end,
         },
       },
-      event = "BufEnter",
+      event = "VeryLazy",
       config = function(_, _)
         local lsp = require "base.utils.lsp"
         local utils = require "base.utils"
