@@ -187,7 +187,7 @@ return {
   --  https://github.com/lukas-reineke/indent-blankline.nvim
   {
     "lukas-reineke/indent-blankline.nvim",
-    event = "VeryLazy",
+    event = "User BaseFile",
     opts = {
       buftype_exclude = {
         "nofile",
@@ -670,7 +670,7 @@ return {
   --  https://github.com/petertriho/nvim-scrollbar
   {
     "petertriho/nvim-scrollbar",
-    event = "VeryLazy",
+    event = "User BaseFile",
     opts = {
       handlers = {
         gitsigns = true, -- gitsigns integration (display hunks)

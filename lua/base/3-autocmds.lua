@@ -3,16 +3,17 @@
 
 --    Sections:
 --       ## EXTRA LOGIC
---       -> 1. Save/restore window layout on write/read buffer.
---       -> 2. Launch alpha greeter on startup.
---       -> 3. Hot reload on config change.
---       -> 4. Update neotree when closing the git client.
-
+--       -> 1. Events to load plugins faster.
+--       -> 2. Save/restore window layout when possible.
+--       -> 3. Launch alpha greeter on startup.
+--       -> 4. Hot reload on config change.
+--       -> 5. Update neotree when closing the git client.
+--
 --       ## COOL HACKS
---       -> 5. Effect: URL underline.
---       -> 6. Effect: Flash on yank.
---       -> 7. Disable right click contextual menu warning message.
---       -> 8. Unlist quickfist buffers if the filetype changes.
+--       -> 6. Effect: URL underline.
+--       -> 7. Effect: Flash on yank.
+--       -> 8. Disable right click contextual menu warning message.
+--       -> 9. Unlist quickfist buffers if the filetype changes.
 --
 --       ## COMMANDS
 --       -> 9. Nvim updater commands
@@ -26,7 +27,32 @@ local utils = require "base.utils"
 local is_available = utils.is_available
 
 -- ## EXTRA LOGIC -----------------------------------------------------------
--- 1. Save/restore window layout on write/read buffer.
+-- 1. Events to load plugins faster → 'BaseFile'/'BaseGitFile':
+--    this is pretty much the same thing as the event 'BufEnter',
+--    but without increasing the startup time displayed in the greeter.
+autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
+  desc = "Nvim user events for file detection (BaseFile and BaseGitFile)",
+  group = augroup("file_user_events", { clear = true }),
+  callback = function(args)
+    local empty_buffer = vim.fn.expand "%" == ""
+    local greeter = vim.api.nvim_get_option_value("filetype", { buf = args.buf }) == "alpha"
+    local git_repo = utils.cmd({ "git", "-C", vim.fn.expand "%:p:h", "rev-parse" }, false)
+
+    -- For any file exept empty buffer, or the greeter (alpha)
+    if not (empty_buffer or greeter) then
+      utils.event "File" -- Emit event 'BaseFile'
+
+      -- Is the buffer part of a git repo?
+      if git_repo then
+        utils.event "GitFile" -- Emit event 'BaseGitFile'
+        vim.api.nvim_del_augroup_by_name "file_user_events"
+      end
+
+    end
+  end,
+})
+
+-- 2. Save/restore window layout when possible.
 local view_group = augroup("auto_view", { clear = true })
 autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {
   desc = "Save view with mkview for real files",
@@ -60,25 +86,19 @@ autocmd("BufWinEnter", {
   end,
 })
 
--- 2. Launch alpha greeter on startup
+-- 3. Launch alpha greeter on startup
 if is_available "alpha-nvim" then
   local alpha_group = augroup("alpha_settings", { clear = true })
   autocmd({ "User", "BufEnter" }, {
     desc = "Disable status and tablines for alpha",
     group = alpha_group,
     callback = function(event)
-      if
-        (
-          (event.event == "User" and event.file == "AlphaReady")
-          or (
-            event.event == "BufEnter"
-            and vim.api.nvim_get_option_value(
-                "filetype",
-                { buf = event.buf }
-              )
-              == "alpha"
-          )
-        ) and not vim.g.before_alpha
+      local is_filetype_alpha = vim.api.nvim_get_option_value(
+      "filetype",{ buf = event.buf }) == "alpha"
+
+      if ((event.event == "User" and event.file == "AlphaReady") or
+         (event.event == "BufEnter" and is_filetype_alpha)) and
+         not vim.g.before_alpha
       then
         vim.g.before_alpha = {
           showtabline = vim.opt.showtabline:get(),
@@ -87,9 +107,7 @@ if is_available "alpha-nvim" then
         vim.opt.showtabline, vim.opt.laststatus = 0, 0
       elseif
         vim.g.before_alpha
-        and event.event == "BufEnter"
-        and vim.api.nvim_get_option_value("buftype", { buf = event.buf })
-          ~= "nofile"
+        and event.event == "BufEnter" and not is_filetype_alpha
       then
         vim.opt.laststatus, vim.opt.showtabline =
           vim.g.before_alpha.laststatus, vim.g.before_alpha.showtabline
@@ -128,7 +146,9 @@ if is_available "alpha-nvim" then
   })
 end
 
--- 3. Hot reload on config change.
+
+
+-- 4. Hot reload on config change.
 autocmd({ "BufWritePost" }, {
   desc = "When writing a buffer, :NvimReload if the buffer is a config file.",
   group = augroup("reload_if_buffer_is_config_file", { clear = true }),
@@ -145,7 +165,7 @@ autocmd({ "BufWritePost" }, {
   end,
 })
 
--- 4. Update neotree when closin the git client.
+-- 5. Update neotree when closin the git client.
 if is_available "neo-tree.nvim" then
   autocmd("TermClose", {
     pattern = { "*lazygit", "*gitui" },
@@ -160,7 +180,7 @@ if is_available "neo-tree.nvim" then
 end
 
 -- ## COOL HACKS ------------------------------------------------------------
--- 5. Effect: URL underline.
+-- 6. Effect: URL underline.
 autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   desc = "URL Highlighting",
   group = augroup("HighlightUrl", { clear = true }),
@@ -193,8 +213,10 @@ autocmd("FileType", {
   callback = function() vim.opt_local.buflisted = false end,
 })
 
+
+
 -- ## COMMANDS --------------------------------------------------------------
--- 9. Nvim updater commands
+-- 10. Nvim updater commands
 cmd(
   "NvimChangelog",
   function() require("base.utils.updater").changelog() end,
@@ -235,7 +257,7 @@ cmd(
   { desc = "Reload Nvim without closing it (Experimental)" }
 )
 
--- 10. Neotest commands
+-- 11. Neotest commands
 -- Neotest doesn't implement commands by default, so we do it here.
 -------------------------------------------------------------------
 cmd(
@@ -290,3 +312,6 @@ cmd("Swd", function()
   vim.cmd ":cd %:p:h"
   vim.cmd ":pwd"
 end, { desc = "cd current file's directory" })
+
+
+
