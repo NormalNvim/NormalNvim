@@ -20,7 +20,7 @@ return {
   { "cappyzawa/trim.nvim", commit = "2df124c2c2844d3143091ebd3ae8b49bbe06bc5e" },
   { "dense-analysis/neural", commit = "fd1b8ebdf44a4fd1eec296f2d6124247c942a3aa" },
   { "echasnovski/mini.animate", commit = "b0978ee3dd0dafd644d0bc6c37c396dbe8658342" },
-  { "famiu/bufdelete.nvim", commit = "8d15a0a3189b02ac7ad9dd6dc089cc62edf095c6" },
+  { "echasnovski/mini.bufremove", commit = "14805473144fffbd019d07e51bed2d176e065ee9" },
   { "folke/lazy.nvim", version = "^9" },
   { "folke/neodev.nvim", version = "^2" },
   { "folke/tokyonight.nvim", commit = "fd0a005fd8986ec0d98a1938dc570303e8d8444b" },

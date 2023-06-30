@@ -27,6 +27,8 @@
 --       -> close_right   → <leader>br to delete all wintabs to the right.
 --       -> sort          → <leader>bs to sort wintabs.
 --       -> close_tab     → <leader>bd to select a wintab to close.
+
+
 local M = {}
 
 --- HELPERS -----------------------------------------------------------------
@@ -81,11 +83,7 @@ function M.comparator.unique_path(bufnr_a, bufnr_b) return unique_path(bufnr_a) 
 ---@return boolean comparison true if A is sorted before B, false if B should be sorted before A.
 function M.comparator.modified(bufnr_a, bufnr_b) return bufinfo(bufnr_a).lastused > bufinfo(bufnr_b).lastused end
 
-
-
-
 --- FUNCTIONS ---------------------------------------------------------------
-
 --- Move the current buffer tab n places in the bufferline.
 ---@param n number The number of tabs to move the current buffer over by (positive = right, negative = left)
 function M.move(n)
@@ -129,14 +127,26 @@ end
 ---@param tabnr number The position of the buffer to navigate to.
 function M.nav_to(tabnr) vim.cmd.b(vim.t.bufs[tabnr]) end
 
---- Close a given buffer,
---- asking for confirmation if unsaved.
----@param bufnr? number The buffer to close or the current buffer if not provided.
----@param force? boolean Whether or not to force close the buffers or confirm changes (default: false).
+--- Close a given buffer
+---@param bufnr? number The buffer to close or the current buffer if not provided
+---@param force? boolean Whether or not to foce close the buffers or confirm changes (default: false)
 function M.close(bufnr, force)
-  if force == nil then force = false end
-  if require("base.utils").is_available "bufdelete.nvim" then
-    require("bufdelete").bufdelete(bufnr, force)
+  if require("base.utils").is_available "mini.bufremove" then
+    if not force and vim.api.nvim_get_option_value("modified", { buf = bufnr }) then
+      local bufname = vim.fn.expand "%"
+      local empty = bufname == ""
+      if empty then bufname = "Untitled" end
+      local confirm = vim.fn.confirm(('Save changes to "%s"?'):format(bufname), "&Yes\n&No\n&Cancel", 1, "Question")
+      if confirm == 1 then
+        if empty then return end
+        vim.cmd.write()
+      elseif confirm == 2 then
+        force = true
+      else
+        return
+      end
+    end
+    require("mini.bufremove").delete(bufnr, force)
   else
     vim.cmd((force and "bd!" or "confirm bd") .. (bufnr == nil and "" or bufnr))
   end
@@ -148,10 +158,9 @@ end
 ---@param force? boolean Whether or not to force close the buffers or confirm changes (default: false).
 function M.wipe(bufnr, force)
   if force == nil then force = false end
-  if require("base.utils").is_available "bufdelete.nvim" then
-    -- WORKAROUND: more reliable than actual bufwipeout
-    require("bufdelete").bufdelete(bufnr, force) -- close buffer(s)
-    vim.cmd("silent! close")                     -- close current window
+  if require("base.utils").is_available "mini.bufremove" then
+    M.close(bufnr, force)    -- close buffer(s)
+    vim.cmd("silent! close") -- close current window
   else
     vim.cmd((force and "bd!" or "confirm bd") .. (bufnr == nil and "" or bufnr))
     vim.cmd("silent! close")
