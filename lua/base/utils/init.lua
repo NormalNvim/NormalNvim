@@ -76,9 +76,11 @@ function M.extend_tbl(default, opts)
   return default and vim.tbl_deep_extend("force", default, opts) or opts
 end
 
---- Insert one or more values into a list like table and maintain that you do not insert non-unique values (THIS MODIFIES `lst`).
+--- Insert one or more values into a list like table and maintain that you
+--- do not insert non-unique values (THIS MODIFIES `lst`).
 ---@param lst any[]|nil The list like table that you want to insert into.
----@param vals any|any[] Either a list like table of values to be inserted or a single value to be inserted.
+---@param vals any|any[] Either a list like table of values to be inserted
+---                      or a single value to be inserted.
 ---@return any[] # The modified list like table.
 function M.list_insert_unique(lst, vals)
   if not lst then lst = {} end
@@ -100,7 +102,8 @@ end
 ---@param condition boolean # Whether to run the function or not.
 ---@return any|nil result # the result of the function running or nil.
 function M.conditional_func(func, condition, ...)
-  -- if the condition is true or no condition is provided, evaluate the function with the rest of the parameters and return the result
+  -- if the condition is true or no condition is provided, evaluate
+  -- the function with the rest of the parameters and return the result
   if condition and type(func) == "function" then return func(...) end
 end
 
@@ -118,9 +121,11 @@ function M.get_icon(kind, padding, no_fallback)
   return icon and icon .. string.rep(" ", padding or 0) or ""
 end
 
---- Get a icon spinner table if it is available in the Nvim icons. Icons in format `kind1`,`kind2`, `kind3`, ...
+--- Get a icon spinner table if it is available in the Nvim icons.
+--- Icons in format `kind1`,`kind2`, `kind3`, ...
 ---@param kind string The kind of icon to check for sequential entries of.
----@return string[]|nil spinners # A collected table of spinning icons in sequential order or nil if none exist.
+---@return string[]|nil spinners # A collected table of spinning icons
+---                                in sequential order or nil if none exist.
 function M.get_spinner(kind, ...)
   local spinner = {}
   local counter = 1
@@ -205,10 +210,12 @@ function M.system_open(path)
 end
 
 --- Toggle a user terminal if it exists, if not then create a new one and save it.
----@param opts string|table A terminal command string or a table of options for Terminal:new() (Check toggleterm.nvim documentation for table format).
+---@param opts string|table A terminal command string or a table of options
+---                         for Terminal:new() Check toggleterm.nvim
+---                         documentation for table format.
 function M.toggle_term_cmd(opts)
   local terms = {}
-  -- if a command string is provided, create a basic table for Terminal:new() options
+  -- if a command string is provided, create a table for Terminal:new() options
   if type(opts) == "string" then opts = { cmd = opts, hidden = true } end
   local num = vim.v.count > 0 and vim.v.count or 1
   -- if terminal doesn't exist yet, create it
@@ -231,11 +238,12 @@ end
 function M.alpha_button(sc, txt)
   -- replace <leader> in shortcut text with LDR for nicer printing.
   local sc_ = sc:gsub("%s", ""):gsub("LDR", "<leader>")
-  -- if the leader is set, replace the text with the actual leader key for nicer printing.
+  -- if the leader is set, replace the text with the actual leader key.
   if vim.g.mapleader then
     sc = sc:gsub("LDR", vim.g.mapleader == " " and "SPC" or vim.g.mapleader)
   end
-  -- return the button entity to display the correct text and send the correct keybinding on press.
+  -- return the button entity to display the correct text
+  -- and send the correct keybinding on press.
   return {
     type = "button",
     val = txt,
@@ -256,7 +264,8 @@ function M.alpha_button(sc, txt)
   }
 end
 
---- Check if a plugin is defined in lazy. Useful with lazy loading when a plugin is not necessarily loaded yet.
+--- Check if a plugin is defined in lazy. Useful with lazy loading
+--- when a plugin is not necessarily loaded yet.
 ---@param plugin string The plugin to search for.
 ---@return boolean available # Whether the plugin is available.
 function M.is_available(plugin)
@@ -264,10 +273,11 @@ function M.is_available(plugin)
   return lazy_config_avail and lazy_config.plugins[plugin] ~= nil
 end
 
---- A helper function to wrap a module function to require a plugin before running.
+--- Helper function to require a module when running a function.
 ---@param plugin string The plugin to call `require("lazy").load` with.
 ---@param module table The system module where the functions live (e.g. `vim.ui`).
----@param func_names string|string[] The functions to wrap in the given module (e.g. `{ "ui", "select }`).
+---@param func_names string|string[] The functions to wrap in
+---                                  the given module (e.g. `{ "ui", "select }`).
 function M.load_plugin_with_func(plugin, module, func_names)
   if type(func_names) == "string" then func_names = { func_names } end
   for _, func in ipairs(func_names) do
@@ -294,7 +304,9 @@ function M.which_key_register()
 end
 
 --- Table based API for setting keybindings.
----@param map_table table A nested table where the first key is the vim mode, the second key is the key to map, and the value is the function to set the mapping to.
+---@param map_table table A nested table where the first key is the vim mode,
+---                       the second key is the key to map, and the value is
+---                       the function to set the mapping to.
 ---@param base? table A base set of options to set on every keybinding.
 function M.set_mappings(map_table, base)
   -- iterate over the first keys for each mode
@@ -321,7 +333,8 @@ function M.set_mappings(map_table, base)
       end
     end
   end
-  if package.loaded["which-key"] then M.which_key_register() end -- if which-key is loaded already, register
+  -- if which-key is loaded already, register
+  if package.loaded["which-key"] then M.which_key_register() end
 end
 
 --- regex used for matching a valid URL/URI string
@@ -343,9 +356,11 @@ function M.set_url_effect()
   end
 end
 
---- Run a shell command and capture the output and if the command succeeded or failed
+--- Run a shell command and capture the output and if the command
+--- succeeded or failed
 ---@param cmd string The terminal command to execute
----@param show_error? boolean Whether or not to show an unsuccessful command as an error to the user
+---@param show_error? boolean Whether or not to show an unsuccessful command
+---                           as an error to the user
 ---@return string|nil # The result of a successfully executed command or nil
 function M.cmd(cmd, show_error)
   if type(cmd) == "string" then cmd = vim.split(cmd, " ") end
