@@ -4,11 +4,11 @@
 --  LSP related utility functions to use within Nvim and user configurations.
 
 --    Functions:
---       -> LSP settings
---       -> Formatting settings
---       -> setup
---       -> on_attach
---       -> config
+--      -> LSP settings
+--      -> Formatting settings
+--      -> setup
+--      -> on_attach
+--      -> config
 
 local M = {}
 local tbl_contains = vim.tbl_contains

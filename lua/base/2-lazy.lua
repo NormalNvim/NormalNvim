@@ -3,11 +3,12 @@
 -- DESCRIPTION:
 -- Use this file to configure the way you get updates.
 
--- INDEX:
---   -> nvim updater options      → choose your updates channed here.
---   -> lazyload extra behaviors  → extra stuff we add to lazy for better UX.
---   -> assign spec               → if channel==stable, uses lazy_snatshot.lua
---   -> setup using spec          → actual setup.
+--    Sections:
+--
+--      -> nvim updater options  → choose your updates channed here.
+--      -> extra behaviors       → extra stuff we add to lazy for better UX.
+--      -> assign spec           → if channel==stable, uses lazy_snatshot.lua
+--      -> setup using spec      → actual setup.
 
 
 -- This collection is used to lock plugin versions.

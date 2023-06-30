@@ -10,8 +10,8 @@
 --  unless it become deprecated it the future or cause any kind of trouble.
 
 --    Functions:
---       -> update      → update a single mason package.
---       -> updateall   → update all mason packages.
+--      -> update      → update a single mason package.
+--      -> updateall   → update all mason packages.
 --
 
 local M = {}

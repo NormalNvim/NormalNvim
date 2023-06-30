@@ -10,14 +10,14 @@
 --    than one device.
 --
 --    Functions:
---       -> generate_snapshot   → used by :NvimFreezePluginVersions.
---       -> version             → used by :NvimVersion.
---       -> changelog           → used by :NvimChangeLog.
---       -> update_packages     → used by :NvimUpdatePlugins.
---       -> create_rollback     → ured by :NvimRollbackCreate.
---       -> rollback            → used by :NvimRollbackRestore.
---       -> attempt_update      → helper for update.
---       -> update              → used by :NvimUpdateConfig.
+--      -> generate_snapshot   → used by :NvimFreezePluginVersions.
+--      -> version             → used by :NvimVersion.
+--      -> changelog           → used by :NvimChangeLog.
+--      -> update_packages     → used by :NvimUpdatePlugins.
+--      -> create_rollback     → ured by :NvimRollbackCreate.
+--      -> rollback            → used by :NvimRollbackRestore.
+--      -> attempt_update      → helper for update.
+--      -> update              → used by :NvimUpdateConfig.
 
 local git = require "base.utils.git"
 

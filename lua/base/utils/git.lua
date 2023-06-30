@@ -10,30 +10,30 @@
 --  So if you you decide to delete the updater, feel free to delete this too.
 
 --    Helpers:
---       -> git.cmd              → Used to run git commands.
---       -> git.pretty_changelog → Used by 'git.current_version'.
+--      -> git.cmd              → Used to run git commands.
+--      -> git.pretty_changelog → Used by 'git.current_version'.
 
 --    Functions:
---       -> git.available
---       -> git.is_repo
---       -> git.fetch
---       -> git.pull
---       -> git.checkout
---       -> git.hard_reset
---       -> git.branch_contains
---       -> git.branch_remote
---       -> git.remote_add
---       -> git.remote_update
---       -> git.current_version
---       -> git.verify
---       -> git.local_head
---       -> git.remote_head
---       -> git.tag_commit
---       -> git.get_commit_range
---       -> git.get_versions
---       -> git.latest_version
---       -> git.is_breaking
---       -> git.breaking_changes
+--      -> git.available
+--      -> git.is_repo
+--      -> git.fetch
+--      -> git.pull
+--      -> git.checkout
+--      -> git.hard_reset
+--      -> git.branch_contains
+--      -> git.branch_remote
+--      -> git.remote_add
+--      -> git.remote_update
+--      -> git.current_version
+--      -> git.verify
+--      -> git.local_head
+--      -> git.remote_head
+--      -> git.tag_commit
+--      -> git.get_commit_range
+--      -> git.get_versions
+--      -> git.latest_version
+--      -> git.is_breaking
+--      -> git.breaking_changes
 
 local git = { url = "https://github.com/" }
 

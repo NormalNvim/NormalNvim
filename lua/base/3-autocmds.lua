@@ -4,6 +4,7 @@
 -- All autocmds are defined here.
 
 --    Sections:
+--
 --       ## EXTRA LOGIC
 --       -> 1. Events to load plugins faster.
 --       -> 2. Save/restore window layout when possible.

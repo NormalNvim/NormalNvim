@@ -5,26 +5,26 @@
 --
 
 --    Helpers:
---       -> reload                → Reload nvim settings.
---       -> extend_tbl            → Add the content of a table to another table.
---       -> list_insert_unique    → Insert in a table without repetition.
---       -> conditional_func      → Run a function if conditions are met.
---       -> get_icon              → Return an icon from the icons directory.
---       -> get_spinner           → Like the former but for animated iconns.
---       -> get_hlgroup           → Get highlight properties a highlight name.
---       -> notify                → Send a notification asynchronously.
---       -> event                 → Manually emit a system event.
---       -> system_open           → Open the file or URL under the cursor.
---       -> toggle_term_cmd       → get/set a re-usable toggleterm session.
---       -> alpha_button          → Nice way to create a button for alpha.
---       -> is_available          → Return true if the plugin is available.
---       -> load_plugin_with_func → Load a plugin before running a command.
---       -> which_key_register    → When setting a mapping, add it to whichkey.
---       -> set_mappings          → We use it to create mappings in a clean way.
---       -> delete_url_effect     → Don't show an effect for urls.
---       -> set_url_effect        → Show an effect for urls.
---       -> cmd                   → Run a shell command and return true/false
---       -> confirm_quit          → Ask for confirmation before exit.
+--      -> reload                → Reload nvim settings.
+--      -> extend_tbl            → Add the content of a table to another table.
+--      -> list_insert_unique    → Insert in a table without repetition.
+--      -> conditional_func      → Run a function if conditions are met.
+--      -> get_icon              → Return an icon from the icons directory.
+--      -> get_spinner           → Like the former but for animated iconns.
+--      -> get_hlgroup           → Get highlight properties a highlight name.
+--      -> notify                → Send a notification asynchronously.
+--      -> event                 → Manually emit a system event.
+--      -> system_open           → Open the file or URL under the cursor.
+--      -> toggle_term_cmd       → get/set a re-usable toggleterm session.
+--      -> alpha_button          → Nice way to create a button for alpha.
+--      -> is_available          → Return true if the plugin is available.
+--      -> load_plugin_with_func → Load a plugin before running a command.
+--      -> which_key_register    → When setting a mapping, add it to whichkey.
+--      -> set_mappings          → We use it to create mappings in a clean way.
+--      -> delete_url_effect     → Don't show an effect for urls.
+--      -> set_url_effect        → Show an effect for urls.
+--      -> cmd                   → Run a shell command and return true/false
+--      -> confirm_quit          → Ask for confirmation before exit.
 
 
 local M = {}

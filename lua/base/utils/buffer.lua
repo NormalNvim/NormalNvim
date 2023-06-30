@@ -7,26 +7,26 @@
 --  as it takes a lot of complexity out of '../4-mappings.lua'.
 
 --    Helpers:
---       -> bufinfo
---       -> unique_path
---       -> is_valid
---       -> comparator.bufnr
---       -> comparator.extension
---       -> comparator.fullpath
---       -> comparator.unique_path
---       -> comparator.modified
+--      -> bufinfo
+--      -> unique_path
+--      -> is_valid
+--      -> comparator.bufnr
+--      -> comparator.extension
+--      -> comparator.fullpath
+--      -> comparator.unique_path
+--      -> comparator.modified
 
 --    Functions:
---       -> move          → <b / >b to move the current wintab to left/right.
---       -> nav           → ]b / [b to open the wintab on the left/right.
---       -> nav_to        → (unused) We use heirline instead for <leader>bb.
---       -> close         → <leader>C to close the current buffer but not its window.
---       -> wipe          → <leader>c to close the current buffer and its window.
---       -> close_all     → <leader>bC to close all buffers.
---       -> close_left    → <leader>bl to delete all wintabs to the left.
---       -> close_right   → <leader>br to delete all wintabs to the right.
---       -> sort          → <leader>bs to sort wintabs.
---       -> close_tab     → <leader>bd to select a wintab to close.
+--      -> move          → <b / >b to move the current wintab to left/right.
+--      -> nav           → ]b / [b to open the wintab on the left/right.
+--      -> nav_to        → (unused) We use heirline instead for <leader>bb.
+--      -> close         → <leader>C to close the current buffer but not its window.
+--      -> wipe          → <leader>c to close the current buffer and its window.
+--      -> close_all     → <leader>bC to close all buffers.
+--      -> close_left    → <leader>bl to delete all wintabs to the left.
+--      -> close_right   → <leader>br to delete all wintabs to the right.
+--      -> sort          → <leader>bs to sort wintabs.
+--      -> close_tab     → <leader>bd to select a wintab to close.
 
 
 local M = {}
