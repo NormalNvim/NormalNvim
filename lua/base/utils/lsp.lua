@@ -93,8 +93,10 @@ M.setup = function(server)
   if setup_handler then setup_handler(server, opts) end
 end
 
---- Helper function to check if any active LSP clients given a filter provide a specific capability
----@param capability string The server capability to check for (example: "documentFormattingProvider")
+--- Helper function to check if any active LSP clients given a filter provide
+--- a specific capability
+---@param capability string The server capability to check for
+---                         example: "documentFormattingProvider"
 ---@param filter vim.lsp.get_active_clients.filter|nil (table|nil) A table with
 ---              key-value pairs used to filter the returned clients.
 ---              The available keys are:
@@ -112,7 +114,7 @@ end
 local function add_buffer_autocmd(augroup, bufnr, autocmds)
   if not vim.tbl_islist(autocmds) then autocmds = { autocmds } end
   local cmds_found, cmds =
-    pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
+      pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
   if not cmds_found or vim.tbl_isempty(cmds) then
     vim.api.nvim_create_augroup(augroup, { clear = false })
     for _, autocmd in ipairs(autocmds) do
@@ -127,7 +129,7 @@ end
 
 local function del_buffer_autocmd(augroup, bufnr)
   local cmds_found, cmds =
-    pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
+      pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
   if cmds_found then
     vim.tbl_map(function(cmd) vim.api.nvim_del_autocmd(cmd.id) end, cmds)
   end
@@ -163,12 +165,14 @@ M.on_attach = function(client, bufnr)
   if client.supports_method "textDocument/inlayHint" then
     vim.lsp.buf.inlay_hint(bufnr, vim.g.inlay_hints_enabled) -- enable on startup
     vim.b.inlay_hints_enabled = vim.g.inlay_hints_enabled    -- sync buffer toggle
-   lsp_mappings.n["<leader>ui"] = {
+    lsp_mappings.n["<leader>ui"] = {
       function() require("base.utils.ui").toggle_buffer_inlay_hints() end,
-      desc = "Toggle LSP inlay hints (buffer)"}
+      desc = "Toggle LSP inlay hints (buffer)",
+    }
     lsp_mappings.n["<leader>uI"] = {
       function() require("base.utils.ui").toggle_inlay_hints() end,
-      desc = "Toggle LSP inlay hints (global)"}
+      desc = "Toggle LSP inlay hints (global)",
+    }
   end
 
   -- NOTE: Telescope has no method for project level diagnostics anymore.
@@ -183,12 +187,12 @@ M.on_attach = function(client, bufnr)
 
   if is_available "mason-lspconfig.nvim" then
     lsp_mappings.n["<leader>li"] =
-      { "<cmd>LspInfo<cr>", desc = "LSP information" }
+    { "<cmd>LspInfo<cr>", desc = "LSP information" }
   end
 
   if is_available "null-ls.nvim" then
     lsp_mappings.n["<leader>lI"] =
-      { "<cmd>NullLsInfo<cr>", desc = "Null-ls information" }
+    { "<cmd>NullLsInfo<cr>", desc = "Null-ls information" }
   end
 
   if client.supports_method "textDocument/codeAction" then
@@ -205,7 +209,7 @@ M.on_attach = function(client, bufnr)
       desc = "Refresh codelens",
       callback = function()
         if
-          not M.has_capability("textDocument/codeLens", { bufnr = bufnr })
+            not M.has_capability("textDocument/codeLens", { bufnr = bufnr })
         then
           del_buffer_autocmd("lsp_codelens_refresh", bufnr)
           return
@@ -239,8 +243,8 @@ M.on_attach = function(client, bufnr)
   end
 
   if
-    client.supports_method "textDocument/formatting"
-    and not tbl_contains(M.formatting.disabled, client.name)
+      client.supports_method "textDocument/formatting"
+      and not tbl_contains(M.formatting.disabled, client.name)
   then
     lsp_mappings.n["<leader>lf"] = {
       function() vim.lsp.buf.format(M.format_opts) end,
@@ -257,22 +261,22 @@ M.on_attach = function(client, bufnr)
     local autoformat = M.formatting.format_on_save
     local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
     if
-      autoformat.enabled
-      and (tbl_isempty(autoformat.allow_filetypes or {}) or tbl_contains(
-        autoformat.allow_filetypes,
-        filetype
-      ))
-      and (
-        tbl_isempty(autoformat.ignore_filetypes or {})
-        or not tbl_contains(autoformat.ignore_filetypes, filetype)
-      )
+        autoformat.enabled
+        and (tbl_isempty(autoformat.allow_filetypes or {}) or tbl_contains(
+          autoformat.allow_filetypes,
+          filetype
+        ))
+        and (
+          tbl_isempty(autoformat.ignore_filetypes or {})
+          or not tbl_contains(autoformat.ignore_filetypes, filetype)
+        )
     then
       add_buffer_autocmd("lsp_auto_format", bufnr, {
         events = "BufWritePre",
         desc = "autoformat on save",
         callback = function()
           if
-            not M.has_capability("textDocument/formatting", { bufnr = bufnr })
+              not M.has_capability("textDocument/formatting", { bufnr = bufnr })
           then
             del_buffer_autocmd("lsp_auto_format", bufnr)
             return
@@ -282,8 +286,8 @@ M.on_attach = function(client, bufnr)
             autoformat_enabled = vim.g.autoformat_enabled
           end
           if
-            autoformat_enabled
-            and ((not autoformat.filter) or autoformat.filter(bufnr))
+              autoformat_enabled
+              and ((not autoformat.filter) or autoformat.filter(bufnr))
           then
             vim.lsp.buf.format(
               require("base.utils").extend_tbl(
@@ -312,10 +316,10 @@ M.on_attach = function(client, bufnr)
         desc = "highlight references when cursor holds",
         callback = function()
           if
-            not M.has_capability(
-              "textDocument/documentHighlight",
-              { bufnr = bufnr }
-            )
+              not M.has_capability(
+                "textDocument/documentHighlight",
+                { bufnr = bufnr }
+              )
           then
             del_buffer_autocmd("lsp_document_highlight", bufnr)
             return
@@ -451,24 +455,36 @@ M.on_attach = function(client, bufnr)
     end
   end
 
-  if client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens then
-    if vim.b.semantic_tokens_enabled == nil then vim.b.semantic_tokens_enabled = vim.g.semantic_tokens_enabled end
-    if not vim.g.semantic_tokens_enabled then vim.lsp.semantic_tokens["stop"](bufnr, client.id) end
+  if
+      client.supports_method "textDocument/semanticTokens/full"
+      and vim.lsp.semantic_tokens
+  then
+    if vim.b.semantic_tokens_enabled == nil then
+      vim.b.semantic_tokens_enabled = vim.g.semantic_tokens_enabled
+    end
+    if not vim.g.semantic_tokens_enabled then
+      vim.lsp.semantic_tokens["stop"](bufnr, client.id)
+    end
     lsp_mappings.n["<leader>uY"] = {
-      function() require("astronvim.utils.ui").toggle_buffer_semantic_tokens(bufnr) end,
+      function()
+        require("astronvim.utils.ui").toggle_buffer_semantic_tokens(bufnr)
+      end,
       desc = "Toggle LSP semantic highlight (buffer)",
     }
   end
 
   if not vim.tbl_isempty(lsp_mappings.v) then
     lsp_mappings.v["<leader>l"] =
-      { desc = (vim.g.icons_enabled and " " or "") .. "LSP" }
+    { desc = (vim.g.icons_enabled and " " or "") .. "LSP" }
   end
   utils.set_mappings(lsp_mappings, { buffer = bufnr })
 
-
   for id, _ in pairs(base.lsp.progress) do -- clear lingering progress messages
-    if not next(vim.lsp.get_active_clients { id = tonumber(id:match "^%d+") }) then base.lsp.progress[id] = nil end
+    if
+        not next(vim.lsp.get_active_clients { id = tonumber(id:match "^%d+") })
+    then
+      base.lsp.progress[id] = nil
+    end
   end
   local on_attach_override = nil -- todo: clean this
   conditional_func(on_attach_override, true, client, bufnr)
@@ -477,22 +493,22 @@ end
 --- The default Nvim LSP capabilities
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem.documentationFormat =
-  { "markdown", "plaintext" }
+{ "markdown", "plaintext" }
 M.capabilities.textDocument.completion.completionItem.snippetSupport = true
 M.capabilities.textDocument.completion.completionItem.preselectSupport = true
 M.capabilities.textDocument.completion.completionItem.insertReplaceSupport =
-  true
+    true
 M.capabilities.textDocument.completion.completionItem.labelDetailsSupport =
-  true
+    true
 M.capabilities.textDocument.completion.completionItem.deprecatedSupport = true
 M.capabilities.textDocument.completion.completionItem.commitCharactersSupport =
-  true
+    true
 M.capabilities.textDocument.completion.completionItem.tagSupport =
-  { valueSet = { 1 } }
+{ valueSet = { 1 } }
 M.capabilities.textDocument.completion.completionItem.resolveSupport =
-  { properties = { "documentation", "detail", "additionalTextEdits" } }
+{ properties = { "documentation", "detail", "additionalTextEdits" } }
 M.capabilities.textDocument.foldingRange =
-  { dynamicRegistration = false, lineFoldingOnly = true }
+{ dynamicRegistration = false, lineFoldingOnly = true }
 M.capabilities = M.capabilities
 M.flags = {}
 
@@ -510,14 +526,14 @@ function M.config(server_name)
   lsp_opts = {
     init_options = {
       preferences = { -- inlayhints options (actually enabled in M.on_attach)
-          includeInlayParameterNameHints = "all",
-          includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-          includeInlayFunctionParameterTypeHints = true,
-          includeInlayVariableTypeHints = true,
-          includeInlayPropertyDeclarationTypeHints = true,
-          includeInlayFunctionLikeReturnTypeHints = true,
-          includeInlayEnumMemberValueHints = true,
-          importModuleSpecifierPreference = 'non-relative'
+        includeInlayParameterNameHints = "all",
+        includeInlayParameterNameHintsWhenArgumentMatchesName = true,
+        includeInlayFunctionParameterTypeHints = true,
+        includeInlayVariableTypeHints = true,
+        includeInlayPropertyDeclarationTypeHints = true,
+        includeInlayFunctionLikeReturnTypeHints = true,
+        includeInlayEnumMemberValueHints = true,
+        importModuleSpecifierPreference = "non-relative",
       },
     },
   }
@@ -539,7 +555,8 @@ function M.config(server_name)
       lsp_opts.settings = { yaml = { schemas = schemastore.yaml.schemas() } }
     end
   end
-  if server_name == "lua_ls" then -- by default initialize neodev and disable third party checking
+  -- by default initialize neodev and disable third party checking
+  if server_name == "lua_ls" then
     pcall(require, "neodev")
     lsp_opts.before_init = function(config)
       if vim.b.neodev_enabled then

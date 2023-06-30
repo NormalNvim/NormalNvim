@@ -25,7 +25,6 @@
 --      -> cmd                   → Run a shell command and return true/false
 --      -> confirm_quit          → Ask for confirmation before exit.
 
-
 local M = {}
 
 --- Partially reload Nvim user settings. Includes core vim options, mappings,

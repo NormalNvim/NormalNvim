@@ -3,7 +3,6 @@
 -- DESCRIPTION:
 -- Extra functionality we add to heirline we use to manage heirline.
 
-
 local M = {}
 
 local hl = require "base.utils.status.hl"
@@ -14,10 +13,10 @@ local utils = require "base.utils"
 local buffer_utils = require "base.utils.buffer"
 local get_icon = utils.get_icon
 
---- A helper function to get the type a tab or buffer is
----@param self table the self table from a heirline component function
----@param prefix? string the prefix of the type, either "tab" or "buffer" (Default: "buffer")
----@return string # the string of prefix with the type (i.e. "_active" or "_visible")
+--- A helper function to get the type a tab or buffer is.
+---@param self table the self table from a heirline component function.
+---@param prefix? string the prefix of the type, either "tab" or "buffer" (Default: "buffer").
+---@return string # the string of prefix with the type (i.e. "_active" or "_visible").
 function M.tab_type(self, prefix)
   local tab_type = ""
   if self.is_active then
@@ -28,7 +27,7 @@ function M.tab_type(self, prefix)
   return (prefix or "buffer") .. tab_type
 end
 
---- Make a list of buffers, rendering each buffer with the provided component
+--- Make a list of buffers, rendering each buffer with the provided component.
 ---@param component table
 ---@return table
 M.make_buflist = function(component)
@@ -43,7 +42,7 @@ M.make_buflist = function(component)
           right = "tabline_bg",
         }
       end,
-      { -- bufferlist
+      {              -- bufferlist
         init = function(self) self.tab_type = M.tab_type(self) end,
         on_click = { -- add clickable component to each buffer
           callback = function(_, minwid) vim.api.nvim_win_set_buf(0, minwid) end,
@@ -67,25 +66,30 @@ M.make_buflist = function(component)
               self.label = label
             end
           end,
-          provider = function(self) return provider.str { str = self.label, padding = { left = 1, right = 1 } } end,
+          provider = function(self)
+            return provider.str {
+              str = self.label,
+              padding = { left = 1, right = 1 },
+            }
+          end,
           hl = hl.get_attributes "buffer_picker",
         },
-        component, -- create buffer component
+        component,                                                -- create buffer component
       },
       function(self) return buffer_utils.is_valid(self.bufnr) end -- disable surrounding
     ),
     { provider = get_icon "ArrowLeft" .. " ", hl = overflow_hl },
     { provider = get_icon "ArrowRight" .. " ", hl = overflow_hl },
     function() return vim.t.bufs end, -- use base bufs variable
-    false -- disable internal caching
+    false                             -- disable internal caching
   )
 end
 
 --- Alias to require("heirline.utils").make_tablist
 function M.make_tablist(...) return require("heirline.utils").make_tablist(...) end
 
---- Run the buffer picker and execute the callback function on the selected buffer
----@param callback function with a single parameter of the buffer number
+--- Run the buffer picker and execute the callback function on the selected buffer.
+---@param callback function with a single parameter of the buffer number.
 function M.buffer_picker(callback)
   local tabline = require("heirline").tabline
   -- if buflist then
