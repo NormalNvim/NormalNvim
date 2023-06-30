@@ -2,7 +2,6 @@
 --
 --  DESCRIPTION:
 --  General utility functions to use within Nvim.
---
 
 --    Helpers:
 --      -> reload                → Reload nvim settings.
