@@ -1,13 +1,18 @@
---- ### Mason Utils
+--- ### Mason utils
 --
--- Mason related utility functions to use within Nvim and user configurations.
+--  DESCRIPTION:
+--  Functions called by the plugin mason in ../../plugins/3-dev-core.lua
 --
--- This module can be loaded with `local mason_utils = require("base.utils.mason")`
+--  Thiese couple functions are a re-implementation of mason functions for
+--  better UX. Frindly notifications and stuff, so you know what's going on.
 --
--- @module base.utils.mason
--- @see base.utils
--- @copyright 2022
--- @license GNU General Public License v3.0
+--  While you could technically delete this file, we encourage you to keep it
+--  unless it become deprecated it the future or cause any kind of trouble.
+
+--    Functions:
+--       -> update      → update a single mason package.
+--       -> updateall   → update all mason packages.
+--
 
 local M = {}
 
@@ -93,7 +98,7 @@ function M.update_all()
                 running = running - 1
                 if running == 0 then
                   notify "Mason: Update Complete"
-                  basevent "MasonUpdateCompleted"
+                  baseevent "MasonUpdateCompleted"
                 end
               end)
             else
@@ -104,7 +109,7 @@ function M.update_all()
                 else
                   notify "Mason: No updates available"
                 end
-                basevent "MasonUpdateCompleted"
+                baseevent "MasonUpdateCompleted"
               end
             end
           end)

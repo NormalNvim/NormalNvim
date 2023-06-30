@@ -1,3 +1,6 @@
+-- Command to check if you have the required dependencies to use NormalNvim.
+--
+-- DESCRIPTION:
 -- On neovim you can run
 -- :healthcheck base
 -- to know possible causes in case NormalNvim is not working correctly.

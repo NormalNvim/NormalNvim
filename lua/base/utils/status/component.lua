@@ -1,12 +1,8 @@
---- ### base Status Components
+--- ### base status components
 --
--- Statusline related component functions to use with Heirline
---
--- This module can be loaded with `local component = require "base.utils.status.component"`
---
--- @module base.utils.status.component
--- @copyright 2023
--- @license GNU General Public License v3.0
+-- DESCRIPTION:
+-- Components we load on the plugin heirline.
+
 
 local M = {}
 

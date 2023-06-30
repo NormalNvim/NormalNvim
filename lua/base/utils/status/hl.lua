@@ -1,12 +1,8 @@
---- ### base Status Highlighting
+--- ### base status highlighting
 --
--- Statusline related highlighting utilities
---
--- This module can be loaded with `local hl = require "base.utils.status.hl"`
---
--- @module base.utils.status.hl
--- @copyright 2023
--- @license GNU General Public License v3.0
+-- DESCRIPTION:
+-- Set colors for heirline.
+
 
 local M = {}
 

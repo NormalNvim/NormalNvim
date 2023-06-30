@@ -1,29 +1,39 @@
---- ### Nvim Utilities
+--- ### Nvim general utils
 --
--- Various utility functions to use within Nvim.
+--  DESCRIPTION:
+--  General utility functions to use within Nvim.
 --
--- This module can be loaded with `local utils = require "base.utils"`
---
--- @module base.utils
--- @copyright 2022
--- @license GNU General Public License v3.0
+
+--    Helpers:
+--       -> reload                → Reload nvim settings.
+--       -> extend_tbl            → Add the content of a table to another table.
+--       -> list_insert_unique    → Insert in a table without repetition.
+--       -> conditional_func      → Run a function if conditions are met.
+--       -> get_icon              → Return an icon from the icons directory.
+--       -> get_spinner           → Like the former but for animated iconns.
+--       -> get_hlgroup           → Get highlight properties a highlight name.
+--       -> notify                → Send a notification asynchronously.
+--       -> event                 → Manually emit a system event.
+--       -> system_open           → Open the file or URL under the cursor.
+--       -> toggle_term_cmd       → get/set a re-usable toggleterm session.
+--       -> alpha_button          → Nice way to create a button for alpha.
+--       -> is_available          → Return true if the plugin is available.
+--       -> load_plugin_with_func → Load a plugin before running a command.
+--       -> which_key_register    → When setting a mapping, add it to whichkey.
+--       -> set_mappings          → We use it to create mappings in a clean way.
+--       -> delete_url_effect     → Don't show an effect for urls.
+--       -> set_url_effect        → Show an effect for urls.
+--       -> cmd                   → Run a shell command and return true/false
+--       -> confirm_quit          → Ask for confirmation before exit.
+
 
 local M = {}
 
---- Merge extended options with a default table of options
----@param default? table The default table that you want to merge into
----@param opts? table The new options that should be merged with the default table
----@return table # The merged table
-function M.extend_tbl(default, opts)
-  opts = opts or {}
-  return default and vim.tbl_deep_extend("force", default, opts) or opts
-end
-
 --- Partially reload Nvim user settings. Includes core vim options, mappings,
---- and highlights. This is an experimental feature and may lead to
+--- and highlights. This is an experimental feature and may lead to.
 --- instabilities until restart.
----@param quiet? boolean Whether or not to notify on completion of reloading
----@return boolean # True if the reload was successful, False otherwise
+---@param quiet? boolean Whether or not to notify on completion of reloading.
+---@return boolean # True if the reload was successful, False otherwise.
 function M.reload(quiet)
   -- Reload options, mappings and plugins (this is managed automatically by lazy).
   -- Never reload base.3-autocmds to avoid issues.
@@ -45,23 +55,32 @@ function M.reload(quiet)
       success = false
     end
   end
-  if not quiet then -- if not quiet, then notify of result
+  if not quiet then -- if not quiet, then notify of result.
     if success then
       M.notify("Nvim successfully reloaded", vim.log.levels.INFO)
     else
       M.notify("Error reloading Nvim...", vim.log.levels.ERROR)
     end
   end
-  vim.cmd.doautocmd "ColorScheme" -- For heirline
+  vim.cmd.doautocmd "ColorScheme" -- sFor heirline.
   vim.cmd("colorscheme " .. base.default_colorscheme)
 
   return success
 end
 
---- Insert one or more values into a list like table and maintain that you do not insert non-unique values (THIS MODIFIES `lst`)
----@param lst any[]|nil The list like table that you want to insert into
----@param vals any|any[] Either a list like table of values to be inserted or a single value to be inserted
----@return any[] # The modified list like table
+--- Merge extended options with a default table of options
+---@param default? table The default table that you want to merge into
+---@param opts? table The new options that should be merged with the default table
+---@return table # The merged table
+function M.extend_tbl(default, opts)
+  opts = opts or {}
+  return default and vim.tbl_deep_extend("force", default, opts) or opts
+end
+
+--- Insert one or more values into a list like table and maintain that you do not insert non-unique values (THIS MODIFIES `lst`).
+---@param lst any[]|nil The list like table that you want to insert into.
+---@param vals any|any[] Either a list like table of values to be inserted or a single value to be inserted.
+---@return any[] # The modified list like table.
 function M.list_insert_unique(lst, vals)
   if not lst then lst = {} end
   assert(vim.tbl_islist(lst), "Provided table is not a list like table")
@@ -77,18 +96,18 @@ function M.list_insert_unique(lst, vals)
   return lst
 end
 
---- Call function if a condition is met
----@param func function The function to run
----@param condition boolean # Whether to run the function or not
----@return any|nil result # the result of the function running or nil
+--- Call function if a condition is met.
+---@param func function The function to run.
+---@param condition boolean # Whether to run the function or not.
+---@return any|nil result # the result of the function running or nil.
 function M.conditional_func(func, condition, ...)
   -- if the condition is true or no condition is provided, evaluate the function with the rest of the parameters and return the result
   if condition and type(func) == "function" then return func(...) end
 end
 
---- Get an icon from `lspkind` if it is available and return it
----@param kind string The kind of icon in `lspkind` to retrieve
----@return string icon
+--- Get an icon from `lspkind` if it is available and return it.
+---@param kind string The kind of icon in `lspkind` to retrieve.
+---@return string icon.
 function M.get_icon(kind, padding, no_fallback)
   if not vim.g.icons_enabled and no_fallback then return "" end
   local icon_pack = vim.g.icons_enabled and "icons" or "text_icons"
@@ -101,8 +120,8 @@ function M.get_icon(kind, padding, no_fallback)
 end
 
 --- Get a icon spinner table if it is available in the Nvim icons. Icons in format `kind1`,`kind2`, `kind3`, ...
----@param kind string The kind of icon to check for sequential entries of
----@return string[]|nil spinners # A collected table of spinning icons in sequential order or nil if none exist
+---@param kind string The kind of icon to check for sequential entries of.
+---@return string[]|nil spinners # A collected table of spinning icons in sequential order or nil if none exist.
 function M.get_spinner(kind, ...)
   local spinner = {}
   local counter = 1
@@ -114,10 +133,10 @@ function M.get_spinner(kind, ...)
   if #spinner > 0 then return spinner end
 end
 
---- Get highlight properties for a given highlight name
----@param name string The highlight group name
----@param fallback? table The fallback highlight properties
----@return table properties # the highlight group properties
+--- Get highlight properties for a given highlight name.
+---@param name string The highlight group name.
+---@param fallback? table The fallback highlight properties.
+---@return table properties # the highlight group properties.
 function M.get_hlgroup(name, fallback)
   if vim.fn.hlexists(name) == 1 then
     local hl
@@ -138,19 +157,19 @@ function M.get_hlgroup(name, fallback)
   return fallback or {}
 end
 
---- Serve a notification with a title of Nvim
----@param msg string The notification body
----@param type number|nil The type of the notification (:help vim.log.levels)
----@param opts? table The nvim-notify options to use (:help notify-options)
+--- Serve a notification with a title of Nvim.
+---@param msg string The notification body.
+---@param type number|nil The type of the notification (:help vim.log.levels).
+---@param opts? table The nvim-notify options to use (:help notify-options).
 function M.notify(msg, type, opts)
   vim.schedule(
     function() vim.notify(msg, type, M.extend_tbl({ title = "Nvim" }, opts)) end
   )
 end
 
---- Trigger an internal NormalNvim event
----@param event string The event name to be appended to Base
--- @usage If you pass the event 'Foo' to this method, it will trigger
+--- Trigger an internal NormalNvim event.
+---@param event string The event name to be appended to Base.
+-- @usage If you pass the event 'Foo' to this method, it will trigger.
 --        the autocmds including the pattern 'BaseFoo'.
 function M.event(event)
   vim.schedule(
@@ -163,8 +182,8 @@ function M.event(event)
   )
 end
 
---- Open a URL under the cursor with the current operating system
----@param path string The path of the file to open with the system opener
+--- Open a URL under the cursor with the current operating system.
+---@param path string The path of the file to open with the system opener.
 function M.system_open(path)
   local cmd
   if vim.fn.has "win32" == 1 and vim.fn.executable "explorer" == 1 then
@@ -186,8 +205,8 @@ function M.system_open(path)
   )
 end
 
---- Toggle a user terminal if it exists, if not then create a new one and save it
----@param opts string|table A terminal command string or a table of options for Terminal:new() (Check toggleterm.nvim documentation for table format)
+--- Toggle a user terminal if it exists, if not then create a new one and save it.
+---@param opts string|table A terminal command string or a table of options for Terminal:new() (Check toggleterm.nvim documentation for table format).
 function M.toggle_term_cmd(opts)
   local terms = {}
   -- if a command string is provided, create a basic table for Terminal:new() options
@@ -206,18 +225,18 @@ function M.toggle_term_cmd(opts)
   terms[opts.cmd][num]:toggle()
 end
 
---- Create a button entity to use with the alpha dashboard
----@param sc string The keybinding string to convert to a button
----@param txt string The explanation text of what the keybinding does
----@return table # A button entity table for an alpha configuration
+--- Create a button entity to use with the alpha dashboard.
+---@param sc string The keybinding string to convert to a button.
+---@param txt string The explanation text of what the keybinding does.
+---@return table # A button entity table for an alpha configuration.
 function M.alpha_button(sc, txt)
-  -- replace <leader> in shortcut text with LDR for nicer printing
+  -- replace <leader> in shortcut text with LDR for nicer printing.
   local sc_ = sc:gsub("%s", ""):gsub("LDR", "<leader>")
-  -- if the leader is set, replace the text with the actual leader key for nicer printing
+  -- if the leader is set, replace the text with the actual leader key for nicer printing.
   if vim.g.mapleader then
     sc = sc:gsub("LDR", vim.g.mapleader == " " and "SPC" or vim.g.mapleader)
   end
-  -- return the button entity to display the correct text and send the correct keybinding on press
+  -- return the button entity to display the correct text and send the correct keybinding on press.
   return {
     type = "button",
     val = txt,
@@ -238,18 +257,18 @@ function M.alpha_button(sc, txt)
   }
 end
 
---- Check if a plugin is defined in lazy. Useful with lazy loading when a plugin is not necessarily loaded yet
----@param plugin string The plugin to search for
----@return boolean available # Whether the plugin is available
+--- Check if a plugin is defined in lazy. Useful with lazy loading when a plugin is not necessarily loaded yet.
+---@param plugin string The plugin to search for.
+---@return boolean available # Whether the plugin is available.
 function M.is_available(plugin)
   local lazy_config_avail, lazy_config = pcall(require, "lazy.core.config")
   return lazy_config_avail and lazy_config.plugins[plugin] ~= nil
 end
 
---- A helper function to wrap a module function to require a plugin before running
----@param plugin string The plugin to call `require("lazy").load` with
----@param module table The system module where the functions live (e.g. `vim.ui`)
----@param func_names string|string[] The functions to wrap in the given module (e.g. `{ "ui", "select }`)
+--- A helper function to wrap a module function to require a plugin before running.
+---@param plugin string The plugin to call `require("lazy").load` with.
+---@param module table The system module where the functions live (e.g. `vim.ui`).
+---@param func_names string|string[] The functions to wrap in the given module (e.g. `{ "ui", "select }`).
 function M.load_plugin_with_func(plugin, module, func_names)
   if type(func_names) == "string" then func_names = { func_names } end
   for _, func in ipairs(func_names) do
@@ -262,7 +281,7 @@ function M.load_plugin_with_func(plugin, module, func_names)
   end
 end
 
---- Register queued which-key mappings
+--- Register queued which-key mappings.
 function M.which_key_register()
   if M.which_key_queue then
     local wk_avail, wk = pcall(require, "which-key")
@@ -275,9 +294,9 @@ function M.which_key_register()
   end
 end
 
---- Table based API for setting keybindings
----@param map_table table A nested table where the first key is the vim mode, the second key is the key to map, and the value is the function to set the mapping to
----@param base? table A base set of options to set on every keybinding
+--- Table based API for setting keybindings.
+---@param map_table table A nested table where the first key is the vim mode, the second key is the key to map, and the value is the function to set the mapping to.
+---@param base? table A base set of options to set on every keybinding.
 function M.set_mappings(map_table, base)
   -- iterate over the first keys for each mode
   base = base or {}
@@ -310,16 +329,16 @@ end
 M.url_matcher =
   "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
---- Delete the syntax matching rules for URLs/URIs if set
-function M.delete_url_match()
+--- Delete the syntax matching rules for URLs/URIs if set.
+function M.delete_url_effect()
   for _, match in ipairs(vim.fn.getmatches()) do
     if match.group == "HighlightURL" then vim.fn.matchdelete(match.id) end
   end
 end
 
---- Add syntax matching rules for highlighting URLs/URIs
-function M.set_url_match()
-  M.delete_url_match()
+--- Add syntax matching rules for highlighting URLs/URIs.
+function M.set_url_effect()
+  M.delete_url_effect()
   if vim.g.highlighturl_enabled then
     vim.fn.matchadd("HighlightURL", M.url_matcher, 15)
   end

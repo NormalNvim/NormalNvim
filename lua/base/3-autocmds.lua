@@ -1,5 +1,7 @@
--- Actions performed automatically
--- You can delete anything in this file safely.
+-- Autocmds file.
+--
+-- DESCRIPTION:
+-- All autocmds are defined here.
 
 --    Sections:
 --       ## EXTRA LOGIC
@@ -13,12 +15,12 @@
 --       -> 6. Effect: URL underline.
 --       -> 7. Effect: Flash on yank.
 --       -> 8. Disable right click contextual menu warning message.
---       -> 9. Unlist quickfist buffers if the filetype changes.
+--       -> 9. Unlist quickfix buffers if the filetype changes.
 --
 --       ## COMMANDS
---       -> 9. Nvim updater commands
---       -> 10. Neotest commands
---       ->     Extra commands
+--       -> 9. Nvim updater commands.
+--       -> 10. Neotest commands.
+--       ->     Extra commands.
 
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
@@ -184,7 +186,7 @@ end
 autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   desc = "URL Highlighting",
   group = augroup("HighlightUrl", { clear = true }),
-  callback = function() utils.set_url_match() end,
+  callback = function() utils.set_url_effect() end,
 })
 
 -- 6. Effect: Flash on yank.
@@ -205,7 +207,7 @@ autocmd("VimEnter", {
   end,
 })
 
--- 8. Unlist quickfist buffers if the filetype changes.
+-- 8. Unlist quickfix buffers if the filetype changes.
 autocmd("FileType", {
   desc = "Unlist quickfist buffers",
   group = augroup("unlist_quickfist", { clear = true }),
