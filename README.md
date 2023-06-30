@@ -75,9 +75,6 @@ Please before opening an issue, check [the AstroVim manual](https://astronvim.co
 
     `:healthcheck base`
 
-* **Why are my sessions not remembered?**
-Of the buffers that were opened when nvim was closed, NormalNvim will only remember the ones that were saved at least once. This might sound confusing at first, but it gives you the most control over what you actually want to save/restore.
-
 * **How can I disable the tabline?** On the options file, search for `showtabline` and set it to 0. If instead you want to remove the functionality completely from nvim, then check the plugin heirline. Here is where we implement the tabline logic. Also check the [./lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua) and [./lua/base/utils/status.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/utils/status.lua).
 
 * **How can I disable the animations?** You can delete the plugin [mini.animate](https://github.com/echasnovski/mini.animate). In case you only want to disable some animations look into the plugin docs.
@@ -87,6 +84,9 @@ Of the buffers that were opened when nvim was closed, NormalNvim will only remem
 ```sh
 CHATGPT_API_KEY="my_key_here"
 ```
+
+* **Why are my sessions not remembered?**
+Of the buffers that were opened when nvim was closed, NormalNvim will only remember the ones that were saved at least once. This might sound confusing at first, but it gives you the most control over what you actually want to save/restore.
 
 * **What scenarios are not covered by this distro?**
   * **Kubernetes**: We do not provide a kubernetes plugin. But we recommend using friendly-snippets, to quickly write code, and [overseer.nvim](https://github.com/stevearc/overseer.nvim) to run kubernetes commands from inside nvim without having to wait for the server response.
