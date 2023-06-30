@@ -11,10 +11,12 @@ local utils = require "base.utils"
 local extend_tbl = utils.extend_tbl
 local get_icon = utils.get_icon
 
---- Convert a component parameter table to a table that can be used with the component builder.
+--- Convert a component parameter table to a table
+--- that can be used with the component builder.
 ---@param opts? table a table of provider options.
 ---@param provider? function|string a provider in `M.providers`.
----@return table|false # the provider table that can be used in `M.component.builder`.
+---@return table|false # the provider table
+---                      that can be used in `M.component.builder`.
 function M.build_provider(opts, provider, _)
   return opts
       and {
@@ -28,11 +30,17 @@ function M.build_provider(opts, provider, _)
       or false
 end
 
---- Convert key/value table of options to an array of providers for the component builder.
+--- Convert key/value table of options to an array of providers
+--- for the component builder.
 ---@param opts table the table of options for the components.
----@param providers string[] an ordered list like array of providers that are configured in the options table.
----@param setup? function a function that takes provider options table, provider name, provider index and returns the setup provider table, optional, default is `M.build_provider`.
----@return table # the fully setup options table with the appropriately ordered providers.
+---@param providers string[] an ordered list like array of providers
+---                          that are configured in the options table.
+---@param setup? function a function that takes provider options table,
+---                       provider name, provider index and returns
+---                       the setup provider table, optional,
+---                       default is `M.build_provider`.
+---@return table # the fully setup options table
+---                with the appropriately ordered providers.
 function M.setup_providers(opts, providers, setup)
   setup = setup or M.build_provider
   for i, provider in ipairs(providers) do
@@ -42,7 +50,8 @@ function M.setup_providers(opts, providers, setup)
 end
 
 --- A utility function to get the width of the bar.
----@param is_winbar? boolean true if you want the width of the winbar, false if you want the statusline width.
+---@param is_winbar? boolean true if you want the width of the winbar,
+---                          false if you want the statusline width.
 ---@return integer # the width of the specified bar.
 function M.width(is_winbar)
   return vim.o.laststatus == 3 and not is_winbar and vim.o.columns
@@ -66,7 +75,8 @@ end
 
 local function escape(str) return str:gsub("%%", "%%%%") end
 
---- A utility function to stylize a string with an icon from lspkind, separators, and left/right padding.
+--- A utility function to stylize a string with an icon from lspkind,
+--- separators, and left/right padding.
 ---@param str? string the string to stylize.
 ---@param opts? table options of `{ padding = { left = 0, right = 0 }, separator = { left = "|", right = "|" }, escape = true, show_empty = false, icon = { kind = "NONE", padding = { left = 0, right = 0 } } }`.
 ---@return string # the stylized string.
@@ -180,7 +190,9 @@ function M.null_ls_sources(filetype, method)
       or {}
 end
 
---- A helper function for decoding statuscolumn click events with mouse click pressed, modifier keys, as well as which signcolumn sign was clicked if any.
+--- A helper function for decoding statuscolumn click events with
+--- mouse click pressed, modifier keys,
+--- as well as which signcolumn sign was clicked if any.
 ---@param self any the self parameter from Heirline component on_click.callback function call.
 ---@param minwid any the minwid parameter from Heirline component on_click.callback function call.
 ---@param clicks any the clicks parameter from Heirline component on_click.callback function call.
