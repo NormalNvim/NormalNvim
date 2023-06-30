@@ -62,7 +62,8 @@ end
 
 --- A provider function for building a foldcolumn.
 ---@param opts? table options passed to the stylize function.
----@return function # a custom foldcolumn function for the statuscolumn that doesn't show the nest levels.
+---@return function # a custom foldcolumn function for
+---                   the statuscolumn that doesn't show the nest levels.
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.foldcolumn }
 -- @see base.utils.status.utils.stylize
 function M.foldcolumn(opts)
@@ -165,8 +166,10 @@ function M.paste(opts)
 end
 
 --- A provider function for displaying if a macro is currently being recorded.
----@param opts? table a prefix before the recording register and options passed to the stylize function.
----@return function # a function that returns a string of the current recording status.
+---@param opts? table a prefix before the recording register
+---                   and options passed to the stylize function.
+---@return function # a function that returns
+---                   a string of the current recording status.
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.macro_recording() }
 -- @see base.utils.status.utils.stylize
 function M.macro_recording(opts)
@@ -192,8 +195,10 @@ function M.showcmd(opts)
 end
 
 --- A provider function for displaying the current search count.
----@param opts? table options for `vim.fn.searchcount` and options passed to the stylize function.
----@return function # a function that returns a string of the current search location.
+---@param opts? table options for `vim.fn.searchcount`
+---                   and options passed to the stylize function.
+---@return function # a function that returns
+---                   a string of the current search location.
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.search_count() }
 -- @see base.utils.status.utils.stylize
 function M.search_count(opts)
@@ -218,8 +223,10 @@ function M.search_count(opts)
 end
 
 --- A provider function for showing the text of the current vim mode.
----@param opts? table options for padding the text and options passed to the stylize function.
----@return function # the function for displaying the text of the current vim mode.
+---@param opts? table options for padding the text
+---                   and options passed to the stylize function.
+---@return function # the function for displaying
+---                   the text of the current vim mode.
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.mode_text() }
 -- @see base.utils.status.utils.stylize
 function M.mode_text(opts)
@@ -246,9 +253,12 @@ function M.mode_text(opts)
   end
 end
 
---- A provider function for showing the percentage of the current location in a document.
----@param opts? table options for Top/Bot text, fixed width, and options passed to the stylize function.
----@return function # the statusline string for displaying the percentage of current document location.
+--- A provider function for showing the percentage of
+--- the current location in a document.
+---@param opts? table options for Top/Bot text, fixed width,
+---                   and options passed to the stylize function.
+---@return function # the statusline string for displaying the percentage of
+---                   current document location.
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.percentage() }
 -- @see base.utils.status.utils.stylize
 function M.percentage(opts)
@@ -271,7 +281,8 @@ function M.percentage(opts)
 end
 
 --- A provider function for showing the current line and character in a document.
----@param opts? table options for padding the line and character locations and options passed to the stylize function.
+---@param opts? table options for padding the line and character locations
+---                   and options passed to the stylize function.
 ---@return function # the statusline string for showing location in document line_num:char_num.
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.ruler({ pad_ruler = { line = 3, char = 2 } }) }
 -- @see base.utils.status.utils.stylize
@@ -304,7 +315,8 @@ function M.scrollbar(opts)
 end
 
 --- A provider to simply show a close button icon.
----@param opts? table options passed to the stylize function and the kind of icon to use.
+---@param opts? table options passed to the stylize function
+---                   and the kind of icon to use.
 ---@return string # the stylized icon.
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.close_button() }
 -- @see base.utils.status.utils.stylize
@@ -326,7 +338,8 @@ function M.filetype(opts)
 end
 
 --- A provider function for showing the current filename.
----@param opts? table options for argument to fnamemodify to format filename and options passed to the stylize function.
+---@param opts? table options for argument to fnamemodify to format filename
+---                   and options passed to the stylize function.
 ---@return function # the function for outputting the filename.
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.filename() }
 -- @see base.utils.status.utils.stylize
@@ -377,7 +390,9 @@ function M.file_format(opts)
 end
 
 --- Get a unique filepath between all buffers.
----@param opts? table options for function to get the buffer name, a buffer number, max length, and options passed to the stylize function.
+---@param opts? table options for function to get the buffer name,
+---                   a buffer number, max length, and options passed
+---                   to the stylize function.
 ---@return function # path to file that uniquely identifies each buffer.
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.unique_path() }
 -- @see base.utils.status.utils.stylize
@@ -432,7 +447,8 @@ end
 
 --- A provider function for showing if the current file is modifiable.
 ---@param opts? table options passed to the stylize function.
----@return function # the function for outputting the indicator if the file is modified.
+---@return function # the function for outputting the indicator
+---                   if the file is modified.
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.file_modified() }
 -- @see base.utils.status.utils.stylize
 function M.file_modified(opts)
@@ -521,8 +537,10 @@ function M.git_diff(opts)
   end
 end
 
---- A provider function for showing the current diagnostic count of a specific severity.
----@param opts table options for severity of diagnostic and options passed to the stylize function.
+--- A provider function for
+--- showing the current diagnostic count of a specific severity.
+---@param opts table options for severity of diagnostic and options passed
+---                  to the stylize function.
 ---@return function|nil # the function for outputting the diagnostic count.
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.diagnostics({ severity = "ERROR" }) }
 -- @see base.utils.status.utils.stylize
@@ -563,7 +581,9 @@ function M.lsp_progress(opts)
 end
 
 --- A provider function for showing the connected LSP client names.
----@param opts? table options for explanding null_ls clients, max width percentage, and options passed to the stylize function.
+---@param opts? table options for explanding null_ls clients,
+---                   max width percentage, and options passed
+---                   to the stylize function.
 ---@return function # the function for outputting the LSP client names.
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.lsp_client_names({ expand_null_ls = true, truncate = 0.25 }) }
 -- @see base.utils.status.utils.stylize
