@@ -1,10 +1,14 @@
---- ### Git LUA API
+--- ### Git api
 --
--- This module can be loaded with `local git = require "base.utils.git"`
+--  DESCRIPTION:
+--  Helpers to easily perform the git operations we need.
 --
--- @module base.utils.git
--- @copyright 2022
--- @license GNU General Public License v3.0
+--  We use this on ./updater.lua
+--  to search for the latest version on your git repository
+--  when using the command :NvimUpdateConfig
+--
+--  So if you you decide to delete the updater, feel free to delete this too.
+
 
 local git = { url = "https://github.com/" }
 
@@ -14,7 +18,10 @@ local function trim_or_nil(str) return type(str) == "string" and vim.trim(str) o
 ---@param args string the git arguments
 ---@return string|nil # The result of the command or nil if unsuccessful
 function git.cmd(args, ...)
-  return require("base.utils").cmd("git -C " .. vim.fn.stdpath("config") .. " " .. args, ...)
+  if type(args) == "string" then args = { args } end
+  return require("base.utils").cmd(
+    vim.list_extend({ "git", "-C", vim.fn.stdpath("config") }, args), ...
+  )
 end
 
 --- Check if the Nvim is able to reach the `git` command
@@ -117,9 +124,8 @@ function git.tag_commit(tag, ...) return trim_or_nil(git.cmd("rev-list -n 1 " ..
 ---@param end_hash? string the end commit hash
 ---@return string[] # An array like table of commit messages
 function git.get_commit_range(start_hash, end_hash, ...)
-  local range = ""
-  if start_hash and end_hash then range = start_hash .. ".." .. end_hash end
-  local log = git.cmd('log --no-merges --pretty="format:[%h] %s" ' .. range, ...)
+  local range = start_hash and end_hash and start_hash .. ".." .. end_hash or nil
+  local log = git.cmd({ "log", "--no-merges", '--pretty="format:[%h] %s"', range }, ...)
   return log and vim.fn.split(log, "\n") or {}
 end
 
