@@ -8,9 +8,33 @@
 --  to keep it as it takes a lot of complexity out of
 --  ../4-mappings.lua and ./lsp.lua
 
+--    Functions:
+--      -> toggle_ui_notifications
+--      -> toggle_autopairs
+--      -> toggle_diagnostics
+--      -> toggle_background
+--      -> toggle_cmp
+--      -> toggle_autoformat
+--      -> toggle_buffer_autoformat
+--      -> toggle_buffer_semantic_tokens
+--      -> toggle_semantic_tokens
+--      -> toggle_codelens
+--      -> toggle_tabline
+--      -> toggle_conceal
+--      -> toggle_statusline
+--      -> change_number
+--      -> toggle_spell
+--      -> toggle_paste
+--      -> toggle_wrap
+--      -> toggle_syntax
+--      -> toggle_url_effect
+--      -> toggle_foldcolumn
+--      -> toggle_buffer_inlay_hints
+--      -> toggle_inlay_hints
+--      -> toggle_signcolumn
+--      -> set_indent
 
 local M = {}
-
 local notify = require("base.utils").notify
 
 local function bool2str(bool) return bool and "on" or "off" end
@@ -152,37 +176,6 @@ function M.toggle_signcolumn()
   notify(string.format("signcolumn=%s", vim.wo.signcolumn))
 end
 
---- Set the indent and tab related numbers
-function M.set_indent()
-  local input_avail, input = pcall(vim.fn.input, "Set indent value (>0 expandtab, <=0 noexpandtab): ")
-  if input_avail then
-    local indent = tonumber(input)
-    if not indent or indent == 0 then return end
-    vim.bo.expandtab = (indent > 0) -- local to buffer
-    indent = math.abs(indent)
-    vim.bo.tabstop = indent -- local to buffer
-    vim.bo.softtabstop = indent -- local to buffer
-    vim.bo.shiftwidth = indent -- local to buffer
-    notify(string.format("indent=%d %s", indent, vim.bo.expandtab and "expandtab" or "noexpandtab"))
-  end
-end
-
---- Change the number display modes
-function M.change_number()
-  local number = vim.wo.number -- local to window
-  local relativenumber = vim.wo.relativenumber -- local to window
-  if not number and not relativenumber then
-    vim.wo.number = true
-  elseif number and not relativenumber then
-    vim.wo.relativenumber = true
-  elseif number and relativenumber then
-    vim.wo.number = false
-  else -- not number and relativenumber
-    vim.wo.relativenumber = false
-  end
-  notify(string.format("number %s, relativenumber %s", bool2str(vim.wo.number), bool2str(vim.wo.relativenumber)))
-end
-
 --- Toggle spell
 function M.toggle_spell()
   vim.wo.spell = not vim.wo.spell -- local to window
@@ -215,9 +208,9 @@ function M.toggle_syntax()
 end
 
 --- Toggle URL/URI syntax highlighting rules
-function M.toggle_url_match()
+function M.toggle_url_effect()
   vim.g.highlighturl_enabled = not vim.g.highlighturl_enabled
-  require("base.utils").set_url_match()
+  require("base.utils").set_url_effect()
 end
 
 local last_active_foldcolumn
@@ -244,6 +237,37 @@ function M.toggle_inlay_hints(bufnr)
   vim.b.inlay_hints_enabled = not vim.g.inlay_hints_enabled     -- sync buffer state
   vim.lsp.buf.inlay_hint(bufnr or 0, vim.g.inlay_hints_enabled) -- apply state
   notify(string.format("Global inlay hints %s", bool2str(vim.g.inlay_hints_enabled)))
+end
+
+--- Set the indent and tab related numbers
+function M.set_indent()
+  local input_avail, input = pcall(vim.fn.input, "Set indent value (>0 expandtab, <=0 noexpandtab): ")
+  if input_avail then
+    local indent = tonumber(input)
+    if not indent or indent == 0 then return end
+    vim.bo.expandtab = (indent > 0) -- local to buffer
+    indent = math.abs(indent)
+    vim.bo.tabstop = indent -- local to buffer
+    vim.bo.softtabstop = indent -- local to buffer
+    vim.bo.shiftwidth = indent -- local to buffer
+    notify(string.format("indent=%d %s", indent, vim.bo.expandtab and "expandtab" or "noexpandtab"))
+  end
+end
+
+--- Change the number display modes
+function M.change_number()
+  local number = vim.wo.number -- local to window
+  local relativenumber = vim.wo.relativenumber -- local to window
+  if not number and not relativenumber then
+    vim.wo.number = true
+  elseif number and not relativenumber then
+    vim.wo.relativenumber = true
+  elseif number and relativenumber then
+    vim.wo.number = false
+  else -- not number and relativenumber
+    vim.wo.relativenumber = false
+  end
+  notify(string.format("number %s, relativenumber %s", bool2str(vim.wo.number), bool2str(vim.wo.relativenumber)))
 end
 
 return M
