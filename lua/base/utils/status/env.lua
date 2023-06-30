@@ -3,7 +3,6 @@
 -- DESCRIPTION:
 -- Variables we use mostly on heirline, and gitsigns.
 
-
 local M = {}
 
 M.fallback_colors = {
@@ -96,10 +95,17 @@ local function pattern_match(str, pattern_list)
 end
 
 M.buf_matchers = {
-  filetype = function(pattern_list, bufnr) return pattern_match(vim.bo[bufnr or 0].filetype, pattern_list) end,
-  buftype = function(pattern_list, bufnr) return pattern_match(vim.bo[bufnr or 0].buftype, pattern_list) end,
+  filetype = function(pattern_list, bufnr)
+    return pattern_match(vim.bo[bufnr or 0].filetype, pattern_list)
+  end,
+  buftype = function(pattern_list, bufnr)
+    return pattern_match(vim.bo[bufnr or 0].buftype, pattern_list)
+  end,
   bufname = function(pattern_list, bufnr)
-    return pattern_match(vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr or 0), ":t"), pattern_list)
+    return pattern_match(
+      vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr or 0), ":t"),
+      pattern_list
+    )
   end,
 }
 
@@ -109,7 +115,13 @@ local gitsigns = function(_)
   local gitsigns_avail, gitsigns = pcall(require, "gitsigns")
   if gitsigns_avail then vim.schedule(gitsigns.preview_hunk) end
 end
-for _, sign in ipairs { "Topdelete", "Untracked", "Add", "Changedelete", "Delete" } do
+for _, sign in ipairs {
+  "Topdelete",
+  "Untracked",
+  "Add",
+  "Changedelete",
+  "Delete",
+} do
   local name = "GitSigns" .. sign
   if not M.sign_handlers[name] then M.sign_handlers[name] = gitsigns end
 end
