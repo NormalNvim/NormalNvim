@@ -1,12 +1,8 @@
---- ### base Status Environment
+--- ### base status environment
 --
--- Statusline related environment variables shared between components/providers/etc.
---
--- This module can be loaded with `local env = require "base.utils.status.env"`
---
--- @module base.utils.status.env
--- @copyright 2023
--- @license GNU General Public License v3.0
+-- DESCRIPTION:
+-- Variables we use mostly on heirline, and gitsigns.
+
 
 local M = {}
 

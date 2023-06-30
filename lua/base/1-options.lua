@@ -1,18 +1,13 @@
--- NVim option variables
-
--- HELLO, welcome to NormalNVim!
+-- HELLO, welcome to NormalNvim!
 -- -------------------------------------
--- Here you can define your nvim options.
+-- Here you can define your nvim globals.
 --
--- You can update this nvim distro with :NvimUpdateConfig
--- you can easily revert to the previous version with :NvimRollbackRestore
---
--- For plugin updates
+-- For plugin updates:
 -- Check ./2-lazy.lua to know more about "stable" and "nightly" channels.
 -- And how to lock your package versions.
 
 
--- Global that will contain this Nvim distro options (updater... etc)
+-- This table contains the NormalNvin config (the parts we re-use)
 _G.base = {}
 
 -- Theme

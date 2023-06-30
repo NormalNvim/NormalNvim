@@ -1,12 +1,8 @@
---- ### base Status Initializers
+--- ### base status initializers
 --
+-- DESCRIPTION:
 -- Statusline related init functions for building dynamic statusline components
---
--- This module can be loaded with `local init = require "base.utils.status.init"`
---
--- @module base.utils.status.init
--- @copyright 2023
--- @license GNU General Public License v3.0
+
 
 local M = {}
 

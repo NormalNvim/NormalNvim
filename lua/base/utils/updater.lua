@@ -1,23 +1,23 @@
---- ### Nvim Updater
+--- ### Nvim Updater functions
 --
--- Nvim Updater utilities to use within Nvim and user configurations.
+--  DESCRIPTION:
+--  Functions for the nvim updater commands in ../3-autocmds.lua
 --
--- This module can also loaded with `local updater = require("base.utils.updater")`
+--  While you could technically delete this file, and the update commands
+--  in the autocmds file, we encourage you to keep it, as it is a great way to:
+--  * Freeze your plugins versions.
+--  * Download the latest version of your config, assuming you use nvim in more
+--    than one device.
 --
--- @module base.utils.updater
--- @see base.utils
--- @copyright 2022
--- @license GNU General Public License v3.0
-
 --    Functions:
---       -> generate_snapshot   → Snapshot of the plugins installed.
---       -> version             →
---       -> changelog           →
---       -> attempt_update      →
---       -> update_packages     → Sync Packer and then update Mason.
---       -> create_rollback     → create rollback file before updating.
---       -> rollback            → Nvim's rollback to a saved previous version.
---       -> update              →
+--       -> generate_snapshot   → used by :NvimFreezePluginVersions.
+--       -> version             → used by :NvimVersion.
+--       -> changelog           → used by :NvimChangeLog.
+--       -> update_packages     → used by :NvimUpdatePlugins.
+--       -> create_rollback     → ured by :NvimRollbackCreate.
+--       -> rollback            → used by :NvimRollbackRestore.
+--       -> attempt_update      → helper for update.
+--       -> update              → used by :NvimUpdateConfig.
 
 local git = require "base.utils.git"
 
@@ -79,7 +79,7 @@ function M.generate_snapshot(write)
     return plugin
   end, plugins)
   if file then
-    file:write "}"
+    file:write "}\n"
     file:close()
   end
   notify "Lazy packages locked to their current version."
@@ -106,18 +106,6 @@ function M.changelog(quiet)
   vim.list_extend(summary, git.pretty_changelog(git.get_commit_range()))
   if not quiet then echo(summary) end
   return summary
-end
-
---- Attempt an update of Nvim
---- @param target string The target if checking out a specific tag or commit or nil if just pulling
-local function attempt_update(target, opts)
-  -- if updating to a new stable version or a specific commit checkout the provided target
-  if opts.channel == "stable" or opts.commit then
-    return git.checkout(target, false)
-    -- if no target, pull the latest
-  else
-    return git.pull(false)
-  end
 end
 
 --- Cancelled update message
@@ -163,6 +151,19 @@ function M.rollback()
     return
   end
   M.update(rollback_opts)
+end
+
+
+--- Attempt an update of Nvim
+--- @param target string The target if checking out a specific tag or commit or nil if just pulling
+local function attempt_update(target, opts)
+  -- if updating to a new stable version or a specific commit checkout the provided target
+  if opts.channel == "stable" or opts.commit then
+    return git.checkout(target, false)
+    -- if no target, pull the latest
+  else
+    return git.pull(false)
+  end
 end
 
 --- Nvim's updater function

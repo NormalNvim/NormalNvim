@@ -1,13 +1,13 @@
---- ### Nvim UI Options
+--- ### Nvim UI toggle functions
 --
---  Utility functions for easy UI toggles.
+--  DESCRIPTION:
+--  We use this for easy UI toggles.
+--  We call these functions in ../4-mappings.lua and ./lsp.lua
 --
--- This module can be loaded with `local ui = require("base.utils.ui")`
---
--- @module base.utils.ui
--- @see base.utils
--- @copyright 2022
--- @license GNU General Public License v3.0
+--  While you could technically delete this file, we encourage you
+--  to keep it as it takes a lot of complexity out of
+--  ../4-mappings.lua and ./lsp.lua
+
 
 local M = {}
 

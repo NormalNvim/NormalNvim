@@ -1,12 +1,8 @@
---- ### base Status Providers
+--- ### base status providers
 --
--- Statusline related provider functions for building statusline components
---
--- This module can be loaded with `local provider = require "base.utils.status.provider"`
---
--- @module base.utils.status.provider
--- @copyright 2023
--- @license GNU General Public License v3.0
+-- DESCRIPTION:
+-- The main functions we use to configure heirline.
+
 
 local M = {}
 

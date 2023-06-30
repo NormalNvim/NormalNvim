@@ -1,12 +1,8 @@
 --- ### base status conditions
 --
--- Statusline related condition functions to use with Heirline
---
--- This module can be loaded with `local condition = require "base.utils.status.condition"`
---
--- @module base.utils.status.condition
--- @copyright 2023
--- @license GNU General Public License v3.0
+-- DESCRIPTION:
+-- Conditions that need to be true to load heirline, and other related plugins.
+
 
 local M = {}
 

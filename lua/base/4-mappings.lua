@@ -1,5 +1,8 @@
 -- nvim keybindings (qwerty).
--- note that "../utils/lsp.lua" will always prevail over "mappings.lua".
+--
+-- DESCRIPTION:
+-- All mappings are defined here, and on "../utils/lsp.lua".
+-- Note that "../utils/lsp.lua" will always prevail over "mappings.lua".
 
 --    Sections:
 --
@@ -15,7 +18,7 @@
 --       -> ui toggles                         [ui]
 --       -> shifted movement keys
 --       -> special cases
---
+
 --       ## Plugin bindings
 --       -> alpha-nvim
 --       -> comments.nvim

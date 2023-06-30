@@ -1,13 +1,7 @@
---- ### Nvim LSP Utils
+--- ### Nvim LSP utils
 --
--- LSP related utility functions to use within Nvim and user configurations.
---
--- This module can be loaded with `local lsp_utils = require("base.utils.lsp")`
---
--- @module base.utils.lsp
--- @see base.utils
--- @copyright 2022
--- @license GNU General Public License v3.0
+--  DESCRIPTION:
+--  LSP related utility functions to use within Nvim and user configurations.
 
 --    Functions:
 --       -> LSP settings

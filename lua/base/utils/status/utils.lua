@@ -1,12 +1,8 @@
---- ### base Status Utilities
+--- ### base status utilities
 --
+-- DESCRIPTION:
 -- Statusline related uitility functions
---
--- This module can be loaded with `local status_utils = require "base.utils.status.utils"`
---
--- @module base.utils.status.utils
--- @copyright 2023
--- @license GNU General Public License v3.0
+
 
 local M = {}
 

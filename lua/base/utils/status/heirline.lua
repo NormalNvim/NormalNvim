@@ -1,12 +1,8 @@
---- ### base Status Heirline Extensions
+--- ### base status heirline extensions
 --
--- Statusline related heirline specific extensions
---
--- This module can be loaded with `local astro_heirline = require "base.utils.status.heirline"`
---
--- @module base.utils.status.heirline
--- @copyright 2023
--- @license GNU General Public License v3.0
+-- DESCRIPTION:
+-- Extra functionality we add to heirline we use to manage heirline.
+
 
 local M = {}
 
