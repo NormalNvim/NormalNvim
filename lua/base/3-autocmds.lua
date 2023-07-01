@@ -96,24 +96,26 @@ if is_available "alpha-nvim" then
     desc = "Disable status and tablines for alpha",
     group = alpha_group,
     callback = function(event)
+      local is_empty_file = vim.api.nvim_get_option_value(
+        "buftype", { buf = event.buf }) ~= "nofile"
       local is_filetype_alpha = vim.api.nvim_get_option_value(
-      "filetype",{ buf = event.buf }) == "alpha"
+        "filetype", { buf = event.buf }) == "alpha"
 
       if ((event.event == "User" and event.file == "AlphaReady") or
-         (event.event == "BufEnter" and is_filetype_alpha)) and
-         not vim.g.before_alpha
+         (event.event == "BufEnter" and is_filetype_alpha) and
+         not vim.g.before_alpha) -- don't delete any parenthesis here.
       then
         vim.g.before_alpha = {
           showtabline = vim.opt.showtabline:get(),
-          laststatus = vim.opt.laststatus:get(),
+          laststatus = vim.opt.laststatus:get()
         }
         vim.opt.showtabline, vim.opt.laststatus = 0, 0
       elseif
-        vim.g.before_alpha
-        and event.event == "BufEnter" and not is_filetype_alpha
+        vim.g.before_alpha and event.event == "BufEnter" and not is_empty_file
       then
-        vim.opt.laststatus, vim.opt.showtabline =
-          vim.g.before_alpha.laststatus, vim.g.before_alpha.showtabline
+        vim.opt.laststatus,
+        vim.opt.showtabline = vim.g.before_alpha.laststatus,
+        vim.g.before_alpha.showtabline
         vim.g.before_alpha = nil
       end
     end,
@@ -203,8 +205,9 @@ autocmd("VimEnter", {
   desc = "Disable right contextual menu warning message",
   group = augroup("contextual_menu", { clear = true }),
   callback = function()
-    vim.api.nvim_command [[aunmenu PopUp.How-to\ disable\ mouse]] -- Disable right click message
-    vim.api.nvim_command [[aunmenu PopUp.-1-]] -- Disable right click message
+    -- Disable right click message
+    vim.api.nvim_command [[aunmenu PopUp.How-to\ disable\ mouse]]
+    vim.api.nvim_command [[aunmenu PopUp.-1-]]
   end,
 })
 
@@ -297,6 +300,7 @@ end, { desc = "Run all unit tests for the current nodejs project" })
 
 -- Customize this command to work as you like
 cmd("TestNodejsE2e", function()
+
   vim.cmd ":ProjectRoot" -- cd the project root (requires project.nvim)
   vim.cmd ":TermExec cmd='npm run e2e'" -- Conventional way to call e2e in nodejs (requires ToggleTerm)
 end, { desc = "Run e2e tests for the current nodejs project" })
