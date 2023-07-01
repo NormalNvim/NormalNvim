@@ -17,7 +17,7 @@ The space key shows [all you can do](https://github.com/Zeioth/NormalNvim/wiki/b
 ![screenshot_2023-06-14_11-41-03_398515538](https://github.com/NormalNvim/NormalNvim/assets/3357792/af73f0b2-b56e-47d8-9bb8-f68b76e4b577)
 
 
-## Install (Linux/MacOs)
+## Install (Linux/MacOS)
 
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
