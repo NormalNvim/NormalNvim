@@ -15,7 +15,7 @@
 --  To do so run ':NvimFreezePluginVersions'.
 --  Please don't manually delete ../lazy_snapshot.lua or you will get errors.
 base.updater = {
-  options = { remote = "origin", channel = "nightly" }, -- 'nightly', or 'stable'
+  options = { remote = "origin", channel = "stable" }, -- 'nightly', or 'stable'
   snapshot = { module = "lazy_snapshot", path = vim.fn.stdpath "config" .. "/lua/lazy_snapshot.lua" },
   rollback_file = vim.fn.stdpath "cache" .. "/rollback.lua",
 
