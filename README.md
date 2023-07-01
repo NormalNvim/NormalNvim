@@ -17,13 +17,17 @@ The space key shows [all you can do](https://github.com/Zeioth/NormalNvim/wiki/b
 ![screenshot_2023-06-14_11-41-03_398515538](https://github.com/NormalNvim/NormalNvim/assets/3357792/af73f0b2-b56e-47d8-9bb8-f68b76e4b577)
 
 
-## Install
+## Install (Linux/MacOs)
 
 ```sh
-# Strongly recommended: 
-# Fork the project, and clone the fork instead of this.
-git clone --depth 1 git@github.com:Zeioth/NormalNVim.git ~/.config/nvim
-nvim
+# Strongly recommended: Fork the repo and clone YOUR fork.
+git clone --depth 1 git@github.com:NormalNVim/NormalNVim.git ~/.config/nvim && echo "Downloading packages:"; wget -N -O /tmp/normalnvim_packages.zip https://github.com/NormalNvim/NormalPackages/raw/main/packages.zip && unzip -d ~/.local/share/nvim/lazy -q -n /tmp/normalnvim_packages.zip && echo "DONE - Starting neovim."; nvim
+```
+
+## Install (Windows)
+```sh
+# Strongly recommended: Fork the repo and clone YOUR fork.
+git clone --depth 1 git@github.com:NormalNVim/NormalNVim.git %USERPROFILE%\AppData\Local\nvim && nvim
 ```
 
 ## System dependencies
