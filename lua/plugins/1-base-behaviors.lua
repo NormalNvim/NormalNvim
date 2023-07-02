@@ -334,6 +334,7 @@ return {
             },
           },
         },
+        -- A command is a function that we can assign to a mapping (below)
         commands = {
           system_open = function(state)
             require("base.utils").system_open(state.tree:get_node():get_id())
