@@ -31,7 +31,7 @@ return {
     cmd = { "RnvimrToggle" },
     init = function()
       -- vim.g.rnvimr_vanilla = 1 → Often solves many issues
-      vim.g.rnvimr_enable_picker = 1 -- if 1, will close rnvimr after choosing a file.
+      vim.g.rnvimr_enable_picker = 1         -- if 1, will close rnvimr after choosing a file.
       vim.g.rnvimr_ranger_cmd = { "ranger" } -- by using a shell script like TERM=foot ranger "$@" we can open terminals inside ranger.
     end,
   },
@@ -61,8 +61,8 @@ return {
   -- Telescope integration (:Telescope projects)
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = {"ahmedkhalf/project.nvim"},
-    cmd = {"ProjectRoot", "Telescope projects"},
+    dependencies = { "ahmedkhalf/project.nvim" },
+    cmd = { "ProjectRoot", "Telescope projects" },
     opts = function() require("telescope").load_extension "projects" end,
   },
 
@@ -100,7 +100,7 @@ return {
   -- Telescope integration (:Telescope undo)
   {
     "nvim-telescope/telescope.nvim",
-    dependencies = {"Zeioth/telescope-undo.nvim"},
+    dependencies = { "Zeioth/telescope-undo.nvim" },
     cmd = { "Telescope undo" },
     opts = function() require("telescope").load_extension "undo" end,
   },
@@ -182,10 +182,10 @@ return {
     opts = {
       find_engine = {
         default = {
-         find = {
+          find = {
             --pick one of item in find_engine [ag, rg ]
             cmd = "ag",
-            options = { },
+            options = {},
           },
           replace = {
             -- If you install oxi with cargo you can use it instead.
@@ -193,290 +193,269 @@ return {
           },
         },
       },
-      is_insert_mode = true,  -- start open panel on is_insert_mode
+      is_insert_mode = true, -- start open panel on is_insert_mode
       mapping = {
-        ['toggle_line'] = {
-            map = "d",
-            cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
-            desc = "toggle item."
+        ["toggle_line"] = {
+          map = "d",
+          cmd = "<cmd>lua require('spectre').toggle_line()<CR>",
+          desc = "toggle item.",
         },
-        ['enter_file'] = {
-            map = "<cr>",
-            cmd = "<cmd>lua require('spectre.actions').select_entry()<CR>",
-            desc = "open file."
+        ["enter_file"] = {
+          map = "<cr>",
+          cmd = "<cmd>lua require('spectre.actions').select_entry()<CR>",
+          desc = "open file.",
         },
-        ['send_to_qf'] = {
-            map = "sqf",
-            cmd = "<cmd>lua require('spectre.actions').send_to_qf()<CR>",
-            desc = "send all items to quickfix."
+        ["send_to_qf"] = {
+          map = "sqf",
+          cmd = "<cmd>lua require('spectre.actions').send_to_qf()<CR>",
+          desc = "send all items to quickfix.",
         },
-        ['replace_cmd'] = {
-            map = "src",
-            cmd = "<cmd>lua require('spectre.actions').replace_cmd()<CR>",
-            desc = "replace command."
+        ["replace_cmd"] = {
+          map = "src",
+          cmd = "<cmd>lua require('spectre.actions').replace_cmd()<CR>",
+          desc = "replace command.",
         },
-        ['show_option_menu'] = {
-            map = "so",
-            cmd = "<cmd>lua require('spectre').show_options()<CR>",
-            desc = "show options."
+        ["show_option_menu"] = {
+          map = "so",
+          cmd = "<cmd>lua require('spectre').show_options()<CR>",
+          desc = "show options.",
         },
-        ['run_current_replace'] = {
+        ["run_current_replace"] = {
           map = "c",
           cmd = "<cmd>lua require('spectre.actions').run_current_replace()<CR>",
-          desc = "confirm item."
+          desc = "confirm item.",
         },
-        ['run_replace'] = {
-            map = "R",
-            cmd = "<cmd>lua require('spectre.actions').run_replace()<CR>",
-            desc = "replace all."
+        ["run_replace"] = {
+          map = "R",
+          cmd = "<cmd>lua require('spectre.actions').run_replace()<CR>",
+          desc = "replace all.",
         },
-        ['change_view_mode'] = {
-            map = "sv",
-            cmd = "<cmd>lua require('spectre').change_view()<CR>",
-            desc = "results view mode."
+        ["change_view_mode"] = {
+          map = "sv",
+          cmd = "<cmd>lua require('spectre').change_view()<CR>",
+          desc = "results view mode.",
         },
-        ['change_replace_sed'] = {
+        ["change_replace_sed"] = {
           map = "srs",
           cmd = "<cmd>lua require('spectre').change_engine_replace('sed')<CR>",
-          desc = "use sed to replace."
+          desc = "use sed to replace.",
         },
-        ['change_replace_oxi'] = {
+        ["change_replace_oxi"] = {
           map = "sro",
           cmd = "<cmd>lua require('spectre').change_engine_replace('oxi')<CR>",
-          desc = "use oxi to replace."
+          desc = "use oxi to replace.",
         },
-        ['toggle_live_update']={
+        ["toggle_live_update"] = {
           map = "sar",
           cmd = "<cmd>lua require('spectre').toggle_live_update()<CR>",
-          desc = "auto refresh changes when nvim writes a file."
+          desc = "auto refresh changes when nvim writes a file.",
         },
-        ['resume_last_search'] = {
+        ["resume_last_search"] = {
           map = "sl",
           cmd = "<cmd>lua require('spectre').resume_last_search()<CR>",
-          desc = "repeat last search."
+          desc = "repeat last search.",
         },
-        ['insert_qwerty'] = {
+        ["insert_qwerty"] = {
           map = "i",
           cmd = "<cmd>startinsert<CR>",
-          desc = "insert (qwerty)."
+          desc = "insert (qwerty).",
         },
-        ['insert_colemak'] = {
+        ["insert_colemak"] = {
           map = "o",
           cmd = "<cmd>startinsert<CR>",
-          desc = "insert (colemak)."
+          desc = "insert (colemak).",
         },
-        ['quit'] = {
-            map = "q",
-            cmd = "<cmd>lua require('spectre').close()<CR>",
-            desc = "quit."
+        ["quit"] = {
+          map = "q",
+          cmd = "<cmd>lua require('spectre').close()<CR>",
+          desc = "quit.",
         },
       },
     },
   },
 
-  --neotree
+  -- neotree
   -- https://github.com/nvim-neo-tree/neo-tree.nvim
   {
     "nvim-neo-tree/neo-tree.nvim",
     dependencies = { "MunifTanjim/nui.nvim" },
     cmd = "Neotree",
     init = function() vim.g.neo_tree_remove_legacy_commands = true end,
-    opts = {
-      auto_clean_after_session_restore = true,
-      close_if_last_window = true,
-      sources = { "filesystem", "buffers", "git_status" },
-      source_selector = {
-        winbar = true,
-        content_layout = "center",
-        sources = {
-          {
-            source = "filesystem",
-            display_name = get_icon "FolderClosed" .. " File",
-          },
-          {
-            source = "buffers",
-            display_name = get_icon "DefaultFile" .. " Bufs",
-          },
-          { source = "git_status", display_name = get_icon "Git" .. " Git" },
-          {
-            source = "diagnostics",
-            display_name = get_icon "Diagnostic" .. " Diagnostic",
-          },
-        },
-      },
-      default_component_configs = {
-        indent = { padding = 0 },
-        icon = {
-          folder_closed = get_icon "FolderClosed",
-          folder_open = get_icon "FolderOpen",
-          folder_empty = get_icon "FolderEmpty",
-          folder_empty_open = get_icon "FolderEmpty",
-          default = get_icon "DefaultFile",
-        },
-        modified = { symbol = get_icon "FileModified" },
-        git_status = {
-          symbols = {
-            added = get_icon "GitAdd",
-            deleted = get_icon "GitDelete",
-            modified = get_icon "GitChange",
-            renamed = get_icon "GitRenamed",
-            untracked = get_icon "GitUntracked",
-            ignored = get_icon "GitIgnored",
-            unstaged = get_icon "GitUnstaged",
-            staged = get_icon "GitStaged",
-            conflict = get_icon "GitConflict",
+    opts = function()
+      local utils = require "base.utils"
+      local get_icon = utils.get_icon
+      return {
+        auto_clean_after_session_restore = true,
+        close_if_last_window = true,
+        sources = { "filesystem", "buffers", "git_status" },
+        source_selector = {
+          winbar = true,
+          content_layout = "center",
+          sources = {
+            {
+              source = "filesystem",
+              display_name = get_icon("FolderClosed", 1, true) .. "File",
+            },
+            {
+              source = "buffers",
+              display_name = get_icon("DefaultFile", 1, true) .. "Bufs",
+            },
+            {
+              source = "git_status",
+              display_name = get_icon("Git", 1, true) .. "Git",
+            },
+            {
+              source = "diagnostics",
+              display_name = get_icon("Diagnostic", 1, true) .. "Diagnostic",
+            },
           },
         },
-      },
-      commands = {
-        system_open = function(state)
-          require("base.utils").system_open(state.tree:get_node():get_id())
-        end,
-        parent_or_close = function(state)
-          local node = state.tree:get_node()
-          if
-            (node.type == "directory" or node:has_children())
-            and node:is_expanded()
-          then
-            state.commands.toggle_node(state)
-          else
-            require("neo-tree.ui.renderer").focus_node(
-              state,
-              node:get_parent_id()
-            )
-          end
-        end,
-        child_or_open = function(state)
-          local node = state.tree:get_node()
-          if node.type == "directory" or node:has_children() then
-            if not node:is_expanded() then -- if unexpanded, expand
+        default_component_configs = {
+          indent = { padding = 0 },
+          icon = {
+            folder_closed = get_icon "FolderClosed",
+            folder_open = get_icon "FolderOpen",
+            folder_empty = get_icon "FolderEmpty",
+            folder_empty_open = get_icon "FolderEmpty",
+            default = get_icon "DefaultFile",
+          },
+          modified = { symbol = get_icon "FileModified" },
+          git_status = {
+            symbols = {
+              added = get_icon "GitAdd",
+              deleted = get_icon "GitDelete",
+              modified = get_icon "GitChange",
+              renamed = get_icon "GitRenamed",
+              untracked = get_icon "GitUntracked",
+              ignored = get_icon "GitIgnored",
+              unstaged = get_icon "GitUnstaged",
+              staged = get_icon "GitStaged",
+              conflict = get_icon "GitConflict",
+            },
+          },
+        },
+        commands = {
+          system_open = function(state)
+            require("base.utils").system_open(state.tree:get_node():get_id())
+          end,
+          parent_or_close = function(state)
+            local node = state.tree:get_node()
+            if
+                (node.type == "directory" or node:has_children())
+                and node:is_expanded()
+            then
               state.commands.toggle_node(state)
-            else -- if expanded and has children, seleect the next child
+            else
               require("neo-tree.ui.renderer").focus_node(
                 state,
-                node:get_child_ids()[1]
+                node:get_parent_id()
               )
             end
-          else -- if not a directory just open it
-            state.commands.open(state)
-          end
-        end,
-        copy_selector = function(state)
-          local node = state.tree:get_node()
-          local filepath = node:get_id()
-          local filename = node.name
-          local modify = vim.fn.fnamemodify
-
-          local results = {
-            e = { val = modify(filename, ":e"), msg = "Extension only" },
-            f = { val = filename, msg = "Filename" },
-            F = {
-              val = modify(filename, ":r"),
-              msg = "Filename w/o extension",
-            },
-            h = { val = modify(filepath, ":~"), msg = "Path relative to Home" },
-            p = { val = modify(filepath, ":."), msg = "Path relative to CWD" },
-            P = { val = filepath, msg = "Absolute path" },
-          }
-
-          local messages = {
-            { "\nChoose to copy to clipboard:\n", "Normal" },
-          }
-          for i, result in pairs(results) do
-            if result.val and result.val ~= "" then
-              vim.list_extend(messages, {
-                { ("%s."):format(i), "Identifier" },
-                { (" %s: "):format(result.msg) },
-                { result.val, "String" },
-                { "\n" },
-              })
+          end,
+          child_or_open = function(state)
+            local node = state.tree:get_node()
+            if node.type == "directory" or node:has_children() then
+              if not node:is_expanded() then -- if unexpanded, expand
+                state.commands.toggle_node(state)
+              else -- if expanded and has children, seleect the next child
+                require("neo-tree.ui.renderer").focus_node(
+                  state,
+                  node:get_child_ids()[1]
+                )
+              end
+            else -- if not a directory just open it
+              state.commands.open(state)
             end
-          end
-          vim.api.nvim_echo(messages, false, {})
-          local result = results[vim.fn.getcharstr()]
-          if result and result.val and result.val ~= "" then
-            vim.notify("Copied: " .. result.val)
-            vim.fn.setreg("+", result.val)
-          end
-        end,
-        run_command = function(state) vim.api.nvim_input ":" end,
-        diff_files = function(state)
-          local node = state.tree:get_node()
-          local log = require "neo-tree.log"
-          state.clipboard = state.clipboard or {}
-          if diff_Node and diff_Node ~= tostring(node.id) then
-            local current_Diff = node.id
-            require("neo-tree.utils").open_file(state, diff_Node, open)
-            vim.cmd("vert diffs " .. current_Diff)
-            log.info("Diffing " .. diff_Name .. " against " .. node.name)
-            diff_Node = nil
-            current_Diff = nil
-            state.clipboard = {}
-            require("neo-tree.ui.renderer").redraw(state)
-          else
-            local existing = state.clipboard[node.id]
-            if existing and existing.action == "diff" then
-              state.clipboard[node.id] = nil
-              diff_Node = nil
-              require("neo-tree.ui.renderer").redraw(state)
-            else
-              state.clipboard[node.id] = { action = "diff", node = node }
-              diff_Name = state.clipboard[node.id].node.name
-              diff_Node = tostring(state.clipboard[node.id].node.id)
-              log.info("Diff source file " .. diff_Name)
-              require("neo-tree.ui.renderer").redraw(state)
+          end,
+          copy_selector = function(state)
+            local node = state.tree:get_node()
+            local filepath = node:get_id()
+            local filename = node.name
+            local modify = vim.fn.fnamemodify
+
+            local results = {
+              e = { val = modify(filename, ":e"), msg = "Extension only" },
+              f = { val = filename, msg = "Filename" },
+              F = {
+                val = modify(filename, ":r"),
+                msg = "Filename w/o extension",
+              },
+              h = {
+                val = modify(filepath, ":~"),
+                msg = "Path relative to Home",
+              },
+              p = {
+                val = modify(filepath, ":."),
+                msg = "Path relative to CWD",
+              },
+              P = { val = filepath, msg = "Absolute path" },
+            }
+
+            local messages = {
+              { "\nChoose to copy to clipboard:\n", "Normal" },
+            }
+            for i, result in pairs(results) do
+              if result.val and result.val ~= "" then
+                vim.list_extend(messages, {
+                  { ("%s."):format(i),           "Identifier" },
+                  { (" %s: "):format(result.msg) },
+                  { result.val,                  "String" },
+                  { "\n" },
+                })
+              end
             end
-          end
-        end,
-      },
-      window = {
-        width = 30,
-        mappings = {
-          ["<space>"] = false, -- disable space until we figure out which-key disabling
-          ["[b"] = "prev_source",
-          ["]b"] = "next_source",
-          ["e"] = function()
-            vim.api.nvim_exec("Neotree focus filesystem left", true)
+            vim.api.nvim_echo(messages, false, {})
+            local result = results[vim.fn.getcharstr()]
+            if result and result.val and result.val ~= "" then
+              vim.notify("Copied: " .. result.val)
+              vim.fn.setreg("+", result.val)
+            end
           end,
-          ["b"] = function()
-            vim.api.nvim_exec("Neotree focus buffers left", true)
+          find_in_dir = function(state)
+            local node = state.tree:get_node()
+            local path = node:get_id()
+            require("telescope.builtin").find_files {
+              cwd = node.type == "directory" and path
+                  or vim.fn.fnamemodify(path, ":h"),
+            }
           end,
-          ["g"] = function()
-            vim.api.nvim_exec("Neotree focus git_status left", true)
-          end,
-          o = "open",
-          O = "system_open",
-          h = "parent_or_close",
-          l = "child_or_open",
-          Y = "copy_selector",
-          ["s"] = "run_command",
-          ["D"] = "diff_files", -- This replaces filter directories
         },
-      },
-      filesystem = {
-        follow_current_file = true,
-        hijack_netrw_behavior = "open_current",
-        use_libuv_file_watcher = true,
-        filtered_items = {
-          visible = false, -- By default, hide hidden files, but show them dimmed when enabled.
-          hide_dotfiles = true,
-          hide_gitignored = true,
+        window = {
+          width = 30,
+          mappings = {
+            ["<space>"] = false, -- disable space until we figure out which-key disabling
+            ["[b"] = "prev_source",
+            ["]b"] = "next_source",
+            F = utils.is_available "telescope.nvim" and "find_in_dir" or nil,
+            O = "system_open",
+            Y = "copy_selector",
+            h = "parent_or_close",
+            l = "child_or_open",
+            o = "open",
+            ["e"] = function()
+              vim.api.nvim_exec("Neotree focus filesystem left", true)
+            end,
+            ["b"] = function()
+              vim.api.nvim_exec("Neotree focus buffers left", true)
+            end,
+            ["g"] = function()
+              vim.api.nvim_exec("Neotree focus git_status left", true)
+            end,
+          },
         },
-      },
-      event_handlers = {
-        {
-          event = "neo_tree_buffer_enter",
-          handler = function(_) vim.opt_local.signcolumn = "auto" end,
+        filesystem = {
+          follow_current_file = true,
+          hijack_netrw_behavior = "open_current",
+          use_libuv_file_watcher = true,
         },
-        --{
-        --  event = "file_opened",
-        --  handler = function(file_path)
-        --    --auto close
-        --    require("neo-tree").close_all()
-        --  end
-        --},
-      },
-    },
+        event_handlers = {
+          {
+            event = "neo_tree_buffer_enter",
+            handler = function(_) vim.opt_local.signcolumn = "auto" end,
+          },
+        },
+      }
+    end,
   },
 
   --  code [folding mod] + [promise-asyn] dependency
@@ -504,20 +483,21 @@ return {
           end
         end
 
-        return (filetype == "" or buftype == "nofile") and "indent" -- only use indent until a file is opened
+        -- only use indent until a file is opened
+        return (filetype == "" or buftype == "nofile") and "indent"
           or function(bufnr)
             return require("ufo")
-              .getFolds(bufnr, "lsp")
-              :catch(
-                function(err)
-                  return handleFallbackException(bufnr, err, "treesitter")
-                end
-              )
-              :catch(
-                function(err)
-                  return handleFallbackException(bufnr, err, "indent")
-                end
-              )
+                .getFolds(bufnr, "lsp")
+                :catch(
+                  function(err)
+                    return handleFallbackException(bufnr, err, "treesitter")
+                  end
+                )
+                :catch(
+                  function(err)
+                    return handleFallbackException(bufnr, err, "indent")
+                  end
+                )
           end
       end,
     },
@@ -543,7 +523,7 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     cmd = { "Telescope neoclip", "Telescope macroscope" },
-    dependencies = {"AckslD/nvim-neoclip.lua"},
+    dependencies = { "AckslD/nvim-neoclip.lua" },
     opts = function()
       require("telescope").load_extension "neoclip"
       require("telescope").load_extension "macroscope"
@@ -563,7 +543,7 @@ return {
     "andymass/vim-matchup",
     event = "VeryLazy",
     config = function()
-      vim.g.matchup_matchparen_deferred = 1 -- work async
+      vim.g.matchup_matchparen_deferred = 1   -- work async
       vim.g.matchup_matchparen_offscreen = {} -- disable status bar icon
     end,
   },
