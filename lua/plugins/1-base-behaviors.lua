@@ -21,16 +21,25 @@
 
 -- import custom icons
 local get_icon = require("base.utils").get_icon
+local windows = vim.loop.os_uname().sysname == "Windows" -- true if windows
 
 -- configures plugins
 return {
   -- [ranger] file browser
   -- https://github.com/kevinhwang91/rnvimr
+  -- This is NormalNvim file browser, which is only for Linux.
+  --
+  -- If you are on Windows, you have 3 options:
+  -- * Use neotree instead (<space>+e).
+  -- * Delete rnvimr and install some other file browser you like.
+  -- * Or enable WLS on Windows and launch neovim from there.
+  --   This way you can install and use 'ranger' and its dependency 'pynvim'.
   {
     "kevinhwang91/rnvimr",
     cmd = { "RnvimrToggle" },
+    enabled = not windows,
     init = function()
-      -- vim.g.rnvimr_vanilla = 1 → Often solves many issues
+      -- vim.g.rnvimr_vanilla = 1 → Often solves issues in your ranger config.
       vim.g.rnvimr_enable_picker = 1         -- if 1, will close rnvimr after choosing a file.
       vim.g.rnvimr_ranger_cmd = { "ranger" } -- by using a shell script like TERM=foot ranger "$@" we can open terminals inside ranger.
     end,
