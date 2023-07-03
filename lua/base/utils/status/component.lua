@@ -1,7 +1,22 @@
 --- ### base status components
 --
 -- DESCRIPTION:
--- Components we load on the plugin heirline.
+-- Components we can load on the plugin heirline under the 'components' section.
+--
+-- A component is made of providers.
+-- So it is very easy to create your own components!
+--
+--
+-- EXAMPLE: Here we create a component that uses the provider 'filename'
+--          to show the current filename on heirline:
+--
+-- function M.my_component(opts)
+--  opts = extend_tbl({ filename = { padding = { left = 1, right = 1 } } }, opts)
+--  return M.builder(status_utils.setup_providers(opts, { "filename" }))
+-- end
+--
+-- NOTE: Because components use the builder design pattern, we don't need to
+--       manually require the providers from 'providers.lua'.
 
 local M = {}
 
@@ -55,6 +70,21 @@ function M.file_info(opts)
     "file_modified",
     "file_read_only",
     "close_button",
+  }))
+end
+
+--- Displays operative system and file encoding.
+---@param opts? table options for configuring file_format, encoding.
+---@return table # The Heirline component table.
+-- @usage local heirline_component = require("base.utils.status").component.file_encoding()
+function M.file_encoding(opts)
+  opts = extend_tbl({
+    file_format = { padding = { left = 1, right = 0 } },
+    file_encoding = { padding = { left = 1, right = 0 } },
+  }, opts)
+  return M.builder(status_utils.setup_providers(opts, {
+    "file_format",
+    "file_encoding",
   }))
 end
 
@@ -143,8 +173,8 @@ function M.cmd_info(opts)
       color = "cmd_info_bg",
       condition = function()
         return condition.is_hlsearch()
-            or condition.is_macro_recording()
-            or condition.is_statusline_showcmd()
+          or condition.is_macro_recording()
+          or condition.is_statusline_showcmd()
       end,
     },
     condition = function() return vim.opt.cmdheight:get() == 0 end,
@@ -189,14 +219,11 @@ end
 ---@return table # The Heirline component table.
 -- @usage local heirline_component = require("base.utils.status").component.breadcumbs()
 function M.breadcrumbs(opts)
-  opts = extend_tbl(
-    {
-      padding = { left = 1 },
-      condition = condition.aerial_available,
-      update = "CursorMoved",
-    },
-    opts
-  )
+  opts = extend_tbl({
+    padding = { left = 1 },
+    condition = condition.aerial_available,
+    update = "CursorMoved",
+  }, opts)
   opts.init = init.breadcrumbs(opts)
   return opts
 end
@@ -416,7 +443,7 @@ function M.lsp(opts)
               status_utils.build_provider(p_opts, provider[p](p_opts)),
               status_utils.build_provider(p_opts, provider.str(p_opts)),
             }
-            or false
+          or false
       end
     )
   )
@@ -481,9 +508,9 @@ function M.signcolumn(opts)
       callback = function(...)
         local args = status_utils.statuscolumn_clickargs(...)
         if
-            args.sign
-            and args.sign.name
-            and env.sign_handlers[args.sign.name]
+          args.sign
+          and args.sign.name
+          and env.sign_handlers[args.sign.name]
         then
           env.sign_handlers[args.sign.name](args)
         end
@@ -502,37 +529,31 @@ function M.builder(opts)
   opts = extend_tbl({ padding = { left = 0, right = 0 } }, opts)
   local children = {}
   if opts.padding.left > 0 then -- add left padding
-    table.insert(
-      children,
-      {
-        provider = status_utils.pad_string(
-          " ",
-          { left = opts.padding.left - 1 }
-        ),
-      }
-    )
+    table.insert(children, {
+      provider = status_utils.pad_string(
+        " ",
+        { left = opts.padding.left - 1 }
+      ),
+    })
   end
   for key, entry in pairs(opts) do
     if
-        type(key) == "number"
-        and type(entry) == "table"
-        and provider[entry.provider]
-        and (entry.opts == nil or type(entry.opts) == "table")
+      type(key) == "number"
+      and type(entry) == "table"
+      and provider[entry.provider]
+      and (entry.opts == nil or type(entry.opts) == "table")
     then
       entry.provider = provider[entry.provider](entry.opts)
     end
     children[key] = entry
   end
   if opts.padding.right > 0 then -- add right padding
-    table.insert(
-      children,
-      {
-        provider = status_utils.pad_string(
-          " ",
-          { right = opts.padding.right - 1 }
-        ),
-      }
-    )
+    table.insert(children, {
+      provider = status_utils.pad_string(
+        " ",
+        { right = opts.padding.right - 1 }
+      ),
+    })
   end
   return opts.surround
       and status_utils.surround(
@@ -541,7 +562,7 @@ function M.builder(opts)
         children,
         opts.surround.condition
       )
-      or children
+    or children
 end
 
 return M
