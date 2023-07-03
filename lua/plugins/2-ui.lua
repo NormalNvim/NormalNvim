@@ -104,11 +104,15 @@ return {
       dashboard.section.header.opts.hl = "DashboardHeader"
       vim.cmd "highlight DashboardHeader guifg=#F7778F"
 
+      -- If on windows, don't show the 'ranger' button
+      local ranger_button = dashboard.button("r", "🐍 Ranger  ", "<cmd>RnvimrToggle<CR>")
+      if vim.loop.os_uname().sysname == "Windows" then ranger_button = nil end
+
       -- Buttons
       dashboard.section.buttons.val = {
         dashboard.button("n", "📄 New     ", "<cmd>ene<CR>"),
         dashboard.button("e", "🌺 Recent  ", "<cmd>Telescope oldfiles<CR>"),
-        dashboard.button("r", "🐍 Ranger  ", "<cmd>RnvimrToggle<CR>"),
+        ranger_button,
         dashboard.button(
           "s",
           "🔎 Sessions",
