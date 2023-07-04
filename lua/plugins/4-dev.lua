@@ -211,13 +211,13 @@ return {
   --  COMPILER ----------------------------------------------------------------
   {
     "Zeioth/compiler.nvim",
-    cmd = {"CompilerOpen", "CompilerToggleResults"},
+    cmd = { "CompilerOpen", "CompilerToggleResults" },
     dependencies = { "stevearc/overseer.nvim" },
     config = function(_, opts) require("compiler").setup(opts) end,
   },
   {
     "stevearc/overseer.nvim",
-    cmd = {"CompilerOpen", "CompilerToggleResults"},
+    cmd = { "CompilerOpen", "CompilerToggleResults" },
     opts = {
       -- Tasks are disposed 5 minutes after running to free resources.
       -- If you need to close a task inmediatelly:
