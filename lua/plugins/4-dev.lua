@@ -40,6 +40,7 @@
 --       -> distant.nvim                   [ssh to edit in a remove machine]
 
 local get_icon = require("base.utils").get_icon
+local windows = vim.loop.os_uname().sysname == "Windows" -- true if windows
 return {
   --  COMMENTS ----------------------------------------------------------------
   --  Advanced comment features [adv. comments]
@@ -66,7 +67,7 @@ return {
   --  https://github.com/rafamadriz/friendly-snippets
   {
     "L3MON4D3/LuaSnip",
-    build = vim.fn.has "win32" ~= 0
+    build = not windows
         and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
       or nil,
     dependencies = {
