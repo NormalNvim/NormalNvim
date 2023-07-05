@@ -40,7 +40,7 @@
 --       -> distant.nvim                   [ssh to edit in a remove machine]
 
 local get_icon = require("base.utils").get_icon
-local windows = vim.loop.os_uname().sysname == "Windows" -- true if windows
+local windows = vim.fn.has('win32') == 1 -- true if on windows
 return {
   --  COMMENTS ----------------------------------------------------------------
   --  Advanced comment features [adv. comments]
