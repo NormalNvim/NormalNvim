@@ -20,7 +20,7 @@
 --       -> which-key                   [on-screen keybinding]
 
 local utils = require "base.utils"
-
+local windows = vim.fn.has('win32') == 1 -- true if on windows
 return {
   --  astrotheme [theme]
   --  https://github.com/AstroNvim/astrotheme
@@ -106,7 +106,7 @@ return {
 
       -- If on windows, don't show the 'ranger' button
       local ranger_button = dashboard.button("r", "🐍 Ranger  ", "<cmd>RnvimrToggle<CR>")
-      if vim.loop.os_uname().sysname == "Windows" then ranger_button = nil end
+      if windows then ranger_button = nil end
 
       -- Buttons
       dashboard.section.buttons.val = {
