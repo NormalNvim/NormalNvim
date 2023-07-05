@@ -118,7 +118,7 @@ maps.n["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
 maps.v["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
 maps.n["<C-p>"] = { '"+p<esc>', desc = "Paste from cliboard" }
 
--- Make 'x' key not copy to clipboard when depeting a character.
+-- Make 'x' key not copy to clipboard when deleting a character.
 maps.n["x"] = {
   -- Also let's allow 'x' key to delete blank lines in normal mode.
   function()
