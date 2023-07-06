@@ -58,8 +58,7 @@ local utils = require "base.utils"
 local get_icon = utils.get_icon
 local is_available = utils.is_available
 local ui = require "base.utils.ui"
-
-local maps = { i = {}, n = {}, v = {}, t = {} }
+local maps = require("base.utils").empty_map_table()
 
 -- -------------------------------------------------------------------------
 --

@@ -19,6 +19,7 @@
 --      -> is_available          → Return true if the plugin is available.
 --      -> load_plugin_with_func → Load a plugin before running a command.
 --      -> which_key_register    → When setting a mapping, add it to whichkey.
+--      -> M.empty_map_table     → Return a mappings table.
 --      -> set_mappings          → We use it to create mappings in a clean way.
 --      -> delete_url_effect     → Don't show an effect for urls.
 --      -> set_url_effect        → Show an effect for urls.
@@ -319,6 +320,21 @@ function M.which_key_register()
   end
 end
 
+--- Get an empty table of mappings with a key for each map mode
+---@return table<string,table> # a table with entries for each map mode
+function M.empty_map_table()
+  local maps = {}
+  for _, mode in ipairs { "", "n", "v", "x", "s", "o", "!", "i", "l", "c", "t" } do
+    maps[mode] = {}
+  end
+  if vim.fn.has "nvim-0.10.0" == 1 then
+    for _, abbr_mode in ipairs { "ia", "ca", "!a" } do
+      maps[abbr_mode] = {}
+    end
+  end
+  return maps
+end
+
 --- Table based API for setting keybindings.
 ---@param map_table table A nested table where the first key is the vim mode,
 ---                       the second key is the key to map, and the value is
@@ -398,5 +414,7 @@ function M.confirm_quit()
     vim.cmd('confirm quit')
   end
 end
+
+
 
 return M
