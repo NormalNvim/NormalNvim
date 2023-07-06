@@ -139,7 +139,7 @@ end
 ---@param client table The LSP client details when attaching
 ---@param bufnr number The buffer that the LSP client is attaching to
 M.on_attach = function(client, bufnr)
-  local lsp_mappings = require("astronvim.utils").empty_map_table()
+  local lsp_mappings = require("base.utils").empty_map_table()
 
   -- LSP mappings
   lsp_mappings.n["<leader>ld"] = {
