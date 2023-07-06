@@ -169,23 +169,8 @@ end
 ---@param type number|nil The type of the notification (:help vim.log.levels).
 ---@param opts? table The nvim-notify options to use (:help notify-options).
 function M.notify(msg, type, opts)
-  vim.schedule(function()
-    vim.notify(
-      msg,
-      type,
-      M.extend_tbl({
-        title = "Nvim",
-        on_open = function(win)
-          pcall(require, "nvim-treesitter")
-          vim.wo[win].spell = false
-          vim.wo[win].conceallevel = 3
-          vim.wo[win].concealcursor = "n"
-          -- With this, we allow using markdown on the notifications.
-          vim.treesitter.start(vim.api.nvim_win_get_buf(win), "markdown")
-        end,
-      }, opts)
-    )
-  end)
+  vim.schedule(function() vim.notify(
+    msg, type, M.extend_tbl({ title = "Nvim" }, opts)) end)
 end
 
 --- Trigger an internal NormalNvim event.
@@ -287,7 +272,7 @@ end
 ---@return boolean available # Whether the plugin is available.
 function M.is_available(plugin)
   local lazy_config_avail, lazy_config = pcall(require, "lazy.core.config")
-  return lazy_config_avail and lazy_config.plugins[plugin] ~= nil
+  return lazy_config_avail and lazy_config.spec.plugins[plugin] ~= nil
 end
 
 --- Helper function to require a module when running a function.
