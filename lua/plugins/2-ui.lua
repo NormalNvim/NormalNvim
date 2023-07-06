@@ -168,7 +168,7 @@ return {
     end,
     opts = {
       on_open = function(win)
-        vim.api.nvim_win_set_config(win, { zindex = 1000 })
+        vim.api.nvim_win_set_config(win, { zindex = 175 })
         -- close notification immediately if notifications disabled
         if not vim.g.notifications_enabled then vim.api.nvim_win_close(win, true) end
       end,
