@@ -17,7 +17,9 @@
 --       -> nvim-ufo               [folding mod]
 --       -> nvim-neoclip           [nvim clipboard]
 --       -> suda.vim               [write as sudo]
---       -> vim-matchup            [Imprived % motion]
+--       -> vim-matchup            [Improved % motion]
+--       -> hop.nvim               [go to word visually]
+--       -> nvim-autopairs         [auto close brackets]
 
 -- import custom icons
 local get_icon = require("base.utils").get_icon
@@ -570,7 +572,7 @@ return {
     end,
   },
 
-  --  [autopairs] auto closes (), "", '', [], {}
+  --  nvim-autopairs [auto close brackets]
   --  https://github.com/windwp/nvim-autopairs
   {
     "windwp/nvim-autopairs",
