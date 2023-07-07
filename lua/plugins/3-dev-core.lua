@@ -56,7 +56,6 @@ return {
       auto_install = true, -- Install a parser for the current language if not present.
       autotag = { enable = true },
       context_commentstring = { enable = true, enable_autocmd = false },
-      ensure_installed = { "markdown" },
       highlight = {
         enable = true,
         disable = function(_, bufnr)
