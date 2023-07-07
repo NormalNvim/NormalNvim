@@ -83,6 +83,5 @@ return {
   { "williamboman/mason.nvim", version = "^1" },
   { "windwp/nvim-ts-autotag", commit = "6be1192965df35f94b8ea6d323354f7dc7a557e4" },
   { "zeioth/friendly-snippets", commit = "b8405db25d2b02a7e158a8c95468727581434aea" },
-  { "zeioth/nvim-spectre", commit = "844c47da186165764c22e0624170282127f58b60" },
   { "zidhuss/neotest-minitest", commit = "25dbe6e56a245899661f025a957b6e2502900a0d" },
 }
