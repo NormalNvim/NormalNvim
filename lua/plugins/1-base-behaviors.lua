@@ -188,7 +188,7 @@ return {
   -- To start the search press <ESC>.
   -- It doesn't have ctrl-z so please always commit before using it.
   {
-    "zeioth/nvim-spectre",
+    "nvim-pack/nvim-spectre",
     cmd = "Spectre",
     opts = {
       find_engine = {
