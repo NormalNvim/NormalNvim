@@ -175,6 +175,7 @@ return {
           vim.wo[win].conceallevel = 3
           vim.bo[vim.api.nvim_win_get_buf(win)].filetype = "markdown"
           vim.wo[win].spell = false
+          pcall(vim.treesitter.start, vim.api.nvim_win_get_buf(win), "markdown")
         end
       end,
     },
@@ -272,7 +273,7 @@ return {
           status.component.diagnostics(),
           status.component.fill(),
           status.component.cmd_info(),
-          status.component.fill(),
+          status.componnt.fill(),
           status.component.lsp(),
           status.component.treesitter(),
           --status.component.file_encoding(), -- uncomment to enable
