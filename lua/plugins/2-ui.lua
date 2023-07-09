@@ -169,8 +169,14 @@ return {
     opts = {
       on_open = function(win)
         vim.api.nvim_win_set_config(win, { zindex = 175 })
-        -- close notification immediately if notifications disabled
         if not vim.g.notifications_enabled then vim.api.nvim_win_close(win, true) end
+        if require("base.utils").is_available "nvim-treesitter" then
+          if not package.loaded["nvim-treesitter"] then require "nvim-treesitter" end
+          vim.wo[win].conceallevel = 3
+          vim.bo[vim.api.nvim_win_get_buf(win)].filetype = "markdown"
+          vim.wo[win].spell = false
+          pcall(vim.treesitter.start, vim.api.nvim_win_get_buf(win), "markdown")
+        end
       end,
     },
     config = function(_, opts)
@@ -267,7 +273,7 @@ return {
           status.component.diagnostics(),
           status.component.fill(),
           status.component.cmd_info(),
-          status.component.fill(),
+          status.componnt.fill(),
           status.component.lsp(),
           status.component.treesitter(),
           --status.component.file_encoding(), -- uncomment to enable
@@ -296,7 +302,11 @@ return {
             condition = function(self)
               self.winid = vim.api.nvim_tabpage_list_wins(0)[1]
               return status.condition.buffer_matches(
-                { filetype = { "aerial", "dapui_.", "neo%-tree", "NvimTree", "edgy" } },
+                {
+                  filetype = {
+                  "aerial", "dapui_.", "dap-repl", "neo%-tree", "NvimTree", "edgy"
+                  }
+                },
                 vim.api.nvim_win_get_buf(self.winid)
               )
             end,
