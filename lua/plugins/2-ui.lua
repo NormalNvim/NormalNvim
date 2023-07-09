@@ -273,7 +273,7 @@ return {
           status.component.diagnostics(),
           status.component.fill(),
           status.component.cmd_info(),
-          status.componnt.fill(),
+          status.component.fill(),
           status.component.lsp(),
           status.component.treesitter(),
           --status.component.file_encoding(), -- uncomment to enable
