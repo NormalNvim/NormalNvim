@@ -585,8 +585,12 @@ return {
           undo = {
             use_delta = true,
             side_by_side = true,
+            diff_context_lines = 0,
             entry_format = "󰣜 #$ID, $STAT, $TIME",
             layout_strategy = "horizontal",
+            layout_config = {
+              preview_width = 0.70,
+            },
             mappings = {
               i = {
                 ["<cr>"] = require("telescope-undo.actions").yank_additions,
