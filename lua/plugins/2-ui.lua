@@ -539,7 +539,9 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      "debugloop/telescope-undo.nvim",
+      {"debugloop/telescope-undo.nvim",
+      lazy=false
+      },
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         enabled = vim.fn.executable "make" == 1,
@@ -594,14 +596,9 @@ return {
             },
             mappings = {
               i = {
-                ["<cr>"] = actions.yank_additions,
-                ["<S-cr>"] = actions.yank_deletions,
-                ["<C-cr>"] = actions.restore,
-              },
-              n = {
-                ["y"] = undo_actions.yank_additions,
-                ["Y"] = undo_actions.yank_deletions,
-                ["u"] = undo_actions.restore,
+                ["<cr>"] = undo_actions.yank_additions,
+                ["<S-cr>"] = undo_actions.yank_deletions,
+                ["<C-cr>"] = undo_actions.restore,
               },
             },
           },
