@@ -71,7 +71,6 @@ return {
   { "rebelot/heirline.nvim", commit = "2a151df2dc870e79b138a59ebaaaddf3d1b0d703" },
   { "rouge8/neotest-rust", commit = "e9015a5e343dc47dac90dc74effb3dd11ff7d2ae" },
   { "s1n7ax/nvim-window-picker", version = "^1" },
-  { "s1n7ax/nvim-window-picker", version = "^1" },
   { "saadparwaiz1/cmp_luasnip", commit = "18095520391186d634a0045dacaa346291096566" },
   { "shunsambongi/neotest-testthat", commit = "63be77b75a2ad33df39e3c4e4de10e163a21cfef" },
   { "stevearc/aerial.nvim", commit = "79644dbedc189d79573b2a60e247989bbd8f16e7" },

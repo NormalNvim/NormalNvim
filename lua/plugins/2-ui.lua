@@ -549,6 +549,7 @@ return {
     cmd = "Telescope",
     opts = function()
       local actions = require "telescope.actions"
+      local undo_actions = require("telescope-undo.actions")
       local get_icon = require("base.utils").get_icon
       local mappings = {
         i = {
@@ -593,14 +594,14 @@ return {
             },
             mappings = {
               i = {
-                ["<cr>"] = require("telescope-undo.actions").yank_additions,
-                ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
-                ["<C-cr>"] = require("telescope-undo.actions").restore,
+                ["<cr>"] = actions.yank_additions,
+                ["<S-cr>"] = actions.yank_deletions,
+                ["<C-cr>"] = actions.restore,
               },
               n = {
-                ["y"] = require("telescope-undo.actions").yank_additions,
-                ["Y"] = require("telescope-undo.actions").yank_deletions,
-                ["u"] = require("telescope-undo.actions").restore,
+                ["y"] = undo_actions.yank_additions,
+                ["Y"] = undo_actions.yank_deletions,
+                ["u"] = undo_actions.restore,
               },
             },
           },
