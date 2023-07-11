@@ -8,7 +8,7 @@ return {
   { "NMAC427/guess-indent.nvim", commit = "b8ae749fce17aa4c267eec80a6984130b94f80b2" },
   { "NvChad/nvim-colorizer.lua", commit = "dde3084106a70b9a79d48f426f6d6fec6fd203f7" },
   { "Shatur/neovim-session-manager", commit = "51827268c5ee56567b7033af9ed547ab704553b9" },
-  { "Zeioth/compiler.nvim", commit = "ecd5a619634188b50bd7908c6ec9ac1d30c8c566" },
+  { "Zeioth/compiler.nvim", commit = "931c208be271c284a77d92854746b6126ef8aaa8" },
   { "Zeioth/markmap.nvim", commit = "d7dd8f6da7107e56fdb039d66d55e027501435c5" },
   { "ahmedkhalf/project.nvim", commit = "8c6bad7d22eef1b71144b401c9f74ed01526a4fb" },
   { "akinsho/toggleterm.nvim", version = "^2" },
