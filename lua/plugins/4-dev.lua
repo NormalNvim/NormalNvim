@@ -237,7 +237,6 @@ return {
       --   },
       -- },
     },
-    config = function(_, opts) require("overseer").setup(opts) end,
   },
 
 
