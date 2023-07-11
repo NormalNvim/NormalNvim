@@ -105,15 +105,54 @@ return {
   --      You can use the original repo once this is fixed.
   -- https://github.com/debugloop/telescope-undo.nvim/issues/30#issuecomment-1575753897
   {
-    "Zeioth/telescope-undo.nvim",
+	  "nvim-telescope/telescope.nvim",
     cmd = { "Telescope undo" },
-  },
-  -- Telescope integration (:Telescope undo)
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = { "Zeioth/telescope-undo.nvim" },
-    cmd = { "Telescope undo" },
-    opts = function() require("telescope").load_extension "undo" end,
+	  dependencies = {
+		  "nvim-lua/plenary.nvim",
+		  "debugloop/telescope-undo.nvim",
+	  },
+	  config = function()
+		  local telescope = require("telescope")
+		  local tele_actions = require("telescope.actions")
+		  local undo_actions = require("telescope-undo.actions")
+		  telescope.setup({
+			  defaults = {
+				  layout_config = {
+					  anchor = "center",
+					  height = 0.8,
+					  width = 0.9,
+					  preview_width = 0.6,
+					  prompt_position = "bottom",
+				  },
+				  mappings = {
+					  i = {
+						  ["<esc>"] = tele_actions.close,
+					  },
+				  },
+			  },
+			  extensions = {
+				  undo = {
+					  use_delta = true,
+					  side_by_side = true,
+					  entry_format = "󰣜 #$ID, $STAT, $TIME",
+					  layout_strategy = "flex",
+					  mappings = {
+						  i = {
+							  ["<cr>"] = undo_actions.yank_additions,
+							  ["<S-cr>"] = undo_actions.yank_deletions,
+							  ["<C-cr>"] = undo_actions.restore,
+						  },
+              n = {
+                ["y"] = undo_actions.yank_additions,
+                ["Y"] = undo_actions.yank_deletions,
+                ["u"] = undo_actions.restore,
+              },
+					  },
+				  },
+			  },
+		  })
+		  telescope.load_extension("undo")
+	  end,
   },
 
   -- nvim-window-picker  [select buffer with a letter]
