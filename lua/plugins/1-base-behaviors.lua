@@ -16,6 +16,7 @@
 --       -> neotree file browser   [neotree]
 --       -> nvim-ufo               [folding mod]
 --       -> nvim-neoclip           [nvim clipboard]
+--       -> zen.nvim               [distraction free mode]
 --       -> suda.vim               [write as sudo]
 --       -> vim-matchup            [Improved % motion]
 --       -> hop.nvim               [go to word visually]
@@ -69,13 +70,6 @@ return {
     },
     config = function(_, opts) require("project_nvim").setup(opts) end,
   },
-  -- Telescope integration (:Telescope projects)
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = { "ahmedkhalf/project.nvim" },
-    cmd = { "ProjectRoot", "Telescope projects" },
-    opts = function() require("telescope").load_extension "projects" end,
-  },
 
   -- trim.nvim [auto trim spaces]
   -- https://github.com/cappyzawa/trim.nvim
@@ -97,62 +91,6 @@ return {
   -- By default it support neovim/aerial and others.
   {
     "stevearc/stickybuf.nvim",
-  },
-
-  -- telescope-undo.nvim [undo history]
-  -- https://github.com/debugloop/telescope-undo.nvim
-  -- BUG: We are using a fork because of a bug where options are ignored.
-  --      You can use the original repo once this is fixed.
-  -- https://github.com/debugloop/telescope-undo.nvim/issues/30#issuecomment-1575753897
-  {
-	  "nvim-telescope/telescope.nvim",
-    cmd = { "Telescope undo" },
-	  dependencies = {
-		  "nvim-lua/plenary.nvim",
-		  "debugloop/telescope-undo.nvim",
-	  },
-	  config = function()
-		  local telescope = require("telescope")
-		  local tele_actions = require("telescope.actions")
-		  local undo_actions = require("telescope-undo.actions")
-		  telescope.setup({
-			  defaults = {
-				  layout_config = {
-					  anchor = "center",
-					  height = 0.8,
-					  width = 0.9,
-					  preview_width = 0.6,
-					  prompt_position = "bottom",
-				  },
-				  mappings = {
-					  i = {
-						  ["<esc>"] = tele_actions.close,
-					  },
-				  },
-			  },
-			  extensions = {
-				  undo = {
-					  use_delta = true,
-					  side_by_side = true,
-					  entry_format = "󰣜 #$ID, $STAT, $TIME",
-					  layout_strategy = "flex",
-					  mappings = {
-						  i = {
-							  ["<cr>"] = undo_actions.yank_additions,
-							  ["<S-cr>"] = undo_actions.yank_deletions,
-							  ["<C-cr>"] = undo_actions.restore,
-						  },
-              n = {
-                ["y"] = undo_actions.yank_additions,
-                ["Y"] = undo_actions.yank_deletions,
-                ["u"] = undo_actions.restore,
-              },
-					  },
-				  },
-			  },
-		  })
-		  telescope.load_extension("undo")
-	  end,
   },
 
   -- nvim-window-picker  [select buffer with a letter]
@@ -554,31 +492,21 @@ return {
     },
   },
 
-  --  [zen mode]
+  --  nvim-neoclip [nvim clipboard]
+  --  https://github.com/AckslD/nvim-neoclip.lua
+  --  By default registers are deleted between sessions.
+  {
+    "AckslD/nvim-neoclip.lua",
+    config = function()
+      require('neoclip').setup()
+    end,
+  },
+
+  --  zen-mode.nivm [distraction free mode]
   --  https://github.com/folke/zen-mode.nvim
   {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
-  },
-
-  --  nvim-neoclip [nvim clipboard]
-  --  https://github.com/AckslD/nvim-neoclip.lua
-  --  Registers are deleted between sessions
-  {
-    "AckslD/nvim-neoclip.lua",
-    cmd = { "Telescope neoclip", "Telescope macroscope" },
-    dependencies = { "nvim-telescope/telescope.nvim" },
-    config = function() require("neoclip").setup() end,
-  },
-  -- Telescope integration (:Telescope neoclip amd :Telescope macroscope)
-  {
-    "nvim-telescope/telescope.nvim",
-    cmd = { "Telescope neoclip", "Telescope macroscope" },
-    dependencies = { "AckslD/nvim-neoclip.lua" },
-    opts = function()
-      require("telescope").load_extension "neoclip"
-      require("telescope").load_extension "macroscope"
-    end,
   },
 
   --  suda.nvim [write as sudo]

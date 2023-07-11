@@ -97,12 +97,6 @@ return {
       --require("luasnip").filetype_extend("shell", { "doxygen" })
     end,
   },
-  -- Telescope integration (:Telescope luasnip)
-  -- Note: It only shows the available snippets for the current language.
-  {
-    "nvim-telescope/telescope.nvim",
-    opts = function() require("telescope").load_extension "luasnip" end,
-  },
 
   --  GIT ---------------------------------------------------------------------
   --  Git signs [git hunks]
@@ -388,19 +382,6 @@ return {
         ["]]"] = false,
       },
     },
-  },
-  -- Telescope integration (:Telescope aerial)
-  {
-    "nvim-telescope/telescope.nvim",
-    dependencies = {"stevearc/aerial.nvim"},
-    cmd = {
-      "AerialToggle",
-      "AerialOpen",
-      "AerialNavOpen",
-      "AerialInfo",
-      "AerialClose",
-    },
-    opts = function() require("telescope").load_extension "aerial" end,
   },
 
   --  CODE DOCUMENTATION ------------------------------------------------------

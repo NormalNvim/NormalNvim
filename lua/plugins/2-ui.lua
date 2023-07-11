@@ -185,13 +185,6 @@ return {
       vim.notify = notify
     end,
   },
-  -- Telescope integration (:Telescope notify)
-  {
-    "nvim-telescope/telescope.nvim",
-    dependency = { "rcarriga/nvim-notify" },
-    cmd = "Telescope notify",
-    opts = function() require("telescope").load_extension "notify" end,
-  },
 
   --  Code identation [guides]
   --  https://github.com/lukas-reineke/indent-blankline.nvim
@@ -540,9 +533,13 @@ return {
   --  Telescope [search] + [search backend] dependency
   --  https://github.com/nvim-telescope/telescope.nvim
   --  https://github.com/nvim-telescope/telescope-fzf-native.nvim
+  --  https://github.com/debugloop/telescope-undo.nvim
+  --  NOTE: Normally, plugins that depend on Telescope are defined separately.
+  --  But its Telescope extension is added in the Telescope 'config' section.
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
+      "debugloop/telescope-undo.nvim",
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         enabled = vim.fn.executable "make" == 1,
@@ -573,7 +570,7 @@ return {
           layout_config = {
             horizontal = {
               prompt_position = "top",
-              preview_width = 0.55,
+              preview_width = 0.50,
             },
             vertical = {
               mirror = false,
@@ -584,17 +581,72 @@ return {
           },
           mappings = mappings,
         },
+        extensions = {
+          undo = {
+            use_delta = true,
+            side_by_side = true,
+            entry_format = "󰣜 #$ID, $STAT, $TIME",
+            layout_strategy = "horizontal",
+            mappings = {
+              i = {
+                ["<cr>"] = require("telescope-undo.actions").yank_additions,
+                ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
+                ["<C-cr>"] = require("telescope-undo.actions").restore,
+              },
+              n = {
+                ["y"] = require("telescope-undo.actions").yank_additions,
+                ["Y"] = require("telescope-undo.actions").yank_deletions,
+                ["u"] = require("telescope-undo.actions").restore,
+              },
+            },
+          },
+        },
       }
     end,
     config = function(_, opts)
       local telescope = require "telescope"
       telescope.setup(opts)
-      local utils = require "base.utils"
-      local conditional_func = utils.conditional_func
-      conditional_func(
+      -- Here we define the Telescope extension for all plugins.
+      -- If you delete a plugin, you can also delete its Telescope extension.
+      utils.conditional_func(
+        telescope.load_extension,
+        utils.is_available "nvim-notify",
+        "notify"
+      )
+      utils.conditional_func(
         telescope.load_extension,
         utils.is_available "telescope-fzf-native.nvim",
         "fzf"
+      )
+      utils.conditional_func(
+        telescope.load_extension,
+        utils.is_available "telescope-undo.nvim",
+        "undo"
+      )
+      utils.conditional_func(
+        telescope.load_extension,
+        utils.is_available "nvim-neoclip.lua",
+        "neoclip"
+      )
+      utils.conditional_func(
+        telescope.load_extension,
+        utils.is_available "nvim-neoclip.lua",
+        "macroscope"
+      )
+      utils.conditional_func(
+        telescope.load_extension,
+        utils.is_available "project.nvim",
+        "projects"
+      )
+      utils.conditional_func(
+        telescope.load_extension,
+        utils.is_available "LuaSnip",
+        "luasnip"
+      )
+      utils.conditional_func(
+        telescope.load_extension,
+        utils.is_available "aerial.nvim",
+        "aerial"
       )
     end,
   },
@@ -752,7 +804,7 @@ return {
   --  BUG: Currently only works for redo.
   {
     "tzachar/highlight-undo.nvim",
-    cmd='Telescope undo',
+    event = "VeryLazy",
     opts = {
       hlgroup = "CurSearch",
       duration = 150,
