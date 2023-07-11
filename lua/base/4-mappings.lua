@@ -733,8 +733,14 @@ if is_available "telescope.nvim" then
     desc = "Git branches",
   }
   maps.n["<leader>gc"] = {
-    function() require("telescope.builtin").git_commits() end,
-    desc = "Git commits",
+    function()
+      require("telescope.builtin").git_commits()
+    end, desc = "Git commits (repository)"
+  }
+  maps.n["<leader>gC"] = {
+    function()
+      require("telescope.builtin").git_bcommits()
+    end, desc = "Git commits (current file)"
   }
   maps.n["<leader>gt"] = {
     function() require("telescope.builtin").git_status() end,
