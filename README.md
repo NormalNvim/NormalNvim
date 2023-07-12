@@ -92,9 +92,6 @@ Yes, 100%. This is not necessary, but we advise you to launch NormalNvim using [
 CHATGPT_API_KEY="my_key_here"
 ```
 
-* **Why are my sessions not remembered?**
-Of the buffers that were opened when nvim was closed, NormalNvim will only remember the ones that were saved at least once. This might sound confusing at first, but it gives you the most control over what you actually want to save/restore.
-
 * **What scenarios are not covered by this distro?**
   * **Kubernetes**: We do not provide a kubernetes plugin. But we recommend using friendly-snippets, to quickly write code, and [overseer.nvim](https://github.com/stevearc/overseer.nvim) to run kubernetes commands from inside nvim without having to wait for the server response.
   * **e2e testing**: We do not provide an e2e plugin. But we do provide the :TestNodejsE2e command you can customize on [/lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua) along with all the other testing commands. You can also rename the commands to anything you want in case you don't use nodejs.
