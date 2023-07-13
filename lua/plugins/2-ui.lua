@@ -169,14 +169,18 @@ return {
     opts = {
       on_open = function(win)
         vim.api.nvim_win_set_config(win, { zindex = 175 })
-        if not vim.g.notifications_enabled then vim.api.nvim_win_close(win, true) end
-        if require("base.utils").is_available "nvim-treesitter" then
-          if not package.loaded["nvim-treesitter"] then require "nvim-treesitter" end
-          vim.wo[win].conceallevel = 3
-          vim.bo[vim.api.nvim_win_get_buf(win)].filetype = "markdown"
-          vim.wo[win].spell = false
-          pcall(vim.treesitter.start, vim.api.nvim_win_get_buf(win), "markdown")
+        if not vim.g.ui_notifications_enabled then
+          vim.api.nvim_win_close(win, true)
         end
+        if not package.loaded["nvim-treesitter"] then
+          pcall(require, "nvim-treesitter")
+        end
+        vim.wo[win].conceallevel = 3
+        local buf = vim.api.nvim_win_get_buf(win)
+        if not pcall(vim.treesitter.start, buf, "markdown") then
+          vim.bo[buf].syntax = "markdown"
+        end
+        vim.wo[win].spell = false
       end,
     },
     config = function(_, opts)
@@ -539,7 +543,9 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      "debugloop/telescope-undo.nvim",
+      {"debugloop/telescope-undo.nvim",
+      lazy=false
+      },
       {
         "nvim-telescope/telescope-fzf-native.nvim",
         enabled = vim.fn.executable "make" == 1,
@@ -548,8 +554,8 @@ return {
     },
     cmd = "Telescope",
     opts = function()
-      local actions = require "telescope.actions"
       local get_icon = require("base.utils").get_icon
+      local actions = require "telescope.actions"
       local mappings = {
         i = {
           ["<C-n>"] = actions.cycle_history_next,
@@ -585,18 +591,17 @@ return {
           undo = {
             use_delta = true,
             side_by_side = true,
+            diff_context_lines = 0,
             entry_format = "󰣜 #$ID, $STAT, $TIME",
             layout_strategy = "horizontal",
+            layout_config = {
+              preview_width = 0.70,
+            },
             mappings = {
               i = {
                 ["<cr>"] = require("telescope-undo.actions").yank_additions,
                 ["<S-cr>"] = require("telescope-undo.actions").yank_deletions,
                 ["<C-cr>"] = require("telescope-undo.actions").restore,
-              },
-              n = {
-                ["y"] = require("telescope-undo.actions").yank_additions,
-                ["Y"] = require("telescope-undo.actions").yank_deletions,
-                ["u"] = require("telescope-undo.actions").restore,
               },
             },
           },
