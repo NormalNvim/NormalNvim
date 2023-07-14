@@ -169,7 +169,7 @@ return {
     opts = {
       on_open = function(win)
         vim.api.nvim_win_set_config(win, { zindex = 175 })
-        if not vim.g.ui_notifications_enabled then
+        if not vim.g.notifications_enabled then
           vim.api.nvim_win_close(win, true)
         end
         if not package.loaded["nvim-treesitter"] then
