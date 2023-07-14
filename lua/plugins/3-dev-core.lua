@@ -58,12 +58,7 @@ return {
       context_commentstring = { enable = true, enable_autocmd = false },
       highlight = {
         enable = true,
-        disable = function(_, bufnr) -- Disable for big files.
-          local ok, stats = pcall(
-            vim.uv.fs_stat, vim.api.nvim_buf_get_name(bufnr))
-          return (ok and stats and stats.size > 102400) or
-            vim.api.nvim_buf_line_count(bufnr) > 10000
-        end,
+        disable = function(_, bufnr) return vim.b[bufnr].large_buf end,
       },
       matchup = {
         enable = true,
@@ -390,7 +385,7 @@ return {
         if not snip_status_ok then return end
         local border_opts = {
           border = "single",
-          winhighlight = "Normal:Normal,FloatBorder:FloatBorder,CursorLine:Visual,Search:None",
+          winhighlight = "NormalFloat:NormalFloat,FloatBorder:FloatBorder",
         }
 
         local function has_words_before()

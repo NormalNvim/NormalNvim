@@ -361,6 +361,8 @@ return {
       open_automatic = false, -- Open if the buffer is compatible
       attach_mode = "global",
       backends = { "lsp", "treesitter", "markdown", "man" },
+      disable_max_lines = vim.g.big_file.lines,
+      disable_max_size = vim.g.big_file.size,
       layout = { min_width = 28 },
       show_guides = true,
       filter_kind = false,
