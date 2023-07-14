@@ -243,7 +243,10 @@ return {
       show_current_context = true,
     },
     init = function()
-      -- Disable for big files
+      local augroup = vim.api.nvim_create_augroup
+      local autocmd = vim.api.nvim_create_autocmd
+
+      -- Disable it for big files.
       autocmd("BufReadPre", {
         desc = "Disable indent-blankfile plugin for big files",
         group = augroup("large_buf", { clear = true }),
