@@ -242,6 +242,20 @@ return {
       context_char = "▏",
       show_current_context = true,
     },
+    init = function()
+      -- Disable for big files
+      autocmd("BufReadPre", {
+        desc = "Disable indent-blankfile plugin for big files",
+        group = augroup("large_buf", { clear = true }),
+        callback = function(args)
+          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(args.buf))
+          vim.b[args.buf].large_buf = (ok and stats and stats.size > vim.g.big_file.size)
+            or vim.api.nvim_buf_line_count(args.buf) > vim.g.big_file.lines
+
+          if vim.b[args.buf].large_buf then pcall(vim.cmd.IndentBlanklineDisable) end
+        end,
+      })
+    end
   },
 
   --  [statusbar]
@@ -668,16 +682,8 @@ return {
       )
     end,
     opts = {
-      input = {
-        default_prompt = "➤ ",
-        win_options = { winhighlight = "Normal:Normal,NormalNC:Normal" },
-      },
-      select = {
-        backend = { "telescope", "builtin" },
-        builtin = {
-          win_options = { winhighlight = "Normal:Normal,NormalNC:Normal" },
-        },
-      },
+      input = { default_prompt = "➤ "},
+      select = { backend = { "telescope", "builtin" } },
     },
   },
 
