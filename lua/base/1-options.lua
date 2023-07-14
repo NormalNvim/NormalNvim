@@ -15,15 +15,12 @@ _G.base = {}
 base.default_colorscheme = "tokyonight-night"
 
 -- append/remove
-vim.opt.viewoptions:remove "curdir" -- disable saving current directory with views
+vim.opt.viewoptions:remove "curdir" -- Disable saving current directory with views
 vim.opt.shortmess:append { s = true, I = true } -- disable startup message
 vim.opt.backspace:append { "nostop" } -- Don't stop backspace at insert
 if vim.fn.has "nvim-0.9" == 1 then
-  vim.opt.diffopt:append "linematch:60" -- enable linematch diff algorithm
+  vim.opt.diffopt:append "linematch:60" -- Enable linematch diff algorithm
 end
-
--- Set
-vim.cmd "set autochdir" -- By default, use current file dir as working dir.
 
 -- define variables
 local options = {
@@ -81,18 +78,18 @@ local options = {
     selection = "old", -- Don't select the newline symbol when using <End> on visual mode
   },
   g = {
-    mapleader = " ", -- set leader key
-    maplocalleader = ",", -- set default local leader key
-    autoformat_enabled = false, -- enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
-    autopairs_enabled = false, -- enable autopairs at start
-    inlay_hints_enabled = false, -- enable LSP inlay_hints at startup
-    semantic_tokens_enabled = true, -- enable LSP semantic tokens on startup
-    cmp_enabled = true, -- enable completion at start
-    codelens_enabled = true, -- enable or disable automatic codelens refreshing for lsp that support it
-    diagnostics_mode = 3, -- set the visibility of diagnostics in the UI (0=off, 1=only show in status line, 2=virtual text off, 3=all on)
-    highlighturl_enabled = true, -- highlight URLs by default
-    icons_enabled = true, -- disable icons in the UI (disable if no nerd font is available)
-    lsp_handlers_enabled = true, -- enable or disable default vim.lsp.handlers (hover and signatureHelp)
+    mapleader = " ", -- Set leader key
+    maplocalleader = ",", -- Set default local leader key
+    autoformat_enabled = false, -- Enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled)
+    autopairs_enabled = false, -- Enable autopairs at start
+    inlay_hints_enabled = false, -- Enable LSP inlay_hints at startup
+    semantic_tokens_enabled = true, -- Enable LSP semantic tokens on startup
+    cmp_enabled = true, -- Enable completion at start
+    codelens_enabled = true, -- Enable or disable automatic codelens refreshing for lsp that support it
+    diagnostics_mode = 3, -- Set the visibility of diagnostics in the UI (0=off, 1=only show in status line, 2=virtual text off, 3=all on)
+    highlighturl_enabled = true, -- Highlight URLs by default
+    icons_enabled = true, -- Disable icons in the UI (disable if no nerd font is available)
+    lsp_handlers_enabled = true, -- Enable or disable default vim.lsp.handlers (hover and signatureHelp)
     notifications_enabled = true, -- nvim notifications enabled/disabled
     big_file = { size = 1024 * 100, lines = 10000 }, -- For files bigger than this, disable 'aerial', 'blankline'.
   },
