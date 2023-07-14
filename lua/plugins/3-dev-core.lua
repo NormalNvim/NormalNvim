@@ -58,8 +58,11 @@ return {
       context_commentstring = { enable = true, enable_autocmd = false },
       highlight = {
         enable = true,
-        disable = function(_, bufnr)
-          return vim.api.nvim_buf_line_count(bufnr) > 10000
+        disable = function(_, bufnr) -- Disable for big files.
+          local ok, stats = pcall(
+            vim.uv.fs_stat, vim.api.nvim_buf_get_name(bufnr))
+          return (ok and stats and stats.size > 102400) or
+            vim.api.nvim_buf_line_count(bufnr) > 10000
         end,
       },
       matchup = {
