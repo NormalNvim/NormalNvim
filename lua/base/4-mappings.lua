@@ -121,8 +121,8 @@ maps.v["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
 maps.n["<C-p>"] = { '"+p<esc>', desc = "Paste from cliboard" }
 
 -- Make 'c' key not copy to clipboard when changing a character.
-maps.n["c"] = { '"_c', desc = "'c' without yanking" }
-maps.n["C"] = { '"_c', desc = "'c' without yanking" }
+maps.n["c"] = { '"_c', desc = "Change without yanking" }
+maps.n["C"] = { '"_C', desc = "Change without yanking" }
 
 -- Make 'x' key not copy to clipboard when deleting a character.
 maps.n["x"] = {
