@@ -120,6 +120,10 @@ maps.n["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
 maps.v["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
 maps.n["<C-p>"] = { '"+p<esc>', desc = "Paste from cliboard" }
 
+-- Make 'c' key not copy to clipboard when changing a character.
+maps.n["c"] = { '"_c', desc = "'c' without yanking" }
+maps.n["C"] = { '"_c', desc = "'c' without yanking" }
+
 -- Make 'x' key not copy to clipboard when deleting a character.
 maps.n["x"] = {
   -- Also let's allow 'x' key to delete blank lines in normal mode.
@@ -136,9 +140,9 @@ maps.n["x"] = {
       vim.api.nvim_feedkeys('"_x', "n", false)
     end
   end,
-  desc = "Delete character without yanking it.",
+  desc = "Delete character without yanking it",
 }
-maps.v["x"] = { '"_x', desc = "Delete character without yanking it." }
+maps.v["x"] = { '"_x', desc = "Delete character without yanking it" }
 
 -- Override nvim default behavior so it doesn't auto-yank when pasting on visual mode.
 maps.v["p"] = { "P", desc = "Paste content you've previourly yanked" }
@@ -845,6 +849,10 @@ if is_available "telescope.nvim" then
   maps.n["<leader>fF"] = {
     function() require("telescope.builtin").live_grep() end,
     desc = "Find words in project (no hidden)",
+  }
+  maps.n["<leader>f/"] = {
+    function() require("telescope.builtin").current_buffer_fuzzy_find() end,
+    desc = "Find words in current buffer"
   }
 
   -- Some lsp keymappings are here because they depend on telescope
