@@ -44,7 +44,7 @@ end
 ---@param bufnr number The buffer to check.
 ---@return boolean # Whether the buffer is valid or not.
 function M.is_valid(bufnr)
-  if not bufnr or bufnr < 1 then return false end
+  if not bufnr then bufnr = 0 end
   return vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].buflisted
 end
 
@@ -144,9 +144,10 @@ function M.nav_to(tabnr) vim.cmd.b(vim.t.bufs[tabnr]) end
 ---@param force? boolean Whether or not to foce close the buffers,
 ---                      or confirm changes (default: false).
 function M.close(bufnr, force)
-  if require("base.utils").is_available "mini.bufremove" then
-    if
-        not force and vim.api.nvim_get_option_value("modified", { buf = bufnr })
+  if require("base.utils").is_available "mini.bufremove" and
+     M.is_valid(bufnr) and #vim.t.bufs > 1 then
+    if not force and vim.api.nvim_get_option_value(
+      "modified", { buf = bufnr })
     then
       local bufname = vim.fn.expand "%"
       local empty = bufname == ""
