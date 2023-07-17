@@ -152,7 +152,7 @@ return {
       shading_factor = 2,
       direction = "float",
       float_opts = {
-        border = "curved",
+        border = "rounded",
         highlights = { border = "Normal", background = "Normal" },
       },
     },
