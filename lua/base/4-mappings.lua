@@ -925,7 +925,7 @@ if is_available "telescope.nvim" then
       desc = "Open compiler",
     }
     maps.n["<leader>lC"] = {
-      function() vim.cmd "CompilerOpen" end,
+      function() vim.cmd "CompilerToggleResults" end,
       desc = "Toggle compiler results",
     }
     maps.n["<F6>"] = {
