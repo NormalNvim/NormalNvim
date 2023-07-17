@@ -136,7 +136,13 @@ end
 
 --- Navigate to a specific buffer by its position in the bufferline.
 ---@param tabnr number The position of the buffer to navigate to.
-function M.nav_to(tabnr) vim.cmd.b(vim.t.bufs[tabnr]) end
+function M.nav_to(tabnr)
+  if tabnr > #vim.t.bufs or tabnr < 1 then
+    utils.notify(("No tab #%d"):format(tabnr), vim.log.levels.WARN)
+  else
+    vim.cmd.b(vim.t.bufs[tabnr])
+  end
+end
 
 --- Close a given buffer
 ---@param bufnr? number The buffer to close or the current buffer
