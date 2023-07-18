@@ -384,7 +384,7 @@ return {
         local lspkind_status_ok, lspkind = pcall(require, "lspkind")
         if not snip_status_ok then return end
         local border_opts = {
-          border = "single",
+          border = "rounded",
           winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
         }
 
