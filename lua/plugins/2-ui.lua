@@ -775,7 +775,7 @@ return {
   --        disable it during the keybinding using vim.g.minianimate_disable = true
   {
     "echasnovski/mini.animate",
-    event = "VeryLazy",
+    event = "User BaseFile",
     -- enabled = false,
     opts = function()
       -- don't use animate when scrolling with the mouse
