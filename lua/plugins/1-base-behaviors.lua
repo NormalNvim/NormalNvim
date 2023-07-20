@@ -159,13 +159,38 @@ return {
   },
 
   -- Session management [session]
-  -- https://github.com/Shatur/Shatur/neovim-session-manager
+  -- https://github.com/Shatur/neovim-session-manager
   -- This plugin save your session when leaving nvim.
   -- It also display a Telescope menu to restore saved sessions.
   -- Sessions are saved by directory.
   {
     "Shatur/neovim-session-manager",
+    event = "User BaseFile",
     cmd = "SessionManager",
+    opts = {
+      autoload_mode = require('session_manager.config').AutoloadMode.Disabled,  -- Do not autoload on startup.
+      autosave_last_session = true,                                             -- Auto save session on exit vim.
+      autosave_only_in_session = false                                          -- Allow overriding sessions.
+    },
+    config = function(_, opts)
+      local session_manager = require('session_manager')
+      session_manager.setup(opts)
+
+      -- Auto save session on write to ensure a consistent state.
+      local augroup = vim.api.nvim_create_augroup
+      local autocmd = vim.api.nvim_create_autocmd
+      autocmd({ 'BufWritePost' }, {
+        group = augroup("session_manager_autosave_on_write", { clear = true }),
+        callback = function ()
+          if vim.bo.filetype ~= 'git' and
+             not vim.bo.filetype ~= 'gitcommit' and
+             not vim.bo.filetype ~= 'gitrebase'
+          then
+            session_manager.autosave_session()
+          end
+        end
+      })
+    end
   },
 
   -- spectre.nvim [search and replace in project]
