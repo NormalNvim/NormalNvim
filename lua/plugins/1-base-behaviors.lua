@@ -64,6 +64,9 @@ return {
         "Makefile",
         "package.json",
       },
+      exclude_dirs = {
+        "~/"
+      },
       silent_chdir = true,
       manual_mode = false,
       --ignore_lsp = { "lua_ls" },
@@ -167,14 +170,13 @@ return {
   -- If you prefer to manually manage sessions using <space>S
   -- you can disable autosaving sessions here.
   {
-    "Zeioth/neovim-session-manager",
+    "Shatur/neovim-session-manager",
     event = "User BaseFile",
     cmd = "SessionManager",
     opts = {
       autoload_mode = require('session_manager.config').AutoloadMode.Disabled,  -- Do not autoload on startup.
       autosave_last_session = false,                                            -- Don't auto save session on exit vim.
       autosave_only_in_session = false,                                          -- Allow overriding sessions.
-      show_last_session_on_top = true,
     },
     config = function(_, opts)
       local session_manager = require('session_manager')
