@@ -115,14 +115,16 @@ maps.n["<Tab>"] = {
 -- clipboard ---------------------------------------------------------------
 -- only useful when the option 'clipboard' is commented on ./1-options.lua
 maps.n["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
-maps.v["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
+maps.x["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
 maps.n["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
-maps.v["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
+maps.x["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
 maps.n["<C-p>"] = { '"+p<esc>', desc = "Paste from cliboard" }
 
 -- Make 'c' key not copy to clipboard when changing a character.
 maps.n["c"] = { '"_c', desc = "Change without yanking" }
 maps.n["C"] = { '"_C', desc = "Change without yanking" }
+maps.x["c"] = { '"_c', desc = "Change without yanking" }
+maps.x["C"] = { '"_C', desc = "Change without yanking" }
 
 -- Make 'x' key not copy to clipboard when deleting a character.
 maps.n["x"] = {
@@ -142,11 +144,11 @@ maps.n["x"] = {
   end,
   desc = "Delete character without yanking it",
 }
-maps.v["x"] = { '"_x', desc = "Delete character without yanking it" }
+maps.x["x"] = { '"_x', desc = "Delete character without yanking it" }
 
 -- Override nvim default behavior so it doesn't auto-yank when pasting on visual mode.
-maps.v["p"] = { "P", desc = "Paste content you've previourly yanked" }
-maps.v["P"] = { "p", desc = "Yank what you are going to override, then paste" }
+maps.x["p"] = { "P", desc = "Paste content you've previourly yanked" }
+maps.x["P"] = { "p", desc = "Yank what you are going to override, then paste" }
 
 -- search highlighing ------------------------------------------------------
 -- use ESC to clear hlsearch, while preserving its original functionality.
@@ -168,10 +170,10 @@ maps.n["<ESC>"] = {
 }
 
 -- Improved tabulation ------------------------------------------------------
-maps.v["<S-Tab>"] = { "<gv", desc = "unindent line" }
-maps.v["<Tab>"] = { ">gv", desc = "indent line" }
-maps.v["<"] = { "<gv", desc = "unindent line" }
-maps.v[">"] = { ">gv", desc = "indent line" }
+maps.x["<S-Tab>"] = { "<gv", desc = "unindent line" }
+maps.x["<Tab>"] = { ">gv", desc = "indent line" }
+maps.x["<"] = { "<gv", desc = "unindent line" }
+maps.x[">"] = { ">gv", desc = "indent line" }
 
 -- improved gg --------------------------------------------------------------
 maps.n["gg"] = {
@@ -194,7 +196,7 @@ maps.n["G"] = {
   end,
   desc = "G and go to the last position",
 }
-maps.v["gg"] = {
+maps.x["gg"] = {
   function()
     vim.g.minianimate_disable = true
     if vim.v.count > 0 then
@@ -206,7 +208,7 @@ maps.v["gg"] = {
   end,
   desc = "gg and go to the first position (visual)",
 }
-maps.v["G"] = {
+maps.x["G"] = {
   function()
     vim.g.minianimate_disable = true
     vim.cmd "normal! G$"
@@ -517,7 +519,7 @@ if is_available "Comment.nvim" then
     end,
     desc = "Comment line",
   }
-  maps.v["<leader>/"] = {
+  maps.x["<leader>/"] = {
     "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
     desc = "Toggle comment line",
   }
@@ -971,7 +973,7 @@ maps.t["<C-l>"] =
 -- dap.nvim [debugger] -----------------------------------------------------
 if is_available "nvim-dap" then
   maps.n["<leader>d"] = icons.d
-  maps.v["<leader>d"] = icons.d
+  maps.x["<leader>d"] = icons.d
   -- modified function keys found with `showkey -a` in the terminal to get key code
   -- run `nvim -V3log +quit` and search through the "Terminal info" in the `log` file for the correct keyname
   maps.n["<F5>"] =
@@ -1050,7 +1052,7 @@ if is_available "nvim-dap" then
       end,
       desc = "Evaluate Input",
     }
-    maps.v["<leader>dE"] =
+    maps.x["<leader>dE"] =
     { function() require("dapui").eval() end, desc = "Evaluate Input" }
     maps.n["<leader>du"] =
     { function() require("dapui").toggle() end, desc = "Toggle Debugger UI" }
@@ -1064,7 +1066,7 @@ end
 -- testing [tests] -------------------------------------------------
 -- neotest
 maps.n["<leader>T"] = icons.tt
-maps.v["<leader>T"] = icons.tt
+maps.x["<leader>T"] = icons.tt
 if is_available "neotest" then
   maps.n["<leader>Tu"] = {
     function() require("neotest").run.run() end,
@@ -1181,7 +1183,7 @@ if is_available "hop.nvim" then
     end,
     desc = "Hop to word",
   }
-  maps.v["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
+  maps.x["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
     function()
       require "hop"
       vim.cmd "HopWord"
