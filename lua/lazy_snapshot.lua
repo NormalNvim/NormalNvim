@@ -9,7 +9,7 @@ return {
   { "NvChad/nvim-colorizer.lua", commit = "dde3084106a70b9a79d48f426f6d6fec6fd203f7" },
   { "Zeioth/compiler.nvim", commit = "1f4c80eb780b13fc38ff38e4c45db22d65515ee3" },
   { "Zeioth/markmap.nvim", commit = "d7dd8f6da7107e56fdb039d66d55e027501435c5" },
-  { "Zeioth/neovim-session-manager", commit = "57dea3e7218f765f4bce35640db96840f3210a16" },
+  { "Zeioth/neovim-session-manager", commit = "c1f64107492a97166e640e8654c95a87fc0f1d7b" },
   { "ahmedkhalf/project.nvim", commit = "8c6bad7d22eef1b71144b401c9f74ed01526a4fb" },
   { "akinsho/toggleterm.nvim", commit = "00c13dccc78c09fa5da4c5edda990a363e75035e" },
   { "andymass/vim-matchup", commit = "ca8971739e3908973c5912cb3a0ffb6cf7bd83e7" },
