@@ -97,9 +97,9 @@ if is_available "alpha-nvim" then
     group = alpha_group,
     callback = function(event)
       local is_filetype_alpha = vim.api.nvim_get_option_value(
-        "filetype", { buf = event.buf }) == "alpha"
+        "filetype", { buf = 0 }) == "alpha"
       local is_empty_file = vim.api.nvim_get_option_value(
-        "buftype", { buf = event.buf }) == "nofile"
+        "buftype", { buf = 0 }) == "nofile"
       if((event.event == "User" and event.file == "AlphaReady") or
          (event.event == "BufEnter" and is_filetype_alpha)) and
         not vim.g.before_alpha

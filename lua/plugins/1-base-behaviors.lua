@@ -167,13 +167,14 @@ return {
   -- If you prefer to manually manage sessions using <space>S
   -- you can disable autosaving sessions here.
   {
-    "Shatur/neovim-session-manager",
+    "Zeioth/neovim-session-manager",
     event = "User BaseFile",
     cmd = "SessionManager",
     opts = {
       autoload_mode = require('session_manager.config').AutoloadMode.Disabled,  -- Do not autoload on startup.
       autosave_last_session = false,                                            -- Don't auto save session on exit vim.
-      autosave_only_in_session = false                                          -- Allow overriding sessions.
+      autosave_only_in_session = false,                                          -- Allow overriding sessions.
+      show_last_session_on_top = true,
     },
     config = function(_, opts)
       local session_manager = require('session_manager')
