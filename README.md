@@ -13,7 +13,7 @@
 Tokyo Night (Night) theme by default
 ![screenshot_2023-05-27_16-41-26_120206834](https://github.com/Zeioth/NormalNvim/assets/3357792/8f3b76c8-3ceb-4b8d-a0e1-50f73c94eb00)
 
-Alpha greeter
+Greeter displayed on startup
 ![screenshot_2023-07-22_01-40-09_498046836](https://github.com/NormalNvim/NormalNvim/assets/3357792/c91904b6-4f0e-46ba-93fd-7f6ffc155880)
 
 The space key shows [all you can do](https://github.com/Zeioth/NormalNvim/wiki/basic-mappings)
