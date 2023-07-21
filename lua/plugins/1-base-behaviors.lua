@@ -65,6 +65,7 @@ return {
         "Makefile",
         "package.json",
       },
+      -- Don't list the next projects
       exclude_dirs = {
         "~/"
       },
