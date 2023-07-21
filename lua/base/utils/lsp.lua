@@ -449,21 +449,20 @@ M.on_attach = function(client, bufnr)
   end
 
   if
-      client.supports_method "textDocument/semanticTokens/full"
-      and vim.lsp.semantic_tokens
+    client.supports_method "textDocument/semanticTokens/full" and
+    vim.lsp.semantic_tokens
   then
-    if vim.b.semantic_tokens_enabled == nil then
-      vim.b.semantic_tokens_enabled = vim.g.semantic_tokens_enabled
+    if vim.g.semantic_tokens_enabled then
+      vim.b[bufnr].semantic_tokens_enabled = true
+      lsp_mappings.n["<leader>uY"] = {
+        function()
+          require("base.utils.ui").toggle_buffer_semantic_tokens(bufnr)
+        end,
+        desc = "Toggle LSP semantic highlight (buffer)",
+      }
+    else
+      client.server_capabilities.semanticTokensProvider = nil
     end
-    if not vim.g.semantic_tokens_enabled then
-      vim.lsp.semantic_tokens["stop"](bufnr, client.id)
-    end
-    lsp_mappings.n["<leader>uY"] = {
-      function()
-        require("astronvim.utils.ui").toggle_buffer_semantic_tokens(bufnr)
-      end,
-      desc = "Toggle LSP semantic highlight (buffer)",
-    }
   end
 
   if not vim.tbl_isempty(lsp_mappings.v) then
