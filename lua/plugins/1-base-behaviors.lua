@@ -51,7 +51,7 @@ return {
   -- project.nvim [project search + auto cd]
   -- https://github.com/ahmedkhalf/project.nvim
   {
-    "ahmedkhalf/project.nvim",
+    "Zeioth/project.nvim",
     cmd = "ProjectRoot",
     opts = {
       -- How to find root directory
@@ -69,6 +69,13 @@ return {
       },
       silent_chdir = true,
       manual_mode = false,
+
+      -- Don't auto-chdir for specific filetypes.
+      exclude_filetype_chdir = {"", "OverseerList",},
+
+      -- Don't auto-chdir for specific buftypes.
+      exclude_buftype_chdir = {"", "terminal"},
+
       --ignore_lsp = { "lua_ls" },
     },
     config = function(_, opts) require("project_nvim").setup(opts) end,
