@@ -52,6 +52,7 @@ return {
   -- https://github.com/ahmedkhalf/project.nvim
   {
     "Zeioth/project.nvim",
+    event = "User BaseFile",
     cmd = "ProjectRoot",
     opts = {
       -- How to find root directory
@@ -71,7 +72,7 @@ return {
       manual_mode = false,
 
       -- Don't auto-chdir for specific filetypes.
-      exclude_filetype_chdir = {"", "OverseerList",},
+      exclude_filetype_chdir = {"", "OverseerList", "alpha"},
 
       -- Don't auto-chdir for specific buftypes.
       exclude_buftype_chdir = {"", "terminal"},
