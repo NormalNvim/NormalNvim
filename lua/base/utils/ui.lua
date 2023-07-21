@@ -211,6 +211,7 @@ end
 function M.toggle_url_effect()
   vim.g.highlighturl_enabled = not vim.g.highlighturl_enabled
   require("base.utils").set_url_effect()
+  notify(string.format("URL effect %s", bool2str(vim.g.highlighturl_enabled)))
 end
 
 local last_active_foldcolumn
