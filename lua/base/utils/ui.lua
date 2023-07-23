@@ -215,16 +215,20 @@ function M.toggle_wrap()
 end
 
 --- Toggle syntax highlighting and treesitter
-function M.toggle_syntax()
+function M.toggle_buffer_syntax(bufnr)
+  -- HACK: this should just be `bufnr = bufnr or 0` but it looks like `vim.treesitter.stop` has a bug with `0` being current
+  bufnr = (bufnr and bufnr ~= 0) and bufnr or vim.api.nvim_win_get_buf(0)
   local ts_avail, parsers = pcall(require, "nvim-treesitter.parsers")
-  if vim.g.syntax_on then -- global var for on//off
-    if ts_avail and parsers.has_parser() then vim.cmd.TSBufDisable "highlight" end
-    vim.cmd.syntax "off" -- set vim.g.syntax_on = false
+  if vim.bo[bufnr].syntax == "off" then
+    if ts_avail and parsers.has_parser() then vim.treesitter.start(bufnr) end
+    vim.bo[bufnr].syntax = "on"
+    if not vim.b.semantic_tokens_enabled then M.toggle_buffer_semantic_tokens(bufnr, true) end
   else
-    if ts_avail and parsers.has_parser() then vim.cmd.TSBufEnable "highlight" end
-    vim.cmd.syntax "on" -- set vim.g.syntax_on = true
+    if ts_avail and parsers.has_parser() then vim.treesitter.stop(bufnr) end
+    vim.bo[bufnr].syntax = "off"
+    if vim.b.semantic_tokens_enabled then M.toggle_buffer_semantic_tokens(bufnr, true) end
   end
-  notify(string.format("syntax %s", bool2str(vim.g.syntax_on)))
+  notify(string.format("syntax %s", bool2str(vim.bo[bufnr].syntax)))
 end
 
 --- Toggle URL/URI syntax highlighting rules
