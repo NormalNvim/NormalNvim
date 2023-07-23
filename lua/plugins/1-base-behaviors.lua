@@ -182,11 +182,14 @@ return {
     "Shatur/neovim-session-manager",
     event = "User BaseFile",
     cmd = "SessionManager",
-    opts = {
-      autoload_mode = require('session_manager.config').AutoloadMode.Disabled,  -- Do not autoload on startup.
-      autosave_last_session = false,                                            -- Don't auto save session on exit vim.
-      autosave_only_in_session = false,                                         -- Allow overriding sessions.
-    },
+    opts = function()
+      local config = require('session_manager.config')
+      return {
+        autoload_mode = config.AutoloadMode.Disabled,                        -- Do not autoload on startup.
+        autosave_last_session = false,                                       -- Don't auto save session on exit vim.
+        autosave_only_in_session = false,                                    -- We allow overriding sessions.
+      }
+    end,
     config = function(_, opts)
       local session_manager = require('session_manager')
       session_manager.setup(opts)
