@@ -18,6 +18,8 @@
 --      -> toggle_buffer_autoformat
 --      -> toggle_buffer_semantic_tokens
 --      -> toggle_semantic_tokens
+--      -> toggle_buffer_inlay_hints
+--      -> toggle_inlay_hints
 --      -> toggle_codelens
 --      -> toggle_tabline
 --      -> toggle_conceal
@@ -29,8 +31,6 @@
 --      -> toggle_syntax
 --      -> toggle_url_effect
 --      -> toggle_foldcolumn
---      -> toggle_buffer_inlay_hints
---      -> toggle_inlay_hints
 --      -> toggle_signcolumn
 --      -> set_indent
 
@@ -96,21 +96,23 @@ function M.toggle_autoformat()
 end
 
 --- Toggle buffer local auto format
-function M.toggle_buffer_autoformat()
-  local old_val = vim.b.autoformat_enabled
+function M.toggle_buffer_autoformat(bufnr)
+  bufnr = bufnr or 0
+  local old_val = vim.b[bufnr].autoformat_enabled
   if old_val == nil then old_val = vim.g.autoformat_enabled end
-  vim.b.autoformat_enabled = not old_val
-  notify(string.format("Buffer autoformatting %s", bool2str(vim.b.autoformat_enabled)))
+  vim.b[bufnr].autoformat_enabled = not old_val
+  notify(string.format("Buffer autoformatting %s", bool2str(vim.b[bufnr].autoformat_enabled)))
 end
 
 --- Toggle buffer semantic token highlighting for all language servers that support it
 --@param bufnr? number the buffer to toggle the clients on
 function M.toggle_buffer_semantic_tokens(bufnr)
-  vim.b.semantic_tokens_enabled = not vim.b.semantic_tokens_enabled
-  for _, client in ipairs(vim.lsp.get_active_clients()) do
+  bufnr = bufnr or 0
+  vim.b[bufnr].semantic_tokens_enabled = not vim.b[bufnr].semantic_tokens_enabled
+  for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = bufnr })) do
     if client.server_capabilities.semanticTokensProvider then
-      vim.lsp.semantic_tokens[vim.b.semantic_tokens_enabled and "start" or "stop"](bufnr or 0, client.id)
-      notify(string.format("Buffer lsp semantic highlighting %s", bool2str(vim.b.semantic_tokens_enabled)))
+      vim.lsp.semantic_tokens[vim.b[bufnr].semantic_tokens_enabled and "start" or "stop"](bufnr, client.id)
+      notify(string.format("Buffer lsp semantic highlighting %s", bool2str(vim.b[bufnr].semantic_tokens_enabled)))
     end
   end
 end
@@ -126,6 +128,24 @@ function M.toggle_buffer_semantic_tokens(bufnr)
       notify(string.format("Buffer lsp semantic highlighting %s", bool2str(vim.b.semantic_tokens_enabled)))
     end
   end
+end
+
+--- Toggle LSP inlay hints (buffer)
+-- @param bufnr? number the buffer to toggle the clients on
+function M.toggle_buffer_inlay_hints(bufnr)
+  bufnr = bufnr or 0
+  vim.b[bufnr].inlay_hints_enabled = not vim.b[bufnr].inlay_hints_enabled    -- flip buffer state
+  vim.lsp.buf.inlay_hint(bufnr, vim.b[bufnr].inlay_hints_enabled)            -- apply state
+  notify(string.format("Buffer inlay hints %s", bool2str(vim.b.inlay_hints_enabled)))
+end
+
+--- Toggle LSP inlay hints (global)
+-- @param bufnr? number the buffer to toggle the clients on
+function M.toggle_inlay_hints(bufnr)
+  vim.g.inlay_hints_enabled = not vim.g.inlay_hints_enabled     -- flip global state
+  vim.b.inlay_hints_enabled = not vim.g.inlay_hints_enabled     -- sync buffer state
+  vim.lsp.buf.inlay_hint(bufnr or 0, vim.g.inlay_hints_enabled) -- apply state
+  notify(string.format("Global inlay hints %s", bool2str(vim.g.inlay_hints_enabled)))
 end
 
 --- Toggle codelens
@@ -221,23 +241,6 @@ function M.toggle_foldcolumn()
   if curr_foldcolumn ~= "0" then last_active_foldcolumn = curr_foldcolumn end
   vim.wo.foldcolumn = curr_foldcolumn == "0" and (last_active_foldcolumn or "1") or "0"
   notify(string.format("foldcolumn=%s", vim.wo.foldcolumn))
-end
-
---- Toggle LSP inlay hints (buffer)
--- @param bufnr? number the buffer to toggle the clients on
-function M.toggle_buffer_inlay_hints(bufnr)
-  vim.b.inlay_hints_enabled = not vim.b.inlay_hints_enabled     -- flip buffer state
-  vim.lsp.buf.inlay_hint(bufnr or 0, vim.b.inlay_hints_enabled) -- apply state
-  notify(string.format("Buffer inlay hints %s", bool2str(vim.b.inlay_hints_enabled)))
-end
-
---- Toggle LSP inlay hints (global)
--- @param bufnr? number the buffer to toggle the clients on
-function M.toggle_inlay_hints(bufnr)
-  vim.g.inlay_hints_enabled = not vim.g.inlay_hints_enabled     -- flip global state
-  vim.b.inlay_hints_enabled = not vim.g.inlay_hints_enabled     -- sync buffer state
-  vim.lsp.buf.inlay_hint(bufnr or 0, vim.g.inlay_hints_enabled) -- apply state
-  notify(string.format("Global inlay hints %s", bool2str(vim.g.inlay_hints_enabled)))
 end
 
 --- Set the indent and tab related numbers
