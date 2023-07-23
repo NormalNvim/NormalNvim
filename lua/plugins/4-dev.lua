@@ -4,7 +4,6 @@
 --    Sections:
 --       ## COMMENTS
 --       -> comment.nvim                   [adv. comments]
---       -> lsp_signature.nvim             [auto show parameters help]
 
 --       ## SNIPPETS
 --       -> luasnip                        [snippet engine]
@@ -60,15 +59,6 @@ return {
           and { pre_hook = commentstring.create_pre_hook() }
         or {}
     end,
-  },
-
-  -- Show lsp help when writing parameters [auto show parameters help]
-  -- https://github.com/ray-x/lsp_signature.nvim
-  {
-    event = "User BaseFile",
-    "ray-x/lsp_signature.nvim",
-    opts = {},
-    config = function(_, opts) require'lsp_signature'.setup(opts) end
   },
 
   --  SNIPPETS ----------------------------------------------------------------
