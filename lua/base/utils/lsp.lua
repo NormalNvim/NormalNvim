@@ -461,7 +461,7 @@ M.on_attach = function(client, bufnr)
         desc = "Toggle LSP semantic highlight (buffer)",
       }
     else
-      client.server_capabilities.semanticTokensProvider = nil
+      client.server_capabilities.semanticTokenProvider = nil
     end
   end
 
