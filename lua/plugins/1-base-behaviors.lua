@@ -20,7 +20,6 @@
 --       -> suda.vim               [write as sudo]
 --       -> vim-matchup            [Improved % motion]
 --       -> hop.nvim               [go to word visually]
---       -> lsp_signature.nvim     [auto show parameters help]
 --       -> nvim-autopairs         [auto close brackets]
 
 -- import custom icons
@@ -589,23 +588,6 @@ return {
       -- you can configure Hop the way you like here; see :h hop-config
       require("hop").setup(opts)
     end,
-  },
-
-  -- Show lsp help when writing parameters [auto show parameters help]
-  -- https://github.com/ray-x/lsp_signature.nvim
-  {
-    "ray-x/lsp_signature.nvim",
-    event = "VeryLazy",
-    opts = {
-      -- Window mode (disabled)
-      floating_window = true,     -- Dislay it as floating window.
-      hi_parameter = "IncSearch", -- Color to highlight floating window.
-
-      -- Hint mode (enabled)
-      hint_enable = false,        -- Display it as hint.
-      hint_prefix = "👈 "
-    },
-    config = function(_, opts) require'lsp_signature'.setup(opts) end
   },
 
   --  nvim-autopairs [auto close brackets]
