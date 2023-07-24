@@ -178,6 +178,9 @@ return {
   --
   -- If you prefer to manually manage sessions using <space>S
   -- you can disable autosaving sessions here.
+  --
+  -- If you prefer to load the last session automatically when opening nvim,
+  -- you can delete all settings and just set "lazy = false".
   {
     "Shatur/neovim-session-manager",
     event = "User BaseFile",
