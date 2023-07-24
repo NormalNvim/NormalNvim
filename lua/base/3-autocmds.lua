@@ -60,8 +60,8 @@ local view_group = augroup("auto_view", { clear = true })
 autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {
   desc = "Save view with mkview for real files",
   group = view_group,
-  callback = function(event)
-    if vim.b[event.buf].view_activated then
+  callback = function(args)
+    if vim.b[args.buf].view_activated then
       vim.cmd.mkview { mods = { emsg_silent = true } }
     end
   end,
@@ -69,12 +69,12 @@ autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {
 autocmd("BufWinEnter", {
   desc = "Try to load file view if available and enable view saving for real files",
   group = view_group,
-  callback = function(event)
-    if not vim.b[event.buf].view_activated then
+  callback = function(args)
+    if not vim.b[args.buf].view_activated then
       local filetype =
-        vim.api.nvim_get_option_value("filetype", { buf = event.buf })
+        vim.api.nvim_get_option_value("filetype", { buf = args.buf })
       local buftype =
-        vim.api.nvim_get_option_value("buftype", { buf = event.buf })
+        vim.api.nvim_get_option_value("buftype", { buf = args.buf })
       local ignore_filetypes = { "gitcommit", "gitrebase", "svg", "hgcommit" }
       if
         buftype == ""
@@ -82,7 +82,7 @@ autocmd("BufWinEnter", {
         and filetype ~= ""
         and not vim.tbl_contains(ignore_filetypes, filetype)
       then
-        vim.b[event.buf].view_activated = true
+        vim.b[args.buf].view_activated = true
         vim.cmd.loadview { mods = { emsg_silent = true } }
       end
     end
@@ -95,13 +95,13 @@ if is_available "alpha-nvim" then
   autocmd({ "User", "BufEnter" }, {
     desc = "Disable status and tablines for alpha",
     group = alpha_group,
-    callback = function(event)
+    callback = function(args)
       local is_filetype_alpha = vim.api.nvim_get_option_value(
         "filetype", { buf = 0 }) == "alpha"
       local is_empty_file = vim.api.nvim_get_option_value(
         "buftype", { buf = 0 }) == "nofile"
-      if((event.event == "User" and event.file == "AlphaReady") or
-         (event.event == "BufEnter" and is_filetype_alpha)) and
+      if((args.event == "User" and args.file == "AlphaReady") or
+         (args.event == "BufEnter" and is_filetype_alpha)) and
         not vim.g.before_alpha
       then
         vim.g.before_alpha = {
@@ -111,7 +111,7 @@ if is_available "alpha-nvim" then
         vim.opt.showtabline, vim.opt.laststatus = 0, 0
       elseif
         vim.g.before_alpha
-        and event.event == "BufEnter"
+        and args.event == "BufEnter"
         and not is_empty_file
       then
         vim.opt.laststatus = vim.g.before_alpha.laststatus
