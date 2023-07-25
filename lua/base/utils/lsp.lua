@@ -530,6 +530,22 @@ function M.config(server_name)
     lsp_opts.settings = { Lua = { workspace = { checkThirdParty = false } } }
   end
   local opts = lsp_opts
+  opts = {
+    ---@type lspconfig.options
+    servers = {
+      pyright = {},
+      r_language_server = {},
+      julials = {},
+      marksman = {
+        -- also needs:
+        -- $home/.config/marksman/config.toml :
+        -- [core]
+        -- markdown.file_extensions = ["md", "markdown", "qmd"]
+        filetypes = { "markdown", "quarto" },
+        root_dir = require("lspconfig.util").root_pattern(".git", ".marksman.toml", "_quarto.yml"),
+      },
+    },
+  }
   local old_on_attach = server.on_attach
   local user_on_attach = opts.on_attach
   opts.on_attach = function(client, bufnr)

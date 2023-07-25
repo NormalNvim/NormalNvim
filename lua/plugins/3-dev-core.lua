@@ -67,6 +67,40 @@ return {
       autotag = { enable = true },
       context_commentstring = { enable = true, enable_autocmd = false },
       auto_install = true, -- Install a parser for the current language if not present.
+      ensure_installed = {
+        "bash",
+        "c",
+        "html",
+        "javascript",
+        "json",
+        "lua",
+        "luadoc",
+        "luap",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "query",
+        "regex",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "yaml",
+        "bash",
+        "html",
+        "css",
+        "javascript",
+        "json",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "vim",
+        "yaml",
+        "python",
+        "julia",
+        "r",
+      },
     },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
@@ -320,6 +354,7 @@ return {
         "hrsh7th/cmp-buffer",
         "hrsh7th/cmp-path",
         "hrsh7th/cmp-nvim-lsp",
+        "jmbuhr/otter.nvim"
       },
       event = "InsertEnter",
       opts = function()
@@ -370,6 +405,7 @@ return {
             expand = function(args) luasnip.lsp_expand(args.body) end,
           },
           duplicates = {
+            otter = 1,
             nvim_lsp = 1,
             luasnip = 1,
             cmp_tabnine = 1,
@@ -458,6 +494,7 @@ return {
             end, { "i", "s" }),
           },
           sources = cmp.config.sources {
+            { name = "otter", priority = 1500 },
             { name = "nvim_lsp", priority = 1000 },
             { name = "luasnip", priority = 750 },
             { name = "buffer", priority = 500 },
@@ -481,7 +518,7 @@ return {
       dev = false,
       opts = {
         lspFeatures = {
-          languages = { "r", "python", "julia", "bash", "html", "lua" },
+          languages = { "r", "python", "julia", "bash", "html", "lua", "haskell" },
         },
       },
       ft = "quarto",
@@ -509,16 +546,6 @@ return {
     {
       "jmbuhr/otter.nvim",
       opts = {},
-    },
-
-    {
-      "hrsh7th/nvim-cmp",
-      dependencies = { "jmbuhr/otter.nvim" },
-      opts = function(_, opts)
-        ---@param opts cmp.ConfigSchema
-        local cmp = require("cmp")
-        opts.sources = cmp.config.sources(vim.list_extend(opts.sources, { { name = "otter" } }))
-      end,
     },
 
     -- send code from python/r/qmd documets to a terminal or REPL
@@ -561,67 +588,6 @@ return {
           ["<leader>cs"] = { set_terminal, "set terminal" },
         })
       end,
-    },
-
-    {
-      "neovim/nvim-lspconfig",
-      ---@class PluginLspOpts
-      opts = {
-        ---@type lspconfig.options
-        servers = {
-          pyright = {},
-          r_language_server = {},
-          julials = {},
-          marksman = {
-            -- also needs:
-            -- $home/.config/marksman/config.toml :
-            -- [core]
-            -- markdown.file_extensions = ["md", "markdown", "qmd"]
-            filetypes = { "markdown", "quarto" },
-            root_dir = require("lspconfig.util").root_pattern(".git", ".marksman.toml", "_quarto.yml"),
-          },
-        },
-      },
-    },
-
-    {
-      "nvim-treesitter/nvim-treesitter",
-      opts = {
-        ensure_installed = {
-          "bash",
-          "c",
-          "html",
-          "javascript",
-          "json",
-          "lua",
-          "luadoc",
-          "luap",
-          "markdown",
-          "markdown_inline",
-          "python",
-          "query",
-          "regex",
-          "tsx",
-          "typescript",
-          "vim",
-          "vimdoc",
-          "yaml",
-          "bash",
-          "html",
-          "css",
-          "javascript",
-          "json",
-          "lua",
-          "markdown",
-          "markdown_inline",
-          "python",
-          "vim",
-          "yaml",
-          "python",
-          "julia",
-          "r",
-        },
-      },
     },
   }, -- end of collection
 } -- end of return
