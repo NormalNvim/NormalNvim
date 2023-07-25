@@ -16,6 +16,9 @@ local utils = require "base.utils"
 local extend_tbl = utils.extend_tbl
 local get_icon = utils.get_icon
 local luv = vim.uv or vim.loop -- TODO: REMOVE WHEN DROPPING SUPPORT FOR Neovim v0.9
+local is_available = utils.is_available
+
+
 
 --- A provider function for the fill string.
 ---@return string # the statusline string for filling the empty space.
@@ -643,21 +646,28 @@ function M.str(opts)
 end
 
 --- A provider function for displaying the compiler state.
+--- Be aware using this provider, will auto load the plugin compiler.nvim into memory.
 ---@return function # the state of the compiler.
 -- @usage local heirline_component = { provider = require("base.utils.status").provider.compiler_state() }
 -- @see base.utils.status.utils.stylize
 function M.compiler_state(opts)
-  local ovs = require("overseer.task_list")
-  local ovs_utils = require("overseer.util")
+  local ovs
+  local ovs_utils
   local state
   local tasks
   local tasks_by_status
   local spinner = utils.get_spinner("LSPLoading", 1) or { "" }
+
   return function()
+    if is_available "compiler.nvim" and not ovs then
+      ovs = require("overseer.task_list")
+      ovs_utils = require("overseer.util")
+    end
+    if not ovs then return nil end
+
     tasks = ovs.list_tasks({ unique = true })
     tasks_by_status = ovs_utils.tbl_group_by(tasks, "status")
 
-    -- Get state
     state = "INACTIVE"
     if tasks_by_status["FAILURE"] then state = "FAILURE" end
     if tasks_by_status["CANCELLED"] then state = "CANCELLED" end
@@ -669,7 +679,7 @@ function M.compiler_state(opts)
     return status_utils.stylize(state == "RUNNING" and (table.concat({
           " ",
           spinner[math.floor(luv.hrtime() / 12e7) % #spinner + 1] or "",
-          "compiling",
+          "compiling" or "",
         }, "")
       ), opts)
 
