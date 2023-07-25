@@ -667,7 +667,9 @@ function M.compiler_state(opts)
     if tasks_by_status["SUCCESS"] then state = "SUCCESS" end
 
     return status_utils.stylize(state == "RUNNING" and (table.concat({
-          " ", spinner[math.floor(luv.hrtime() / 12e7) % #spinner + 1] or "", "compiling",
+          " ",
+          spinner[math.floor(luv.hrtime() / 12e7) % #spinner + 1] or "",
+          "compiling",
         }, "")
       ), opts)
 
