@@ -77,6 +77,7 @@ local icons = {
   g = { desc = get_icon("Git", 1, true) .. "Git" },
   S = { desc = get_icon("Session", 1, true) .. "Session" },
   t = { desc = get_icon("Terminal", 1, true) .. "Terminal" },
+  Q = { desc = get_icon("Terminal", 1, true) .. "Quarto" },
 }
 
 -- standard Operations -----------------------------------------------------
@@ -234,11 +235,7 @@ maps.n["<leader>pv"] = { "<cmd>NvimVersion<cr>", desc = "Nvim Version" }
 maps.n["<leader>pl"] = { "<cmd>NvimChangelog<cr>", desc = "Nvim Changelog" }
 
 -- buffers/tabs [buffers ]--------------------------------------------------
-maps.n["<leader>c"] = { -- Close window and buffer at the same time.
-  function() require("base.utils.buffer").wipe() end,
-  desc = "Wipe buffer",
-}
-maps.n["<leader>C"] = { -- Close buffer keeping the window.
+maps.n["<leader>bc"] = { -- Close buffer keeping the window.
   function() require("base.utils.buffer").close() end,
   desc = "Close buffer",
 }
@@ -273,7 +270,7 @@ maps.n["<b"] = {
 }
 
 maps.n["<leader>b"] = icons.b
-maps.n["<leader>bc"] = {
+maps.n["<leader>ba"] = {
   function() require("base.utils.buffer").close_all(true) end,
   desc = "Close all buffers except current",
 }
@@ -357,14 +354,6 @@ maps.n["<C-j>"] = {
     require("base.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1))
   end,
   desc = "Previous buffer",
-}
-maps.n["<S-Down>"] = {
-  function() vim.api.nvim_feedkeys("5j", "n", true) end,
-  desc = "Fast move down",
-}
-maps.n["<S-Up>"] = {
-  function() vim.api.nvim_feedkeys("5k", "n", true) end,
-  desc = "Fast move up",
 }
 
 -- tabs
@@ -483,7 +472,7 @@ if is_available "Comment.nvim" then
     desc = "Comment line",
   }
   maps.v["<leader>/"] = {
-    "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
+    "<esc><cmd>lua require('Comment.api').toggle.blockwise(vim.fn.visualmode())<cr>",
     desc = "Toggle comment line",
   }
 end
@@ -642,48 +631,48 @@ end
 
 -- smart-splits.nivm
 if is_available "smart-splits.nvim" then
-  maps.n["<C-h>"] = {
+  maps.n["<S-h>"] = {
     function() require("smart-splits").move_cursor_left() end,
     desc = "Move to left split",
   }
-  maps.n["<C-j>"] = {
+  maps.n["<S-j>"] = {
     function() require("smart-splits").move_cursor_down() end,
     desc = "Move to below split",
   }
-  maps.n["<C-k>"] = {
+  maps.n["<S-k>"] = {
     function() require("smart-splits").move_cursor_up() end,
     desc = "Move to above split",
   }
-  maps.n["<C-l>"] = {
+  maps.n["<S-l>"] = {
     function() require("smart-splits").move_cursor_right() end,
     desc = "Move to right split",
   }
-  maps.n["<C-Up>"] = {
+  maps.n["<S-Up>"] = {
     function() require("smart-splits").resize_up() end,
     desc = "Resize split up",
   }
-  maps.n["<C-Down>"] = {
+  maps.n["<S-Down>"] = {
     function() require("smart-splits").resize_down() end,
     desc = "Resize split down",
   }
-  maps.n["<C-Left>"] = {
+  maps.n["<S-Left>"] = {
     function() require("smart-splits").resize_left() end,
     desc = "Resize split left",
   }
-  maps.n["<C-Right>"] = {
+  maps.n["<S-Right>"] = {
     function() require("smart-splits").resize_right() end,
     desc = "Resize split right",
   }
 else
-  maps.n["<C-h>"] = { "<C-w>h", desc = "Move to left split" }
-  maps.n["<C-j>"] = { "<C-w>j", desc = "Move to below split" }
-  maps.n["<C-k>"] = { "<C-w>k", desc = "Move to above split" }
-  maps.n["<C-l>"] = { "<C-w>l", desc = "Move to right split" }
-  maps.n["<C-Up>"] = { "<cmd>resize -2<CR>", desc = "Resize split up" }
-  maps.n["<C-Down>"] = { "<cmd>resize +2<CR>", desc = "Resize split down" }
-  maps.n["<C-Left>"] =
+  maps.n["<S-h>"] = { "<C-w>h", desc = "Move to left split" }
+  maps.n["<S-j>"] = { "<C-w>j", desc = "Move to below split" }
+  maps.n["<S-k>"] = { "<C-w>k", desc = "Move to above split" }
+  maps.n["<S-l>"] = { "<C-w>l", desc = "Move to right split" }
+  maps.n["<S-Up>"] = { "<cmd>resize -2<CR>", desc = "Resize split up" }
+  maps.n["<S-Down>"] = { "<cmd>resize +2<CR>", desc = "Resize split down" }
+  maps.n["<S-Left>"] =
     { "<cmd>vertical resize -2<CR>", desc = "Resize split left" }
-  maps.n["<C-Right>"] =
+  maps.n["<S-Right>"] =
     { "<cmd>vertical resize +2<CR>", desc = "Resize split right" }
 end
 
@@ -1097,30 +1086,69 @@ end
 --   }
 -- end
 
--- [neural] -----------------------------------------------------------------
-if is_available "neural" then
-  maps.n["<leader>a"] = {
-    function() require("neural").prompt() end,
-    desc = "Ask chatgpt",
+--- [quarto] ------------
+maps.n["<leader>Q"] = icons.Q
+maps.n["<leader>Qa"] = {
+  "<cmd>QuartoActivate<cr>",
+  desc = "Activate Quarto"
+}
+if is_available("quarto-nvim") then
+  maps.n["<leader>Qp"] = {
+    "<cmd>QuartoPreview<cr>",
+    desc = "Preview Quarto"
+  }
+  maps.n["<leader>Qq"] = {
+    "<cmd>QuartoClosePreview<cr>",
+    desc = "Close Quarto"
+  }
+  maps.n["<leader>Qh"] = {
+    "<cmd>QuartoHelp<cr>",
+    desc = "Quarto Help"
+  }
+  maps.n["<leader>Qe"] = {
+    function () require('otter').export(false) end,
+    desc = "Quarto Export"
+  }
+  maps.n["<leader>QE"] = {
+    function () require('otter').export(true) end,
+    desc = "Quarto Export Overwrite"
+  }
+  maps.n["<leader>Qra"] = {
+    "<cmd>QuartoSendAbove<cr>",
+    desc = "quarto run to cursor"
+  }
+  maps.n["<leader>Qrr"] = {
+    "<cmd>QuartoSendAll<cr>",
+    desc = "Quarto run all"
   }
 end
 
--- hop.nivm ----------------------------------------------------------------
-if is_available "hop.nvim" then
-  maps.n["<C-m>"] = {
-    function()
-      require "hop"
-      vim.cmd "HopWord"
-    end,
-    desc = "Hop to word",
+----[[Slime]]
+if is_available("vim-slime") then
+  maps.n["<leader>Qs"] = {
+    "<cmd>SlimeSend<cr>",
+    desc = "Send Code Chunk"
   }
-  maps.n["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
-    function()
-      require "hop"
-      vim.cmd "HopWord"
-    end,
-    desc = "Hop to word",
+  maps.i["<c-cr>"] = {
+    "<cmd>SlimeSend<cr>i",
+    desc = "Send Code Chunk"
+  }
+  maps.v["<c-cr>"] = {
+    "<cmd>SlimeRegionSend<cr>",
+    desc = "Send Code Chunk"
+  }
+  maps.v["<cr>"] = {
+    "<cmd>SlimeRegionSend<cr>",
+    desc = "Send Code Chunk"
   }
 end
+maps.n["<leader>tg"] = {
+  "<cmd>vsplit terminal://ghci<cr>",
+  desc = "Terminal: haskell"
+}
+maps.n["<leader>tp"] = {
+  "<cmd>vsplit terminal://python<cr>",
+  desc = "Terminal: python"
+}
 
 utils.set_mappings(maps)
