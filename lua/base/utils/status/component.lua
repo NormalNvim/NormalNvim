@@ -565,4 +565,32 @@ function M.builder(opts)
     or children
 end
 
+--- Display an spinner while the compiler is compiling.
+---@param opts? table options for configuring compiler_state and the overall padding.
+---@return table # The Heirline component table.
+-- @usage local heirline_component = require("base.utils.status").component.compiler_state()
+function M.compiler_state(opts)
+  opts = extend_tbl({
+    compiler_state = {
+      condition = function() return is_available("compiler.nvim") end,
+      padding = { left = 1, right = 0 },
+    },
+    hl = hl.get_attributes "treesitter",
+    on_click = {
+      name = "compiler_open",
+      callback = function()
+        if is_available "compiler.nvim" then
+          vim.defer_fn(
+            function() vim.cmd("CompilerToggleResults") end,
+            100
+          )
+        end
+      end,
+    },
+  }, opts)
+  return M.builder(status_utils.setup_providers(opts, {
+    "compiler_state",
+  }))
+end
+
 return M
