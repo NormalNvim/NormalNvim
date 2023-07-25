@@ -2,6 +2,9 @@
 --
 -- DESCRIPTION:
 -- The main functions we use to configure heirline.
+--
+-- Be aware only things assigned inside a the return function will be updated.
+
 
 local M = {}
 
@@ -637,6 +640,40 @@ end
 function M.str(opts)
   opts = extend_tbl({ str = " " }, opts)
   return status_utils.stylize(opts.str, opts)
+end
+
+--- A provider function for displaying the compiler state.
+---@return function # the state of the compiler.
+-- @usage local heirline_component = { provider = require("base.utils.status").provider.compiler_state() }
+-- @see base.utils.status.utils.stylize
+function M.compiler_state(opts)
+  local ovs = require("overseer.task_list")
+  local ovs_utils = require("overseer.util")
+  local state
+  local tasks
+  local tasks_by_status
+  local spinner = utils.get_spinner("LSPLoading", 1) or { "" }
+  return function()
+    tasks = ovs.list_tasks({ unique = true })
+    tasks_by_status = ovs_utils.tbl_group_by(tasks, "status")
+
+    -- Get state
+    state = "INACTIVE"
+    if tasks_by_status["FAILURE"] then state = "FAILURE" end
+    if tasks_by_status["CANCELLED"] then state = "CANCELLED" end
+    if tasks_by_status["DISPOSED"] then state = "DISPOSED" end
+    if tasks_by_status["PENDING"] then state = "PENDING" end
+    if tasks_by_status["RUNNING"] then state = "RUNNING" end
+    if tasks_by_status["SUCCESS"] then state = "SUCCESS" end
+
+    return status_utils.stylize((table.concat({
+          state == "RUNNING" and " " or "",
+          state == "RUNNING" and spinner[math.floor(luv.hrtime() / 12e7) % #spinner + 1] or "",
+          state == "RUNNING" and "compiling" or "",
+        }, "")
+      ), opts)
+
+  end
 end
 
 return M

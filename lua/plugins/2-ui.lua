@@ -289,7 +289,8 @@ return {
           status.component.cmd_info(),
           status.component.fill(),
           status.component.lsp(),
-          status.component.treesitter(),
+          --status.component.treesitter(),    -- uncomment to enable
+          status.component.compiler_state(),
           --status.component.file_encoding(), -- uncomment to enable
           status.component.nav(),
           status.component.mode { surround = { separator = "right" } },
