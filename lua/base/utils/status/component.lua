@@ -573,7 +573,7 @@ function M.compiler_state(opts)
   opts = extend_tbl({
     compiler_state = {
       condition = function()
-        return is_available "compiler.nvim" and vim.bo.filetype ~= ""
+        return is_available "compiler.nvim"
       end,
       padding = { left = 1, right = 0 },
     },
