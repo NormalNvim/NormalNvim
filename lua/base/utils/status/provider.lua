@@ -673,7 +673,7 @@ function M.compiler_state(opts)
     if tasks_by_status["CANCELLED"] then state = "CANCELLED" end
     if tasks_by_status["DISPOSED"] then state = "DISPOSED" end
     if tasks_by_status["PENDING"] then state = "PENDING" end
-    if tasks_by_status["RUNNING"] then state = "RUNNING" end
+    if tasks_by_status["RUNNING"] or _G.compiler_binary_search == true then state = "RUNNING" end
     if tasks_by_status["SUCCESS"] then state = "SUCCESS" end
 
     return status_utils.stylize(state == "RUNNING" and (table.concat({
