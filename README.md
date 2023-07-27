@@ -108,7 +108,7 @@ Special thanks to LeoRed04 for designing the logo.
 
 ## Roadmap
 * Create a clear link to the list of included plugins.
+* Porting vim-dooku to neovim/lua.
 * Setup contributors page.
 * Creating a landing page.
-* Porting vim-dooku to neovim/lua.
 * While on the debugger, add an option to the contextual menu to toggle breakpoint.
