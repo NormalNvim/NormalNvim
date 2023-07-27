@@ -105,3 +105,10 @@ If you want to help me, please star this repository to increase the visibility o
 Originally it took AstroNvim as base. But implements [this VIM config](https://github.com/amix/vimrc) with some extras. Code has been simplified while retaining its core features. NormalNvim has also contributed to the code of many of the plugins included, in order to debug them and make them better.
 
 Special thanks to LeoRed04 for designing the logo.
+
+## Roadmap
+* Create a clear link to the list of included plugins.
+* Setup contributors page.
+* Creating a landing page.
+* Porting vim-dooku to neovim/lua.
+* While on the debugger, add an option to the contextual menu to toggle breakpoint.
