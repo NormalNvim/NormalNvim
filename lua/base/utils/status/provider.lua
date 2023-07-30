@@ -659,7 +659,7 @@ function M.compiler_state(opts)
   local spinner = utils.get_spinner("LSPLoading", 1) or { "" }
 
   return function()
-    if is_available "compiler.nvim" and not ovs and vim.bo.filetype ~= "" then
+    if is_available "compiler.nvim" and is_available "treesitter" and not ovs then
       ovs = require("overseer.task_list")
       ovs_utils = require("overseer.util")
     end
