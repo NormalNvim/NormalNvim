@@ -659,7 +659,7 @@ function M.compiler_state(opts)
   local spinner = utils.get_spinner("LSPLoading", 1) or { "" }
 
   return function()
-    if is_available "compiler.nvim" and not ovs and vim.bo.filetype ~= "" then
+    if is_available "compiler.nvim" and is_available "treesitter" and not ovs then
       ovs = require("overseer.task_list")
       ovs_utils = require("overseer.util")
     end
@@ -667,14 +667,7 @@ function M.compiler_state(opts)
 
     tasks = ovs.list_tasks({ unique = true })
     tasks_by_status = ovs_utils.tbl_group_by(tasks, "status")
-
-    state = "INACTIVE"
-    if tasks_by_status["FAILURE"] then state = "FAILURE" end
-    if tasks_by_status["CANCELLED"] then state = "CANCELLED" end
-    if tasks_by_status["DISPOSED"] then state = "DISPOSED" end
-    if tasks_by_status["PENDING"] then state = "PENDING" end
     if tasks_by_status["RUNNING"] then state = "RUNNING" end
-    if tasks_by_status["SUCCESS"] then state = "SUCCESS" end
 
     return status_utils.stylize(state == "RUNNING" and (table.concat({
           " ",

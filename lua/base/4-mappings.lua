@@ -1146,7 +1146,7 @@ end
 
 -- code docmentation [docs] -------------------------------------------------
 
-if is_available "markdown-preview.nivm" or is_available "markmap.nvim" then
+if is_available "markdown-preview.nivm" or is_available "markmap.nvim" or is_available "dooku.nvim" then
   maps.n["<leader>D"] = icons.dc
 
   -- Markdown preview
@@ -1164,15 +1164,14 @@ if is_available "markdown-preview.nivm" or is_available "markmap.nvim" then
       desc = "Markmap",
     }
   end
-end
 
--- dooku.nvim → Enable it once ported to lua
--- if is_available "markmap.nvim" then
---   maps.n["<leader>Dm"] = {
---     function() vim.cmd ":MarkmapOpen" end,
---     desc = "Markdown mental map",
---   }
--- end
+  if is_available "dooku.nvim" then
+    maps.n["<leader>Dd"] = {
+      function() vim.cmd ":DookuGenerate" end,
+      desc = "Open documentation",
+    }
+  end
+end
 
 -- [neural] -----------------------------------------------------------------
 if is_available "neural" then

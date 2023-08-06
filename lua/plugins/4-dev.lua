@@ -27,8 +27,7 @@
 --       -> aerial.nvim                    [code analyzer]
 
 --       ## CODE DOCUMENTATION
---       -> vim-doxigen                    [general    doc generator]
---       -> vim-typedoc                    [typescript doc generator]
+--       -> dooku.nivm                     [html doc generator]
 --       -> markdown-preview.nvim          [markdown previewer]
 --       -> markmap.nvim                   [markdown mindmap]
 
@@ -159,6 +158,7 @@ return {
   {
     "mfussenegger/nvim-dap",
     enabled = vim.fn.has "win32" == 0,
+    event = "User BaseFile",
     dependencies = {
       {
         "jay-babu/mason-nvim-dap.nvim",
@@ -200,7 +200,6 @@ return {
         end,
       },
     },
-    event = "User BaseFile",
   },
 
   --  COMPILER ----------------------------------------------------------------
@@ -386,39 +385,17 @@ return {
   },
 
   --  CODE DOCUMENTATION ------------------------------------------------------
-  --  Temporary removed until re-implemented in LUA
-  --  vim-doxygen
-  --  https://github.com/Zeioth/vim-doxygen
-  -- {
-  --   "Zeioth/vim-doxygen",
-  --   tf = {
-  --     "c",
-  --     "cpp",
-  --     "cs",
-  --     "python",
-  --     "d",
-  --     "fortran",
-  --     "java",
-  --     "perl",
-  --     "vhdl",
-  --     "objc",
-  --     "php",
-  --   },
-  --   cmd = {
-  --     "TypedocOpen",
-  --     "TypedocRegen",
-  --   },
-  -- },
-  -- --  vim-typedoc
-  -- --  https://github.com/Zeioth/vim-typedoc
-  -- {
-  --   "Zeioth/vim-doxygen",
-  --   tf = { "typescript" },
-  --   cmd = {
-  --     "DoxygenOpen",
-  --     "DoxygenRegen",
-  --   },
-  -- },
+  --  dooku.nvim [html doc generator]
+  --  https://github.com/Zeioth/dooku.nvim
+  {
+    "Zeioth/dooku.nvim",
+    cmd = {
+      "DookuGenerate",
+      "DookuOpen",
+      "DookuAutoSetup"
+    },
+    opts = {},
+  },
 
   --  [markdown previewer]
   --  https://github.com/iamcco/markdown-preview.nvim
