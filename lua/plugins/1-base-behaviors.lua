@@ -228,13 +228,13 @@ return {
       find_engine = {
         default = {
           find = {
-            --pick one of item in find_engine [ag, rg, ripgrep ]
+            -- pick one of item in find_engine [ ag, rg, ripgrep ]
             cmd = "ripgrep",
             options = {},
           },
           replace = {
-            -- If you install oxi with cargo you can use it instead.
-            cmd = "sed",
+            -- pick one of item in [ sed, oxi ]
+            cmd = "oxi",
           },
         },
       },
