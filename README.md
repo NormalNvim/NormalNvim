@@ -107,8 +107,9 @@ Originally it took AstroNvim as base. But implements [this VIM config](https://g
 Special thanks to LeoRed04 for designing the logo.
 
 ## Roadmap
+* ~~Porting vim-dooku to neovim/lua~~.
 * Create a clear link to the list of included plugins.
-* Porting vim-dooku to neovim/lua.
 * Setup contributors page.
 * Creating a landing page.
+* Add all the debuggers to a link in the dependencies section, to make easier for users setting up dap.
 * While on the debugger, add an option to the contextual menu to toggle breakpoint.
