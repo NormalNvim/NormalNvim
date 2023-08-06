@@ -228,8 +228,8 @@ return {
       find_engine = {
         default = {
           find = {
-            --pick one of item in find_engine [ag, rg ]
-            cmd = "ag",
+            --pick one of item in find_engine [ag, rg, ripgrep ]
+            cmd = "ripgrep",
             options = {},
           },
           replace = {
