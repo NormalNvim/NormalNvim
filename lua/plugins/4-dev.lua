@@ -159,9 +159,46 @@ return {
     "mfussenegger/nvim-dap",
     enabled = vim.fn.has "win32" == 0,
     event = "User BaseFile",
+    config = function(_, opts)
+      local dap = require("dap")
+
+      -- C#
+      dap.adapters.coreclr = {
+        type = 'executable',
+        command = '/usr/bin/netcoredbg', -- path of your netcoredbg executable
+        args = {'--interpreter=vscode'}
+      }
+      dap.configurations.cs = {
+        {
+          type = "coreclr",
+          name = "launch - netcoredbg",
+          request = "launch",
+          program = function() -- Ask the user what executable wants to debug
+              return vim.fn.input('Path to dll: ', vim.fn.getcwd() .. '/bin/Program.exe', 'file')
+          end,
+        },
+      }
+
+      -- Python
+      dap.adapters.python = {
+          type = 'executable',
+          command = vim.fn.stdpath('data')..'/mason/packages/debugpy/venv/bin/python',
+          args = { '-m', 'debugpy.adapter' },
+      }
+      dap.configurations.python = {
+        {
+          type = "python",
+          request = "launch",
+          name = "Launch file",
+          program = "${file}", -- This configuration will launch the current file if used.
+        },
+      }
+
+    end, -- of dap config
     dependencies = {
       {
         "jay-babu/mason-nvim-dap.nvim",
+        "mfussenegger/nvim-dap-python",
         dependencies = { "nvim-dap" },
         cmd = { "DapInstall", "DapUninstall" },
         opts = { handlers = {} },
