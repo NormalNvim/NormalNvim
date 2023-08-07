@@ -52,7 +52,7 @@ return {
   -- https://github.com/ahmedkhalf/project.nvim
   {
     "Zeioth/project.nvim",
-    event = "User BaseFile",
+    event = "VeryLazy",
     cmd = "ProjectRoot",
     opts = {
       -- How to find root directory
@@ -64,6 +64,7 @@ return {
         ".svn",
         "Makefile",
         "package.json",
+        ".solution",
       },
       -- Don't list the next projects
       exclude_dirs = {
@@ -76,7 +77,7 @@ return {
       exclude_filetype_chdir = {"", "OverseerList", "alpha"},
 
       -- Don't auto-chdir for specific buftypes.
-      exclude_buftype_chdir = {"", "terminal"},
+      exclude_buftype_chdir = {"nofile", "terminal"},
 
       --ignore_lsp = { "lua_ls" },
     },
@@ -223,19 +224,18 @@ return {
   -- It doesn't have ctrl-z so please always commit before using it.
   {
     "nvim-pack/nvim-spectre",
+    build = (windows and "") or "./build.sh nvim-oxi",
     cmd = "Spectre",
     opts = {
-      find_engine = {
-        default = {
-          find = {
-            --pick one of item in find_engine [ag, rg ]
-            cmd = "ag",
-            options = {},
-          },
-          replace = {
-            -- If you install oxi with cargo you can use it instead.
-            cmd = "sed",
-          },
+      default = {
+        find = {
+          -- pick one of item in find_engine [ ag, rg, ripgrep ]
+          cmd = "rg",
+          options = {}
+        },
+        replace = {
+          -- pick one of item in [ sed, oxi ]
+          cmd = (windows and "sed") or "oxi",
         },
       },
       is_insert_mode = true, -- start open panel on is_insert_mode
