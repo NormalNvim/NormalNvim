@@ -35,7 +35,7 @@ git clone git@github.com:NormalNVim/NormalNVim.git %USERPROFILE%\AppData\Local\n
 ranger       # Necessary for Rnvimr.
 pynvim       # Necessary for Rnvimr.
 ripgrep      # Necessary for Spectre.
-oxi          # Necessary for Spectre.
+rust         # Necessary for Spectre.
 yarn         # Necessary for Markmap.
 ```
 
