@@ -801,6 +801,7 @@ return {
 
       local animate = require "mini.animate"
       return {
+        open = { enable = false }, -- causes issues on spectre toggle.
         resize = {
           timing = animate.gen_timing.linear { duration = 33, unit = "total" },
         },
