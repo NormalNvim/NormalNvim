@@ -129,6 +129,6 @@ Requires the system package: netcoredbg
 :MasonInstall debugpy@1.6.7
 
 # C / C++ / Rust
-Requires the system package codelldb
+Requires the system package lldb
 
 ```
