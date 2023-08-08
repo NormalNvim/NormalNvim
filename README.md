@@ -18,19 +18,22 @@ The space key shows [all you can do](https://github.com/Zeioth/NormalNvim/wiki/b
 
 
 ## Install (Linux/MacOS)
-
+On UNIX, the installer will automatically install the [extra goodies](https://github.com/NormalNvim/NormalPackages), which are pre configured packages, debuggers, formatters, linters, treesitter, and LSP configs. If you prefer to install this manually using mason, just run the command until the first `&&`.
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
 git clone git@github.com:NormalNVim/NormalNVim.git ~/.config/nvim && echo "Downloading packages:"; wget -N -O /tmp/normalnvim_packages.tar.gz https://github.com/NormalNvim/NormalPackages/raw/main/packages.tar.gz && mkdir -p ~/.local/share/nvim/lazy/ && tar -xzf /tmp/normalnvim_packages.tar.gz -C ~/.local/share/nvim/lazy/ && echo "DONE - Starting neovim."; nvim
 ```
 
 ## Install (Windows)
+On Windows you can optionally install the [extra goodies](https://github.com/NormalNvim/NormalPackages) manually.
+Windows 
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
 git clone git@github.com:NormalNVim/NormalNVim.git %USERPROFILE%\AppData\Local\nvim && nvim
 ```
 
 ## System dependencies
+If you miss a dependency it won't cause any error, but it will disable the feature.
 ```sh
 ranger       # Necessary for Rnvimr.
 pynvim       # Necessary for Rnvimr.
