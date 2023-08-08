@@ -115,3 +115,20 @@ Special thanks to LeoRed04 for designing the logo.
 * Creating a landing page.
 * Add all the debuggers to a link in the dependencies section, to make easier for users setting up dap.
 * While on the debugger, add an option to the contextual menu to toggle breakpoint.
+
+## Scratchpad
+(WIP, this is not ready yet, there are just my notes.)
+
+Debuggers are distributed with NormalNvim under the directory /mason, but you will still have to install 
+
+```
+# C#
+Requires the system package: netcoredbg
+
+#Python → Due to debugpy bug https://github.com/microsoft/debugpy/issues/1345
+:MasonInstall debugpy@1.6.7
+
+# C / C++ / Rust
+Requires the system package codelldb
+
+```
