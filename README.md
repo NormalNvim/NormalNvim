@@ -131,4 +131,7 @@ Requires the system package: netcoredbg
 # C / C++ / Rust
 Requires the system package lldb
 
+# Javascript firefox (also support typescript)
+You don't need to manually install this, mason DAP is capable of installing it.
+
 ```
