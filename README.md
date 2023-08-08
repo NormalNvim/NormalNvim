@@ -117,7 +117,7 @@ Special thanks to LeoRed04 for designing the logo.
 * While on the debugger, add an option to the contextual menu to toggle breakpoint.
 
 ## Scratchpad
-(WIP, this is not ready yet, there are just my notes.)
+(WIP, this is not ready yet, these are just my notes.)
 
 Debuggers are distributed with NormalNvim under the directory /mason, but you will still have to install 
 
