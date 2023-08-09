@@ -126,18 +126,22 @@ Debuggers are distributed with NormalNvim under the directory /mason, but you wi
 
 ```
 # C#
-Requires the system package: netcoredbg
+Requires the system package: `netcoredbg`
 
 # Java
-Requires the system package: jdtls
+Requires the system package: `jdtls`
 
 #Python → Due to debugpy bug https://github.com/microsoft/debugpy/issues/1345
 :MasonInstall debugpy@1.6.7
 
 # C / C++ / Rust
-Requires the system package lldb
+Requires the system package `lldb`
+
+# Go
+Requires the system package `dlv`
 
 # Javascript firefox (also support typescript)
 You don't need to manually install this, mason DAP is capable of installing it.
+
 
 ```
