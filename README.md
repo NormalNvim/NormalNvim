@@ -128,6 +128,9 @@ Debuggers are distributed with NormalNvim under the directory /mason, but you wi
 # C#
 Requires the system package: netcoredbg
 
+# Java
+Requires the system package: jdtls
+
 #Python → Due to debugpy bug https://github.com/microsoft/debugpy/issues/1345
 :MasonInstall debugpy@1.6.7
 
