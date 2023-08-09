@@ -142,6 +142,4 @@ Requires the system package `dlv`
 
 # Javascript firefox (also support typescript)
 You don't need to manually install this, mason DAP is capable of installing it.
-
-
 ```
