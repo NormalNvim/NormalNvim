@@ -48,6 +48,7 @@ yarn         # Necessary for Markmap.
 * ⚡ **Lazy:** Plugins are loaded lazily, providing super fast performance.
 * 😎 **Plugins are self-contained:** Allowing you to easily delete what you don't want.
 * 🔋 **Batteries included:** Most plugins you will ever need are included and debugged by default. Get the best user experience out of the box and forget about nasty bugs in your Neovim config.
+* 🐞 **Insecticide included:** Debuggers, Linters, Formatters, linters, LSP... preinstalled, preconfigured and ready to code.
 * 🔒 **Plugin version lock:** You can choose "stable" or "nightly" update channels. Or if you prefer, use :NvimFreezePluginVersions to create your own stable versions!
 * 🔙 **Rollbacks:** You can easily recover from a nvim distro update using :NvimRollbackRestore
 * 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
