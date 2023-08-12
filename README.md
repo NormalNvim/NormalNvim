@@ -41,6 +41,7 @@ rust         # Necessary for Spectre.
 yarn         # Necessary for Markmap.
 jdtls        # Necessary for the java debugger.
 dlv          # Necessary for the go debugger.
+grcov        # Necessary for test coverage.
 ```
 
 
@@ -173,4 +174,3 @@ Requires the system dependency open-jdk.
 # C#
 Requires the system dependencies dotnet-runtime and dotnet-sdk.
 ```
-
