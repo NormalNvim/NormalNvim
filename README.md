@@ -39,6 +39,8 @@ pynvim       # Necessary for Rnvimr.
 ripgrep      # Necessary for Spectre.
 rust         # Necessary for Spectre.
 yarn         # Necessary for Markmap.
+jdtls        # Necessary for the java debugger.
+dlv          # Necessary for the go debugger.
 ```
 
 
