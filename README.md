@@ -115,6 +115,7 @@ Special thanks to LeoRed04 for designing the logo.
 
 ## Roadmap
 * ~~Porting vim-dooku to neovim/lua~~.
+* Ship debuggers/testers/formatters/linters with NormalNvim.
 * Create a clear link to the list of included plugins.
 * Setup contributors page.
 * Creating a landing page.
