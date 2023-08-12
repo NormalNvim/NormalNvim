@@ -128,7 +128,7 @@ Debuggers are distributed with NormalNvim under the directory /mason, but you wi
 
 ```
 # C#
-Requires the system package: `netcoredbg`
+Requires the system package: `netcoredbg`.
 
 # Java
 Requires the system package: `jdtls`
@@ -148,3 +148,28 @@ You don't need to manually install this, mason DAP is capable of installing it.
 # Shell
 You don't need to manually install this, mason DAP is capable of installing it.
 ```
+
+Also, WIP for testers:
+
+```
+# Python
+Requires the system package pytest
+
+# Rust
+Requires the system package rust-nextest
+
+# Dotnet
+Requires the nuget pacakge nunit
+dotnet tool install --global nunit
+```
+
+Also, WIP for compiler:
+
+```
+# Java
+Requires the system dependency open-jdk.
+
+# C#
+Requires the system dependencies dotnet-runtime and dotnet-sdk.
+```
+
