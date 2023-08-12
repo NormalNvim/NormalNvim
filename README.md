@@ -26,7 +26,6 @@ git clone git@github.com:NormalNVim/NormalNVim.git ~/.config/nvim && echo "Downl
 
 ## Install (Windows)
 On Windows you can optionally install the [extra goodies](https://github.com/NormalNvim/NormalPackages) manually.
-Windows 
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
 git clone git@github.com:NormalNVim/NormalNVim.git %USERPROFILE%\AppData\Local\nvim && nvim
