@@ -126,28 +126,6 @@ Special thanks to LeoRed04 for designing the logo.
 ## Scratchpad
 (WIP, this is not ready yet, these are just my notes.)
 
-Debuggers are distributed with NormalNvim under the directory /mason, but you will still have to install 
-
-```
-# Java
-Requires the system package: `jdtls`
-
-#Python → Due to debugpy bug https://github.com/microsoft/debugpy/issues/1345
-:MasonInstall debugpy@1.6.7
-
-# C / C++ / Rust
-Requires the system package `lldb`
-
-# Go
-Requires the system package `dlv`
-
-# Javascript firefox (also support typescript)
-You don't need to manually install this, mason DAP is capable of installing it.
-
-# Shell
-You don't need to manually install this, mason DAP is capable of installing it.
-```
-
 Also, WIP for testers:
 
 ```
