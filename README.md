@@ -37,13 +37,14 @@ If you miss a dependency it won't cause any error, but it will disable the featu
 ranger       # Necessary for Rnvimr.
 pynvim       # Necessary for Rnvimr.
 ripgrep      # Necessary for Spectre.
-rust         # Necessary for Spectre.
 yarn         # Necessary for Markmap.
+grcov        # Necessary for test coverage.
 jdtls        # Necessary for the java debugger.
 dlv          # Necessary for the go debugger.
-grcov        # Necessary for test coverage.
-```
 
+For compilers, check:
+https://github.com/Zeioth/Compiler.nvim/wiki/how-to-install-the-required-dependencies
+```
 
 ## Distro features
 
@@ -138,14 +139,4 @@ Requires the system package rust-nextest
 # Dotnet
 Requires the nuget pacakge nunit
 dotnet tool install --global nunit
-```
-
-Also, WIP for compiler:
-
-```
-# Java
-Requires the system dependency open-jdk.
-
-# C#
-Requires the system dependencies dotnet-runtime and dotnet-sdk.
 ```
