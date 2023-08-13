@@ -41,10 +41,8 @@ yarn         # Necessary for Markmap.
 grcov        # Necessary for test coverage.
 jdtls        # Necessary for the java debugger.
 dlv          # Necessary for the go debugger.
-
-For compilers, check:
-https://github.com/Zeioth/Compiler.nvim/wiki/how-to-install-the-required-dependencies
 ```
+For compilers, check: https://github.com/Zeioth/Compiler.nvim/wiki/how-to-install-the-required-dependencies
 
 ## Distro features
 
