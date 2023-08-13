@@ -129,9 +129,6 @@ Special thanks to LeoRed04 for designing the logo.
 Debuggers are distributed with NormalNvim under the directory /mason, but you will still have to install 
 
 ```
-# C#
-Requires the system package: `netcoredbg`.
-
 # Java
 Requires the system package: `jdtls`
 
