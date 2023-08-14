@@ -64,6 +64,7 @@ local options = {
     writebackup = false, -- Disable making a backup before overwriting a file.
 
     -- Aditions
+    shada = "!,'1000,<50,s10,h", -- Remember the last 1000 opened files
     undodir = vim.fn.stdpath "data" .. "/undodir", -- Chooses where to store the undodir.
     history = 1000, -- Number of commands to remember in a history table (per buffer).
     swapfile = false, -- Ask what state to recover when opening a file that was not saved.
