@@ -37,6 +37,7 @@ If you miss a dependency it won't cause any error, but it will disable the featu
 ranger       # Necessary for Rnvimr.
 pynvim       # Necessary for Rnvimr.
 ripgrep      # Necessary for Spectre.
+rust         # Necessary for Spectre.
 yarn         # Necessary for Markmap.
 delta        # Necessary for telescope-undo.
 grcov        # Necessary for test coverage.
