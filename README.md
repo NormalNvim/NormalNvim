@@ -121,32 +121,9 @@ Special thanks to LeoRed04 for designing the logo.
 
 ## Roadmap
 * ~~Porting vim-dooku to neovim/lua~~.
-* Ship debuggers/testers/formatters/linters with NormalNvim.
+* Ship debuggers/testers/formatters/linters with NormalNvim. → Configs ready, testing before shipping them as part of the `NormalNvim` installer.
+* Add all the debuggers to a link in the dependencies section, to make easier for users setting up dap.
 * Create a clear link to the list of included plugins.
 * Setup contributors page.
 * Creating a landing page.
-* Add all the debuggers to a link in the dependencies section, to make easier for users setting up dap.
 * While on the debugger, add an option to the contextual menu to toggle breakpoint.
-
-## Scratchpad
-(WIP, this is not ready yet, these are just my notes.)
-
-Also, WIP for testers:
-
-```
-# jest
-Requires jest in your project, or system.
-
-# Python
-Requires the system package pytest
-
-# Rust
-Requires the system package rust-nextest
-
-# Dotnet
-Requires the nuget pacakge nunit
-dotnet tool install --global nunit
-
-# Go
-Doesn't require any dependency.
-```
