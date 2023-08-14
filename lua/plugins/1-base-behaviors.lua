@@ -235,7 +235,7 @@ return {
         },
         replace = {
           -- pick one of item in [ sed, oxi ]
-          cmd = (windows and "sed") or "oxi",
+          cmd = (windows and "sed") or "sed",
         },
       },
       is_insert_mode = true, -- start open panel on is_insert_mode
@@ -554,9 +554,8 @@ return {
   --  By default registers are deleted between sessions.
   {
     "AckslD/nvim-neoclip.lua",
-    config = function()
-      require('neoclip').setup()
-    end,
+    requires = { {'nvim-telescope/telescope.nvim'} },
+    config = function() require('neoclip').setup() end,
   },
 
   --  zen-mode.nivm [distraction free mode]

@@ -571,8 +571,9 @@ return {
   {
     "nvim-telescope/telescope.nvim",
     dependencies = {
-      {"debugloop/telescope-undo.nvim",
-      lazy=false
+      {
+        "debugloop/telescope-undo.nvim",
+        cmd = "Telescope",
       },
       {
         "nvim-telescope/telescope-fzf-native.nvim",
