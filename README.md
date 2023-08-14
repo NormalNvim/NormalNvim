@@ -38,6 +38,7 @@ ranger       # Necessary for Rnvimr.
 pynvim       # Necessary for Rnvimr.
 ripgrep      # Necessary for Spectre.
 yarn         # Necessary for Markmap.
+delta        # Necessary for telescope-undo.
 grcov        # Necessary for test coverage.
 jdtls        # Necessary for the java debugger.
 dlv          # Necessary for the go debugger.
