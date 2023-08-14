@@ -55,7 +55,7 @@ To use the compiler, you will neeed its depedencies too. [Check here](https://gi
 * ⚡ **Lazy:** Plugins are loaded lazily, providing super fast performance.
 * 😎 **Plugins are self-contained:** Allowing you to easily delete what you don't want.
 * 🔋 **Batteries included:** Most plugins you will ever need are included and debugged by default. Get the best user experience out of the box and forget about nasty bugs in your Neovim config.
-* 🐞 **IDE:** Debuggers, Test runners, Linters, Formatters, linters, LSP... preinstalled, preconfigured and ready to code for the top 12 most popular programming languages.
+* 🐞 **IDE:** Debuggers, Test runners, Linters, Formatters, LSP, Treesitter... preinstalled, preconfigured and ready to code for the top 12 most popular programming languages.
 * 🔒 **Plugin version lock:** You can choose "stable" or "nightly" update channels. Or if you prefer, use :NvimFreezePluginVersions to create your own stable versions!
 * 🔙 **Rollbacks:** You can easily recover from a nvim distro update using :NvimRollbackRestore
 * 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
