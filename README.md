@@ -42,6 +42,10 @@ delta        # Necessary for telescope-undo.
 grcov        # Necessary for test coverage.
 jdtls        # Necessary for the java debugger.
 dlv          # Necessary for the go debugger.
+jest         # Necessary for neotest-jest (installed as yarn global add jest).
+pytest       # Necessary for neotest-python
+cargo-nextest # Nesessary for neotest-rust (installed as cargo install cargo-nextest)
+nunit        # Necessary for neotest-dotnet (installed as dotnet tool install --global nunit)
 ```
 To use the compiler, you will neeed its depedencies too. [Check here](https://github.com/Zeioth/Compiler.nvim/wiki/how-to-install-the-required-dependencies)
 
