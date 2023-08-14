@@ -129,6 +129,9 @@ Special thanks to LeoRed04 for designing the logo.
 Also, WIP for testers:
 
 ```
+# jest
+Requires jest in your project, or system.
+
 # Python
 Requires the system package pytest
 
@@ -138,4 +141,7 @@ Requires the system package rust-nextest
 # Dotnet
 Requires the nuget pacakge nunit
 dotnet tool install --global nunit
+
+# Go
+Doesn't require any dependency.
 ```
