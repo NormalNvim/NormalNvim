@@ -23,6 +23,7 @@
 
 --       ## ARTIFICIAL INTELLIGENCE
 --       -> neural                         [chatgpt code generator]
+--       -> copilot                        [github code suggestions]
 --       -> guess-indent                   [guess-indent]
 
 --       ## COMPILER
