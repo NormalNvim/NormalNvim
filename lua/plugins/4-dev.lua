@@ -258,6 +258,15 @@ return {
     end,
   },
 
+  --  copilot [github code suggestions]
+  --  https://github.com/github/copilot.vim
+  --  As alternative to chatgpt, you can use copilot uncommenting this.
+  --  Then you must run :Copilot setup
+  -- {
+  --   "github/copilot.vim",
+  --   event = "User BaseFile"
+  -- },
+
   -- [guess-indent]
   -- https://github.com/NMAC427/guess-indent.nvim
   -- Note that this plugin won't autoformat the code.
