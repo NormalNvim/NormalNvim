@@ -86,7 +86,7 @@ __You are expected to fork the project before cloning it. So you are the only on
 For more info, [read the wiki](https://github.com/Zeioth/NormalNvim/wiki).
 
 ## FAQ
-Please before opening an issue, check the [AstroVim Community](https://github.com/AstroNvim/astrocommunity) repo where you can find help about how to install and configure most plugins.
+Please before opening an issue, check the [astrocommunity](https://github.com/AstroNvim/astrocommunity) repo where you can find help about how to install and configure most plugins.
 
 * **NormalNvim is not working. How can I know why?**
 
