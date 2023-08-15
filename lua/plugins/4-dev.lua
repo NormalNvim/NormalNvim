@@ -74,6 +74,11 @@ return {
       "zeioth/friendly-snippets",
       "benfowler/telescope-luasnip.nvim",
     },
+    opts = {
+      history = true,
+      delete_check_events = "TextChanged",
+      region_check_events = "CursorMoved",
+    },
     config = function(_, opts)
       if opts then require("luasnip").config.setup(opts) end
       vim.tbl_map(
