@@ -29,41 +29,8 @@ git clone git@github.com:NormalNVim/NormalNVim.git ~/.config/nvim
 git clone git@github.com:NormalNVim/NormalNVim.git %USERPROFILE%\AppData\Local\nvim && nvim
 ```
 
-## System dependencies
-If you miss a dependency it won't cause any error, but it will disable the feature.
-```sh
-ranger        # Necessary for Rnvimr.
-pynvim        # Necessary for Rnvimr.
-ripgrep       # Necessary for Spectre.
-rust          # Necessary for Spectre.
-yarn          # Necessary for Markmap.
-delta         # Necessary for telescope-undo.
-grcov         # Necessary for test coverage.
-jest          # Necessary for neotest-jest (installed as yarn global add jest).
-pytest        # Necessary for neotest-python
-cargo-nextest # Nesessary for neotest-rust (installed as cargo install cargo-nextest)
-nunit         # Necessary for neotest-dotnet (installed as dotnet tool install --global nunit)
-```
-
-## Mason packages
-
-Inside neovim press `:` to enter a command, and copy paste the next to install `LSP`, `formatters`, `linters`, and `debuggers` for the 13 most common programming languages. 
-
-```
-:MasonInstall lua-language-server debugpy prettierd eslint-lsp css-lsp asm-lsp netcoredbg json-lsp codelldb firefox-debug-adapter rust-analyzer clangd csharp-language-server bash-language-server python-lsp-server semgrep jdtls ruby-lsp taplo ktlint yaml-language-server neocmakelsp angular-language-server ansible-language-server dockerfile-language-server docker-compose-language-service helm-ls custom-elements-languageserver fsautocomplete perlnavigator kotlin-language-server svelte-language-server phpactor stylua csharpier bash-debug-adapter java-debug-adapter asmfmt java-test google-java-format dart-debug-adapter golangci-lint gofumpt golangci-lint-langserver kotlin-debug-adapter rubocop beautysh shellcheck gersemi cmakelint eslint_d markuplint php-cs-fixer phpcs delve
-```
-The download is `2GB. Expect it to take a while.
-
-## Treesitter parsers
-
-Inside neovim press `:` to enter a command, and copy paste the next to unlock all the new neovim motions and verbs.
-
-```
-:TSInstall all
-```
-
-## Required compiler packages
-To use [compiler.nvim](https://github.com/Zeioth/Compiler.nvim), you will neeed its depedencies too. [Check here](https://github.com/Zeioth/Compiler.nvim/wiki/how-to-install-the-required-dependencies)
+## Dependencies
+NormalNvim will automatically install the plugins the first time you open it. But to unlock all features, [you must install the dependencies](https://github.com/NormalNvim/NormalNvim/wiki/dependencies).
 
 ## Distro features
 
