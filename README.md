@@ -96,7 +96,7 @@ If you want to help me, please star this repository to increase the visibility o
 
 [![Stargazers over time](https://starchart.cc/NormalNvim/NormalNvim.svg)](https://starchart.cc/NormalNvim/NormalNvim)
 
-## Send a PR to appear as contributor
+## Fix a bug and send a PR to appear as contributor
 
 <a href="https://github.com/NormalNvim/NormalNvim/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=NormalNvim/NormalNvim" />
