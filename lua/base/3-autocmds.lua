@@ -16,7 +16,7 @@
 --       ## COOL HACKS
 --       -> 7. Effect: URL underline.
 --       -> 8. Effect: Flash on yank.
---       -> 9. Disable right click contextual menu warning message.
+--       -> 9. Customize right click contextual menu.
 --       -> 10. Unlist quickfix buffers if the filetype changes.
 --
 --       ## COMMANDS
@@ -238,7 +238,7 @@ autocmd("TextYankPost", {
   callback = function() vim.highlight.on_yank() end,
 })
 
--- 9. Disable right click contextual menu warning message.
+-- 9. Customize right click contextual menu.
 autocmd("VimEnter", {
   desc = "Disable right contextual menu warning message",
   group = augroup("contextual_menu", { clear = true }),
