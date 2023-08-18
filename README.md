@@ -46,15 +46,13 @@ nunit        # Necessary for neotest-dotnet (installed as dotnet tool install --
 ```
 To use the compiler, you will neeed its depedencies too. [Check here](https://github.com/Zeioth/Compiler.nvim/wiki/how-to-install-the-required-dependencies)
 
-## Required mason packages
+## Mason packages
 
-Inside neovim press `:` to enter a command, and copy paste the next to install all the mason packages necessary to make LSP, formatters, linters, and the debugger work correctly.
+Inside neovim press `:` to enter a command, and copy paste the next to install all the mason packages necessary to make LSP, formatters, linters, and the debugger work correctly. 
 
 ```
 :MasonInstall lua-language-server debugpy prettierd eslint-lsp css-lsp asm-lsp netcoredbg json-lsp codelldb firefox-debug-adapter rust-analyzer clangd csharp-language-server bash-language-server python-lsp-server semgrep jdtls ruby-lsp taplo ktlint yaml-language-server neocmakelsp angular-language-server ansible-language-server dockerfile-language-server docker-compose-language-service helm-ls custom-elements-languageserver fsautocomplete perlnavigator kotlin-language-server svelte-language-server phpactor stylua csharpier bash-debug-adapter java-debug-adapter asmfmt java-test google-java-format dart-debug-adapter golangci-lint gofumpt golangci-lint-langserver kotlin-debug-adapter rubocop beautysh shellcheck gersemi cmakelint eslint_d markuplint php-cs-fixer phpcs delve
 ```
-
-This will install all the mason packages necessary to make LSP, formatters, linters, 
 
 ## Required treesitter packages
 
