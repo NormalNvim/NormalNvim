@@ -30,7 +30,7 @@ git clone git@github.com:NormalNVim/NormalNVim.git %USERPROFILE%\AppData\Local\n
 ```
 
 ## Dependencies
-NormalNvim will connect to the internet to download the plugins the first time you open it. But to unlock all features, [you must install the dependencies](https://github.com/NormalNvim/NormalNvim/wiki/dependencies).
+NormalNvim will connect to the internet the time you open it to download the plugins. But to unlock all features, [you must install the dependencies](https://github.com/NormalNvim/NormalNvim/wiki/dependencies).
 
 ## Distro features
 
