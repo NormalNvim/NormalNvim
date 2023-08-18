@@ -45,7 +45,7 @@ cargo-nextest # Nesessary for neotest-rust (installed as cargo install cargo-nex
 nunit         # Necessary for neotest-dotnet (installed as dotnet tool install --global nunit)
 ```
 
-## Mason packages (optional but strongly recommended)
+## Mason packages (recommended)
 
 Inside neovim press `:` to enter a command, and copy paste the next to install all the packages necessary to make `LSP`, `formatters`, `linters`, and the `debugger` work correctly. 
 
@@ -53,7 +53,7 @@ Inside neovim press `:` to enter a command, and copy paste the next to install a
 :MasonInstall lua-language-server debugpy prettierd eslint-lsp css-lsp asm-lsp netcoredbg json-lsp codelldb firefox-debug-adapter rust-analyzer clangd csharp-language-server bash-language-server python-lsp-server semgrep jdtls ruby-lsp taplo ktlint yaml-language-server neocmakelsp angular-language-server ansible-language-server dockerfile-language-server docker-compose-language-service helm-ls custom-elements-languageserver fsautocomplete perlnavigator kotlin-language-server svelte-language-server phpactor stylua csharpier bash-debug-adapter java-debug-adapter asmfmt java-test google-java-format dart-debug-adapter golangci-lint gofumpt golangci-lint-langserver kotlin-debug-adapter rubocop beautysh shellcheck gersemi cmakelint eslint_d markuplint php-cs-fixer phpcs delve
 ```
 
-## Treesitter parsers (optional but strongly recommended)
+## Treesitter parsers (recommended)
 
 Inside neovim press `:` to enter a command, and copy paste the next to install treesitter support for all languages to unlock all the new neovim motions and verbs.
 
