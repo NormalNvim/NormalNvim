@@ -305,7 +305,7 @@ M.on_attach = function(client, bufnr)
   if client.supports_method "textDocument/documentHighlight" then
     add_buffer_autocmd("lsp_document_highlight", bufnr, {
       {
-        events = { "CursorHold", "CursorHoldI" },
+        events = { "CursorHold", "CursorHoldI", "BufLeave" },
         desc = "highlight references when cursor holds",
         callback = function()
           if

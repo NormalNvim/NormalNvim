@@ -23,6 +23,7 @@
 
 --       ## ARTIFICIAL INTELLIGENCE
 --       -> neural                         [chatgpt code generator]
+--       -> copilot                        [github code suggestions]
 --       -> guess-indent                   [guess-indent]
 
 --       ## COMPILER
@@ -72,6 +73,7 @@ return {
       or nil,
     dependencies = {
       "zeioth/friendly-snippets",
+      "Zeioth/NormalSnippets",
       "benfowler/telescope-luasnip.nvim",
     },
     opts = {
@@ -266,6 +268,13 @@ return {
   --   "github/copilot.vim",
   --   event = "User BaseFile"
   -- },
+  -- copilot-cmp
+  -- https://github.com/zbirenbaum/copilot-cmp
+  -- {
+  --   "zbirenbaum/copilot-cmp",
+  --   opts = { suggesion = { enabled = false }, panel = { enabled = false } },
+  --   config = function (_, opts) require("copilot_cmp").setup(opts) end
+  -- },
 
   -- [guess-indent]
   -- https://github.com/NMAC427/guess-indent.nvim
@@ -446,7 +455,6 @@ return {
 
       -- Go
       -- Requires:
-      -- * You have the system dependency 'dlv'.
       -- * You have initialized your module with 'go mod init module_name'.
       -- * You :cd your project before running DAP.
       -- note that no mason package or nvim plugin is required.
@@ -454,7 +462,7 @@ return {
         type = 'server',
         port = '${port}',
         executable = {
-          command = '/usr/bin/dlv', -- Ensure this is correct
+          command = vim.fn.stdpath('data')..'/mason/packages/delve/dlv',
           args = {'dap', '-l', '127.0.0.1:${port}'},
         }
       }
