@@ -11,16 +11,17 @@
 --       -> 3. Launch alpha greeter on startup.
 --       -> 4. Hot reload on config change.
 --       -> 5. Update neotree when closing the git client.
+--       -> 6. Java debugger.
 --
 --       ## COOL HACKS
---       -> 6. Effect: URL underline.
---       -> 7. Effect: Flash on yank.
---       -> 8. Disable right click contextual menu warning message.
---       -> 9. Unlist quickfix buffers if the filetype changes.
+--       -> 7. Effect: URL underline.
+--       -> 8. Effect: Flash on yank.
+--       -> 9. Disable right click contextual menu warning message.
+--       -> 10. Unlist quickfix buffers if the filetype changes.
 --
 --       ## COMMANDS
---       -> 9. Nvim updater commands.
---       -> 10. Neotest commands.
+--       -> 11. Nvim updater commands.
+--       -> 12. Neotest commands.
 --       ->     Extra commands.
 
 local augroup = vim.api.nvim_create_augroup
@@ -185,15 +186,51 @@ if is_available "neo-tree.nvim" then
   })
 end
 
+-- 6. Java debugger.
+if is_available "nvim-dap" then
+  autocmd("BufRead", {
+    desc = "On java files, start jdtls",
+    group = augroup("neotree_git_refresh", { clear = true }),
+    callback = function()
+      if vim.bo.filetype == "java" then
+        local config = {
+          cmd = { vim.fn.stdpath "data" .. "/mason/packages/jdtls/jdtls" },
+          root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
+          init_options = {
+            bundles = {
+              vim.fn.glob(vim.fn.stdpath "data" .. "/mason/packages/java-test/extension/server/*.jar", true),
+              vim.fn.glob(vim.fn.stdpath "data" .. "/mason/packages/java-debug-adapter/extension/server/com.microsoft.java.debug.plugin-*.jar", true),
+            },
+          },
+        }
+        require("jdtls").start_or_attach(config)
+
+        -- Give enough time for jdt to fully load the project, or it will fail with
+        -- "No LSP client found"
+        local timer = 2500
+        for i = 0, 12, 1 do
+          vim.defer_fn(
+            function()
+              test = require("jdtls.dap").setup_dap_main_class_configs()
+            end,
+            timer
+          )
+          timer = timer + 2500
+        end
+      end
+    end,
+  })
+end
+
 -- ## COOL HACKS ------------------------------------------------------------
--- 6. Effect: URL underline.
+-- 7. Effect: URL underline.
 autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   desc = "URL Highlighting",
   group = augroup("HighlightUrl", { clear = true }),
   callback = function() utils.set_url_effect() end,
 })
 
--- 6. Effect: Flash on yank.
+-- 8. Effect: Flash on yank.
 autocmd("TextYankPost", {
   desc = "Highlight yanked text",
   group = augroup("highlightyank", { clear = true }),
@@ -201,7 +238,7 @@ autocmd("TextYankPost", {
   callback = function() vim.highlight.on_yank() end,
 })
 
--- 7. Disable right click contextual menu warning message.
+-- 9. Disable right click contextual menu warning message.
 autocmd("VimEnter", {
   desc = "Disable right contextual menu warning message",
   group = augroup("contextual_menu", { clear = true }),
@@ -212,7 +249,7 @@ autocmd("VimEnter", {
   end,
 })
 
--- 8. Unlist quickfix buffers if the filetype changes.
+-- 10. Unlist quickfix buffers if the filetype changes.
 autocmd("FileType", {
   desc = "Unlist quickfist buffers",
   group = augroup("unlist_quickfist", { clear = true }),
@@ -223,7 +260,7 @@ autocmd("FileType", {
 
 
 -- ## COMMANDS --------------------------------------------------------------
--- 10. Nvim updater commands
+-- 11. Nvim updater commands
 cmd(
   "NvimChangelog",
   function() require("base.utils.updater").changelog() end,
@@ -264,7 +301,7 @@ cmd(
   { desc = "Reload Nvim without closing it (Experimental)" }
 )
 
--- 11. Neotest commands
+-- 12. Neotest commands
 -- Neotest doesn't implement commands by default, so we do it here.
 -------------------------------------------------------------------
 cmd(
@@ -320,6 +357,5 @@ cmd("Swd", function()
   vim.cmd ":cd %:p:h"
   vim.cmd ":pwd"
 end, { desc = "cd current file's directory" })
-
 
 
