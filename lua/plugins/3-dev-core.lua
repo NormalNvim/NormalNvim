@@ -53,7 +53,7 @@ return {
     },
     build = ":TSUpdate",
     opts = {
-      auto_install = true, -- Install a parser for the current language if not present.
+      auto_install = false, -- Currently bugged. Use [:TSInstall all] and [:TSUpdate all]
       autotag = { enable = true },
       context_commentstring = { enable = true, enable_autocmd = false },
       highlight = {

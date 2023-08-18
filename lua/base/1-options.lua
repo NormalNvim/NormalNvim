@@ -7,25 +7,22 @@
 -- And how to lock your package versions.
 
 
--- This table contains the NormalNvin config (the parts we re-use)
+-- NormalNvin lua globals
 _G.base = {}
 
 -- Theme
---base.default_colorscheme = "astrotheme"
 base.default_colorscheme = "tokyonight-night"
 
 -- append/remove
 vim.opt.viewoptions:remove "curdir" -- Disable saving current directory with views.
 vim.opt.shortmess:append { s = true, I = true } -- disable startup message.
 vim.opt.backspace:append { "nostop" } -- Don't stop backspace at insert.
-if vim.fn.has "nvim-0.9" == 1 then
-  vim.opt.diffopt:append "linematch:60" -- Enable linematch diff algorithm.
-end
+vim.opt.diffopt:append "linematch:60" -- Enable linematch diff algorithm.
 
 -- define variables
 local options = {
   opt = {
-    -- AstroNvim Defaults
+    -- Defaults
     clipboard = "unnamedplus", -- Connection to the system clipboard.
     breakindent = true, -- Wrap indent to match  line start.
     cmdheight = 0, -- hide command line unless needed.

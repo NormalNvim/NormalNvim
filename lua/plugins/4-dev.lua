@@ -359,10 +359,9 @@ return {
       }
 
       -- Java
-      -- WARNING:
-      -- * The java debugger config is system specific.
-      -- * You HAVE to manually modify this file as specified inside:
-      -- ../../ftplugin/java.lua
+      -- Note: The java debugger jdtls is automatically spawned and configured
+      --       when a java file is opened. You can check it here:
+      --       ../base/3-autocmds.lua
 
       -- Python
       dap.adapters.python = {
