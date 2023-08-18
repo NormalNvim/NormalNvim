@@ -32,17 +32,17 @@ git clone git@github.com:NormalNVim/NormalNVim.git %USERPROFILE%\AppData\Local\n
 ## System dependencies
 If you miss a dependency it won't cause any error, but it will disable the feature.
 ```sh
-ranger       # Necessary for Rnvimr.
-pynvim       # Necessary for Rnvimr.
-ripgrep      # Necessary for Spectre.
-rust         # Necessary for Spectre.
-yarn         # Necessary for Markmap.
-delta        # Necessary for telescope-undo.
-grcov        # Necessary for test coverage.
-jest         # Necessary for neotest-jest (installed as yarn global add jest).
-pytest       # Necessary for neotest-python
+ranger        # Necessary for Rnvimr.
+pynvim        # Necessary for Rnvimr.
+ripgrep       # Necessary for Spectre.
+rust          # Necessary for Spectre.
+yarn          # Necessary for Markmap.
+delta         # Necessary for telescope-undo.
+grcov         # Necessary for test coverage.
+jest          # Necessary for neotest-jest (installed as yarn global add jest).
+pytest        # Necessary for neotest-python
 cargo-nextest # Nesessary for neotest-rust (installed as cargo install cargo-nextest)
-nunit        # Necessary for neotest-dotnet (installed as dotnet tool install --global nunit)
+nunit         # Necessary for neotest-dotnet (installed as dotnet tool install --global nunit)
 ```
 
 ## Mason packages (optional but strongly recommended)
