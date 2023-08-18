@@ -101,8 +101,7 @@ Originally it took AstroNvim as base. But implements [this VIM config](https://g
 
 Special thanks to LeoRed04 for designing the logo.
 
-## Thanks to all contributors
-Send a PR to appear as contributor.
+## Send a PR to appear as contributor
 
 <a href="https://github.com/NormalNvim/NormalNvim/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=NormalNvim/NormalNvim" />
