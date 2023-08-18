@@ -96,16 +96,16 @@ If you want to help me, please star this repository to increase the visibility o
 
 [![Stargazers over time](https://starchart.cc/NormalNvim/NormalNvim.svg)](https://starchart.cc/NormalNvim/NormalNvim)
 
-## Credits
-Originally it took AstroNvim as base. But implements [this VIM config](https://github.com/amix/vimrc) with some extras. Code has been simplified while retaining its core features. NormalNvim has also contributed to the code of many of the plugins included, in order to debug them and make them better.
-
-Special thanks to LeoRed04 for designing the logo.
-
 ## Send a PR to appear as contributor
 
 <a href="https://github.com/NormalNvim/NormalNvim/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=NormalNvim/NormalNvim" />
 </a>
+
+## Credits
+Originally it took AstroNvim as base. But implements [this VIM config](https://github.com/amix/vimrc) with some extras. Code has been simplified while retaining its core features. NormalNvim has also contributed to the code of many of the plugins included, in order to debug them and make them better.
+
+Special thanks to LeoRed04 for designing the logo.
 
 ## Roadmap
 * ~~Porting vim-dooku to neovim/lua~~.
