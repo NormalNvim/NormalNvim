@@ -21,7 +21,7 @@ The space key shows [all you can do](https://github.com/Zeioth/NormalNvim/wiki/b
 On UNIX, the installer will automatically install the [extra goodies](https://github.com/NormalNvim/NormalPackages).
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
-git clone git@github.com:NormalNVim/NormalNVim.git ~/.config/nvim && echo "Downloading packages:"; wget -N -O /tmp/normalnvim_packages.tar.gz https://github.com/NormalNvim/NormalPackages/raw/main/packages.tar.gz && mkdir -p ~/.local/share/nvim/lazy/ && tar -xzf /tmp/normalnvim_packages.tar.gz -C ~/.local/share/nvim/lazy/ && echo "DONE - Starting neovim."; nvim
+git clone git@github.com:NormalNVim/NormalNVim.git ~/.config/nvim && echo "Downloading packages:"; wget -N -O /tmp/normalnvim_packages.tar.gz https://github.com/NormalNvim/NormalPackages/raw/main/packages.tar.gz && tar -xzf /tmp/normalnvim_packages.tar.gz -C ~/.local/share/nvim/ && echo "DONE - Starting neovim."; nvim
 ```
 
 ## Install (Windows)
