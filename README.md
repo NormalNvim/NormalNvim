@@ -44,7 +44,6 @@ pytest       # Necessary for neotest-python
 cargo-nextest # Nesessary for neotest-rust (installed as cargo install cargo-nextest)
 nunit        # Necessary for neotest-dotnet (installed as dotnet tool install --global nunit)
 ```
-To use the compiler, you will neeed its depedencies too. [Check here](https://github.com/Zeioth/Compiler.nvim/wiki/how-to-install-the-required-dependencies)
 
 ## Mason packages
 
@@ -61,6 +60,9 @@ Inside neovim press `:` to enter a command, and copy paste the next to install t
 ```
 :TSInstall all
 ```
+
+## Required compiler packages
+To use [compiler.nvim](https://github.com/Zeioth/Compiler.nvim), you will neeed its depedencies too. [Check here](https://github.com/Zeioth/Compiler.nvim/wiki/how-to-install-the-required-dependencies)
 
 ## Distro features
 
