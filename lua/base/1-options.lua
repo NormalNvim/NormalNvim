@@ -14,7 +14,6 @@ _G.base = {}
 base.default_colorscheme = "tokyonight-night"
 
 -- append/remove
-vim.opt.runtimepath:append(vim.fn.stdpath "data" .. "/treesitter/parser") -- add treesitter parsers to the runtime. See: "parser_install_dir".
 vim.opt.viewoptions:remove "curdir" -- Disable saving current directory with views.
 vim.opt.shortmess:append { s = true, I = true } -- disable startup message.
 vim.opt.backspace:append { "nostop" } -- Don't stop backspace at insert.
