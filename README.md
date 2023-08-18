@@ -41,8 +41,6 @@ rust         # Necessary for Spectre.
 yarn         # Necessary for Markmap.
 delta        # Necessary for telescope-undo.
 grcov        # Necessary for test coverage.
-jdtls        # Necessary for the java debugger.
-dlv          # Necessary for the go debugger.
 jest         # Necessary for neotest-jest (installed as yarn global add jest).
 pytest       # Necessary for neotest-python
 cargo-nextest # Nesessary for neotest-rust (installed as cargo install cargo-nextest)
