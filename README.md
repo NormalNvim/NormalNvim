@@ -103,8 +103,8 @@ Special thanks to LeoRed04 for designing the logo.
 
 ## Roadmap
 * ~~Porting vim-dooku to neovim/lua~~.
-* Ship debuggers/testers/formatters/linters with NormalNvim. → Configs ready, testing before shipping them as part of the `NormalNvim` installer.
-* Add all the debuggers to a link in the dependencies section, to make easier for users setting up dap.
+* ~~Ship debuggers/testers/formatters/linters with NormalNvim. → Configs ready, testing before shipping them as part of the `NormalNvim` installer.~~ ~~→ In the end we are not distributing the dependencies pre-packages because it's a 2Gb download. Added to the dependencies section instead. This allow using all features on ARM processors too. Which would not be possible by pre-packing.~~
+~~* Add all the debuggers to a link in the dependencies section, to make easier for users setting up dap.~~
 * Create a clear link to the list of included plugins.
 * Setup contributors page.
 * Creating a landing page.
