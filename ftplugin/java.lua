@@ -12,7 +12,7 @@
 -- * The path of "bundles" if correct.
 
 local config = {
-    cmd = {'/usr/bin/jdtls'},
+    cmd = {vim.fn.stdpath('data')..'/mason/packages/jdtls/jdtls'},
     root_dir = vim.fs.dirname(vim.fs.find({'gradlew', '.git', 'mvnw'}, { upward = true })[1]),
     init_options = {
       bundles = {
