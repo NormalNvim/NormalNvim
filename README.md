@@ -36,7 +36,7 @@ NormalNvim will connect to the internet the first time you open it to download t
 
 * ⚡ **Lazy:** Plugins are loaded lazily, providing super fast performance.
 * 😎 **Plugins are self-contained:** Allowing you to easily delete what you don't want.
-* 🔋 **Batteries included:** Most plugins you will ever need are included and debugged by default. Get the best user experience out of the box and forget about nasty bugs in your Neovim config.
+* 🔋 **Batteries included:** Most plugins you will ever need [are included](https://github.com/NormalNvim/NormalNvim/wiki/plugins) and debugged by default. Get the best user experience out of the box and forget about nasty bugs in your Neovim config.
 * 🐞 **IDE:** Debuggers, Test runners, Linters, Formatters, LSP, Treesitter... preinstalled, preconfigured and ready to code for the top 12 most popular programming languages.
 * 🔒 **Plugin version lock:** You can choose "stable" or "nightly" update channels. Or if you prefer, use :NvimFreezePluginVersions to create your own stable versions!
 * 🔙 **Rollbacks:** You can easily recover from a nvim distro update using :NvimRollbackRestore
