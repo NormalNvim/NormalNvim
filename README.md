@@ -45,7 +45,7 @@ cargo-nextest # Nesessary for neotest-rust (installed as cargo install cargo-nex
 nunit         # Necessary for neotest-dotnet (installed as dotnet tool install --global nunit)
 ```
 
-## Mason packages (recommended)
+## Mason packages
 
 Inside neovim press `:` to enter a command, and copy paste the next to install `LSP`, `formatters`, `linters`, and `debuggers` for the 13 most common programming languages. 
 
@@ -54,9 +54,9 @@ Inside neovim press `:` to enter a command, and copy paste the next to install `
 ```
 The download is `2GB. Expect it to take a while.
 
-## Treesitter parsers (recommended)
+## Treesitter parsers
 
-Inside neovim press `:` to enter a command, and copy paste the next to install treesitter support for all languages to unlock all the new neovim motions and verbs.
+Inside neovim press `:` to enter a command, and copy paste the next to unlock all the new neovim motions and verbs.
 
 ```
 :TSInstall all
