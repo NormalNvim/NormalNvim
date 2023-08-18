@@ -245,7 +245,13 @@ autocmd("VimEnter", {
   callback = function()
     -- Disable right click message
     vim.api.nvim_command [[aunmenu PopUp.How-to\ disable\ mouse]]
-    vim.api.nvim_command [[aunmenu PopUp.-1-]]
+    -- vim.api.nvim_command [[aunmenu PopUp.-1-]] -- You can remode a separator like this.
+    vim.api.nvim_command [[menu PopUp.Toggle\ \Breakpoint <cmd>:lua require('dap').toggle_breakpoint()<CR>]]
+    vim.api.nvim_command [[menu PopUp.-2- <Nop>]]
+    vim.api.nvim_command [[menu PopUp.Start\ \Compiler <cmd>:CompilerOpen<CR>]]
+    vim.api.nvim_command [[menu PopUp.Start\ \Debugger <cmd>:DapContinue<CR>]]
+    vim.api.nvim_command [[menu PopUp.Run\ \Test <cmd>:TestRunBlock<CR>]]
+
   end,
 })
 
