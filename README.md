@@ -18,14 +18,12 @@ The space key shows [all you can do](https://github.com/Zeioth/NormalNvim/wiki/b
 
 
 ## Install (Linux/MacOS)
-On UNIX, the installer will automatically install the [extra goodies](https://github.com/NormalNvim/NormalPackages).
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
-git clone git@github.com:NormalNVim/NormalNVim.git ~/.config/nvim && echo "Downloading packages:"; wget -N -O /tmp/normalnvim_packages.tar.gz https://github.com/NormalNvim/NormalPackages/raw/main/packages.tar.gz && tar -xzf /tmp/normalnvim_packages.tar.gz -C ~/.local/share/nvim/ && echo "DONE - Starting neovim."; nvim
+git clone git@github.com:NormalNVim/NormalNVim.git ~/.config/nvim
 ```
 
 ## Install (Windows)
-On Windows you can optionally install the [extra goodies](https://github.com/NormalNvim/NormalPackages) manually.
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
 git clone git@github.com:NormalNVim/NormalNVim.git %USERPROFILE%\AppData\Local\nvim && nvim
@@ -47,6 +45,26 @@ cargo-nextest # Nesessary for neotest-rust (installed as cargo install cargo-nex
 nunit        # Necessary for neotest-dotnet (installed as dotnet tool install --global nunit)
 ```
 To use the compiler, you will neeed its depedencies too. [Check here](https://github.com/Zeioth/Compiler.nvim/wiki/how-to-install-the-required-dependencies)
+
+## Required mason packages
+
+Inside neovim press `:` to enter a command, and copy paste the next
+
+```
+:MasonInstall lua-language-server debugpy prettierd eslint-lsp css-lsp asm-lsp netcoredbg json-lsp codelldb firefox-debug-adapter rust-analyzer clangd csharp-language-server bash-language-server python-lsp-server semgrep jdtls ruby-lsp taplo ktlint yaml-language-server neocmakelsp angular-language-server ansible-language-server dockerfile-language-server docker-compose-language-service helm-ls custom-elements-languageserver fsautocomplete perlnavigator kotlin-language-server svelte-language-server phpactor stylua csharpier bash-debug-adapter java-debug-adapter asmfmt java-test google-java-format dart-debug-adapter golangci-lint gofumpt golangci-lint-langserver kotlin-debug-adapter rubocop beautysh shellcheck gersemi cmakelint eslint_d markuplint php-cs-fixer phpcs delve
+```
+
+This will install all the mason packages necessary to make LSP, formatters, linters, 
+
+## Required treesitter packages
+
+Inside neovim press `:` to enter a command, and copy paste the next
+
+```
+:TSInstall all
+```
+
+This will install treesitter support for all languages.
 
 ## Distro features
 
