@@ -109,4 +109,3 @@ Special thanks to LeoRed04 for designing the logo.
 
 ## Roadmap
 * Creating a landing page.
-* While on the debugger, add an option to the contextual menu to toggle breakpoint.
