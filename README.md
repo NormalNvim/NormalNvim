@@ -101,6 +101,13 @@ Originally it took AstroNvim as base. But implements [this VIM config](https://g
 
 Special thanks to LeoRed04 for designing the logo.
 
+## Thanks to all contributors
+Send a PR to appear as contributor.
+
+<a href="https://github.com/NormalNvim/NormalNvim/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=NormalNvim/NormalNvim" />
+</a>
+
 ## Roadmap
 * ~~Porting vim-dooku to neovim/lua~~.
 * ~~Ship debuggers/testers/formatters/linters with NormalNvim. → Configs ready, testing before shipping them as part of the `NormalNvim` installer.~~ ~~→ In the end we are not distributing the dependencies pre-packages because it's a 2Gb download. Added to the dependencies section instead. This allow using all features on ARM processors too. Which would not be possible by pre-packing.~~
