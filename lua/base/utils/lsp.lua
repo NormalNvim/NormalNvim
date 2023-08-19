@@ -437,8 +437,8 @@ M.on_attach = function(client, bufnr)
         require("telescope.builtin").lsp_type_definitions()
       end
     end
-    if lsp_mappings.n["<leader>lG"] then
-      lsp_mappings.n["<leader>lG"][1] = function()
+    if lsp_mappings.n["<leader>lS"] then
+      lsp_mappings.n["<leader>lS"][1] = function()
         vim.ui.input({ prompt = "Symbol Query: (leave empty for word under cursor)" }, function(query)
           if query then
             -- word under cursor if given query is empty
