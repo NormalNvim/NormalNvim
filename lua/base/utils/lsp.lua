@@ -305,7 +305,7 @@ M.on_attach = function(client, bufnr)
   if client.supports_method "textDocument/documentHighlight" then
     add_buffer_autocmd("lsp_document_highlight", bufnr, {
       {
-        events = { "CursorHold", "CursorHoldI", "BufLeave" },
+        events = { "CursorHold", "CursorHoldI" },
         desc = "highlight references when cursor holds",
         callback = function()
           if
@@ -321,7 +321,7 @@ M.on_attach = function(client, bufnr)
         end,
       },
       {
-        events = { "CursorMoved", "CursorMovedI" },
+        events = { "CursorMoved", "CursorMovedI", "BufLeave" },
         desc = "clear references when cursor moves",
         callback = function() vim.lsp.buf.clear_references() end,
       },
@@ -329,16 +329,14 @@ M.on_attach = function(client, bufnr)
   end
 
   -- Work on any symbol
-  if client.supports_method "textDocument/hover" then
-    lsp_mappings.n["<leader>lh"] = {
-      function() vim.lsp.buf.hover() end,
-      desc = "Hover symbol details",
-    }
-    lsp_mappings.n["gh"] = {
-      function() vim.lsp.buf.hover() end,
-      desc = "Hover symbol details",
-    }
-  end
+  lsp_mappings.n["<leader>lh"] = {
+    function() vim.lsp.buf.hover() end,
+    desc = "Hover symbol details",
+  }
+  lsp_mappings.n["gh"] = {
+    function() vim.lsp.buf.hover() end,
+    desc = "Hover symbol details",
+  }
 
   -- Reduced version of the former, only for methods and parameters
   if client.supports_method "textDocument/signatureHelp" then
