@@ -74,6 +74,7 @@ local icons = {
   u = { desc = get_icon("Window", 1, true) .. "UI" },
   b = { desc = get_icon("Tab", 1, true) .. "Buffers" },
   bs = { desc = get_icon("Sort", 1, true) .. "Sort Buffers" },
+  c = { desc = get_icon("Run", 1, true) .. "Compiler" },
   d = { desc = get_icon("Debugger", 1, true) .. "Debugger" },
   tt = { desc = get_icon("Test", 1, true) .. "Test" },
   dc = { desc = get_icon("Docs", 1, true) .. "Docs" },
@@ -735,7 +736,7 @@ end
 -- aerial.nvimm ------------------------------------------------------------
 if is_available "aerial.nvim" then
   maps.n["<leader>l"] = icons.l
-  maps.n["<leader>ls"] =
+  maps.n["<leader>lt"] =
   { function() require("aerial").toggle() end, desc = "Toggle symbols tree" }
 end
 
@@ -868,7 +869,7 @@ if is_available "telescope.nvim" then
 
   -- Some lsp keymappings are here because they depend on telescope
   maps.n["<leader>l"] = icons.l
-  maps.n["<leader>lt"] = {
+  maps.n["<leader>ls"] = {
     function()
       local aerial_avail, _ = pcall(require, "aerial")
       if aerial_avail then
@@ -877,7 +878,18 @@ if is_available "telescope.nvim" then
         require("telescope.builtin").lsp_document_symbols()
       end
     end,
-    desc = "Search symbols",
+    desc = "Search symbol in buffer", -- Useful to find every time a variable is assigned.
+  }
+  maps.n["gs"] = {
+    function()
+      local aerial_avail, _ = pcall(require, "aerial")
+      if aerial_avail then
+        require("telescope").extensions.aerial.aerial()
+      else
+        require("telescope.builtin").lsp_document_symbols()
+      end
+    end,
+    desc = "Search symbol in bufffer", -- Useful to find every time a variable is assigned.
   }
 
   -- extra - project.nvim
@@ -931,11 +943,16 @@ if is_available "telescope.nvim" then
 
   -- extra - compiler
   if is_available "compiler.nvim" and is_available "overseer.nvim" then
-    maps.n["<leader>lc"] = {
+    maps.n["<leader>c"] = icons.c
+    maps.n["<leader>cc"] = {
       function() vim.cmd "CompilerOpen" end,
       desc = "Open compiler",
     }
-    maps.n["<leader>lC"] = {
+    maps.n["<leader>cr"] = {
+      function() vim.cmd "CompilerRedo" end,
+      desc = "Compiler redo",
+    }
+    maps.n["<leader>cs"] = {
       function() vim.cmd "CompilerToggleResults" end,
       desc = "Toggle compiler results",
     }
@@ -945,13 +962,14 @@ if is_available "telescope.nvim" then
     }
     maps.n["<S-F6>"] = {
       function() vim.cmd "CompilerRedo" end,
-      desc = "Open compiler",
+      desc = "Compiler redo",
     }
     maps.n["<S-F7>"] = {
       function() vim.cmd "CompilerToggleResults" end,
       desc = "Toggle compiler resume",
     }
   end
+
 end
 
 -- toggleterm.nvim ----------------------------------------------------------
