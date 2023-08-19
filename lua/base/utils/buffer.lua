@@ -150,11 +150,9 @@ end
 ---@param force? boolean Whether or not to foce close the buffers,
 ---                      or confirm changes (default: false).
 function M.close(bufnr, force)
-  if require("base.utils").is_available "mini.bufremove" and
-     M.is_valid(bufnr) and #vim.t.bufs > 1 then
-    if not force and vim.api.nvim_get_option_value(
-      "modified", { buf = bufnr })
-    then
+  if not bufnr or bufnr == 0 then bufnr = vim.api.nvim_get_current_buf() end
+  if require("base.utils").is_available "mini.bufremove" and M.is_valid(bufnr) and #vim.t.bufs > 1 then
+    if not force and vim.api.nvim_get_option_value("modified", { buf = bufnr }) then
       local bufname = vim.fn.expand "%"
       local empty = bufname == ""
       if empty then bufname = "Untitled" end
@@ -176,7 +174,7 @@ function M.close(bufnr, force)
     require("mini.bufremove").delete(bufnr, force)
   else
     vim.cmd(
-      (force and "bd!" or "confirm bd") .. (bufnr == nil and "" or bufnr)
+      (force and "bdelete!" or "confirm bdelete") .. (bufnr == nil and "" or bufnr)
     )
   end
 end

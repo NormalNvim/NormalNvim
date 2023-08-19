@@ -305,7 +305,7 @@ M.on_attach = function(client, bufnr)
   if client.supports_method "textDocument/documentHighlight" then
     add_buffer_autocmd("lsp_document_highlight", bufnr, {
       {
-        events = { "CursorHold", "CursorHoldI", "BufLeave" },
+        events = { "CursorHold", "CursorHoldI" },
         desc = "highlight references when cursor holds",
         callback = function()
           if
@@ -321,7 +321,7 @@ M.on_attach = function(client, bufnr)
         end,
       },
       {
-        events = { "CursorMoved", "CursorMovedI" },
+        events = { "CursorMoved", "CursorMovedI", "BufLeave" },
         desc = "clear references when cursor moves",
         callback = function() vim.lsp.buf.clear_references() end,
       },
@@ -329,16 +329,14 @@ M.on_attach = function(client, bufnr)
   end
 
   -- Work on any symbol
-  if client.supports_method "textDocument/hover" then
-    lsp_mappings.n["<leader>lh"] = {
-      function() vim.lsp.buf.hover() end,
-      desc = "Hover symbol details",
-    }
-    lsp_mappings.n["gh"] = {
-      function() vim.lsp.buf.hover() end,
-      desc = "Hover symbol details",
-    }
-  end
+  lsp_mappings.n["<leader>lh"] = {
+    function() vim.lsp.buf.hover() end,
+    desc = "Hover symbol details",
+  }
+  lsp_mappings.n["gh"] = {
+    function() vim.lsp.buf.hover() end,
+    desc = "Hover symbol details",
+  }
 
   -- Reduced version of the former, only for methods and parameters
   if client.supports_method "textDocument/signatureHelp" then
@@ -439,9 +437,14 @@ M.on_attach = function(client, bufnr)
     end
     if lsp_mappings.n["<leader>lG"] then
       lsp_mappings.n["<leader>lG"][1] = function()
-        vim.ui.input({ prompt = "Symbol Query: " }, function(query)
+        vim.ui.input({ prompt = "Symbol Query: (leave empty for word under cursor)" }, function(query)
           if query then
-            require("telescope.builtin").lsp_workspace_symbols { query = query }
+            -- word under cursor if given query is empty
+            if query == "" then query = vim.fn.expand "<cword>" end
+            require("telescope.builtin").lsp_workspace_symbols {
+              query = query,
+              prompt_title = ("Find word (%s)"):format(query),
+            }
           end
         end)
       end

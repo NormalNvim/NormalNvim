@@ -219,7 +219,7 @@ return {
     },
 
     --  Syntax highlight [lsp config]
-    --  https://github.com/nvim-lspconfig
+    --  https://github.com/neovim/nvim-lspconfig
     {
       "neovim/nvim-lspconfig",
       dependencies = {
@@ -347,7 +347,7 @@ return {
           opts = { handlers = {} },
         },
       },
-      event = "User File",
+      event = "User BaseFile",
       opts = function()
         local nls = require "null-ls"
         return {
