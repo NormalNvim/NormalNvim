@@ -329,14 +329,16 @@ M.on_attach = function(client, bufnr)
   end
 
   -- Work on any symbol
-  lsp_mappings.n["<leader>lh"] = {
-    function() vim.lsp.buf.hover() end,
-    desc = "Hover symbol details",
-  }
-  lsp_mappings.n["gh"] = {
-    function() vim.lsp.buf.hover() end,
-    desc = "Hover symbol details",
-  }
+  if client.supports_method "textDocument/hover" then
+    lsp_mappings.n["<leader>lh"] = {
+      function() vim.lsp.buf.hover() end,
+      desc = "Hover symbol details",
+    }
+    lsp_mappings.n["gh"] = {
+      function() vim.lsp.buf.hover() end,
+      desc = "Hover symbol details",
+    }
+  end
 
   -- Reduced version of the former, only for methods and parameters
   if client.supports_method "textDocument/signatureHelp" then
@@ -351,14 +353,16 @@ M.on_attach = function(client, bufnr)
   end
 
   -- Open man under the cursor (We also keep the default keymap 'E')
-  lsp_mappings.n["<leader>lm"] = {
-    function() vim.api.nvim_feedkeys("K", "n", false) end,
-    desc = "Hover man",
-  }
-  lsp_mappings.n["gm"] = {
-    function() vim.api.nvim_feedkeys("K", "n", false) end,
-    desc = "Hover man",
-  }
+  if client.supports_method "textDocument/hover" then
+    lsp_mappings.n["<leader>lm"] = {
+      function() vim.api.nvim_feedkeys("K", "n", false) end,
+      desc = "Hover man",
+    }
+    lsp_mappings.n["gm"] = {
+      function() vim.api.nvim_feedkeys("K", "n", false) end,
+      desc = "Hover man",
+    }
+  end
 
   -- Force LSP refresh (We also keep the default keymap 'U')
   -- if client then
