@@ -351,16 +351,14 @@ M.on_attach = function(client, bufnr)
   end
 
   -- Open man under the cursor (We also keep the default keymap 'E')
-  if client.supports_method "textDocument/hover" then
-    lsp_mappings.n["<leader>lm"] = {
-      function() vim.api.nvim_feedkeys("K", "n", false) end,
-      desc = "Hover man",
-    }
-    lsp_mappings.n["gm"] = {
-      function() vim.api.nvim_feedkeys("K", "n", false) end,
-      desc = "Hover man",
-    }
-  end
+  lsp_mappings.n["<leader>lm"] = {
+    function() vim.api.nvim_feedkeys("K", "n", false) end,
+    desc = "Hover man",
+  }
+  lsp_mappings.n["gm"] = {
+    function() vim.api.nvim_feedkeys("K", "n", false) end,
+    desc = "Hover man",
+  }
 
   -- Force LSP refresh (We also keep the default keymap 'U')
   -- if client then
