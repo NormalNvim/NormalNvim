@@ -219,7 +219,7 @@ return {
     },
 
     --  Syntax highlight [lsp config]
-    --  https://github.com/nvim-lspconfig
+    --  https://github.com/neovim/nvim-lspconfig
     {
       "neovim/nvim-lspconfig",
       dependencies = {
