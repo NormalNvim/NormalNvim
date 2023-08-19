@@ -777,6 +777,7 @@ if is_available "telescope.nvim" then
         prompt_title = "Config Files",
         search_dirs = search_dirs,
         cwd = cwd,
+        follow = true,
       } -- call telescope
     end,
     desc = "Find nvim config files",
