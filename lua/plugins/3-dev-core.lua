@@ -347,7 +347,7 @@ return {
           opts = { handlers = {} },
         },
       },
-      event = "User File",
+      event = "User BaseFile",
       opts = function()
         local nls = require "null-ls"
         return {
