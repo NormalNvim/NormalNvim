@@ -75,7 +75,7 @@ Please before opening an issue, check the [astrocommunity](https://github.com/As
     `:healthcheck base`
 
 * **Supports Windows?**
-Yes, 100%. This is not necessary, but we advise you to launch NormalNvim using [WLS](https://www.youtube.com/watch?v=nARnhEkVAxY). If you do, you can install stuff with the command `apt install mydependency`. This is particulary cool if you want to use `F6` to run [compiler.nvim](https://github.com/Zeioth/compiler.nvim), because you can only compile with the compilers you have installed.
+Yes, 100%. This is not necessary, but we strongly recommend you to launch NormalNvim [using WLS](https://www.youtube.com/watch?v=fFbLUEQsRhM) so you can install [the required dependencies](https://github.com/NormalNvim/NormalNvim/wiki/dependencies).
 
 * **How can I disable the tabline?** On the options file, search for `showtabline` and set it to 0. If instead you want to remove the functionality completely from nvim, then check the plugin heirline. Here is where we implement the tabline logic. Also check [./lua/base/utils/status.lua](https://github.com/NormalNvim/NormalNvim/blob/main/lua/base/utils/status.lua) if you want to delete heirline helpers functions.
 
