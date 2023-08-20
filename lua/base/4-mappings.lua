@@ -943,16 +943,16 @@ if is_available "telescope.nvim" then
 
   -- extra - compiler
   if is_available "compiler.nvim" and is_available "overseer.nvim" then
-    maps.n["<leader>c"] = icons.c
-    maps.n["<leader>cc"] = {
+    maps.n["<leader>m"] = icons.c
+    maps.n["<leader>mm"] = {
       function() vim.cmd "CompilerOpen" end,
       desc = "Open compiler",
     }
-    maps.n["<leader>cr"] = {
+    maps.n["<leader>mr"] = {
       function() vim.cmd "CompilerRedo" end,
       desc = "Compiler redo",
     }
-    maps.n["<leader>cs"] = {
+    maps.n["<leader>mt"] = {
       function() vim.cmd "CompilerToggleResults" end,
       desc = "Toggle compiler results",
     }
