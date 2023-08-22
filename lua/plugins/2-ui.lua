@@ -754,7 +754,6 @@ return {
     },
     enabled = vim.g.icons_enabled,
     config = function(_, opts)
-      base.lspkind = opts
       require("lspkind").init(opts)
     end,
   },
