@@ -9,10 +9,11 @@
 --       -> nvim-colorizer                 [hex colors]
 
 --       ## LSP
---       -> SchemaStore.nvim               [lsp schema manager]
---       -> mason.nvim                     [lsp package manager]
 --       -> nvim-lspconfig                 [lsp config]
---       -> null-ls                        [code formatting]
+--       -> mason.nvim                     [lsp package manager]
+--       -> SchemaStore.nvim               [lsp schema manager]
+--       -> null-ls                        [lsp code formatting]
+--       -> neodev                         [lsp for nvim lua api]
 
 --       ## AUTO COMPLETON
 --       -> nvim-cmp                       [auto completion engine]
@@ -145,78 +146,6 @@ return {
   },
 
   --  LSP -------------------------------------------------------------------
-  --  Schema Store [lsp schema manager]
-  --  https://github.com/b0o/SchemaStore.nvim
-  "b0o/SchemaStore.nvim",
-  {
-    "folke/neodev.nvim",
-    opts = {
-      override = function(root_dir, library)
-        for _, base_config in ipairs(base.supported_configs) do
-          if root_dir:match(base_config) then
-            library.plugins = true
-            break
-          end
-        end
-        vim.b.neodev_enabled = library.enabled
-      end,
-    },
-  },
-
-  --  Syntax highlight [lsp package manager]
-  --  https://github.com/williamboman/mason.nvim
-  {
-    "williamboman/mason.nvim",
-    cmd = {
-      "Mason",
-      "MasonInstall",
-      "MasonUninstall",
-      "MasonUninstallAll",
-      "MasonLog",
-      "MasonUpdate",
-      "MasonUpdateAll",
-    },
-    opts = {
-      ui = {
-        icons = {
-          package_installed = "✓",
-          package_uninstalled = "✗",
-          package_pending = "⟳",
-        },
-      },
-    },
-    build = ":MasonUpdate",
-    config = function(_, opts)
-      require("mason").setup(opts)
-
-      local cmd = vim.api.nvim_create_user_command
-      cmd("MasonUpdate", function(options) require("base.utils.mason").update(options.fargs) end, {
-        nargs = "*",
-        desc = "Update Mason Package",
-        complete = function(arg_lead)
-          local _ = require "mason-core.functional"
-          return _.sort_by(
-            _.identity,
-            _.filter(_.starts_with(arg_lead), require("mason-registry").get_installed_package_names())
-           )
-        end,
-      })
-      cmd(
-        "MasonUpdateAll",
-        function() require("base.utils.mason").update_all() end,
-        { desc = "Update Mason Packages" }
-      )
-
-      for _, plugin in ipairs {
-        "mason-lspconfig",
-        "mason-null-ls",
-        "mason-nvim-dap",
-      } do
-        pcall(require, plugin)
-      end
-    end,
-  },
-
   --  Syntax highlight [lsp config]
   --  https://github.com/neovim/nvim-lspconfig
   {
@@ -293,7 +222,65 @@ return {
     end,
   },
 
-  --  null ls [code formatting]
+  --  Syntax highlight [lsp package manager]
+  --  https://github.com/williamboman/mason.nvim
+  {
+    "williamboman/mason.nvim",
+    cmd = {
+      "Mason",
+      "MasonInstall",
+      "MasonUninstall",
+      "MasonUninstallAll",
+      "MasonLog",
+      "MasonUpdate",
+      "MasonUpdateAll",
+    },
+    opts = {
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_uninstalled = "✗",
+          package_pending = "⟳",
+        },
+      },
+    },
+    build = ":MasonUpdate",
+    config = function(_, opts)
+      require("mason").setup(opts)
+
+      local cmd = vim.api.nvim_create_user_command
+      cmd("MasonUpdate", function(options) require("base.utils.mason").update(options.fargs) end, {
+        nargs = "*",
+        desc = "Update Mason Package",
+        complete = function(arg_lead)
+          local _ = require "mason-core.functional"
+          return _.sort_by(
+            _.identity,
+            _.filter(_.starts_with(arg_lead), require("mason-registry").get_installed_package_names())
+           )
+        end,
+      })
+      cmd(
+        "MasonUpdateAll",
+        function() require("base.utils.mason").update_all() end,
+        { desc = "Update Mason Packages" }
+      )
+
+      for _, plugin in ipairs {
+        "mason-lspconfig",
+        "mason-null-ls",
+        "mason-nvim-dap",
+      } do
+        pcall(require, plugin)
+      end
+    end,
+  },
+
+  --  Schema Store [lsp schema manager]
+  --  https://github.com/b0o/SchemaStore.nvim
+  "b0o/SchemaStore.nvim",
+
+  --  null ls [lsp code formatting]
   --  https://github.com/jose-elias-alvarez/null-ls.nvim
   {
     "jose-elias-alvarez/null-ls.nvim",
@@ -320,6 +307,23 @@ return {
         on_attach = require("base.utils.lsp").on_attach,
       }
     end,
+  },
+
+  --  neodev.nvim [lsp for nvim lua api]
+  --  https://github.com/folke/neodev.nvim
+  {
+    "folke/neodev.nvim",
+    opts = {
+      override = function(root_dir, library)
+        for _, base_config in ipairs(base.supported_configs) do
+          if root_dir:match(base_config) then
+            library.plugins = true
+            break
+          end
+        end
+        vim.b.neodev_enabled = library.enabled
+      end,
+    },
   },
 
   --  AUTO COMPLETION --------------------------------------------------------
@@ -384,17 +388,56 @@ return {
           documentation = cmp.config.window.bordered(border_opts),
         },
         mapping = {
-          ["<Up>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Select },
-          ["<Down>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Select },
-          ["<C-p>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-          ["<C-n>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
-          ["<C-k>"] = cmp.mapping.select_prev_item { behavior = cmp.SelectBehavior.Insert },
-          ["<C-j>"] = cmp.mapping.select_next_item { behavior = cmp.SelectBehavior.Insert },
+          ["<PageUp>"] = cmp.mapping.select_prev_item {
+            behavior = cmp.SelectBehavior.Select,
+            count = 8,
+          },
+          ["<PageDown>"] = cmp.mapping.select_next_item {
+            behavior = cmp.SelectBehavior.Select,
+            count = 8,
+          },
+          ["<C-PageUp>"] = cmp.mapping.select_prev_item {
+            behavior = cmp.SelectBehavior.Select,
+            count = 16,
+          },
+          ["<C-PageDown>"] = cmp.mapping.select_next_item {
+            behavior = cmp.SelectBehavior.Select,
+            count = 16,
+          },
+          ["<S-PageUp>"] = cmp.mapping.select_prev_item {
+            behavior = cmp.SelectBehavior.Select,
+            count = 16,
+          },
+          ["<S-PageDown>"] = cmp.mapping.select_next_item {
+            behavior = cmp.SelectBehavior.Select,
+            count = 16,
+          },
+          ["<Up>"] = cmp.mapping.select_prev_item {
+            behavior = cmp.SelectBehavior.Select,
+          },
+          ["<Down>"] = cmp.mapping.select_next_item {
+            behavior = cmp.SelectBehavior.Select,
+          },
+          ["<C-p>"] = cmp.mapping.select_prev_item {
+            behavior = cmp.SelectBehavior.Insert,
+          },
+          ["<C-n>"] = cmp.mapping.select_next_item {
+            behavior = cmp.SelectBehavior.Insert,
+          },
+          ["<C-k>"] = cmp.mapping.select_prev_item {
+            behavior = cmp.SelectBehavior.Insert,
+          },
+          ["<C-j>"] = cmp.mapping.select_next_item {
+            behavior = cmp.SelectBehavior.Insert,
+          },
           ["<C-u>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
           ["<C-d>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
           ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
           ["<C-y>"] = cmp.config.disable,
-          ["<C-e>"] = cmp.mapping { i = cmp.mapping.abort(), c = cmp.mapping.close() },
+          ["<C-e>"] = cmp.mapping {
+            i = cmp.mapping.abort(),
+            c = cmp.mapping.close(),
+          },
           ["<CR>"] = cmp.mapping.confirm { select = false },
           ["<Tab>"] = cmp.mapping(function(fallback)
             if cmp.visible() then
