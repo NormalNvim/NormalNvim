@@ -52,8 +52,13 @@ function M.check()
       msg = "Used for core functionality such as updater and plugin management.",
     },
     {
+      cmd = { "cargo" },
+      type = "error",
+      msg = "Used by nvim-spectre to install oxi. Also by dooku.nvim to generate rust html docs. If you don't have cargo, it means rust is not installed in your system.",
+    },
+    {
       cmd = { "rg" },
-      type = "warn",
+      type = "error",
       msg = "Used for nvim-spectre to find using ripgrep.",
     },
     {
@@ -185,11 +190,6 @@ function M.check()
       cmd = { "doxygen" },
       type = "warn",
       msg = "Used by dooku.nvim to generate c/c++/python/java html docs (optional)",
-    },
-    {
-      cmd = { "cargo" },
-      type = "warn",
-      msg = "Used by dooku.nvim to generate rust html docs (optional)",
     },
   }
 
