@@ -654,7 +654,6 @@ end
 -- @see base.utils.status.utils.stylize
 function M.compiler_state(opts)
   local ovs
-  local ovs_utils
   local state
   local tasks
   local tasks_by_status
@@ -663,17 +662,16 @@ function M.compiler_state(opts)
   return function()
     if is_available "compiler.nvim" and not ovs then
       vim.defer_fn(function()
-        ovs = require("overseer.task_list")
-        ovs_utils = require("overseer.util")
+        ovs = require("overseer")
       end, 100) -- Hotfix: Defer to avoid stack trace on new files.
     end
     if not ovs then return nil end
 
-    tasks = ovs.list_tasks({ unique = true })
-    tasks_by_status = ovs_utils.tbl_group_by(tasks, "status")
+    tasks = ovs.list_tasks({ unique = false })
+    tasks_by_status = ovs.util.tbl_group_by(tasks, "status")
 
-    state = "INACTIVE"
-    if tasks_by_status["RUNNING"] then state = "RUNNING" end
+    if tasks_by_status["RUNNING"] then state = "RUNNING"
+    else state = "INACTIVE" end
 
     return status_utils.stylize(state == "RUNNING" and (table.concat({
           " ",
