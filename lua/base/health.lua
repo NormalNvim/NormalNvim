@@ -54,7 +54,7 @@ function M.check()
     {
       cmd = { "cargo" },
       type = "error",
-      msg = "Used by nvim-spectre to install oxi. Also by dooku.nvim to generate rust html docs. If you don't have cargo, it means rust is not installed in your system.",
+      msg = "Used by nvim-spectre to install oxi. Also by dooku.nvim to generate rust html docs.",
     },
     {
       cmd = { "rg" },
@@ -74,7 +74,7 @@ function M.check()
     {
       cmd = { "pynvim" },
       type = "warn",
-      msg = "Used to enable ranger file browser → NOTE: checkhealth can't detect this correctly, but you can ensure it is installed with 'pip list | grep pynvim' (Optional)",
+      msg = "Used to enable ranger file browser (optional)\nNOTE: checkhealth won't detect this correctly, but you can ensure it is installed with 'pip list | grep pynvim'.",
     },
     {
       cmd = { "ranger" },
@@ -109,12 +109,12 @@ function M.check()
     {
       cmd = { "cargo nextest" },
       type = "warn",
-      msg = "Used to run rust tests → NOTE: checkhealth can't detect this correctly, but if you can run this command on the terminal, it works fine. (Optional)",
+      msg = "Used to run rust tests (optional)\nNOTE: checkhealth won't detect this correctly, but you can confirm it works correctly with 'cargo nextest'.",
     },
     {
       cmd = { "nunit" },
       type = "warn",
-      msg = "Used to run C# tests → NOTE: You don't need to install anything here. Just add it to your dotnet C# project with 'dotnet add package NUnit NUnit3TestAdapter'. (Optional)",
+      msg = "Used to run C# tests (optional)\nNOTE: There is no way to install this system wide. To use it you must add it to your dotnet C# project: 'dotnet add package NUnit NUnit3TestAdapter'.",
     },
     {
       cmd = { "csc" },
@@ -125,6 +125,11 @@ function M.check()
       cmd = { "mono" },
       type = "warn",
       msg = "Used by compiler.nvim to run non dotnet C# files. (Optional)",
+    },
+    {
+      cmd = { "dotnet" },
+      type = "warn",
+      msg = "Used by compiler.nvim and DAP to operate with dotnet projects (opitonal)\nNOTE: Make sure you also have the system package dotnet-sdk installed.",
     },
     {
       cmd = { "java" },
@@ -184,7 +189,7 @@ function M.check()
     {
       cmd = { "godoc" },
       type = "warn",
-      msg = "Used by dooku.nvim to generate go html docs → NOTE: If you have it installed but you can't run it on the terminal, ensure you have 'go' added to your OS path (optional)",
+      msg = "Used by dooku.nvim to generate go html docs\nNOTE: If you have it installed but you can run it on the terminal, ensure you have added 'go' to your OS path (optional)",
     },
     {
       cmd = { "doxygen" },
