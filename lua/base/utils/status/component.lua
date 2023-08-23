@@ -573,7 +573,7 @@ function M.compiler_state(opts)
   opts = extend_tbl({
     compiler_state = {
       condition = function()
-        return is_available "compiler.nvim" and is_available "treesitter"
+        return is_available "compiler.nvim"
       end,
       padding = { left = 1, right = 0 },
     },
@@ -582,10 +582,7 @@ function M.compiler_state(opts)
       name = "compiler_open",
       callback = function()
         if is_available "compiler.nvim" then
-          vim.defer_fn(
-            function() vim.cmd("CompilerToggleResults") end,
-            100
-          )
+          vim.defer_fn(function() vim.cmd("CompilerToggleResults") end, 100)
         end
       end,
     },
