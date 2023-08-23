@@ -671,6 +671,8 @@ function M.compiler_state(opts)
 
     tasks = ovs.list_tasks({ unique = true })
     tasks_by_status = ovs_utils.tbl_group_by(tasks, "status")
+
+    state = "INACTIVE"
     if tasks_by_status["RUNNING"] then state = "RUNNING" end
 
     return status_utils.stylize(state == "RUNNING" and (table.concat({

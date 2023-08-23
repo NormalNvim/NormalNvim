@@ -235,7 +235,7 @@ return {
         },
         replace = {
           -- pick one of item in [ sed, oxi ]
-          cmd = (windows and "sed") or "sed",
+          cmd = (windows and "sed") or "oxi",
         },
       },
       is_insert_mode = true, -- start open panel on is_insert_mode

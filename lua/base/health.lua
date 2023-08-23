@@ -52,6 +52,16 @@ function M.check()
       msg = "Used for core functionality such as updater and plugin management.",
     },
     {
+      cmd = { "cargo" },
+      type = "error",
+      msg = "Used by nvim-spectre to install oxi. Also by dooku.nvim to generate rust html docs. If you don't have cargo, it means rust is not installed in your system.",
+    },
+    {
+      cmd = { "rg" },
+      type = "error",
+      msg = "Used for nvim-spectre to find using ripgrep.",
+    },
+    {
       cmd = { "lazygit" },
       type = "warn",
       msg = "Used for mappings to pull up git TUI (Optional)",
@@ -62,7 +72,12 @@ function M.check()
       msg = "Used for mappings to pull up git TUI (Optional)",
     },
     {
-      cmd = { "pynvim", "ranger" },
+      cmd = { "pynvim" },
+      type = "warn",
+      msg = "Used to enable ranger file browser → NOTE: checkhealth can't detect this correctly, but you can ensure it is installed with 'pip list | grep pynvim' (Optional)",
+    },
+    {
+      cmd = { "ranger" },
       type = "warn",
       msg = "Used to enable ranger file browser (Optional)",
     },
@@ -70,6 +85,111 @@ function M.check()
       cmd = { "delta" },
       type = "warn",
       msg = "Used by undotree to show a diff (Optional)",
+    },
+    {
+      cmd = { "grcov" },
+      type = "warn",
+      msg = "Used to show code coverage (Optional)",
+    },
+    {
+      cmd = { "grcov" },
+      type = "warn",
+      msg = "Used to show code coverage (Optional)",
+    },
+    {
+      cmd = { "jest" },
+      type = "warn",
+      msg = "Used to run typescript and javascript tests (Optional)",
+    },
+    {
+      cmd = { "pytest" },
+      type = "warn",
+      msg = "Used to run python tests (Optional)",
+    },
+    {
+      cmd = { "cargo nextest" },
+      type = "warn",
+      msg = "Used to run rust tests → NOTE: checkhealth can't detect this correctly, but if you can run this command on the terminal, it works fine. (Optional)",
+    },
+    {
+      cmd = { "nunit" },
+      type = "warn",
+      msg = "Used to run C# tests → NOTE: You don't need to install anything here. Just add it to your dotnet C# project with 'dotnet add package NUnit NUnit3TestAdapter'. (Optional)",
+    },
+    {
+      cmd = { "csc" },
+      type = "warn",
+      msg = "Used by compiler.nvim to compile non dotnet C# files (Optional)",
+    },
+    {
+      cmd = { "mono" },
+      type = "warn",
+      msg = "Used by compiler.nvim to run non dotnet C# files. (Optional)",
+    },
+    {
+      cmd = { "java" },
+      type = "warn",
+      msg = "Used by compiler.nvim and dap to operate with java (Optional)",
+    },
+    {
+      cmd = { "javac" },
+      type = "warn",
+      msg = "Used by compiler.nvim to compile java (Optional)",
+    },
+    {
+      cmd = { "nasm" },
+      type = "warn",
+      msg = "Used by compiler.nvim to compile assembly x86_64 (Optional)",
+    },
+    {
+      cmd = { "gcc" },
+      type = "warn",
+      msg = "Used by compiler.nvim to compile C (Optional)",
+    },
+    {
+      cmd = { "g++" },
+      type = "warn",
+      msg = "Used by compiler.nvim to compile C++ (Optional)",
+    },
+    {
+      cmd = { "python" },
+      type = "warn",
+      msg = "Used by compiler.nvim to interpretate python (Optional)",
+    },
+    {
+      cmd = { "nuitka3" },
+      type = "warn",
+      msg = "Used by compiler.nvim to compile python to machine code (Optional)",
+    },
+    {
+      cmd = { "pyinstaller" },
+      type = "warn",
+      msg = "Used by compiler.nvim to compile python to bytecode (Optional)",
+    },
+    {
+      cmd = { "ruby" },
+      type = "warn",
+      msg = "Used by compiler.nvim to interpretate ruby (optional)",
+    },
+    {
+      cmd = { "perl" },
+      type = "warn",
+      msg = "Used by compiler.nvim to interpretate perl (optional)",
+    },
+    {
+      cmd = { "go" },
+      type = "warn",
+      msg = "Used by compiler.nvim to compile go (optional)",
+    },
+    {
+      cmd = { "godoc" },
+      type = "warn",
+      msg = "Used by dooku.nvim to generate go html docs → NOTE: If you have it installed but you can't run it on the terminal, ensure you have 'go' added to your OS path (optional)",
+    },
+    {
+      cmd = { "doxygen" },
+      type = "warn",
+      msg = "Used by dooku.nvim to generate c/c++/python/java html docs (optional)",
     },
   }
 
