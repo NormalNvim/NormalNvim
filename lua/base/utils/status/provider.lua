@@ -661,9 +661,11 @@ function M.compiler_state(opts)
   local spinner = utils.get_spinner("LSPLoading", 1) or { "" }
 
   return function()
-    if is_available "compiler.nvim" and is_available "treesitter" and not ovs then
-      ovs = require("overseer.task_list")
-      ovs_utils = require("overseer.util")
+    if is_available "compiler.nvim" and not ovs then
+      vim.defer_fn(function()
+        ovs = require("overseer.task_list")
+        ovs_utils = require("overseer.util")
+      end, 100) -- Hotfix: Defer to avoid stack trace on new files.
     end
     if not ovs then return nil end
 
