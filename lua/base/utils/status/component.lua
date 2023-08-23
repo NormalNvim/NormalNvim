@@ -582,10 +582,7 @@ function M.compiler_state(opts)
       name = "compiler_open",
       callback = function()
         if is_available "compiler.nvim" then
-          vim.defer_fn(
-            function() vim.cmd("CompilerToggleResults") end,
-            100
-          )
+          vim.defer_fn(function() vim.cmd("CompilerToggleResults") end, 100)
         end
       end,
     },
