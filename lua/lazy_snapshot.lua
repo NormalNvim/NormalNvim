@@ -39,7 +39,6 @@ return {
   { "jay-babu/mason-null-ls.nvim", version = "^2" },
   { "jay-babu/mason-nvim-dap.nvim", version = "^2" },
   { "jbyuki/one-small-step-for-vimkind", commit = "aa1c4a876c3a4e14614cd0dd55794d00f810dae9" },
-  { "jose-elias-alvarez/null-ls.nvim", commit = "0010ea927ab7c09ef0ce9bf28c2b573fc302f5a7" },
   { "kevinhwang91/nvim-ufo", version = "^1" },
   { "kevinhwang91/promise-async", version = "^1" },
   { "kevinhwang91/rnvimr", commit = "5f0483d1c107ab1fe7e0af08cdf7900aa0dcb40e" },
@@ -66,6 +65,7 @@ return {
   { "onsails/lspkind.nvim", commit = "57610d5ab560c073c465d6faf0c19f200cb67e6e" },
   { "petertriho/nvim-scrollbar", commit = "35f99d559041c7c0eff3a41f9093581ceea534e8" },
   { "phaazon/hop.nvim", commit = "03f0434869f1f38868618198b5f4f2ab6d39aef2" },
+  { "rafamadriz/friendly-snippets", commit = "b8405db25d2b02a7e158a8c95468727581434aea" },
   { "rcarriga/cmp-dap", commit = "d16f14a210cd28988b97ca8339d504533b7e09a4" },
   { "rcarriga/nvim-dap-ui", version = "^3" },
   { "rcarriga/nvim-notify", version = "^3" },
@@ -84,5 +84,4 @@ return {
   { "williamboman/mason.nvim", version = "^1" },
   { "windwp/nvim-autopairs", commit = "ae5b41ce880a6d850055e262d6dfebd362bb276e" },
   { "windwp/nvim-ts-autotag", commit = "6be1192965df35f94b8ea6d323354f7dc7a557e4" },
-  { "zeioth/friendly-snippets", commit = "b8405db25d2b02a7e158a8c95468727581434aea" },
 }
