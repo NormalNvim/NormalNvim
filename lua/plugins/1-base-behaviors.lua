@@ -202,7 +202,7 @@ return {
       -- This avoid inconsistencies when closing multiple instances of the same session.
       local augroup = vim.api.nvim_create_augroup
       local autocmd = vim.api.nvim_create_autocmd
-      autocmd({ 'BufWritePost' }, {
+      autocmd({ 'BufWritePre' }, {
         group = augroup("session_manager_autosave_on_write", { clear = true }),
         callback = function ()
           if vim.bo.filetype ~= 'git' and
