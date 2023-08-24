@@ -358,6 +358,9 @@ return {
         },
       }
 
+      -- F#
+      dap.configurations.fsharp = dap.configurations.cs
+
       -- Java
       -- Note: The java debugger jdtls is automatically spawned and configured
       --       when a java file is opened. You can check it here:
