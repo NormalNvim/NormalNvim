@@ -146,6 +146,7 @@ function M.check()
       type = "warn",
       msg = "Used by compiler.nvim to compile assembly x86_64 (Optional)",
     },
+
     {
       cmd = { "gcc" },
       type = "warn",
@@ -155,6 +156,11 @@ function M.check()
       cmd = { "g++" },
       type = "warn",
       msg = "Used by compiler.nvim to compile C++ (Optional)",
+    },
+    {
+      cmd = { "Rscript" },
+      type = "warn",
+      msg = "Used by compiler.nvim to interpretate R (Optional)",
     },
     {
       cmd = { "python" },

@@ -363,7 +363,7 @@ return {
 
       -- Java
       -- Note: The java debugger jdtls is automatically spawned and configured
-      --       when a java file is opened. You can check it here:
+      --       when a java file is opened. You can check it out here:
       --       ../base/3-autocmds.lua
 
       -- Python
