@@ -459,7 +459,6 @@ return {
       -- Requires:
       -- * You have initialized your module with 'go mod init module_name'.
       -- * You :cd your project before running DAP.
-      -- note that no mason package or nvim plugin is required.
       dap.adapters.delve = {
         type = 'server',
         port = '${port}',
@@ -484,20 +483,34 @@ return {
         },
       }
 
-      -- Dart (untested)
+      -- Dart / Flutter
       dap.adapters.dart = {
-        type = "executable",
-        command = "node",
-        args = { vim.fn.stdpath('data')..'/mason/bin/dart-debug-adapter', "flutter"}
+        type = 'executable',
+        command = vim.fn.stdpath('data')..'/mason/bin/dart-debug-adapter',
+        args = {'dart'}
+      }
+      dap.adapters.flutter = {
+        type = 'executable',
+        command = vim.fn.stdpath('data')..'/mason/bin/dart-debug-adapter',
+        args = {'flutter'}
       }
       dap.configurations.dart = {
         {
           type = "dart",
           request = "launch",
+          name = "Launch dart",
+          dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/", -- ensure this is correct
+          flutterSdkPath = "/opt/flutter",                  -- ensure this is correct
+          program = "${workspaceFolder}/lib/main.dart",     -- ensure this is correct
+          cwd = "${workspaceFolder}",
+        },
+        {
+          type = "dart",
+          request = "launch",
           name = "Launch flutter",
-          dartSdkPath = os.getenv('HOME').."/flutter/bin/cache/dart-sdk/",
-          flutterSdkPath = os.getenv('HOME').."/flutter",
-          program = "${workspaceFolder}/lib/main.dart",
+          dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/", -- ensure this is correct
+          flutterSdkPath = "/opt/flutter",                  -- ensure this is correct
+          program = "${workspaceFolder}/lib/main.dart",     -- ensure this is correct
           cwd = "${workspaceFolder}",
         }
       }
