@@ -505,7 +505,7 @@ return {
           cwd = "${workspaceFolder}",
         },
         {
-          type = "dart",
+          type = "flutter",
           request = "launch",
           name = "Launch flutter",
           dartSdkPath = "/opt/flutter/bin/cache/dart-sdk/", -- ensure this is correct
