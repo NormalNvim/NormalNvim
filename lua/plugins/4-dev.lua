@@ -459,7 +459,6 @@ return {
       -- Requires:
       -- * You have initialized your module with 'go mod init module_name'.
       -- * You :cd your project before running DAP.
-      -- note that no mason package or nvim plugin is required.
       dap.adapters.delve = {
         type = 'server',
         port = '${port}',
