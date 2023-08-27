@@ -192,7 +192,7 @@ if is_available "nvim-dap" then
     desc = "On java files, start jdtls",
     group = augroup("neotree_git_refresh", { clear = true }),
     callback = function()
-      if vim.bo.filetype == "java" then
+      if vim.bo.filetype == "java" or vim.bo.filetype == "kotlin" then
         local config = {
           cmd = { vim.fn.stdpath "data" .. "/mason/packages/jdtls/jdtls" },
           root_dir = vim.fs.dirname(vim.fs.find({ "gradlew", ".git", "mvnw" }, { upward = true })[1]),
