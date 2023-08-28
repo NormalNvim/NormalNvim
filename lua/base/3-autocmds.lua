@@ -190,7 +190,7 @@ end
 if is_available "nvim-dap" then
   autocmd("BufRead", {
     desc = "On java files, start jdtls",
-    group = augroup("neotree_git_refresh", { clear = true }),
+    group = augroup("nvim_dap_java_jdtls", { clear = true }),
     callback = function()
       if vim.bo.filetype == "java" then
         local config = {
