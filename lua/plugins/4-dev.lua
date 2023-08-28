@@ -515,9 +515,11 @@ return {
         }
       }
 
-      -- Kotlin (untested)
+      -- Kotlin
+      -- Kotlin projects have very weak project structure conventions.
+      -- You must manually specify what the project root and main class are.
       dap.adapters.kotlin = {
-          type = 'executable';
+        type = 'executable';
         command = vim.fn.stdpath('data')..'/mason/bin/kotlin-debug-adapter',
       }
       dap.configurations.kotlin = {
@@ -525,8 +527,8 @@ return {
               type = 'kotlin';
               request = 'launch';
               name = 'Launch kotlin program';
-              projectRoot = "${workspaceFolder}/app";
-              mainClass = "AppKt";
+              projectRoot = "${workspaceFolder}/app"; -- ensure this is correct
+              mainClass = "AppKt";                    -- ensure this is correct
           };
       }
 
