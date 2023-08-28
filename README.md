@@ -82,10 +82,10 @@ Yes, 100%. This is not necessary, but we strongly recommend you to launch Normal
 
 * **How can I disable the animations?** You can delete the plugin [mini.animate](https://github.com/echasnovski/mini.animate). In case you only want to disable some animations look into the plugin docs.
 
-* **How can I use `Ask chatgpt`?** On your operative system, set the next env var. You can get an API key from chatgpt's website.
+* **How can I use `Ask chatgpt`?** On your operative system, set the next env var. You can get an API key from [chatgpt's website](https://platform.openai.com/account/api-keys)
 
 ```sh
-CHATGPT_API_KEY="my_key_here"
+OPENAI_API_KEY="my_key_here"
 ```
 
 * **What scenarios are not covered by this distro?**
