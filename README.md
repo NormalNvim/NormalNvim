@@ -87,7 +87,7 @@ Yes, 100%. This is not necessary, but we strongly recommend you to launch Normal
 ```sh
 OPENAI_API_KEY="my_key_here"
 ```
-ckeck how to set env var for [lunix](https://www.freecodecamp.org/news/how-to-set-an-environment-variable-in-linux/), [windows](https://phoenixnap.com/kb/windows-set-environment-variable), [mac](https://phoenixnap.com/kb/set-environment-variable-mac)
+
 * **What scenarios are not covered by this distro?**
   * **Kubernetes**: We do not provide a kubernetes plugin. But we recommend using friendly-snippets, to quickly write code, and [overseer.nvim](https://github.com/stevearc/overseer.nvim) to run kubernetes commands from inside nvim without having to wait for the server response.
   * **e2e testing**: We do not provide an e2e plugin. But we do provide the :TestNodejsE2e command you can customize on [/lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua) along with all the other testing commands. You can also rename the commands to anything you want in case you don't use nodejs.
