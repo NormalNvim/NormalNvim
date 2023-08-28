@@ -332,6 +332,9 @@ return {
       return {
         auto_clean_after_session_restore = true,
         close_if_last_window = true,
+        buffers = {
+          show_unloaded = true
+        },
         sources = { "filesystem", "buffers", "git_status" },
         source_selector = {
           winbar = true,

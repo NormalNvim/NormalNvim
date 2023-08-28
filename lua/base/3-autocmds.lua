@@ -172,25 +172,15 @@ autocmd({ "BufWritePost" }, {
   end,
 })
 
--- 5. Update neotree when closin the git client, or when you focus a buffer.
-local neotree_refresh_group = augroup("neotree_refresh", { clear = true })
+-- 5. Update neotree when closin the git client.
 if is_available "neo-tree.nvim" then
   autocmd("TermClose", {
     pattern = { "*lazygit", "*gitui" },
     desc = "Refresh Neo-Tree git when closing lazygit/gitui",
-    group = neotree_refresh_group,
+    group = augroup("neotree_git_refresh", { clear = true }),
     callback = function()
       if package.loaded["neo-tree.sources.git_status"] then
         require("neo-tree.sources.git_status").refresh()
-      end
-    end,
-  })
-  autocmd("BufReadPre", {
-    desc = "Refresh Neo-Tree buffers tab when opening a new buffer",
-    group = neotree_refresh_group,
-    callback = function()
-      if package.loaded["neo-tree.sources.buffers"] then
-        require("neo-tree.sources.buffers").buffers_changed()
       end
     end,
   })
