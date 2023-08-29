@@ -1230,36 +1230,23 @@ end
 
 -- hop.nivm ----------------------------------------------------------------
 if is_available "hop.nvim" then
+  -- Note that Even though we are using ENTER for hop, you can still select items
+  -- from the special menus 'quickfix', 'q?' and 'q:' using <C+ENTER>.
+
   maps.n["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
     function()
       require "hop"
-      vim.cmd "HopWord"
+      vim.cmd("silent! HopWord")
     end,
     desc = "Hop to word",
   }
   maps.x["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
     function()
       require "hop"
-      vim.cmd "HopWord"
+      vim.cmd ("silent! HopWord")
     end,
     desc = "Hop to word",
   }
-  -- You can remove these mappings for the desired filetypes like this.
-  vim.api.nvim_create_autocmd("FileType", {
-    desc = "Delete hop mapping for the desired filetypes",
-    group = vim.api.nvim_create_augroup("hop", { clear = true }),
-    callback = function()
-      if vim.bo.filetype == "qf" then -- quickfix
-        vim.api.nvim_buf_set_keymap(
-          0,
-          "n",
-          "<C-m>",
-          "<C-m>",
-          { silent = true }
-        )
-      end
-    end,
-  })
 end
 
 utils.set_mappings(maps)
