@@ -209,6 +209,11 @@ return {
              not vim.bo.filetype ~= 'gitcommit' and
              not vim.bo.filetype ~= 'gitrebase'
           then
+            -- Important: Be aware the next line will close anything non-buffer,
+            -- (notifications, neotree, aerial...)
+            -- because saving that stuff would break the GUI on restore.
+            -- If this is important to you, use the event 'VimLeavePre' instead.
+            -- But doing so, your session won't be saved on power loss.
             session_manager.save_current_session()
           end
         end
