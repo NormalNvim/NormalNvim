@@ -1231,7 +1231,7 @@ end
 -- hop.nivm ----------------------------------------------------------------
 if is_available "hop.nvim" then
   -- Note that Even though we are using ENTER for hop, you can still select items
-  -- from the special menus 'quickfix', 'q?' and 'q:' using <C+ENTER>.
+  -- from special menus like 'quickfix', 'q?' and 'q:' with <C+ENTER>.
 
   maps.n["<C-m>"] = { -- The terminal undersand C-m and ENTER as the same key.
     function()
