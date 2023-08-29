@@ -486,7 +486,7 @@ return {
             h = "parent_or_close",
             l = "child_or_open",
             o = "open",
-            ["e"] = function()
+            ["f"] = function()
               vim.api.nvim_exec("Neotree focus filesystem left", true)
             end,
             ["b"] = function()
