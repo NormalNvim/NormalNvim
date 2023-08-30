@@ -6,7 +6,7 @@
 --       -> tokyonight                  [theme]
 --       -> alpha-nvim                  [greeter]
 --       -> nvim-notify                 [notifications]
---       -> indent-blankline.nvim       [guides]
+--       -> mini.indentscope            [guides]
 --       -> heirline                    [statusbar]
 --       -> telescope                   [search]
 --       -> telescope-fzf-native.nvim   [search backend]
@@ -202,78 +202,19 @@ return {
     end,
   },
 
-  --  Code identation [guides]
-  --  https://github.com/lukas-reineke/indent-blankline.nvim
+  --  mini.indentscope [guides]
+  --  https://github.com/echasnovski/mini.indentscope
   {
-    "lukas-reineke/indent-blankline.nvim",
-    event = "User BaseFile",
+    "echasnovski/mini.indentscope",
+    event = { "BufReadPre", "BufNewFile" },
     opts = {
-      buftype_exclude = {
-        "nofile",
-        "terminal",
-      },
-      filetype_exclude = {
-        "help",
-        "startify",
-        "aerial",
-        "alpha",
-        "dashboard",
-        "lazy",
-        "neogitstatus",
-        "NvimTree",
-        "neo-tree",
-        "Trouble",
-        "ranger",
-        "rnvimr",
-      },
-      context_patterns = {
-        "class",
-        "return",
-        "function",
-        "method",
-        "^if",
-        "^while",
-        "jsx_element",
-        "^for",
-        "^object",
-        "^table",
-        "block",
-        "arguments",
-        "if_statement",
-        "else_clause",
-        "jsx_element",
-        "jsx_self_closing_element",
-        "try_statement",
-        "catch_clause",
-        "import_statement",
-        "operation_type",
-      },
-      show_trailing_blankline_indent = false,
-      use_treesitter = true,
-      char = "▏",
-      context_char = "▏",
-      show_current_context = true,
+      draw = { delay = 0, animation = function() return 0 end },
+      options = { border = "top", try_as_border = true },
+      symbol = "▏",
     },
-    init = function()
-      local augroup = vim.api.nvim_create_augroup
-      local autocmd = vim.api.nvim_create_autocmd
-
-      -- Disable it for big files.
-      autocmd("BufReadPre", {
-        desc = "Disable indent-blankfile plugin for big files",
-        group = augroup("large_buf", { clear = true }),
-        callback = function(args)
-          local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(args.buf))
-          vim.b[args.buf].large_buf = (ok and stats and stats.size > vim.g.big_file.size)
-            or vim.api.nvim_buf_line_count(args.buf) > vim.g.big_file.lines
-
-          if vim.b[args.buf].large_buf then pcall(vim.cmd.IndentBlanklineDisable) end
-        end,
-      })
-    end
   },
 
-  --  [statusbar]
+  --  heirline [statusbar]
   --  https://github.com/rebelot/heirline.nvim
   {
     "rebelot/heirline.nvim",
