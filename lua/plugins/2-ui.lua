@@ -20,7 +20,9 @@
 --       -> which-key                   [on-screen keybinding]
 
 local utils = require "base.utils"
-local windows = vim.fn.has('win32') == 1 -- true if on windows
+local windows = vim.fn.has('win32') == 1             -- true if on windows
+local android = vim.fn.isdirectory('/system') == 1   -- true if on android
+
 return {
   --  astrotheme [theme]
   --  https://github.com/AstroNvim/astrotheme
@@ -787,7 +789,7 @@ return {
   {
     "echasnovski/mini.animate",
     event = "User BaseFile",
-    -- enabled = false,
+    enabled = not android,
     opts = function()
       -- don't use animate when scrolling with the mouse
       local mouse_scrolled = false
