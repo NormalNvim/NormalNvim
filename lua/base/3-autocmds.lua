@@ -179,8 +179,18 @@ if is_available "neo-tree.nvim" then
     desc = "Refresh Neo-Tree git when closing lazygit/gitui",
     group = augroup("neotree_git_refresh", { clear = true }),
     callback = function()
-      if package.loaded["neo-tree.sources.git_status"] then
-        require("neo-tree.sources.git_status").refresh()
+      local manager_avail, manager = pcall(require, "neo-tree.sources.manager")
+      if manager_avail then
+        for _, source in ipairs {
+          "filesystem",
+          "git_status",
+          "document_symbols",
+        } do
+          local module = "neo-tree.sources." .. source
+          if package.loaded[module] then
+            manager.refresh(require(module).name)
+          end
+        end
       end
     end,
   })
@@ -363,5 +373,4 @@ cmd("Swd", function()
   vim.cmd ":cd %:p:h"
   vim.cmd ":pwd"
 end, { desc = "cd current file's directory" })
-
 
