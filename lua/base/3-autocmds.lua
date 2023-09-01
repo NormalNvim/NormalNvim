@@ -371,10 +371,3 @@ cmd("Swd", function()
   vim.cmd ":pwd"
 end, { desc = "cd current file's directory" })
 
--- Run a termimal command with ':Term ls' / ':T ls'
-function TermExecAlias(...)
-  local command = table.concat({...}, ' ')
-  vim.cmd('TermExec cmd="' .. command .. '"')
-end
-vim.cmd('command! -nargs=* Term call v:lua.TermExecAlias(<q-args>)')
-vim.cmd('command! -nargs=* T call v:lua.TermExecAlias(<q-args>)')
