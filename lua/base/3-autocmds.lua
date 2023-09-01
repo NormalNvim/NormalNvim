@@ -153,8 +153,6 @@ if is_available "alpha-nvim" then
   })
 end
 
-
-
 -- 4. Hot reload on config change.
 autocmd({ "BufWritePost" }, {
   desc = "When writing a buffer, :NvimReload if the buffer is a config file.",
@@ -354,7 +352,6 @@ end, { desc = "Run all unit tests for the current nodejs project" })
 
 -- Customize this command to work as you like
 cmd("TestNodejsE2e", function()
-
   vim.cmd ":ProjectRoot" -- cd the project root (requires project.nvim)
   vim.cmd ":TermExec cmd='npm run e2e'" -- Conventional way to call e2e in nodejs (requires ToggleTerm)
 end, { desc = "Run e2e tests for the current nodejs project" })
@@ -374,3 +371,10 @@ cmd("Swd", function()
   vim.cmd ":pwd"
 end, { desc = "cd current file's directory" })
 
+-- Run a termimal command with ':Term ls' / ':T ls'
+function TermExecAlias(...)
+  local command = table.concat({...}, ' ')
+  vim.cmd('TermExec cmd="' .. command .. '"')
+end
+vim.cmd('command! -nargs=* Term call v:lua.TermExecAlias(<q-args>)')
+vim.cmd('command! -nargs=* T call v:lua.TermExecAlias(<q-args>)')
