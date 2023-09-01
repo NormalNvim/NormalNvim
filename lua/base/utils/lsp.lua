@@ -1,7 +1,8 @@
 --- ### Nvim LSP utils
 --
 --  DESCRIPTION:
---  LSP related utility functions to use within Nvim and user configurations.
+--  LSP setup. Most options defined here can be tweaked on ../1-options.lua
+--  so avoid touching here when possible. High risk of breaking important stuff.
 
 --    Functions:
 --      -> LSP settings
@@ -459,7 +460,6 @@ function M.config(server_name)
   opts.on_attach = function(client, bufnr)
     conditional_func(old_on_attach, true, client, bufnr)
     M.on_attach(client, bufnr)
-    conditional_func(user_on_attach, true, client, bufnr)
   end
   return opts
 end

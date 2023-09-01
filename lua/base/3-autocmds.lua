@@ -219,7 +219,7 @@ if is_available "nvim-dap" then
         for i = 0, 12, 1 do
           vim.defer_fn(
             function()
-              test = require("jdtls.dap").setup_dap_main_class_configs()
+              require("jdtls.dap").setup_dap_main_class_configs()
             end,
             timer
           )
