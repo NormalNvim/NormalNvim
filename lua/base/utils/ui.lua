@@ -117,19 +117,6 @@ function M.toggle_buffer_semantic_tokens(bufnr)
   end
 end
 
---- Toggle buffer semantic token highlighting for all language servers that support it
---@param bufnr? number the buffer to toggle the clients on
-function M.toggle_buffer_semantic_tokens(bufnr)
-  vim.b.semantic_tokens_enabled = vim.b.semantic_tokens_enabled == false
-
-  for _, client in ipairs(vim.lsp.get_active_clients()) do
-    if client.server_capabilities.semanticTokensProvider then
-      vim.lsp.semantic_tokens[vim.b.semantic_tokens_enabled and "start" or "stop"](bufnr or 0, client.id)
-      notify(string.format("Buffer lsp semantic highlighting %s", bool2str(vim.b.semantic_tokens_enabled)))
-    end
-  end
-end
-
 --- Toggle LSP inlay hints (buffer)
 -- @param bufnr? number the buffer to toggle the clients on
 function M.toggle_buffer_inlay_hints(bufnr)
