@@ -2,8 +2,8 @@
 -- Things that make the GUI better.
 
 --    Sections:
---       -> astrotheme                  [theme]
 --       -> tokyonight                  [theme]
+--       -> astrotheme                  [theme]
 --       -> alpha-nvim                  [greeter]
 --       -> nvim-notify                 [notifications]
 --       -> mini.indentscope            [guides]
@@ -24,6 +24,17 @@ local windows = vim.fn.has('win32') == 1             -- true if on windows
 local android = vim.fn.isdirectory('/system') == 1   -- true if on android
 
 return {
+
+  -- tokyonight [theme]
+  -- https://github.com/folke/tokyonight.nvim
+  {
+    "Zeioth/tokyonight.nvim",
+    event = "User LoadColorSchemes",
+    opts = {
+      dim_inactive = true, -- dim inactive windows
+    },
+  },
+
   --  astrotheme [theme]
   --  https://github.com/AstroNvim/astrotheme
   {
@@ -32,17 +43,6 @@ return {
     opts = {
       palette = "astrodark",
       plugins = { ["dashboard-nvim"] = true },
-    },
-  },
-
-  -- tokyonight [theme]
-  -- https://github.com/folke/tokyonight.nvim
-  {
-    "folke/tokyonight.nvim",
-    event = "User LoadColorSchemes",
-    opts = {
-      plugins = { ["dashboard-nvim"] = true },
-      dim_inactive = true, -- dim inactive windows
     },
   },
 
