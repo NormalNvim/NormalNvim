@@ -30,6 +30,7 @@
 --      -> toggle_wrap
 --      -> toggle_syntax
 --      -> toggle_url_effect
+--      -> toggle_zen_mode
 --      -> toggle_foldcolumn
 --      -> toggle_signcolumn
 --      -> set_indent
@@ -232,6 +233,18 @@ function M.toggle_foldcolumn()
   if curr_foldcolumn ~= "0" then last_active_foldcolumn = curr_foldcolumn end
   vim.wo.foldcolumn = curr_foldcolumn == "0" and (last_active_foldcolumn or "1") or "0"
   notify(string.format("foldcolumn=%s", vim.wo.foldcolumn))
+end
+
+--- Toggle zen mode
+function M.toggle_zen_mode(bufnr)
+  bufnr = bufnr or 0
+  if not vim.b[bufnr].zen_mode then
+    vim.b[bufnr].zen_mode = true
+  else
+    vim.b[bufnr].zen_mode = false
+  end
+  notify(string.format("zen mode %s", bool2str(vim.b[bufnr].zen_mode)))
+  vim.cmd "ZenMode"
 end
 
 --- Set the indent and tab related numbers

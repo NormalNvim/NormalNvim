@@ -419,8 +419,8 @@ maps.n["[t"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
 
 -- zen mode
 if is_available "zen-mode.nvim" then
-  maps.n["<leader>bz"] =
-  { function() vim.cmd "ZenMode" end, desc = "Zen mode" }
+  maps.n["<leader>uz"] =
+  { function() ui.toggle_zen_mode() end, desc = "Zen mode" }
 end
 
 -- ui toggles [ui ]---------------------------------------------------------
