@@ -59,6 +59,7 @@ local get_icon = utils.get_icon
 local is_available = utils.is_available
 local ui = require "base.utils.ui"
 local maps = require("base.utils").empty_map_table()
+local android = vim.fn.isdirectory('/system') == 1   -- true if on android
 
 -- -------------------------------------------------------------------------
 --
@@ -114,12 +115,17 @@ maps.n["<Tab>"] = {
 }
 
 -- clipboard ---------------------------------------------------------------
--- only useful when the option 'clipboard' is commented on ./1-options.lua
-maps.n["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
-maps.x["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
-maps.n["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
-maps.x["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
-maps.n["<C-p>"] = { '"+p<esc>', desc = "Paste from cliboard" }
+
+-- BUG: We disable these mappings on termux by default because <C-y>
+--      is the keycode for scrolling, and remapping it would break it.
+if not android then
+  -- only useful when the option clipboard is commented on ./1-options.lua
+  maps.n["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
+  maps.x["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
+  maps.n["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
+  maps.x["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
+  maps.n["<C-p>"] = { '"+p<esc>', desc = "Paste from cliboard" }
+end
 
 -- Make 'c' key not copy to clipboard when changing a character.
 maps.n["c"] = { '"_c', desc = "Change without yanking" }
