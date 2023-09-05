@@ -426,32 +426,32 @@ end
 -- ui toggles [ui ]---------------------------------------------------------
 maps.n["<leader>u"] = icons.u
 if is_available "nvim-autopairs" then
-  maps.n["<leader>ua"] = { ui.toggle_autopairs, desc = "Toggle autopairs" }
+  maps.n["<leader>ua"] = { ui.toggle_autopairs, desc = "Autopairs" }
 end
-maps.n["<leader>ub"] = { ui.toggle_background, desc = "Toggle background" }
+maps.n["<leader>ub"] = { ui.toggle_background, desc = "Background" }
 if is_available "nvim-cmp" then
-  maps.n["<leader>uc"] = { ui.toggle_cmp, desc = "Toggle autocompletion" }
+  maps.n["<leader>uc"] = { ui.toggle_cmp, desc = "Autocompletion" }
 end
 if is_available "nvim-colorizer.lua" then
   maps.n["<leader>uC"] =
-  { "<cmd>ColorizerToggle<cr>", desc = "Toggle color highlight" }
+  { "<cmd>ColorizerToggle<cr>", desc = "color highlight" }
 end
-maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "Toggle diagnostics" }
+maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "Diagnostics" }
 maps.n["<leader>uD"] = { ui.set_indent, desc = "Change indent setting" }
-maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Toggle signcolumn" }
-maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Toggle statusline" }
-maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "Toggle CodeLens" }
+maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Signcolumn" }
+maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Statusline" }
+maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "CodeLens" }
 maps.n["<leader>un"] = { ui.change_number, desc = "Change line numbering" }
 maps.n["<leader>uN"] =
-{ ui.toggle_ui_notifications, desc = "Toggle UI notifications" }
-maps.n["<leader>up"] = { ui.toggle_paste, desc = "Toggle paste mode" }
-maps.n["<leader>us"] = { ui.toggle_spell, desc = "Toggle spellcheck" }
-maps.n["<leader>uS"] = { ui.toggle_conceal, desc = "Toggle conceal" }
-maps.n["<leader>ut"] = { ui.toggle_tabline, desc = "Toggle tabline" }
-maps.n["<leader>uu"] = { ui.toggle_url_effect, desc = "Toggle URL highlight" }
-maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Toggle wrap" }
-maps.n["<leader>uy"] = { ui.toggle_buffer_syntax, desc = "Toggle syntax highlight (buffer)" }
-maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Toggle foldcolumn" }
+{ ui.toggle_ui_notifications, desc = "UI notifications" }
+maps.n["<leader>up"] = { ui.toggle_paste, desc = "Paste mode" }
+maps.n["<leader>us"] = { ui.toggle_spell, desc = "Spellcheck" }
+maps.n["<leader>uS"] = { ui.toggle_conceal, desc = "Conceal" }
+maps.n["<leader>ut"] = { ui.toggle_tabline, desc = "Tabline" }
+maps.n["<leader>uu"] = { ui.toggle_url_effect, desc = "URL highlight" }
+maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Wrap" }
+maps.n["<leader>uy"] = { ui.toggle_buffer_syntax, desc = "Syntax highlight (buffer)" }
+maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Foldcolumn" }
 maps.n["<leader>uA"] = {
   function()
     if vim.g.minianimate_disable then
@@ -460,7 +460,7 @@ maps.n["<leader>uA"] = {
       vim.g.minianimate_disable = true
     end
   end,
-  desc = "Toggle animations",
+  desc = "Animations",
 }
 
 -- fast movement (shifted) -------------------------------------------------
@@ -556,7 +556,7 @@ if is_available "Comment.nvim" then
   }
   maps.x["<leader>/"] = {
     "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
-    desc = "Toggle comment line",
+    desc = "comment line",
   }
 end
 
@@ -655,7 +655,7 @@ end
 
 -- neotree
 if is_available "neo-tree.nvim" then
-  maps.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Toggle neotree" }
+  maps.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "neotree" }
   maps.n["<leader>o"] = {
     function()
       if vim.bo.filetype == "neo-tree" then
@@ -664,7 +664,7 @@ if is_available "neo-tree.nvim" then
         vim.cmd.Neotree "focus"
       end
     end,
-    desc = "Toggle Neotree Focus",
+    desc = "Neotree Focus",
   }
 end
 
@@ -763,7 +763,7 @@ end
 if is_available "aerial.nvim" then
   maps.n["<leader>l"] = icons.l
   maps.n["<leader>lt"] =
-  { function() require("aerial").toggle() end, desc = "Toggle symbols tree" }
+  { function() require("aerial").toggle() end, desc = "Symbols tree" }
 end
 
 -- telescope.nvim [find] ----------------------------------------------------
@@ -930,11 +930,11 @@ if is_available "telescope.nvim" then
   if is_available "nvim-spectre" then
     maps.n["<leader>fr"] = {
       function() require("spectre").toggle() end,
-      desc = "Toggle find and replace word in project",
+      desc = "Find and replace word in project",
     }
     maps.n["<leader>fb"] = {
       function() require("spectre").toggle { path = vim.fn.expand "%:t:p" } end,
-      desc = "Toggle find and replace word in buffer",
+      desc = "Find and replace word in buffer",
     }
   end
 
@@ -980,7 +980,7 @@ if is_available "telescope.nvim" then
     }
     maps.n["<leader>mt"] = {
       function() vim.cmd "CompilerToggleResults" end,
-      desc = "Toggle compiler results",
+      desc = "compiler results",
     }
     maps.n["<F6>"] = {
       function() vim.cmd "CompilerOpen" end,
@@ -992,7 +992,7 @@ if is_available "telescope.nvim" then
     }
     maps.n["<S-F7>"] = {
       function() vim.cmd "CompilerToggleResults" end,
-      desc = "Toggle compiler resume",
+      desc = "compiler resume",
     }
   end
 
@@ -1011,7 +1011,7 @@ if is_available "toggleterm.nvim" then
     "<cmd>ToggleTerm size=80 direction=vertical<cr>",
     desc = "Toggleterm vertical split",
   }
-  maps.n["<F7>"] = { "<cmd>ToggleTerm<cr>", desc = "Toggle terminal" }
+  maps.n["<F7>"] = { "<cmd>ToggleTerm<cr>", desc = "terminal" }
   maps.t["<F7>"] = maps.n["<F7>"]
   maps.n["<C-'>"] = maps.n["<F7>"] -- requires terminal that supports binding <C-'>
   maps.t["<C-'>"] = maps.n["<F7>"] -- requires terminal that supports binding <C-'>
@@ -1065,7 +1065,7 @@ if is_available "nvim-dap" then
   -- Space + d
   maps.n["<leader>db"] = {
     function() require("dap").toggle_breakpoint() end,
-    desc = "Toggle Breakpoint (F9)",
+    desc = "Breakpoint (F9)",
   }
   maps.n["<leader>dB"] = {
     function() require("dap").clear_breakpoints() end,
@@ -1100,7 +1100,7 @@ if is_available "nvim-dap" then
   maps.n["<leader>dr"] =
     { function() require("dap").restart_frame() end, desc = "Restart (C-F5)" }
   maps.n["<leader>dR"] =
-    { function() require("dap").repl.toggle() end, desc = "Toggle REPL" }
+    { function() require("dap").repl.toggle() end, desc = "REPL" }
   maps.n["<leader>ds"] =
     { function() require("dap").run_to_cursor() end, desc = "Run To Cursor" }
 
@@ -1116,7 +1116,7 @@ if is_available "nvim-dap" then
     maps.x["<leader>dE"] =
       { function() require("dapui").eval() end, desc = "Evaluate Input" }
     maps.n["<leader>du"] =
-      { function() require("dapui").toggle() end, desc = "Toggle Debugger UI" }
+      { function() require("dapui").toggle() end, desc = "Debugger UI" }
     maps.n["<leader>dh"] = {
       function() require("dap.ui.widgets").hover() end,
       desc = "Debugger Hover",
@@ -1165,7 +1165,7 @@ if is_available "nvim-coverage" then
       require("coverage").load(false)
       require("coverage").summary()
     end,
-    desc = "Toggle Coverage",
+    desc = "Coverage",
   }
 end
 

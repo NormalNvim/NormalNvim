@@ -212,7 +212,7 @@ M.on_attach = function(client, bufnr)
     then
       add_buffer_autocmd("lsp_auto_format", bufnr, {
         events = "BufWritePre",
-        desc = "autoformat on save",
+        desc = "Autoformat on save",
         callback = function()
           if not M.has_capability("textDocument/formatting", { bufnr = bufnr }) then
             del_buffer_autocmd("lsp_auto_format", bufnr)
@@ -227,11 +227,11 @@ M.on_attach = function(client, bufnr)
       })
       lsp_mappings.n["<leader>uf"] = {
         function() require("base.utils.ui").toggle_buffer_autoformat() end,
-        desc = "Toggle autoformatting (buffer)",
+        desc = "Autoformatting (buffer)",
       }
       lsp_mappings.n["<leader>uF"] = {
         function() require("base.utils.ui").toggle_autoformat() end,
-        desc = "Toggle autoformatting (global)",
+        desc = "Autoformatting (global)",
       }
     end
   end
@@ -306,7 +306,7 @@ M.on_attach = function(client, bufnr)
       if vim.b.inlay_hints_enabled then vim.lsp.inlay_hint(bufnr, true) end
       lsp_mappings.n["<leader>uH"] = {
         function() require("base.utils.ui").toggle_buffer_inlay_hints(bufnr) end,
-        desc = "Toggle LSP inlay hints (buffer)",
+        desc = "LSP inlay hints (buffer)",
       }
     end
   end
@@ -346,7 +346,7 @@ M.on_attach = function(client, bufnr)
       vim.b[bufnr].semantic_tokens_enabled = true
       lsp_mappings.n["<leader>uY"] = {
         function() require("base.utils.ui").toggle_buffer_semantic_tokens(bufnr) end,
-        desc = "Toggle LSP semantic highlight (buffer)",
+        desc = "LSP semantic highlight (buffer)",
       }
     else
       client.server_capabilities.semanticTokensProvider = nil
