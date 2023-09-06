@@ -13,13 +13,7 @@ _G.base = {}
 -- Theme
 base.default_colorscheme = "tokyonight-night"
 
--- append/remove
-vim.opt.viewoptions:remove "curdir" -- Disable saving current directory with views.
-vim.opt.shortmess:append { s = true, I = true } -- disable startup message.
-vim.opt.backspace:append { "nostop" } -- Don't stop backspace at insert.
-vim.opt.diffopt:append "linematch:60" -- Enable linematch diff algorithm.
-
--- define variables
+-- define variables -----------------------------------------------------------
 local options = {
   opt = {
     -- Defaults
@@ -67,7 +61,6 @@ local options = {
     swapfile = false, -- Ask what state to recover when opening a file that was not saved.
     wrap = true, -- Disable wrapping of lines longer than the width of window.
     colorcolumn = "80", -- PEP8 like character limit vertical bar.
-    mouse = "a", -- Enable mouse support.
     mousescroll = "ver:1,hor:0", -- Disables hozirontal scroll in neovim.
     guicursor = "n:blinkon200,i-ci-ve:ver25", -- Enable cursor blink.
     autochdir = true, -- Use current file dir as working dir (See project.nvim).
@@ -94,7 +87,23 @@ local options = {
   t = vim.t.bufs and vim.t.bufs or { bufs = vim.api.nvim_list_bufs() }, -- initialize buffers for the current tab.
 }
 
--- set variables
+-- extra logic ----------------------------------------------------------------
+local android = vim.fn.isdirectory('/system') == 1   -- true if on android
+
+-- mouse mode
+if android then
+  vim.opt.mouse = "v"
+else
+  vim.opt.mouse = "a"
+end
+
+-- append/remove
+vim.opt.viewoptions:remove "curdir" -- Disable saving current directory with views.
+vim.opt.shortmess:append { s = true, I = true } -- disable startup message.
+vim.opt.backspace:append { "nostop" } -- Don't stop backspace at insert.
+vim.opt.diffopt:append "linematch:60" -- Enable linematch diff algorithm.
+
+-- apply variables ------------------------------------------------------------
 for scope, table in pairs(options) do
   for setting, value in pairs(table) do
     vim[scope][setting] = value
