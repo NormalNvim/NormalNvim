@@ -18,6 +18,7 @@
 --       -> 8. Effect: Flash on yank.
 --       -> 9. Customize right click contextual menu.
 --       -> 10. Unlist quickfix buffers if the filetype changes.
+--       -> 11. Terminal always on insert mode
 --
 --       ## COMMANDS
 --       -> 11. Nvim updater commands.
@@ -125,30 +126,34 @@ if is_available "alpha-nvim" then
     desc = "Start Alpha only when nvim is opened with no arguments",
     group = alpha_group,
     callback = function()
-      local should_skip = false
-      if
-        vim.fn.argc() > 0
-        or vim.fn.line2byte(vim.fn.line "$") ~= -1
-        or not vim.o.modifiable
-      then
-        should_skip = true
-      else
-        for _, arg in pairs(vim.v.argv) do
-          if
-            arg == "-b"
-            or arg == "-c"
-            or vim.startswith(arg, "+")
-            or arg == "-S"
-          then
-            should_skip = true
-            break
-          end
+      -- Precalculate conditions.
+      local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)
+      local buf_not_empty = vim.fn.argc() > 0
+      or #lines > 1
+      or (#lines == 1 and lines[1]:len() > 0)
+      local buflist_not_empty = #vim.tbl_filter(
+        function(bufnr) return vim.bo[bufnr].buflisted end,
+        vim.api.nvim_list_bufs()
+      ) > 1
+      local buf_not_modifiable = not vim.o.modifiable
+
+      -- Return instead of opening alpha if any of these conditions happen.
+      if buf_not_modifiable or buf_not_empty or buflist_not_empty then
+        return
+      end
+      for _, arg in pairs(vim.v.argv) do
+        if arg == "-b"
+          or arg == "-c"
+          or vim.startswith(arg, "+")
+          or arg == "-S"
+        then
+          return
         end
       end
-      if not should_skip then
-        require("alpha").start(true, require("alpha").default_config)
-        vim.schedule(function() vim.cmd.doautocmd "FileType" end)
-      end
+
+      -- All good? Show alpha.
+      require("alpha").start(true, require("alpha").default_config)
+      vim.schedule(function() vim.cmd.doautocmd "FileType" end)
     end,
   })
 end
@@ -271,8 +276,6 @@ autocmd("FileType", {
   callback = function() vim.opt_local.buflisted = false end,
 })
 
-
-
 -- ## COMMANDS --------------------------------------------------------------
 -- 11. Nvim updater commands
 cmd(
@@ -370,4 +373,3 @@ cmd("Swd", function()
   vim.cmd ":cd %:p:h"
   vim.cmd ":pwd"
 end, { desc = "cd current file's directory" })
-
