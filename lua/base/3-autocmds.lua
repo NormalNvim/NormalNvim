@@ -18,7 +18,6 @@
 --       -> 8. Effect: Flash on yank.
 --       -> 9. Customize right click contextual menu.
 --       -> 10. Unlist quickfix buffers if the filetype changes.
---       -> 11. Terminal always on insert mode
 --
 --       ## COMMANDS
 --       -> 11. Nvim updater commands.
