@@ -138,7 +138,7 @@ return {
   --  [mergetool]
   --  	keepBackup = false
   {
-    "https://github.com/tpope/vim-fugitive",
+    "tpope/vim-fugitive",
     enabled = vim.fn.executable "git" == 1,
     dependencies = { "tpope/vim-rhubarb" },
     cmd = {
@@ -590,7 +590,7 @@ return {
       {
         "jay-babu/mason-nvim-dap.nvim",
         "jbyuki/one-small-step-for-vimkind",
-        "https://github.com/mfussenegger/nvim-jdtls",
+        "mfussenegger/nvim-jdtls",
         dependencies = { "nvim-dap" },
         cmd = { "DapInstall", "DapUninstall" },
         opts = { handlers = {} },
