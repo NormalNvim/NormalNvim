@@ -403,7 +403,11 @@ end
 function M.unique_path(opts)
   opts = extend_tbl({
     buf_name = function(bufnr)
-      return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":t")
+      if vim.api.nvim_buf_is_valid(bufnr) then
+        return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ":t")
+      else
+        return ""
+      end
     end,
     bufnr = 0,
     max_length = 16,
