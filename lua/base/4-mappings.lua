@@ -1213,8 +1213,8 @@ if is_available "markdown-preview.nivm" or is_available "markmap.nvim" or is_ava
   -- Markdown Mindmap
   if is_available "markmap.nvim" then
     maps.n["<leader>Dm"] = {
-      function() vim.cmd "MarkmapOpen" end,
-      desc = "Markmap",
+      function() vim.cmd "MarkmapWatch" end,
+      desc = "Markmap watch",
     }
   end
 
