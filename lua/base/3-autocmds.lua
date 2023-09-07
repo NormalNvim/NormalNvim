@@ -136,7 +136,7 @@ if is_available "alpha-nvim" then
       ) > 1
       local buf_not_modifiable = not vim.o.modifiable
 
-      -- Return instead of opening alpha if any of these conditions happen.
+      -- Return instead of opening alpha if any of these conditions occur.
       if buf_not_modifiable or buf_not_empty or buflist_not_empty then
         return
       end
