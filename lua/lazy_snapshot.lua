@@ -11,7 +11,7 @@ return {
   { "Zeioth/NormalSnippets", commit = "e91dbace3e221ee58de39d852c93ceca166f05c3" },
   { "Zeioth/compiler.nvim", commit = "df9eaba5458f10941b5a3037eb8d423139ac92d3" },
   { "Zeioth/dooku.nvim", commit = "41a7ed37411d9dce618bcc6bb6690a9cf14eef54" },
-  { "Zeioth/markmap.nvim", commit = "bd51a6f7dbd4b12b0ccbf0fbdbf5845caeb8f1c7" },
+  { "Zeioth/markmap.nvim", commit = "cc40aeb83490c40def463dbb23cc4e7a17716582" },
   { "Zeioth/project.nvim", commit = "3d30a4ddaf0f0c30892fb2f36fa4669499d7e6db" },
   { "Zeioth/tokyonight.nvim", version = "^1" },
   { "akinsho/toggleterm.nvim", version = "^2" },
