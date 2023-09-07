@@ -13,7 +13,7 @@ return {
   { "Zeioth/dooku.nvim", commit = "41a7ed37411d9dce618bcc6bb6690a9cf14eef54" },
   { "Zeioth/markmap.nvim", commit = "a5b4885deffb796705bedf5f66df5256b554b9a1" },
   { "Zeioth/project.nvim", commit = "3d30a4ddaf0f0c30892fb2f36fa4669499d7e6db" },
-  { "Zeioth/tokyonight.nvim", commit = "c3daab268a2c14623b0e461ad651165c8f5d8335" },
+  { "Zeioth/tokyonight.nvim", version = "^1" },
   { "akinsho/toggleterm.nvim", version = "^2" },
   { "andymass/vim-matchup", commit = "582cbc8c2dc311deb7a03f7d505d52544c36d4b6" },
   { "andythigpen/nvim-coverage", commit = "4634dfb00961a86948518c7e6f85737c24364308" },
