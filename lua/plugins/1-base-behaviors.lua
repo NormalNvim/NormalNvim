@@ -210,24 +210,24 @@ return {
       local session_manager = require('session_manager')
       session_manager.setup(opts)
 
-      -- Auto save session only on write buffer.
-      -- This avoid inconsistencies when closing multiple instances of the same session.
+      -- Auto save session
       local augroup = vim.api.nvim_create_augroup
       local autocmd = vim.api.nvim_create_autocmd
-      autocmd({ 'BufWritePre' }, {
-        group = augroup("session_manager_autosave_on_write", { clear = true }),
+      autocmd({ 'VimLeavePre' }, {
+        group = augroup("session_manager_save_session", { clear = true }),
         callback = function ()
-          if vim.bo.filetype ~= 'git' and
-             not vim.bo.filetype ~= 'gitcommit' and
-             not vim.bo.filetype ~= 'gitrebase'
-          then
-            -- Important: Be aware the next line will close anything non-buffer,
-            -- (notifications, neotree, aerial...)
-            -- because saving that stuff would break the GUI on restore.
-            -- If this is important to you, use the event 'VimLeavePre' instead.
-            -- But doing so, your session won't be saved on power loss.
-            session_manager.save_current_session()
-          end
+          -- Important: Be aware the next line will close anything non-buffer,
+          -- (notifications, neotree, aerial, diffs...)
+          -- because saving that stuff would break the GUI on restore.
+          --
+          -- That's why we don't trigger it on BufWritePre.
+          -- But you might want to if:
+          -- * you suffer from frecuent power loss.
+          -- * you often edit the same files in different nvim sessions
+          --   and want to ensure session consistency.
+          --
+          -- Please consider sending a PR to neovim-session-manager.
+          session_manager.save_current_session()
         end
       })
     end
