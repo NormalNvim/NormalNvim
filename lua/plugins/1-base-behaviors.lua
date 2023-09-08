@@ -24,7 +24,8 @@
 
 -- import custom icons
 local get_icon = require("base.utils").get_icon
-local windows = vim.fn.has('win32') == 1 -- true if on windows
+local windows = vim.fn.has('win32') == 1             -- true if on windows
+local android = vim.fn.isdirectory('/system') == 1   -- true if on android
 
 -- configures plugins
 return {
@@ -41,10 +42,21 @@ return {
     "kevinhwang91/rnvimr",
     cmd = { "RnvimrToggle" },
     enabled = not windows,
-    init = function()
-      -- vim.g.rnvimr_vanilla = 1 → Often solves issues in your ranger config.
-      vim.g.rnvimr_enable_picker = 1         -- if 1, will close rnvimr after choosing a file.
-      vim.g.rnvimr_ranger_cmd = { "ranger" } -- by using a shell script like TERM=foot ranger "$@" we can open terminals inside ranger.
+    config = function(_, opts)
+      -- vim.g.rnvimr_vanilla = 1            -- Often solves issues in your ranger config.
+      vim.g.rnvimr_enable_picker = 1         -- Close rnvimr after choosing a file.
+      vim.g.rnvimr_ranger_cmd = { "ranger" } -- By passing a script like TERM=foot ranger "$@" you can open terminals inside ranger.
+      if android then -- Open on full screenn
+        vim.g.rnvimr_layout = {
+          relative = "editor",
+          width = 200,
+          height = 100,
+          col = 0,
+          row = 0,
+          style = "minimal",
+        }
+      end
+      require("project_nvim").setup(opts)
     end,
   },
 
