@@ -445,9 +445,9 @@ return {
       local augroup = vim.api.nvim_create_augroup
       local baseevent = utils.event
 
-      -- 0. Apply colors defined above to heirline
+      -- 0. Apply colors defined above to heirline after applying a theme
       local heirline_group = augroup("Heirline", { clear = true })
-      autocmd("User", {
+      autocmd("ColorScheme", {
         group = heirline_group,
         desc = "Refresh heirline colors",
         callback = function()
