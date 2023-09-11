@@ -202,16 +202,16 @@ return {
       session_manager.setup(opts)
 
       -- Auto save session
-      vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
+      vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
         group = vim.api.nvim_create_augroup(
           "session_manager_save_session", { clear = true }),
         callback = function ()
-          -- BUG: Don't change the autocmd event until this neovim bug is fixed
-          -- https://github.com/neovim/neovim/issues/12242
-          if vim.bo.filetype ~= 'git'
-          and not vim.bo.filetype ~= 'gitcommit'
-          and not vim.bo.filetype ~= 'gitrebase'
-          then session_manager.autosave_session() end
+          -- BUG: Before saving your session we close anything non-buffer:
+          --      neotree, mergetool, aerial...
+          --
+          --      This is currently necessary due to this neovim bug.
+          --      https://github.com/neovim/neovim/issues/12242
+          session_manager.save_current_session()
         end
       })
     end
