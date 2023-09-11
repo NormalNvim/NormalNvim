@@ -185,15 +185,6 @@ return {
 
   -- Session management [session]
   -- https://github.com/Shatur/neovim-session-manager
-  -- This plugin save your session when you write a buffer.
-  -- It also display a Telescope menu to restore saved sessions.
-  -- Sessions are saved by directory.
-  --
-  -- If you prefer to manually manage sessions using <space>S
-  -- you can disable autosaving sessions here.
-  --
-  -- If you prefer to load the last session automatically when opening nvim,
-  -- you can delete all settings and just set "lazy = false".
   {
     "Shatur/neovim-session-manager",
     event = "User BaseFile",
@@ -201,9 +192,9 @@ return {
     opts = function()
       local config = require('session_manager.config')
       return {
-        autoload_mode = config.AutoloadMode.Disabled,                        -- Do not autoload on startup.
-        autosave_last_session = false,                                       -- Don't auto save session on exit vim.
-        autosave_only_in_session = false,                                    -- We allow overriding sessions.
+        autoload_mode = config.AutoloadMode.Disabled,
+        autosave_last_session = false,
+        autosave_only_in_session = false,
       }
     end,
     config = function(_, opts)
@@ -211,22 +202,12 @@ return {
       session_manager.setup(opts)
 
       -- Auto save session
-      local augroup = vim.api.nvim_create_augroup
-      local autocmd = vim.api.nvim_create_autocmd
-      autocmd({ 'VimLeavePre' }, {
-        group = augroup("session_manager_save_session", { clear = true }),
+      vim.api.nvim_create_autocmd({ 'VimLeavePre' }, {
+        group = vim.api.nvim_create_augroup(
+          "session_manager_save_session", { clear = true }),
         callback = function ()
-          -- Important: Be aware the next line will close anything non-buffer,
-          -- (notifications, neotree, aerial, diffs...)
-          -- because saving that stuff would break the GUI on restore.
-          --
-          -- That's why we don't trigger it on BufWritePre.
-          -- But you might want to if:
-          -- * you suffer from frecuent power loss.
-          -- * you often edit the same files in different nvim sessions
-          --   and want to ensure session consistency.
-          --
-          -- Please consider sending a PR to neovim-session-manager.
+          -- BUG: Don't change the autocmd event until this neovim bug is fixed
+          -- https://github.com/neovim/neovim/issues/12242
           session_manager.save_current_session()
         end
       })
