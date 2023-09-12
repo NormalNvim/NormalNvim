@@ -165,13 +165,13 @@ function M.get_hlgroup(name, fallback)
   return fallback or {}
 end
 
---- Serve a notification with a title of Nvim.
+--- Serve a notification with a title of Neovim.
 ---@param msg string The notification body.
 ---@param type number|nil The type of the notification (:help vim.log.levels).
 ---@param opts? table The nvim-notify options to use (:help notify-options).
 function M.notify(msg, type, opts)
   vim.schedule(function() vim.notify(
-    msg, type, M.extend_tbl({ title = "Nvim" }, opts)) end)
+    msg, type, M.extend_tbl({ title = "Neovim" }, opts)) end)
 end
 
 --- Trigger an internal NormalNvim event.
