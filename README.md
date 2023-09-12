@@ -65,7 +65,7 @@ __You are expected to fork the project before cloning it. So you are the only on
 | **:NvimUpdateConfig** | Pulls the latest changes from the current git repository of your nvim config. Useful to keep your config fresh when you use it in more than one machine. If the updates channel is `stable` this command will pull from the latest available tag release in your github repository. Only tag releases starting by 'v', such as v1.0.0 are recognized. It is also possible to define an specific stable version in `2-lazy.lua` by setting the option `stable_vesion_release`. If the channel is `nightly` it will pull from the nightly branch. Note that uncommited local changes in your config will be lost after an update, so it's important you commit before updating your distro config. |
 | **:NvimUpdatePlugins** | Uses lazy to update the plugins. |
 | **:NvimVersion** | Prints the commit number of the current NormalNvim version. |
-| **:CloseNotificaitons** | Dismiss all notifications. This is automatically triggered by default when writting a buffer. |
+| **:CloseNotificaitons** | Close all notifications. This is automatically triggered by default when writting a buffer. |
 
 For more info, [read the wiki](https://github.com/Zeioth/NormalNvim/wiki).
 
