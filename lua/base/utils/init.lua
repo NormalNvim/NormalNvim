@@ -12,7 +12,6 @@
 --      -> get_spinner           → Like the former but for animated iconns.
 --      -> get_hlgroup           → Get highlight properties a highlight name.
 --      -> notify                → Send a notification asynchronously.
---      -> close_notifications   → Close all notifications.
 --      -> event                 → Manually emit a system event.
 --      -> system_open           → Open the file or URL under the cursor.
 --      -> toggle_term_cmd       → get/set a re-usable toggleterm session.
@@ -173,16 +172,6 @@ end
 function M.notify(msg, type, opts)
   vim.schedule(function() vim.notify(
     msg, type, M.extend_tbl({ title = "Neovim" }, opts)) end)
-end
-
--- Close all notifications
-function M.close_notifications()
-  local windows = vim.fn.getwininfo()
-  for _, window in ipairs(windows) do
-    if window.popup == 1 then
-      vim.api.nvim_win_close(window.winid, true)
-    end
-  end
 end
 
 --- Trigger an internal NormalNvim event.
