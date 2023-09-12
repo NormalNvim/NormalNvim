@@ -31,7 +31,7 @@ return {
     "Zeioth/tokyonight.nvim",
     event = "User LoadColorSchemes",
     opts = {
-      dim_inactive = true, -- dim inactive windows
+      dim_inactive = false, -- dim inactive windows
     },
   },
 
@@ -606,7 +606,7 @@ return {
             entry_format = "󰣜 #$ID, $STAT, $TIME",
             layout_strategy = "horizontal",
             layout_config = {
-              preview_width = 0.70,
+              preview_width = 0.65,
             },
             mappings = {
               i = {
