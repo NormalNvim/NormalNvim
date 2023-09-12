@@ -18,10 +18,11 @@
 --       -> 8. Effect: Flash on yank.
 --       -> 9. Customize right click contextual menu.
 --       -> 10. Unlist quickfix buffers if the filetype changes.
+--       -> 11. Dismiss all notifications on BufWritePre
 --
 --       ## COMMANDS
---       -> 11. Nvim updater commands.
---       -> 12. Neotest commands.
+--       -> 12. Nvim updater commands.
+--       -> 13. Neotest commands.
 --       ->     Extra commands.
 
 local augroup = vim.api.nvim_create_augroup
@@ -275,8 +276,22 @@ autocmd("FileType", {
   callback = function() vim.opt_local.buflisted = false end,
 })
 
+-- 11. Dismiss all notifications on BufWritePre.
+autocmd("BufWritePre", {
+  desc = "Dismiss all notifications on BufWritePre",
+  group = augroup("clear_notifications_on_bufwrite", { clear = true }),
+  callback = function()
+    local windows = vim.fn.getwininfo()
+    for _, window in ipairs(windows) do
+        if window.popup == 1 then
+            vim.api.nvim_win_close(window.winid, true)
+        end
+    end
+  end,
+})
+
 -- ## COMMANDS --------------------------------------------------------------
--- 11. Nvim updater commands
+-- 12. Nvim updater commands
 cmd(
   "NvimChangelog",
   function() require("base.utils.updater").changelog() end,
@@ -317,7 +332,7 @@ cmd(
   { desc = "Reload Nvim without closing it (Experimental)" }
 )
 
--- 12. Neotest commands
+-- 13. Neotest commands
 -- Neotest doesn't implement commands by default, so we do it here.
 -------------------------------------------------------------------
 cmd(
