@@ -42,7 +42,7 @@ NormalNvim will connect to the internet the first time you open it to download t
 * 🔒 **Plugin version lock:** You can choose "stable" or "nightly" update channels. Or if you prefer, use :NvimFreezePluginVersions to create your own stable versions!
 * 🔙 **Rollbacks:** You can easily recover from a nvim distro update using :NvimRollbackRestore
 * 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
-* 📱 **Phone friendly:** You can also install on your phone with Android Termux. Did you eved have a compiler in your pocket? 😉
+* 📱 **Phone friendly:** You can also install it on Android Termux. Did you ever have a compiler in your pocket? 😉
 * ⌨️ **Alternative mappings:** By default the distro uses qwerty, but colemak-dh can be found [here](https://github.com/Zeioth/NormalNvim/wiki/colemak-dh).
 * ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. We will never [hide or abstract](https://i.imgur.com/FCiZvp2.png) stuff from you.
 
