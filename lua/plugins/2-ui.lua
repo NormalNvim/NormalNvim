@@ -31,7 +31,7 @@ return {
     "Zeioth/tokyonight.nvim",
     event = "User LoadColorSchemes",
     opts = {
-      dim_inactive = true, -- dim inactive windows
+      dim_inactive = false, -- dim inactive windows
     },
   },
 
