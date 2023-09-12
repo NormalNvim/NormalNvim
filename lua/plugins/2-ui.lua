@@ -113,8 +113,7 @@ return {
       --   [[ \/_/\/_/\/__/    \/_/\/_/\/_/\/_/]],
       -- }
 
-      if android then
-      dashboard.section.header.val = {
+      if android then dashboard.section.header.val = {
         [[         __                ]],
         [[ __  __ /\_\    ___ ___    ]],
         [[/\ \/\ \\/\ \ /' __` __`\  ]],
@@ -122,8 +121,7 @@ return {
         [[ \ \___/  \ \_\ \_\ \_\ \_\]],
         [[  \/__/    \/_/\/_/\/_/\/_/]],
        }
-      else
-      dashboard.section.header.val = {
+      else dashboard.section.header.val = {
 [[888b      88                                                           88]],
 [[8888b     88                                                           88]],
 [[88 `8b    88                                                           88]],
@@ -138,7 +136,6 @@ return {
                  [[                    /\ \/\ \ \ \_/ |\ \ \/\ \/\ \/\ \ ]],
                  [[                    \ \_\ \_\ \___/  \ \_\ \_\ \_\ \_\]],
                  [[                     \/_/\/_/\/__/    \/_/\/_/\/_/\/_/]],
-
       }
       end
 
@@ -241,6 +238,19 @@ return {
       options = { border = "top", try_as_border = true },
       symbol = "▏",
     },
+    config = function(_, opts)
+      require("mini.indentscope").setup(opts)
+
+      -- Disable for certain filetypes
+      vim.api.nvim_create_autocmd({ "User AlphaReady" }, {
+        desc = "Disable indentscope for certain filetypes",
+        callback = function()
+            if vim.bo.filetype == "alpha" then
+              vim.b.miniindentscope_disable = true
+            end
+        end,
+      })
+    end
   },
 
   --  heirline [statusbar]
