@@ -592,7 +592,7 @@ return {
   --  hop.nvim [go to word visually]
   --  https://github.com/phaazon/hop.nvim
   {
-    "phaazon/hop.nvim",
+    "smoka7/hop.nvim",
     cmd = { "HopWord" },
     opts = { keys = "etovxqpdygfblzhckisuran" },
     config = function(_, opts)
