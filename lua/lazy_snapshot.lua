@@ -84,5 +84,5 @@ return {
   { "williamboman/mason-lspconfig.nvim", version = "^2" },
   { "williamboman/mason.nvim", version = "^1" },
   { "windwp/nvim-autopairs", commit = "defad64afbf19381fe31488a7582bbac421d6e38" },
-  { "windwp/nvim-ts-autotag", commit = "6be1192965df35f94b8ea6d323354f7dc7a557e4" },
+  { "windwp/nvim-ts-autotag", commit = "6be1192965df35f94b8ea6d323354f7dc7a557e4" }
 }
