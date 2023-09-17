@@ -280,7 +280,9 @@ autocmd("FileType", {
 autocmd("BufWritePre", {
   desc = "Close all notifications on BufWritePre",
   group = augroup("close_notifications_on_bufwrite", { clear = true }),
-  callback = function() require("notify").dismiss() end,
+  callback = function()
+    require("notify").dismiss({pending = true, silent = true})
+  end,
 })
 
 -- ## COMMANDS --------------------------------------------------------------
@@ -382,5 +384,6 @@ cmd("Swd", function()
 end, { desc = "cd current file's directory" })
 
 -- Close all notifications
-cmd("CloseNotifications", function() require("notify").dismiss()
+cmd("CloseNotifications", function()
+  require("notify").dismiss({pending = true, silent = true})
 end, { desc = "Dismiss all notifications" })
