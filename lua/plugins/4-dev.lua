@@ -232,7 +232,7 @@ return {
 
   --  [markdown markmap]
   --  https://github.com/Zeioth/markmap.nvim
-  --  Note: If you change the build command, wipe ~/.local/data/nvim/lazy
+  --  Important: Make sure you have yarn in your PATH before running markmap.
   {
     "Zeioth/markmap.nvim",
     build = "yarn global add markmap-cli",
@@ -326,7 +326,7 @@ return {
       --     { "display_duration", detail_level = 2 },
       --     "on_output_summarize",
       --     "on_exit_set_status",
-      --     "on_complete_notify",
+      --     --"on_complete_notify",
       --     "on_complete_dispose",
       --   },
       -- },

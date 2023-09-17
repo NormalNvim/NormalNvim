@@ -222,7 +222,6 @@ return {
   -- It doesn't have ctrl-z so please always commit before using it.
   {
     "nvim-pack/nvim-spectre",
-    build = (windows and "") or "./build.sh nvim-oxi",
     cmd = "Spectre",
     opts = {
       default = {
@@ -233,7 +232,7 @@ return {
         },
         replace = {
           -- pick one of item in [ sed, oxi ]
-          cmd = (windows and "sed") or "oxi",
+          cmd = "sed"
         },
       },
       is_insert_mode = true, -- start open panel on is_insert_mode
