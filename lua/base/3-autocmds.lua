@@ -221,7 +221,7 @@ if is_available "nvim-dap" then
         -- Give enough time for jdt to fully load the project, or it will fail with
         -- "No LSP client found"
         local timer = 2500
-        for i = 0, 12, 1 do
+        for _ = 0, 12, 1 do
           vim.defer_fn(
             function()
               require("jdtls.dap").setup_dap_main_class_configs()
