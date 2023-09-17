@@ -31,8 +31,12 @@ return {
     "Zeioth/tokyonight.nvim",
     event = "User LoadColorSchemes",
     opts = {
-      dim_inactive = false, -- dim inactive windows
-    },
+      dim_inactive = false,
+      styles = {
+        comments = { italic = true },
+        keywords = { italic = true },
+      },
+    }
   },
 
   --  astrotheme [theme]
@@ -245,7 +249,7 @@ return {
       vim.api.nvim_create_autocmd({ "User AlphaReady" }, {
         desc = "Disable indentscope for certain filetypes",
         callback = function()
-          if vim.bo.filetype == "alpha" then
+          if vim.bo.filetype == "alpha" or vim.bo.filetype == "mason" then
             vim.b.miniindentscope_disable = true
           end
         end,
