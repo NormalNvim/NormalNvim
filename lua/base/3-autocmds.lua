@@ -24,7 +24,6 @@
 --       -> 12. Neotest commands.
 --       ->     Extra commands.
 
-local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local cmd = vim.api.nvim_create_user_command
 local utils = require "base.utils"
@@ -36,7 +35,6 @@ local is_available = utils.is_available
 --    but without increasing the startup time displayed in the greeter.
 autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
   desc = "Nvim user events for file detection (BaseFile and BaseGitFile)",
-  group = augroup("file_user_events", { clear = true }),
   callback = function(args)
     local empty_buffer = vim.fn.resolve(vim.fn.expand "%") == ""
     local greeter = vim.api.nvim_get_option_value("filetype", { buf = args.buf }) == "alpha"
@@ -49,7 +47,6 @@ autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
       -- Is the buffer part of a git repo?
       if git_repo then
         utils.event "GitFile" -- Emit event 'BaseGitFile'
-        vim.api.nvim_del_augroup_by_name "file_user_events"
       end
 
     end
@@ -57,10 +54,8 @@ autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
 })
 
 -- 2. Save/restore window layout when possible.
-local view_group = augroup("auto_view", { clear = true })
 autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {
   desc = "Save view with mkview for real files",
-  group = view_group,
   callback = function(args)
     if vim.b[args.buf].view_activated then
       vim.cmd.mkview { mods = { emsg_silent = true } }
@@ -69,7 +64,6 @@ autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {
 })
 autocmd("BufWinEnter", {
   desc = "Try to load file view if available and enable view saving for real files",
-  group = view_group,
   callback = function(args)
     if not vim.b[args.buf].view_activated then
       local filetype =
@@ -92,10 +86,8 @@ autocmd("BufWinEnter", {
 
 -- 3. Launch alpha greeter on startup
 if is_available "alpha-nvim" then
-  local alpha_group = augroup("alpha_settings", { clear = true })
   autocmd({ "User", "BufEnter" }, {
     desc = "Disable status and tablines for alpha",
-    group = alpha_group,
     callback = function(args)
       local is_filetype_alpha = vim.api.nvim_get_option_value(
         "filetype", { buf = 0 }) == "alpha"
@@ -123,7 +115,6 @@ if is_available "alpha-nvim" then
   })
   autocmd("VimEnter", {
     desc = "Start Alpha only when nvim is opened with no arguments",
-    group = alpha_group,
     callback = function()
       -- Precalculate conditions.
       local lines = vim.api.nvim_buf_get_lines(0, 0, 2, false)
@@ -160,7 +151,6 @@ end
 -- 4. Hot reload on config change.
 autocmd({ "BufWritePost" }, {
   desc = "When writing a buffer, :NvimReload if the buffer is a config file.",
-  group = augroup("reload_if_buffer_is_config_file", { clear = true }),
   callback = function()
     local filesThatTriggerReload = {
       vim.fn.stdpath "config" .. "lua/base/1-options.lua",
@@ -179,7 +169,6 @@ if is_available "neo-tree.nvim" then
   autocmd("TermClose", {
     pattern = { "*lazygit", "*gitui" },
     desc = "Refresh Neo-Tree git when closing lazygit/gitui",
-    group = augroup("neotree_git_refresh", { clear = true }),
     callback = function()
       local manager_avail, manager = pcall(require, "neo-tree.sources.manager")
       if manager_avail then
@@ -202,7 +191,6 @@ end
 if is_available "nvim-dap" then
   autocmd("BufRead", {
     desc = "On java files, start jdtls",
-    group = augroup("nvim_dap_java_jdtls", { clear = true }),
     callback = function()
       if vim.bo.filetype == "java" then
         local config = {
@@ -238,14 +226,12 @@ end
 -- 7. Effect: URL underline.
 autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   desc = "URL Highlighting",
-  group = augroup("HighlightUrl", { clear = true }),
   callback = function() utils.set_url_effect() end,
 })
 
 -- 8. Customize right click contextual menu.
 autocmd("VimEnter", {
   desc = "Disable right contextual menu warning message",
-  group = augroup("contextual_menu", { clear = true }),
   callback = function()
     -- Disable right click message
     vim.api.nvim_command [[aunmenu PopUp.How-to\ disable\ mouse]]
@@ -262,7 +248,6 @@ autocmd("VimEnter", {
 -- 9. Unlist quickfix buffers if the filetype changes.
 autocmd("FileType", {
   desc = "Unlist quickfist buffers",
-  group = augroup("unlist_quickfist", { clear = true }),
   pattern = "qf",
   callback = function() vim.opt_local.buflisted = false end,
 })
@@ -270,7 +255,6 @@ autocmd("FileType", {
 -- 10. Close all notifications on BufWritePre.
 autocmd("BufWritePre", {
   desc = "Close all notifications on BufWritePre",
-  group = augroup("close_notifications_on_bufwrite", { clear = true }),
   callback = function()
     require("notify").dismiss({pending = true, silent = true})
   end,

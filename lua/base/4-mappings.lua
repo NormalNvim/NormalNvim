@@ -497,7 +497,6 @@ maps.n["<S-PageUp>"] = {
 -- special cases -------------------------------------------------
 vim.api.nvim_create_autocmd("BufWinEnter", {
   desc = "Make q close help, man, quickfix, dap floats",
-  group = vim.api.nvim_create_augroup("q_close_windows", { clear = true }),
   callback = function(args)
     local buftype =
       vim.api.nvim_get_option_value("buftype", { buf = args.buf })
@@ -511,7 +510,6 @@ vim.api.nvim_create_autocmd("BufWinEnter", {
 })
 vim.api.nvim_create_autocmd("CmdwinEnter", {
   desc = "Make q close command history (q: and q?)",
-  group = vim.api.nvim_create_augroup("q_close_windows", { clear = true }),
   callback = function(args)
     vim.keymap.set(
       "n", "q", "<cmd>close<cr>",
