@@ -168,7 +168,7 @@ return {
       dashboard.config.layout[3].val =
           vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) } -- Above buttons
 
-      -- Disablel autocmd and return
+      -- Disable autocmd and return
       dashboard.config.opts.noautocmd = true
       return dashboard
     end,
