@@ -202,8 +202,6 @@ return {
 
       -- Auto save session
       vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-        group = vim.api.nvim_create_augroup(
-          "session_manager_save_session", { clear = true }),
         callback = function ()
           -- BUG: Before saving your session we close anything non-buffer:
           --      neotree, mergetool, aerial...

@@ -5,7 +5,7 @@
 
 --    Sections:
 --
---      -> nvim updater options  → choose your updates channed here.
+--      -> nvim updater options  → choose your updates channel here.
 --      -> extra behaviors       → extra stuff we add to lazy for better UX.
 --      -> assign spec           → if channel==stable, uses lazy_snatshot.lua
 --      -> setup using spec      → actual setup.
