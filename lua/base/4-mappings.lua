@@ -292,7 +292,11 @@ maps.n["<leader>C"] = { -- Close buffer keeping the window.
 -- maps.n["<leader>X"] = {
 --   function() require("base.utils.buffer").close(0, true) end,
 --   desc = "Force close buffer",
--- }
+--
+maps.n["<leader>ba"] = {
+  function() vim.cmd "wa" end,
+  desc = "Write all changed buffers",
+}
 maps.n["]b"] = {
   function()
     require("base.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1)
