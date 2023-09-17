@@ -15,14 +15,13 @@
 --
 --       ## COOL HACKS
 --       -> 7. Effect: URL underline.
---       -> 8. Effect: Flash on yank.
---       -> 9. Customize right click contextual menu.
---       -> 10. Unlist quickfix buffers if the filetype changes.
---       -> 11. Close all notifications on BufWritePre.
+--       -> 8. Customize right click contextual menu.
+--       -> 9. Unlist quickfix buffers if the filetype changes.
+--       -> 10. Close all notifications on BufWritePre.
 --
 --       ## COMMANDS
---       -> 12. Nvim updater commands.
---       -> 13. Neotest commands.
+--       -> 11. Nvim updater commands.
+--       -> 12. Neotest commands.
 --       ->     Extra commands.
 
 local augroup = vim.api.nvim_create_augroup
@@ -243,15 +242,7 @@ autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   callback = function() utils.set_url_effect() end,
 })
 
--- 8. Effect: Flash on yank.
-autocmd("TextYankPost", {
-  desc = "Highlight yanked text",
-  group = augroup("highlightyank", { clear = true }),
-  pattern = "*",
-  callback = function() vim.highlight.on_yank() end,
-})
-
--- 9. Customize right click contextual menu.
+-- 8. Customize right click contextual menu.
 autocmd("VimEnter", {
   desc = "Disable right contextual menu warning message",
   group = augroup("contextual_menu", { clear = true }),
@@ -268,7 +259,7 @@ autocmd("VimEnter", {
   end,
 })
 
--- 10. Unlist quickfix buffers if the filetype changes.
+-- 9. Unlist quickfix buffers if the filetype changes.
 autocmd("FileType", {
   desc = "Unlist quickfist buffers",
   group = augroup("unlist_quickfist", { clear = true }),
@@ -276,7 +267,7 @@ autocmd("FileType", {
   callback = function() vim.opt_local.buflisted = false end,
 })
 
--- 11. Close all notifications on BufWritePre.
+-- 10. Close all notifications on BufWritePre.
 autocmd("BufWritePre", {
   desc = "Close all notifications on BufWritePre",
   group = augroup("close_notifications_on_bufwrite", { clear = true }),
@@ -286,7 +277,7 @@ autocmd("BufWritePre", {
 })
 
 -- ## COMMANDS --------------------------------------------------------------
--- 12. Nvim updater commands
+-- 11. Nvim updater commands
 cmd(
   "NvimChangelog",
   function() require("base.utils.updater").changelog() end,
@@ -327,7 +318,7 @@ cmd(
   { desc = "Reload Nvim without closing it (Experimental)" }
 )
 
--- 13. Neotest commands
+-- 12. Neotest commands
 -- Neotest doesn't implement commands by default, so we do it here.
 -------------------------------------------------------------------
 cmd(

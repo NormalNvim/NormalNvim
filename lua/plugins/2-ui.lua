@@ -323,7 +323,10 @@ return {
           status.heirline.make_buflist(status.component.tabline_file_info()), -- component for each buffer tab
           status.component.fill { hl = { bg = "tabline_bg" } }, -- fill the rest of the tabline with background color
           { -- tab list
-            condition = function() return #vim.api.nvim_list_tabpages() >= 2 end, -- only show tabs if there are more than one
+            condition = function()
+              -- only show tabs if there are more than one
+              return #vim.api.nvim_list_tabpages() >= 2
+            end,
             status.heirline.make_tablist { -- component for each tab
               provider = status.provider.tabnr(),
               hl = function(self) return status.hl.get_attributes(status.heirline.tab_type(self, "tab"), true) end,
@@ -480,14 +483,9 @@ return {
       heirline.setup(opts)
 
       -- Autocmds --
-      local autocmd = vim.api.nvim_create_autocmd
-      local augroup = vim.api.nvim_create_augroup
-      local baseevent = utils.event
 
       -- 0. Apply colors defined above to heirline after applying a theme
-      local heirline_group = augroup("Heirline", { clear = true })
-      autocmd("ColorScheme", {
-        group = heirline_group,
+      vim.api.nvim_create_autocmd("ColorScheme", {
         desc = "Refresh heirline colors",
         callback = function()
           require("heirline.utils").on_colorscheme(setup_colors())
@@ -495,10 +493,8 @@ return {
       })
 
       -- 1. Update tabs when adding new buffers
-      local bufferline_group = augroup("bufferline", { clear = true })
-      autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
+      vim.api.nvim_create_autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
         desc = "Update buffers when adding new buffers",
-        group = bufferline_group,
         callback = function(args)
           local buf_utils = require "base.utils.buffer"
           if not vim.t.bufs then vim.t.bufs = {} end
@@ -513,14 +509,13 @@ return {
             vim.t.bufs = bufs
           end
           vim.t.bufs = vim.tbl_filter(buf_utils.is_valid, vim.t.bufs)
-          baseevent "BufsUpdated"
+          utils.event "BufsUpdated"
         end,
       })
 
       -- 2. Update tabs when deleting buffers
-      autocmd("BufDelete", {
+      vim.api.nvim_create_autocmd("BufDelete", {
         desc = "Update buffers when deleting buffers",
-        group = bufferline_group,
         callback = function(args)
           local removed
           for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
@@ -537,7 +532,7 @@ return {
             end
           end
           vim.t.bufs = vim.tbl_filter(require("base.utils.buffer").is_valid, vim.t.bufs)
-          if removed then baseevent "BufsUpdated" end
+          if removed then utils.event "BufsUpdated" end
           vim.cmd.redrawtabline()
         end,
       })
@@ -809,7 +804,8 @@ return {
 
   --  highlight-undo
   --  https://github.com/tzachar/highlight-undo.nvim
-  --  BUG: Currently only works for redo.
+  --  This plugin only flases on redo.
+  --  But we also have a autocmd to flash on undo.
   {
     "tzachar/highlight-undo.nvim",
     event = "VeryLazy",
@@ -821,7 +817,16 @@ return {
         { "n", "<C-r>", "redo", {} },
       },
     },
-    config = function(_, opts) require("highlight-undo").setup(opts) end,
+    config = function(_, opts)
+      require("highlight-undo").setup(opts)
+
+      -- Also flash on undo.
+      vim.api.nvim_create_autocmd("TextYankPost", {
+        desc = "Highlight yanked text",
+        pattern = "*",
+        callback = function() vim.highlight.on_yank() end,
+      })
+    end,
   },
 
   --  [on-screen keybindings]
