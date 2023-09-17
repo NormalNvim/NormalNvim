@@ -102,6 +102,8 @@ vim.opt.viewoptions:remove "curdir" -- Disable saving current directory with vie
 vim.opt.shortmess:append { s = true, I = true } -- disable startup message.
 vim.opt.backspace:append { "nostop" } -- Don't stop backspace at insert.
 vim.opt.diffopt:append "linematch:60" -- Enable linematch diff algorithm.
+vim.api.nvim_create_autocmd("User BaseFile", { -- Insert comment on newline when writing comments. To disable it, set it to '-=cro'.
+  callback = function() vim.cmd "set formatoptions=jcroql" end,})
 
 -- apply variables ------------------------------------------------------------
 for scope, table in pairs(options) do
