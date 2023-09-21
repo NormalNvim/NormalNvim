@@ -68,9 +68,7 @@ return {
   --  https://github.com/rafamadriz/friendly-snippets
   {
     "L3MON4D3/LuaSnip",
-    build = not windows
-        and "echo 'NOTE: jsregexp is optional, so not a big deal if it fails to build\n'; make install_jsregexp"
-      or nil,
+    build = vim.fn.has "win32" ~= 0 and "make install_jsregexp" or nil,
     dependencies = {
       "rafamadriz/friendly-snippets",
       "Zeioth/NormalSnippets",
@@ -101,7 +99,6 @@ return {
       require("luasnip").filetype_extend("kotlin", { "kdoc" })
       require("luasnip").filetype_extend("ruby", { "rdoc" })
       require("luasnip").filetype_extend("sh", { "shelldoc" })
-      --require("luasnip").filetype_extend("shell", { "doxygen" })
     end,
   },
 
