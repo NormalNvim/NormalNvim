@@ -553,6 +553,35 @@ return {
         firefoxExecutable = '/usr/bin/firefox'
         }
       }
+      dap.configurations.javascript = dap.configurations.typescript
+      dap.configurations.typescript = dap.configurations.typescript
+      dap.configurations.javascriptreact = dap.configurations.typescript
+
+      -- Javascript / Typescript (chromium)
+      -- IMPORTANT: If you prefer to use this adapter,
+      --            you must manually run one of these two commands first:
+      -- chromium --remote-debugging-port=9222 --user-data-dir=remote-profile
+      -- google-chrome-stable --remote-debugging-port=9222 --user-data-dir=remote-profile
+      -- dap.adapters.chrome = {
+      --  type = 'executable',
+      --  command = vim.fn.stdpath('data')..'/mason/bin/chrome-debug-adapter',
+      -- }
+      -- dap.configurations.typescriptreact = {
+      --  {
+      --   name = 'Debug with Chromium',
+      --   type = "chrome",
+      --   request = "attach",
+      --   program = "${file}",
+      --   cwd = vim.fn.getcwd(),
+      --   sourceMaps = true,
+      --   protocol = "inspector",
+      --   port = 9222,
+      --   webRoot = "${workspaceFolder}"
+      --  }
+      -- }
+      -- dap.configurations.javascript = dap.configurations.typescriptreact
+      -- dap.configurations.typescriptreact = dap.configurations.typescriptreact
+      -- dap.configurations.javascriptreact = dap.configurations.typescriptreact
 
       -- Shell
       dap.adapters.bashdb = {
