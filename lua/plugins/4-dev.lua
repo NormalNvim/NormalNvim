@@ -558,10 +558,10 @@ return {
       dap.configurations.javascriptreact = dap.configurations.typescript
 
       -- Javascript / Typescript (chromium)
-      -- IMPORTANT: If you prefer to use this adapter,
-      --            you must manually run one of these two commands first:
-      -- chromium --remote-debugging-port=9222 --user-data-dir=remote-profile
-      -- google-chrome-stable --remote-debugging-port=9222 --user-data-dir=remote-profile
+      -- If you prefer to use this adapter, comment the firefox one.
+      -- But use this adapter, you must manually run one of these two, first:
+      -- * chromium --remote-debugging-port=9222 --user-data-dir=remote-profile
+      -- * google-chrome-stable --remote-debugging-port=9222 --user-data-dir=remote-profile
       -- dap.adapters.chrome = {
       --  type = 'executable',
       --  command = vim.fn.stdpath('data')..'/mason/bin/chrome-debug-adapter',
