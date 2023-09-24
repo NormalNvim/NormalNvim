@@ -42,7 +42,7 @@ local function trim_or_nil(str)
 end
 
 --- Run a git command from the Nvim installation directory.
----@param args string the git arguments.
+---@param args string|string[] the git arguments.
 ---@return string|nil # The result of the command or nil if unsuccessful.
 function git.cmd(args, ...)
   local utils = require "base.utils"
@@ -57,26 +57,26 @@ function git.available() return vim.fn.executable "git" == 1 end
 
 --- Check if the Nvim home is a git repo.
 ---@return string|nil # ~he result of the command.
-function git.is_repo() return git.cmd("rev-parse --is-inside-work-tree", false) end
+function git.is_repo() return git.cmd({ "rev-parse", "--is-inside-work-tree" }, false) end
 
 --- Fetch git remote.
 ---@param remote string the remote to fetch.
 ---@return string|nil # The result of the command.
-function git.fetch(remote, ...) return git.cmd("fetch " .. remote, ...) end
+function git.fetch(remote, ...) return git.cmd({ "fetch", remote }, ...) end
 
 --- Pull the git repo.
 ---@return string|nil # The result of the command.
-function git.pull(...) return git.cmd("pull --rebase", ...) end
+function git.pull(...) return git.cmd({ "pull", "--rebase" }, ...) end
 
 --- Checkout git target.
 ---@param dest string the target to checkout.
 ---@return string|nil # The result of the command.
-function git.checkout(dest, ...) return git.cmd("checkout -f " .. dest, ...) end
+function git.checkout(dest, ...) return git.cmd({ "checkout", dest }, ...) end
 
 --- Hard reset to a git target.
 -- @param dest the target to hard reset to.
 ---@return string|nil # The result of the command.
-function git.hard_reset(dest, ...) return git.cmd("reset --hard " .. dest, ...) end
+function git.hard_reset(dest, ...) return git.cmd({ "reset", "--hard", dest }, ...) end
 
 --- Check if a branch contains a commit.
 ---@param remote string the git remote to check.
@@ -85,8 +85,7 @@ function git.hard_reset(dest, ...) return git.cmd("reset --hard " .. dest, ...) 
 ---@return boolean # The result of the command.
 function git.branch_contains(remote, branch, commit, ...)
   return git.cmd(
-    "merge-base --is-ancestor " .. commit .. " " .. remote .. "/" .. branch,
-    ...
+    { "merge-base", "--is-ancestor", commit, remote .. "/" .. branch }, ...
   ) ~= nil
 end
 
@@ -94,7 +93,9 @@ end
 ---@param branch string the git branch to check.
 ---@return string|nil # The name of the remote for the given branch.
 function git.branch_remote(branch, ...)
-  return trim_or_nil(git.cmd("config branch." .. branch .. ".remote", ...))
+  return trim_or_nil(
+    git.cmd({ "config", "branch." .. branch .. ".remote" }, ...)
+  )
 end
 
 --- Add a git remote.
@@ -102,7 +103,7 @@ end
 ---@param url string the url of the remote.
 ---@return string|nil # The result of the command.
 function git.remote_add(remote, url, ...)
-  return git.cmd("remote add " .. remote .. " " .. url, ...)
+  return git.cmd({ "remote", "add", remote, url }, ...)
 end
 
 --- Update a git remote URL.
@@ -110,14 +111,14 @@ end
 ---@param url string the new URL of the remote.
 ---@return string|nil # The result of the command.
 function git.remote_update(remote, url, ...)
-  return git.cmd("remote set-url " .. remote .. " " .. url, ...)
+  return git.cmd({ "remote", "set-url", remote, url }, ...)
 end
 
 --- Get the URL of a given git remote.
 ---@param remote string the remote to get the URL of.
 ---@return string|nil # The url of the remote.
 function git.remote_url(remote, ...)
-  return trim_or_nil(git.cmd("remote get-url " .. remote, ...))
+  return trim_or_nil(git.cmd({ "remote", "get-url", remote }, ...))
 end
 
 --- Get branches from a git remote.
@@ -125,44 +126,48 @@ end
 ---@param branch string the branch to setup.
 ---@return string|nil # The result of the command.
 function git.remote_set_branches(remote, branch, ...)
-  return git.cmd(("remote set-branches %s '%s'"):format(remote, branch), ...)
+  return git.cmd({ "remote", "set-branches", remote, branch }, ...)
 end
 
 --- Get the current version with git describe including tags.
 ---@return string|nil # The current git describe string.
 function git.current_version(...)
-  return trim_or_nil(git.cmd("describe --tags", ...))
+  return trim_or_nil(git.cmd({ "describe", "--tags" }, ...))
 end
 
 --- Get the current branch.
 ---@return string|nil # The branch of the Nvim installation.
 function git.current_branch(...)
-  return trim_or_nil(git.cmd("rev-parse --abbrev-ref HEAD", ...))
+  return trim_or_nil(git.cmd({ "rev-parse", "--abbrev-ref", "HEAD" }, ...))
 end
 
 --- Verify a reference.
 ---@return string|nil # The referenced commit.
 function git.ref_verify(ref, ...)
-  return trim_or_nil(git.cmd("rev-parse --verify " .. ref, ...))
+  return trim_or_nil(git.cmd({ "rev-parse", "--verify", ref }, ...))
 end
 
 --- Get the current head of the git repo.
 ---@return string|nil # the head string.
-function git.local_head(...) return trim_or_nil(git.cmd("rev-parse HEAD", ...)) end
+function git.local_head(...)
+  return trim_or_nil(git.cmd({ "rev-parse", "HEAD" }, ...))
+end
 
 --- Get the current head of a git remote.
 ---@param remote string the remote to check.
 ---@param branch string the branch to check.
 ---@return string|nil # The head string of the remote branch.
 function git.remote_head(remote, branch, ...)
-  return trim_or_nil(git.cmd("rev-list -n 1 " .. remote .. "/" .. branch, ...))
+  return trim_or_nil(
+    git.cmd({ "rev-list", "-n", "1", remote .. "/" .. branch }, ...)
+  )
 end
 
 --- Get the commit hash of a given tag.
 ---@param tag string the tag to resolve.
 ---@return string|nil # The commit hash of a git tag.
 function git.tag_commit(tag, ...)
-  return trim_or_nil(git.cmd("rev-list -n 1 " .. tag, ...))
+  return trim_or_nil(git.cmd({ "rev-list", "-n", "1", tag }, ...))
 end
 
 --- Get the commit log between two commit hashes.
@@ -170,10 +175,8 @@ end
 ---@param end_hash? string the end commit hash.
 ---@return string[] # An array like table of commit messages.
 function git.get_commit_range(start_hash, end_hash, ...)
-  local range = start_hash and end_hash and start_hash .. ".." .. end_hash
-      or nil
-  local log =
-      git.cmd({ "log", "--no-merges", '--pretty="format:[%h] %s"', range }, ...)
+  local range = start_hash and end_hash and start_hash .. ".." .. end_hash or nil
+  local log = git.cmd({ "log", "--no-merges", '--pretty="format:[%h] %s"', range }, ...)
   return log and vim.fn.split(log, "\n") or {}
 end
 
@@ -183,9 +186,12 @@ end
 ---@return string[] # An array like table of tags that match the search.
 function git.get_versions(search, ...)
   local tags = git.cmd(
-    'tag -l --sort=version:refname "'
-    .. (search == "latest" and "v*" or search)
-    .. '"',
+    {
+      "tag",
+      "-l",
+      "--sort=version:refname",
+      search == "latest" and "v*" or search,
+    },
     ...
   )
   return tags and vim.fn.split(tags, "\n") or {}

@@ -391,7 +391,7 @@ end
 
 --- Run a shell command and capture the output and if the command
 --- succeeded or failed
----@param cmd string The terminal command to execute
+---@param cmd string|string[] The terminal command to execute
 ---@param show_error? boolean Whether or not to show an unsuccessful command
 ---                           as an error to the user
 ---@return string|nil # The result of a successfully executed command or nil
