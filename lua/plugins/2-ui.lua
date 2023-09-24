@@ -250,7 +250,10 @@ return {
       vim.api.nvim_create_autocmd({ "User AlphaReady" }, {
         desc = "Disable indentscope for certain filetypes",
         callback = function()
-          if vim.bo.filetype == "alpha" or vim.bo.filetype == "mason" then
+          if vim.bo.filetype == "alpha"
+            or vim.bo.filetype == "mason"
+            or vim.bo.filetype == "notify"
+          then
             vim.b.miniindentscope_disable = true
           end
         end,
