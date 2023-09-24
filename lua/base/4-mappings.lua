@@ -17,6 +17,7 @@
 --       -> buffers/tabs                       [buffers]
 --       -> ui toggles                         [ui]
 --       -> shifted movement keys
+--       -> cmdline autocompletion
 --       -> special cases
 
 --       ## Plugin bindings
@@ -427,7 +428,7 @@ if is_available "zen-mode.nvim" then
   { function() ui.toggle_zen_mode() end, desc = "Zen mode" }
 end
 
--- ui toggles [ui ]---------------------------------------------------------
+-- ui toggles [ui] ---------------------------------------------------------
 maps.n["<leader>u"] = icons.u
 if is_available "nvim-autopairs" then
   maps.n["<leader>ua"] = { ui.toggle_autopairs, desc = "Autopairs" }
@@ -467,7 +468,7 @@ maps.n["<leader>uA"] = {
   desc = "Animations",
 }
 
--- fast movement (shifted) -------------------------------------------------
+-- shifted movement keys ----------------------------------------------------
 maps.n["<S-Down>"] = {
   function() vim.api.nvim_feedkeys("7j", "n", true) end,
   desc = "Fast move down",
@@ -498,7 +499,13 @@ maps.n["<S-PageUp>"] = {
   desc = "Page up exactly 20% of the total size of the buffer",
 }
 
--- special cases -------------------------------------------------
+-- cmdline audocompletion ---------------------------------------------------
+maps.c["<up>"] = { "<left>", desc = "Cmdline autocompletion (up)" }
+maps.c["<down>"] = { "<right>", desc = "Cmdline autocompletion (down)" }
+maps.c["<left>"] = { "<up>", desc = "Cmdline autocompletion (left)" }
+maps.c["<right>"] = { "<down>", desc = "Cmdline autocompletion (right)" }
+
+-- special cases ------------------------------------------------------------
 vim.api.nvim_create_autocmd("BufWinEnter", {
   desc = "Make q close help, man, quickfix, dap floats",
   callback = function(args)
