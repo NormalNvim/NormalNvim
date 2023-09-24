@@ -17,7 +17,6 @@
 --       -> buffers/tabs                       [buffers]
 --       -> ui toggles                         [ui]
 --       -> shifted movement keys
---       -> cmdline autocompletion
 --       -> special cases
 
 --       ## Plugin bindings
@@ -498,17 +497,6 @@ maps.n["<S-PageUp>"] = {
   end,
   desc = "Page up exactly 20% of the total size of the buffer",
 }
-
--- cmdline audocompletion ---------------------------------------------------
-maps.c["<up>"] = { "<left>", desc = "Cmdline autocompletion (up)" }
-maps.c["<down>"] = { "<right>", desc = "Cmdline autocompletion (down)" }
-maps.c["<left>"] = { "<up>", desc = "Cmdline autocompletion (left)" }
-maps.c["<right>"] = { "<down>", desc = "Cmdline autocompletion (right)" }
-
-maps.c["<C-h>"] = { "<left>", desc = "Cmdline autocompletion (up)" }
-maps.c["<C-l>"] = { "<right>", desc = "Cmdline autocompletion (down)" }
-maps.c["<C-k>"] = { "<up>", desc = "Cmdline autocompletion (left)" }
-maps.c["<C-j>"] = { "<down>", desc = "Cmdline autocompletion (right)" }
 
 -- special cases ------------------------------------------------------------
 vim.api.nvim_create_autocmd("BufWinEnter", {
