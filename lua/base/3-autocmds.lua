@@ -359,7 +359,9 @@ cmd("Swd", function()
 end, { desc = "cd current file's directory" })
 
 -- Write all buffers
-cmd("WriteAllBuffers", function() vim.cmd "wa" end, { desc = "Write all changed buffers" })
+cmd("WriteAllBuffers", function()
+  vim.cmd "wa"
+end, { desc = "Write all changed buffers" })
 
 -- Close all notifications
 cmd("CloseNotifications", function()
