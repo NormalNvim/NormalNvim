@@ -17,6 +17,7 @@
 --       -> buffers/tabs                       [buffers]
 --       -> ui toggles                         [ui]
 --       -> shifted movement keys
+--       -> cmdline autocompletion
 --       -> special cases
 
 --       ## Plugin bindings
@@ -496,6 +497,24 @@ maps.n["<S-PageUp>"] = {
     vim.cmd "normal! zz"
   end,
   desc = "Page up exactly 20% of the total size of the buffer",
+}
+
+-- cmdline audocompletion ---------------------------------------------------
+maps.c["<Up>"] = {
+  function() return vim.wildmenumode() == 1 and "<Left>" or "<Up>" end,
+  noremap = true, expr = true, desc = "Wildmenu fix for neovim bug #9953",
+}
+maps.c["<Down>"] = {
+  function() return vim.wildmenumode() == 1 and "<Right>" or "<Down>" end,
+  noremap = true, expr = true, desc = "Wildmenu fix for neovim bug #9953",
+}
+maps.c["<Left>"] = {
+  function() return vim.wildmenumode() == 1 and "<Up>" or "<Left>" end,
+  noremap = true, expr = true, desc = "Wildmenu fix for neovim bug #9953",
+}
+maps.c["<Right>"] = {
+  function() return vim.fn.wildmenumode() == 1 and "<Down>" or "<Right>" end,
+  noremap = true, expr = true, desc = "Wildmenu fix for neovim bug #9953",
 }
 
 -- special cases ------------------------------------------------------------
