@@ -12,6 +12,7 @@
 --       -> telescope-fzf-native.nvim   [search backend]
 --       -> smart-splits                [window-dimming]
 --       -> dressing.nvim               [better ui elements]
+--       -> noice.nvim                  [better cmd/search line]
 --       -> nvim-web-devicons           [icons | ui]
 --       -> lspkind.nvim                [icons | lsp]
 --       -> nvim-scrollbar              [scrollbar]
@@ -683,6 +684,35 @@ return {
     },
   },
 
+  --  Noice.nvim [better cmd/search line]
+  --  https://github.com/folke/noice.nvim
+  --  We use it for:
+  --  * cmdline: Display treesitter for :
+  --  * search: Display a magnifier instead of /
+  --
+  --  We don't use it for:
+  --  * LSP status: We use a heirline component for this.
+  --  * Search results: We use a heirline component for this.
+  {
+    "folke/noice.nvim",
+    event = "VeryLazy",
+    opts = {
+      -- The kind of popup used for : and /
+      cmdline = { view = "cmdline" },
+      presets = { bottom_search = true },
+
+      -- Disable every other noice feature
+      messages = { enabled = false },
+      lsp = {
+        hover = { enabled = false },
+        signature = { enabled = false },
+        progress = { enabled = false },
+        message = { enabled = false },
+        smart_move = { enabled = false },
+      },
+    }
+  },
+
   --  UI icons [icons]
   --  https://github.com/nvim-tree/nvim-web-devicons
   {
@@ -833,7 +863,7 @@ return {
     end,
   },
 
-  --  [on-screen keybindings]
+  --  which-key.nvim [on-screen keybindings]
   --  https://github.com/folke/which-key.nvim
   {
     "folke/which-key.nvim",
@@ -847,4 +877,5 @@ return {
       require("base.utils").which_key_register()
     end,
   },
+
 }
