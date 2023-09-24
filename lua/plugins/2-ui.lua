@@ -697,7 +697,7 @@ return {
     "folke/noice.nvim",
     event = "VeryLazy",
     opts = function()
-      local enable_conceal = false          -- Hide symbols if true
+      local enable_conceal = false          -- Hide command text if true
       return {
         presets = { bottom_search = true }, -- The kind of popup used for /
         cmdline = {
