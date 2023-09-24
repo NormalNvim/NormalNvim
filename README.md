@@ -20,13 +20,13 @@ The space key shows [all you can do](https://github.com/Zeioth/NormalNvim/wiki/b
 ## Install (Linux/MacOS)
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
-git clone git@github.com:NormalNVim/NormalNVim.git ~/.config/nvim
+git clone https://github.com/NormalNvim/NormalNvim.git ~/.config/nvim
 ```
 
 ## Install (Windows)
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
-git clone git@github.com:NormalNVim/NormalNVim.git %USERPROFILE%\AppData\Local\nvim && nvim
+git clone https://github.com/NormalNvim/NormalNvim.git %USERPROFILE%\AppData\Local\nvim && nvim
 ```
 
 ## Dependencies
