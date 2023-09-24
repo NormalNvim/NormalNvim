@@ -57,7 +57,9 @@ function git.available() return vim.fn.executable "git" == 1 end
 
 --- Check if the Nvim home is a git repo.
 ---@return string|nil # ~he result of the command.
-function git.is_repo() return git.cmd({ "rev-parse", "--is-inside-work-tree" }, false) end
+function git.is_repo()
+  return git.cmd({ "rev-parse", "--is-inside-work-tree" }, false)
+end
 
 --- Fetch git remote.
 ---@param remote string the remote to fetch.
@@ -76,7 +78,9 @@ function git.checkout(dest, ...) return git.cmd({ "checkout", dest }, ...) end
 --- Hard reset to a git target.
 -- @param dest the target to hard reset to.
 ---@return string|nil # The result of the command.
-function git.hard_reset(dest, ...) return git.cmd({ "reset", "--hard", dest }, ...) end
+function git.hard_reset(dest, ...)
+  return git.cmd({ "reset", "--hard", dest }, ...)
+end
 
 --- Check if a branch contains a commit.
 ---@param remote string the git remote to check.
@@ -175,8 +179,13 @@ end
 ---@param end_hash? string the end commit hash.
 ---@return string[] # An array like table of commit messages.
 function git.get_commit_range(start_hash, end_hash, ...)
-  local range = start_hash and end_hash and start_hash .. ".." .. end_hash or nil
-  local log = git.cmd({ "log", "--no-merges", '--pretty="format:[%h] %s"', range }, ...)
+  local range = start_hash
+                and end_hash
+                and start_hash .. ".." .. end_hash
+                or nil
+  local log = git.cmd(
+    { "log", "--no-merges", '--pretty="format:[%h] %s"', range }, ...
+  )
   return log and vim.fn.split(log, "\n") or {}
 end
 
@@ -208,8 +217,8 @@ end
 
 --- Check if a Conventional Commit commit message is breaking or not.
 ---@param commit string a commit message.
----@return boolean true if the message is breaking, false if the commit message
----                     is not breaking.
+---@return boolean # true if the message is breaking,
+---                  false if the commit message is not breaking.
 function git.is_breaking(commit)
   return vim.fn.match(commit, "\\[.*\\]\\s\\+\\w\\+\\((\\w\\+)\\)\\?!:") ~= -1
 end
