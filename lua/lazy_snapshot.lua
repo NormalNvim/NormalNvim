@@ -27,6 +27,7 @@ return {
   { "echasnovski/mini.indentscope", commit = "f60e9b51a6214c73a170ffc5445ce91560981031" },
   { "folke/lazy.nvim", version = "^10" },
   { "folke/neodev.nvim", version = "^3" },
+  { "folke/noice.nvim", commit = "74c2902146b080035beb19944baf6f014a954720" },
   { "folke/which-key.nvim", version = "^1" },
   { "folke/zen-mode.nvim", commit = "68f554702de63f4b7b6b6d4bcb10178f41a0acc7" },
   { "goolord/alpha-nvim", commit = "712dc1dccd4fd515ef8bd126b3718f79d3e23b0d" },
@@ -84,5 +85,5 @@ return {
   { "williamboman/mason-lspconfig.nvim", version = "^2" },
   { "williamboman/mason.nvim", version = "^1" },
   { "windwp/nvim-autopairs", commit = "defad64afbf19381fe31488a7582bbac421d6e38" },
-  { "windwp/nvim-ts-autotag", commit = "6be1192965df35f94b8ea6d323354f7dc7a557e4" }
+  { "windwp/nvim-ts-autotag", commit = "6be1192965df35f94b8ea6d323354f7dc7a557e4" },
 }
