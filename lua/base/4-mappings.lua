@@ -505,6 +505,11 @@ maps.c["<down>"] = { "<right>", desc = "Cmdline autocompletion (down)" }
 maps.c["<left>"] = { "<up>", desc = "Cmdline autocompletion (left)" }
 maps.c["<right>"] = { "<down>", desc = "Cmdline autocompletion (right)" }
 
+maps.c["<C-h>"] = { "<left>", desc = "Cmdline autocompletion (up)" }
+maps.c["<C-l>"] = { "<right>", desc = "Cmdline autocompletion (down)" }
+maps.c["<C-k>"] = { "<up>", desc = "Cmdline autocompletion (left)" }
+maps.c["<C-j>"] = { "<down>", desc = "Cmdline autocompletion (right)" }
+
 -- special cases ------------------------------------------------------------
 vim.api.nvim_create_autocmd("BufWinEnter", {
   desc = "Make q close help, man, quickfix, dap floats",
