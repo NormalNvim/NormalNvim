@@ -17,8 +17,6 @@
 local M = {}
 
 local utils = require "base.utils"
-local notify = utils.notify
-local baseevent = utils.event
 
 --- Update specified mason packages, or just update the registries
 --- if no packages are listed.
@@ -42,7 +40,7 @@ function M.update(pkg_names, auto_install)
     if success then
       local count = #updated_registries
       if vim.tbl_count(pkg_names) == 0 then
-        notify(
+        utils.notify(
           ("Successfully updated %d %s."):format(
             count,
             count == 1 and "registry" or "registries"
@@ -52,17 +50,17 @@ function M.update(pkg_names, auto_install)
       for _, pkg_name in ipairs(pkg_names) do
         local pkg_avail, pkg = pcall(registry.get_package, pkg_name)
         if not pkg_avail then
-          notify(
+          utils.notify(
             ("Mason: %s is not available"):format(pkg_name),
             vim.log.levels.ERROR
           )
         else
           if not pkg:is_installed() then
             if auto_install then
-              notify(("Mason: Installing %s"):format(pkg.name))
+              utils.notify(("Mason: Installing %s"):format(pkg.name))
               pkg:install()
             else
-              notify(
+              utils.notify(
                 ("Mason: %s not installed"):format(pkg.name),
                 vim.log.levels.WARN
               )
@@ -70,7 +68,7 @@ function M.update(pkg_names, auto_install)
           else
             pkg:check_new_version(function(update_available, version)
               if update_available then
-                notify(
+                utils.notify(
                   ("Mason: Updating %s to %s"):format(
                     pkg.name,
                     version.latest_version
@@ -78,17 +76,21 @@ function M.update(pkg_names, auto_install)
                 )
                 pkg:install():on(
                   "closed",
-                  function() notify(("Mason: Updated %s"):format(pkg.name)) end
+                  function()
+                    utils.notify(("Mason: Updated %s"):format(pkg.name))
+                  end
                 )
               else
-                notify(("Mason: No updates available for %s"):format(pkg.name))
+                utils.notify(
+                  ("Mason: No updates available for %s"):format(pkg.name)
+                )
               end
             end)
           end
         end
       end
     else
-      notify(
+      utils.notify(
         ("Failed to update registries: %s"):format(updated_registries),
         vim.log.levels.ERROR
       )
@@ -104,7 +106,7 @@ function M.update_all()
     return
   end
 
-  notify "Mason: Checking for package updates..."
+  utils.notify "Mason: Checking for package updates..."
   registry.update(vim.schedule_wrap(function(success, updated_registries)
     if success then
       local installed_pkgs = registry.get_installed_packages()
@@ -112,15 +114,15 @@ function M.update_all()
       local no_pkgs = running == 0
 
       if no_pkgs then
-        notify "Mason: No updates available"
-        baseevent "MasonUpdateCompleted"
+        utils.notify("Mason: No updates available")
+        utils.event("MasonUpdateCompleted")
       else
         local updated = false
         for _, pkg in ipairs(installed_pkgs) do
           pkg:check_new_version(function(update_available, version)
             if update_available then
               updated = true
-              notify(
+              utils.notify(
                 ("Mason: Updating %s to %s"):format(
                   pkg.name,
                   version.latest_version
@@ -129,26 +131,26 @@ function M.update_all()
               pkg:install():on("closed", function()
                 running = running - 1
                 if running == 0 then
-                  notify "Mason: Update Complete"
-                  baseevent "MasonUpdateCompleted"
+                  utils.notify "Mason: Update Complete"
+                  utils.event("MasonUpdateCompleted")
                 end
               end)
             else
               running = running - 1
               if running == 0 then
                 if updated then
-                  notify "Mason: Update Complete"
+                  utils.notify "Mason: Update Complete"
                 else
-                  notify "Mason: No updates available"
+                  utils.notify "Mason: No updates available"
                 end
-                baseevent "MasonUpdateCompleted"
+                utils.event("MasonUpdateCompleted")
               end
             end
           end)
         end
       end
     else
-      notify(
+      utils.notify(
         ("Failed to update registries: %s"):format(updated_registries),
         vim.log.levels.ERROR
       )
