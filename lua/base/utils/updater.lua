@@ -19,12 +19,10 @@
 --      -> attempt_update      → helper for update.
 --      -> update              → used by :NvimUpdateConfig.
 
+local utils = require "base.utils"
 local git = require "base.utils.git"
 
 local M = {}
-
-local utils = require "base.utils"
-local notify = utils.notify
 
 local function echo(messages)
   -- if no parameter provided, echo a new line
@@ -82,7 +80,7 @@ function M.generate_snapshot(write)
     file:write "}\n"
     file:close()
   end
-  notify "Lazy packages locked to their current version."
+  utils.notify("Lazy packages locked to their current version.")
   return snapshot
 end
 
@@ -94,7 +92,7 @@ function M.version(quiet)
   if base.updater.options.channel ~= "stable" then
     version = ("nightly (%s)"):format(version)
   end
-  if version and not quiet then notify("Version: " .. version) end
+  if version and not quiet then utils.notify("Version: " .. version) end
   return version
 end
 
@@ -134,7 +132,7 @@ function M.create_rollback(write)
     file:close()
   end
   -- Rollback file created
-  notify(
+  utils.notify(
     "Rollback file created in ~/.cache/nvim\n\npointing to commit:\n"
     .. snapshot.commit
     .. "  \n\nYou can use :NvimRollbackRestore to revert ~/.config to this state."
@@ -147,7 +145,7 @@ function M.rollback()
   local rollback_avail, rollback_opts =
       pcall(dofile, base.updater.rollback_file)
   if not rollback_avail then
-    notify("No rollback file available", vim.log.levels.ERROR)
+    utils.notify("No rollback file available", vim.log.levels.ERROR)
     return
   end
   M.update(rollback_opts)
@@ -176,7 +174,7 @@ function M.update(opts)
   )
   -- if the git command is not available, then throw an error
   if not git.available() then
-    notify(
+    utils.notify(
       "git command is not available, please verify it is accessible in a command line. This may be an issue with your PATH",
       vim.log.levels.ERROR
     )
@@ -185,7 +183,7 @@ function M.update(opts)
 
   -- if installed with an external package manager, disable the internal updater
   if not git.is_repo() then
-    notify(
+    utils.notify(
       "Updater not available for non-git installations",
       vim.log.levels.ERROR
     )
