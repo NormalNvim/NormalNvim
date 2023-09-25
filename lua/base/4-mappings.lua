@@ -501,15 +501,15 @@ maps.n["<S-PageUp>"] = {
 
 -- cmdline audocompletion ---------------------------------------------------
 maps.c["<Up>"] = {
-  function() return vim.wildmenumode() == 1 and "<Left>" or "<Up>" end,
+  function() return vim.fn.wildmenumode() == 1 and "<Left>" or "<Up>" end,
   noremap = true, expr = true, desc = "Wildmenu fix for neovim bug #9953",
 }
 maps.c["<Down>"] = {
-  function() return vim.wildmenumode() == 1 and "<Right>" or "<Down>" end,
+  function() return vim.fn.wildmenumode() == 1 and "<Right>" or "<Down>" end,
   noremap = true, expr = true, desc = "Wildmenu fix for neovim bug #9953",
 }
 maps.c["<Left>"] = {
-  function() return vim.wildmenumode() == 1 and "<Up>" or "<Left>" end,
+  function() return vim.fn.wildmenumode() == 1 and "<Up>" or "<Left>" end,
   noremap = true, expr = true, desc = "Wildmenu fix for neovim bug #9953",
 }
 maps.c["<Right>"] = {
