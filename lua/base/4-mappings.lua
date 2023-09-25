@@ -499,7 +499,7 @@ maps.n["<S-PageUp>"] = {
   desc = "Page up exactly 20% of the total size of the buffer",
 }
 
--- cmdline audocompletion ---------------------------------------------------
+-- cmdline autocompletion ---------------------------------------------------
 maps.c["<Up>"] = {
   function() return vim.fn.wildmenumode() == 1 and "<Left>" or "<Up>" end,
   noremap = true, expr = true, desc = "Wildmenu fix for neovim bug #9953",
