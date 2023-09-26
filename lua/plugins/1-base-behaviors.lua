@@ -115,6 +115,8 @@ return {
   -- By default it support neovim/aerial and others.
   {
     "stevearc/stickybuf.nvim",
+    event = "VeryLazy",
+    config = function() require("stickybuf").setup() end
   },
 
   -- nvim-window-picker  [select buffer with a letter]
