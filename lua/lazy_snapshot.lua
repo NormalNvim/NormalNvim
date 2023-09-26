@@ -78,7 +78,7 @@ return {
   { "stevearc/aerial.nvim", version = "^1" },
   { "stevearc/dressing.nvim", version = "^3" },
   { "stevearc/overseer.nvim", commit = "ed67e917b9dbb431b435d7380f0c4c94e767b229" },
-  { "stevearc/stickybuf.nvim", commit = "4c667bc837e5e3fec5a8857ee99f1a229fc76df9" },
+  { "stevearc/stickybuf.nvim", commit = "e3db41f2c1bb2df3ee6ff964ee74fe991f6f9566" },
   { "tpope/vim-fugitive", commit = "6fcb0ad03982de646e3fecb6915e585651b9a9fb" },
   { "tpope/vim-rhubarb", commit = "ee69335de176d9325267b0fd2597a22901d927b1" },
   { "tzachar/highlight-undo.nvim", commit = "d9e674a2eb4d95ee16cd477d47eab7ddc586e336" },
