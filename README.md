@@ -74,7 +74,7 @@ Please before opening an issue, check the [astrocommunity](https://github.com/As
 
 * **NormalNvim is not working. How can I know why?**
 
-    `:healthcheck base`
+    `:checkhealth base`
 
 * **Supports Windows?**
 Yes, 100%. This is not necessary, but we strongly recommend you to launch NormalNvim [using WLS](https://www.youtube.com/watch?v=fFbLUEQsRhM) so you can install [the required dependencies](https://github.com/NormalNvim/NormalNvim/wiki/dependencies) to unlock all features.
