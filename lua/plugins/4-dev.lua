@@ -559,9 +559,10 @@ return {
 
       -- Javascript / Typescript (chromium)
       -- If you prefer to use this adapter, comment the firefox one.
-      -- But use this adapter, you must manually run one of these two, first:
+      -- But to use this adapter, you must manually run one of these two, first:
       -- * chromium --remote-debugging-port=9222 --user-data-dir=remote-profile
       -- * google-chrome-stable --remote-debugging-port=9222 --user-data-dir=remote-profile
+      -- After starting the debugger, you must manually reload page to get all features.
       -- dap.adapters.chrome = {
       --  type = 'executable',
       --  command = vim.fn.stdpath('data')..'/mason/bin/chrome-debug-adapter',
