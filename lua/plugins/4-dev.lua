@@ -548,13 +548,13 @@ return {
         type = 'firefox',
         request = 'launch',
         reAttach = true,
-        url = 'http://localhost:3000', -- Write the actual URL of your project.
+        url = 'http://localhost:4200', -- Write the actual URL of your project.
         webRoot = '${workspaceFolder}',
         firefoxExecutable = '/usr/bin/firefox'
         }
       }
       dap.configurations.javascript = dap.configurations.typescript
-      dap.configurations.typescript = dap.configurations.typescript
+      dap.configurations.typescriptreact = dap.configurations.typescript
       dap.configurations.javascriptreact = dap.configurations.typescript
 
       -- Javascript / Typescript (chromium)
@@ -566,7 +566,7 @@ return {
       --  type = 'executable',
       --  command = vim.fn.stdpath('data')..'/mason/bin/chrome-debug-adapter',
       -- }
-      -- dap.configurations.typescriptreact = {
+      -- dap.configurations.typescript = {
       --  {
       --   name = 'Debug with Chromium',
       --   type = "chrome",
@@ -579,9 +579,9 @@ return {
       --   webRoot = "${workspaceFolder}"
       --  }
       -- }
-      -- dap.configurations.javascript = dap.configurations.typescriptreact
-      -- dap.configurations.typescriptreact = dap.configurations.typescriptreact
-      -- dap.configurations.javascriptreact = dap.configurations.typescriptreact
+      -- dap.configurations.javascript = dap.configurations.typescript
+      -- dap.configurations.typescriptreact = dap.configurations.typescript
+      -- dap.configurations.javascriptreact = dap.configurations.typescript
 
       -- Shell
       dap.adapters.bashdb = {
@@ -747,4 +747,5 @@ return {
     config = function() require("coverage").setup() end,
     requires = { "nvim-lua/plenary.nvim" },
   },
+
 }
