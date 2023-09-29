@@ -251,6 +251,7 @@ return {
         desc = "Disable indentscope for certain filetypes",
         callback = function()
           if vim.bo.filetype == "alpha"
+            or vim.bo.filetype == "neo-tree"
             or vim.bo.filetype == "mason"
             or vim.bo.filetype == "notify"
           then
