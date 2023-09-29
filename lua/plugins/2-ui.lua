@@ -247,7 +247,7 @@ return {
       require("mini.indentscope").setup(opts)
 
       -- Disable for certain filetypes
-      vim.api.nvim_create_autocmd({ "User AlphaReady" }, {
+      vim.api.nvim_create_autocmd({ "User AlphaReady", "BufEnter" }, {
         desc = "Disable indentscope for certain filetypes",
         callback = function()
           if vim.bo.filetype == "alpha"
