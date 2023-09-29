@@ -36,7 +36,7 @@
 --      -> set_indent
 
 local M = {}
-local utils = require("base.utils").utils
+local utils = require("base.utils")
 
 local function bool2str(bool) return bool and "on" or "off" end
 
