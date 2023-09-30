@@ -1166,6 +1166,14 @@ if is_available "neotest" then
     function() require("neotest").run.run { strategy = "dap" } end,
     desc = "Unit in debugger",
   }
+  maps.n["<leader>Tt"] = {
+    function() require("neotest").summary.toggle() end,
+    desc = "neotest summary",
+  }
+  maps.n["<leader>TT"] = {
+    function() require("neotest").output_panel.toggle() end,
+    desc = "output panel",
+  }
 end
 
 -- Extra - nvim-coverage
