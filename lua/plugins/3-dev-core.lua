@@ -10,6 +10,7 @@
 
 --       ## LSP
 --       -> nvim-lspconfig                 [lsp config]
+--       -> lsp-timeout                    [lsp better memory usage]
 --       -> mason.nvim                     [lsp package manager]
 --       -> SchemaStore.nvim               [lsp schema manager]
 --       -> null-ls                        [lsp code formatting]
@@ -222,7 +223,22 @@ return {
     end,
   },
 
-  --  Syntax highlight [lsp package manager]
+  --  lsp-timeout [lsp memory garbage collector]
+  --  https://github.com/hinell/lsp-timeout.nvim
+  {
+    "hinell/lsp-timeout.nvim",
+    dependencies={ "neovim/nvim-lspconfig" },
+    event = "User BaseFile",
+    init = function()
+      vim.g["lsp-timeout-config"] = {
+        stopTimeout = 10000 * 60 * 1, -- Stop unused lsp servers after 10 min.
+        startTimeout = 2000, -- Force server restart if nvim can't in 2s.
+        silent = true -- Notifications disabled
+      }
+    end
+  },
+
+  --  mason [lsp package manager]
   --  https://github.com/williamboman/mason.nvim
   {
     "williamboman/mason.nvim",
@@ -469,4 +485,7 @@ return {
       }
     end,
   },
+
+
+
 } -- end of return
