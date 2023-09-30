@@ -10,7 +10,7 @@
 
 --       ## LSP
 --       -> nvim-lspconfig                 [lsp config]
---       -> lsp-timeout                    [lsp better memory usage]
+--       -> lsp-timeout                    [lsp garbage collector]
 --       -> mason.nvim                     [lsp package manager]
 --       -> SchemaStore.nvim               [lsp schema manager]
 --       -> null-ls                        [lsp code formatting]
@@ -223,8 +223,9 @@ return {
     end,
   },
 
-  --  lsp-timeout [lsp memory garbage collector]
+  --  lsp-timeout [lsp garbage collector]
   --  https://github.com/hinell/lsp-timeout.nvim
+  --  Stop inactive lsp servers until the buffer recover the focus.
   {
     "hinell/lsp-timeout.nvim",
     dependencies={ "neovim/nvim-lspconfig" },
