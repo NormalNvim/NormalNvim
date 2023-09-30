@@ -240,7 +240,7 @@ autocmd("VimEnter", {
     vim.api.nvim_command [[menu PopUp.-2- <Nop>]]
     vim.api.nvim_command [[menu PopUp.Start\ \Compiler <cmd>:CompilerOpen<CR>]]
     vim.api.nvim_command [[menu PopUp.Start\ \Debugger <cmd>:DapContinue<CR>]]
-    vim.api.nvim_command [[menu PopUp.Run\ \Test <cmd>:TestRunBlock<CR>]]
+    vim.api.nvim_command [[menu PopUp.Run\ \Test <cmd>:Neotest run<CR>]]
 
   end,
 })
@@ -302,32 +302,9 @@ cmd(
   { desc = "Reload Nvim without closing it (Experimental)" }
 )
 
--- 12. Neotest commands
--- Neotest doesn't implement commands by default, so we do it here.
+-- 12. Testing commands
+-- Aditional commands to the ones implemented in neotest.
 -------------------------------------------------------------------
-cmd(
-  "TestRunBlock",
-  function() require("neotest").run.run() end,
-  { desc = "Run the nearest test under the cursor" }
-)
-
-cmd(
-  "TestStopBlock",
-  function() require("neotest").run.stop() end,
-  { desc = "Stopts the nearest test under the cursor" }
-)
-
-cmd(
-  "TestRunFile",
-  function() require("neotest").run.run(vim.fn.expand "%") end,
-  { desc = "Run all tests in the test file" }
-)
-
-cmd(
-  "TestDebugBlock",
-  function() require("neotest").run.run { strategy = "dap" } end,
-  { desc = "Debug the nearest test under the cursor using dap" }
-)
 
 -- Customize this command to work as you like
 cmd("TestNodejs", function()
