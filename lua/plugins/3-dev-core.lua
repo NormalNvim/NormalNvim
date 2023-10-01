@@ -297,10 +297,10 @@ return {
   --  https://github.com/b0o/SchemaStore.nvim
   "b0o/SchemaStore.nvim",
 
-  --  null ls [lsp code formatting]
-  --  https://github.com/jose-elias-alvarez/null-ls.nvim
+  --  null-ls [lsp code formatting]
+  --  https://github.com/nvimtools/none-ls.nvim
   {
-    "jose-elias-alvarez/null-ls.nvim",
+    "nvimtools/none-ls.nvim",
     dependencies = {
       {
         "jay-babu/mason-null-ls.nvim",
