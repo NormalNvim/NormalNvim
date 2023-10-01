@@ -21,7 +21,6 @@
 --       -> hop.nvim               [go to word visually]
 --       -> nvim-autopairs         [auto close brackets]
 
--- import custom icons
 local windows = vim.fn.has('win32') == 1             -- true if on windows
 local android = vim.fn.isdirectory('/system') == 1   -- true if on android
 
