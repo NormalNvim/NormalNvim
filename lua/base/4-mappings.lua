@@ -1224,6 +1224,16 @@ if is_available "nvim-ufo" then
     function() require("ufo").peekFoldedLinesUnderCursor() end,
     desc = "Peek fold",
   }
+  maps.n["zz"] = { function()
+    local ufo = require("ufo")
+    if vim.b.comments_folded then
+      ufo.openAllFolds()
+      vim.b.comments_folded = false
+    else
+      ufo.openFoldsExceptKinds({'comment'}) -- Also allow region|imports
+      vim.b.comments_folded = true
+    end
+  end, desc = "Toggle comments" }
 end
 
 -- code docmentation [docs] -------------------------------------------------
