@@ -313,12 +313,10 @@ return {
       local nls = require "null-ls"
       return {
         sources = {
+          -- You can customize your formatters here.
           nls.builtins.formatting.beautysh.with {
             command = "beautysh",
-            args = {
-              "--indent-size=2",
-              "$FILENAME",
-            },
+            args = { "--indent-size=2", "$FILENAME" },
           },
         },
         on_attach = require("base.utils.lsp").on_attach,
