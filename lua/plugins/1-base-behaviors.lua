@@ -226,8 +226,8 @@ return {
     opts = {
       default = {
         find = {
-          -- pick one of item in find_engine [ ag, rg, ripgrep ]
-          cmd = "rg",
+          -- pick one of item in find_engine [ fd, rg ]
+          cmd = "fd",
           options = {}
         },
         replace = {
