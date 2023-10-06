@@ -57,7 +57,6 @@ return {
   { "nvim-neotest/neotest-go", commit = "1a15e1136db43775214a3e7a598f8930c29c94b7" },
   { "nvim-neotest/neotest-jest", commit = "ae559fbd405084ee38dd711eede6d74f3dc1d463" },
   { "nvim-neotest/neotest-python", commit = "81d2265efac717bb567bc15cc652ae10801286b3" },
-  { "nvim-pack/nvim-spectre", commit = "657e012ff05d4eaddbdea646f6479b8023b4bcee" },
   { "nvim-telescope/telescope-fzf-native.nvim", commit = "6c921ca12321edaa773e324ef64ea301a1d0da62" },
   { "nvim-telescope/telescope.nvim", commit = "a19770625aed49ad2a9f591a5e3946707f7359f6" },
   { "nvim-tree/nvim-web-devicons", commit = "925e2aa30dc9fe9332060199c19f132ec0f3d493" },
@@ -87,4 +86,5 @@ return {
   { "williamboman/mason.nvim", version = "^1" },
   { "windwp/nvim-autopairs", commit = "defad64afbf19381fe31488a7582bbac421d6e38" },
   { "windwp/nvim-ts-autotag", commit = "6be1192965df35f94b8ea6d323354f7dc7a557e4" },
+  { "zeioth/nvim-spectre", commit = "f22e564db341e5cea71db9848ae60230e39f6cd4" },
 }

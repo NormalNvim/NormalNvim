@@ -221,7 +221,7 @@ return {
   -- To start the search press <ESC>.
   -- It doesn't have ctrl-z so please always commit before using it.
   {
-    "nvim-pack/nvim-spectre",
+    "zeioth/nvim-spectre",
     cmd = "Spectre",
     opts = {
       default = {
