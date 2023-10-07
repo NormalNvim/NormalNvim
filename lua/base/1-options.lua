@@ -79,7 +79,7 @@ local options = {
     diagnostics_mode = 3, -- Set code linting (0=off, 1=only show in status line, 2=virtual text off, 3=all on).
     icons_enabled = true, -- Enable icons in the UI (disable if no nerd font is available).
     inlay_hints_enabled = false, -- Enable lsp inlay hints at start.
-    lsp_round_borders = true, -- Enable round borders for lsp hover and signatureHelp.
+    lsp_round_borders_enabled = true, -- Enable round borders for lsp hover and signatureHelp.
     notifications_enabled = true, -- Enable notifications.
     semantic_tokens_enabled = true, -- Enable lsp semantic tokens at start.
     url_effect_enabled = true, -- Highlight URLs with an underline effect.
