@@ -31,7 +31,7 @@ return {
   { "folke/which-key.nvim", version = "^1" },
   { "folke/zen-mode.nvim", commit = "68f554702de63f4b7b6b6d4bcb10178f41a0acc7" },
   { "goolord/alpha-nvim", commit = "712dc1dccd4fd515ef8bd126b3718f79d3e23b0d" },
-  { "hinell/lsp-timeout.nvim", commit = "35b9a4e888df89141da3a2664dbf7e46f6d8fa3c" },
+  { "hinell/lsp-timeout.nvim", commit = "52c66455aac4ece07e63edae0402f1a57470c114" },
   { "hrsh7th/cmp-buffer", commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" },
   { "hrsh7th/cmp-nvim-lsp", commit = "44b16d11215dce86f253ce0c30949813c0a90765" },
   { "hrsh7th/cmp-path", commit = "91ff86cd9c29299a64f968ebb45846c485725f23" },
