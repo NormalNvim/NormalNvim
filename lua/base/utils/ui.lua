@@ -221,9 +221,9 @@ end
 
 --- Toggle URL/URI syntax highlighting rules
 function M.toggle_url_effect()
-  vim.g.highlighturl_enabled = not vim.g.highlighturl_enabled
+  vim.g.url_effect_enabled = not vim.g.url_effect_enabled
   require("base.utils").set_url_effect()
-  utils.notify(string.format("URL effect %s", bool2str(vim.g.highlighturl_enabled)))
+  utils.notify(string.format("URL effect %s", bool2str(vim.g.url_effect_enabled)))
 end
 
 local last_active_foldcolumn

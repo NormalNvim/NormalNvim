@@ -16,9 +16,8 @@ base.default_colorscheme = "tokyonight-night"
 -- define variables -----------------------------------------------------------
 local options = {
   opt = {
-    -- Defaults
-    clipboard = "unnamedplus", -- Connection to the system clipboard.
     breakindent = true, -- Wrap indent to match  line start.
+    clipboard = "unnamedplus", -- Connection to the system clipboard.
     cmdheight = 0, -- hide command line unless needed.
     completeopt = { "menu", "menuone", "noselect" }, -- Options for insert mode completion.
     copyindent = true, -- Copy the previous indentation on autoindenting.
@@ -71,18 +70,19 @@ local options = {
   g = {
     mapleader = " ", -- Set leader key.
     maplocalleader = ",", -- Set default local leader key.
-    autoformat_enabled = false, -- Enable or disable auto formatting at start (lsp.formatting.format_on_save must be enabled).
+
+    autoformat_enabled = false, -- Enable auto formatting at start.
     autopairs_enabled = false, -- Enable autopairs at start.
-    inlay_hints_enabled = false, -- Enable LSP inlay_hints at startup.
-    semantic_tokens_enabled = true, -- Enable LSP semantic tokens on startup.
-    cmp_enabled = true, -- Enable completion at start.
-    codelens_enabled = true, -- Enable or disable automatic codelens refreshing for lsp that support it.
-    diagnostics_mode = 3, -- Set the visibility of diagnostics in the UI (0=off, 1=only show in status line, 2=virtual text off, 3=all on).
-    highlighturl_enabled = true, -- Highlight URLs by default.
-    icons_enabled = true, -- Disable icons in the UI (disable if no nerd font is available).
-    lsp_handlers_enabled = true, -- Enable or disable default vim.lsp.handlers (hover and signatureHelp).
-    notifications_enabled = true, -- nvim notifications enabled/disabled.
     big_file = { size = 1024 * 100, lines = 10000 }, -- For files bigger than this, disable 'treesitter'.
+    cmp_enabled = true, -- Enable completion at start.
+    codelens_enabled = true, -- Enable automatic codelens refreshing for lsp that support it.
+    diagnostics_mode = 3, -- Set code linting (0=off, 1=only show in status line, 2=virtual text off, 3=all on).
+    icons_enabled = true, -- Enable icons in the UI (disable if no nerd font is available).
+    inlay_hints_enabled = false, -- Enable lsp inlay hints at start.
+    lsp_round_borders = true, -- Enable round borders for lsp hover and signatureHelp.
+    notifications_enabled = true, -- Enable notifications.
+    semantic_tokens_enabled = true, -- Enable lsp semantic tokens at start.
+    url_effect_enabled = true, -- Highlight URLs with an underline effect.
   },
   t = vim.t.bufs and vim.t.bufs or { bufs = vim.api.nvim_list_bufs() }, -- initialize buffers for the current tab.
 }
