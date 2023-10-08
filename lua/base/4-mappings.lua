@@ -447,9 +447,6 @@ maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Signcolumn" }
 maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Statusline" }
 maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "CodeLens" }
 maps.n["<leader>un"] = { ui.change_number, desc = "Change line numbering" }
-maps.n["<leader>uN"] =
-{ ui.toggle_ui_notifications, desc = "UI notifications" }
-maps.n["<leader>up"] = { ui.toggle_lsp_signature, desc = "LSP signature" }
 maps.n["<leader>uP"] = { ui.toggle_paste, desc = "Paste mode" }
 maps.n["<leader>us"] = { ui.toggle_spell, desc = "Spellcheck" }
 maps.n["<leader>uS"] = { ui.toggle_conceal, desc = "Conceal" }
@@ -458,7 +455,14 @@ maps.n["<leader>uu"] = { ui.toggle_url_effect, desc = "URL highlight" }
 maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Wrap" }
 maps.n["<leader>uy"] = { ui.toggle_buffer_syntax, desc = "Syntax highlight (buffer)" }
 maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Foldcolumn" }
-maps.n["<leader>uA"] = { ui.toggle_animations, desc = "Animations" }
+maps.n["<leader>uN"] =
+{ ui.toggle_ui_notifications, desc = "UI notifications" }
+if is_available "lsp_signature.nvim" then
+  maps.n["<leader>up"] = { ui.toggle_lsp_signature, desc = "LSP signature" }
+end
+if is_available "mini.animate" then
+  maps.n["<leader>uA"] = { ui.toggle_animations, desc = "Animations" }
+end
 
 -- shifted movement keys ----------------------------------------------------
 maps.n["<S-Down>"] = {
