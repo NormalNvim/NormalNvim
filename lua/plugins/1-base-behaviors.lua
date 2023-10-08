@@ -640,10 +640,16 @@ return {
     event = "User BaseFile",
     opts = function()
       local is_enabled = vim.g.lsp_signature_enabled
+      local round_borders = {}
+      if vim.g.lsp_round_borders_enabled then
+        round_borders = { border = 'rounded' }
+      end
       return {
+
         -- Window mode
         floating_window = is_enabled, -- Dislay it as floating window.
         hi_parameter = "IncSearch",   -- Color to highlight floating window.
+        handler_opts = round_borders, -- Window style
 
         -- Hint mode
         hint_enable = false,          -- Display it as hint.
