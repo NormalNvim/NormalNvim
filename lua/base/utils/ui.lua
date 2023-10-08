@@ -122,9 +122,9 @@ end
 -- @param bufnr? number the buffer to toggle the clients on
 function M.toggle_buffer_inlay_hints(bufnr)
   bufnr = bufnr or 0
-  vim.b[bufnr].inlay_hints_enabled = not vim.b[bufnr].inlay_hints_enabled    -- flip buffer state
-  vim.lsp.buf.inlay_hint(bufnr, vim.b[bufnr].inlay_hints_enabled)            -- apply state
-  utils.notify(string.format("Buffer inlay hints %s", bool2str(vim.b.inlay_hints_enabled)))
+  vim.b[bufnr].inlay_hints_enabled = not vim.b[bufnr].inlay_hints_enabled
+  vim.lsp.inlay_hint(bufnr, vim.b[bufnr].inlay_hints_enabled)
+  utils.notify(string.format("Inlay hints %s", bool2str(vim.b[bufnr].inlay_hints_enabled)))
 end
 
 --- Toggle LSP inlay hints (global)
