@@ -167,12 +167,12 @@ M.on_attach = function(client, bufnr)
     })
     if vim.g.codelens_enabled then vim.lsp.codelens.refresh() end
     lsp_mappings.n["<leader>ll"] = {
-      function() vim.lsp.codelens.refresh() end,
-      desc = "LSP CodeLens refresh",
-    }
-    lsp_mappings.n["<leader>lL"] = {
       function() vim.lsp.codelens.run() end,
       desc = "LSP CodeLens run",
+    }
+    lsp_mappings.n["<leader>lL"] = {
+      function() vim.lsp.codelens.refresh() end,
+      desc = "LSP CodeLens refresh",
     }
   end
 
