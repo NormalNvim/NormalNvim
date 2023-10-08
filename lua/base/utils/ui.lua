@@ -247,6 +247,24 @@ function M.toggle_zen_mode(bufnr)
   vim.cmd "ZenMode"
 end
 
+--- Toggle animations
+function M.toggle_animations()
+  if vim.g.minianimate_disable then
+    vim.g.minianimate_disable = false
+  else
+    vim.g.minianimate_disable = true
+  end
+
+  local state = vim.g.minianimate_disable
+  utils.notify(string.format("animations %s", bool2str(not state)))
+end
+
+--- Toggle lsp signature
+function M.toggle_lsp_signature()
+  local state = require('lsp_signature').toggle_float_win()
+  utils.notify(string.format("lsp signature %s", bool2str(state)))
+end
+
 --- Set the indent and tab related numbers
 function M.set_indent()
   local input_avail, input = pcall(vim.fn.input, "Set indent value (>0 expandtab, <=0 noexpandtab): ")

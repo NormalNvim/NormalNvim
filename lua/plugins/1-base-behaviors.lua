@@ -632,4 +632,26 @@ return {
       end
     end
   },
+
+  -- Show help when writing parameters [auto params help]
+  -- https://github.com/ray-x/lsp_signature.nvim
+  {
+    "Zeioth/lsp_signature.nvim",
+    event = "User BaseFile",
+    opts = function()
+      local is_enabled = vim.g.lsp_signature_enabled
+      return {
+        -- Window mode
+        floating_window = is_enabled, -- Dislay it as floating window.
+        hi_parameter = "IncSearch",   -- Color to highlight floating window.
+
+        -- Hint mode
+        hint_enable = false,          -- Display it as hint.
+        hint_prefix = "👈 "
+
+        -- Aditionally, you can use <space>ui to toggle inlay hints.
+      } end,
+    config = function(_, opts) require'lsp_signature'.setup(opts) end
+  },
+
 }

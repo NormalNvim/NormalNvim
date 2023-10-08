@@ -70,16 +70,18 @@ local options = {
   g = {
     mapleader = " ", -- Set leader key.
     maplocalleader = ",", -- Set default local leader key.
+    big_file = { size = 1024 * 100, lines = 10000 }, -- For files bigger than this, disable 'treesitter'.
 
+    -- All these options are toggleable with <space + l + u>
     autoformat_enabled = false, -- Enable auto formatting at start.
     autopairs_enabled = false, -- Enable autopairs at start.
-    big_file = { size = 1024 * 100, lines = 10000 }, -- For files bigger than this, disable 'treesitter'.
     cmp_enabled = true, -- Enable completion at start.
     codelens_enabled = true, -- Enable automatic codelens refreshing for lsp that support it.
     diagnostics_mode = 3, -- Set code linting (0=off, 1=only show in status line, 2=virtual text off, 3=all on).
     icons_enabled = true, -- Enable icons in the UI (disable if no nerd font is available).
-    inlay_hints_enabled = false, -- Enable lsp inlay hints at start.
+    inlay_hints_enabled = false, -- Enable ayways show function parameter names.
     lsp_round_borders_enabled = true, -- Enable round borders for lsp hover and signatureHelp.
+    lsp_signature_enabled = true, -- Enable automatically showing lsp help as you write function parameters.
     notifications_enabled = true, -- Enable notifications.
     semantic_tokens_enabled = true, -- Enable lsp semantic tokens at start.
     url_effect_enabled = true, -- Highlight URLs with an underline effect.
