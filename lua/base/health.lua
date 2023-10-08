@@ -62,9 +62,9 @@ function M.check()
       msg = "Used by markmap.nvim. Make sure yarn is in your PATH. To learn how check markmap.nvim github page.",
     },
     {
-      cmd = { "rg" },
+      cmd = { "fd" },
       type = "error",
-      msg = "Used for nvim-spectre to find using ripgrep.",
+      msg = "Used for nvim-spectre to find using fd.",
     },
     {
       cmd = { "lazygit" },
@@ -161,6 +161,11 @@ function M.check()
       cmd = { "g++" },
       type = "warn",
       msg = "Used by compiler.nvim to compile C++ (Optional)",
+    },
+    {
+      cmd = { "elixir" },
+      type = "warn",
+      msg = "Used by compiler.nvim to compile elixir (optional)",
     },
     {
       cmd = { "Rscript" },
