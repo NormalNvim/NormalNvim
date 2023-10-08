@@ -170,11 +170,12 @@ M.on_attach = function(client, bufnr)
       function() vim.lsp.codelens.run() end,
       desc = "LSP CodeLens run",
     }
-    lsp_mappings.n["<leader>lL"] = {
-      function() vim.lsp.codelens.refresh() end,
-      desc = "LSP CodeLens refresh",
-    }
   end
+
+  lsp_mappings.n["<leader>lL"] = {
+    function() vim.api.nvim_command(':LspRestart') end,
+    desc = "LSP refresh",
+  }
 
   if client.supports_method "textDocument/declaration" then
     lsp_mappings.n["gD"] = {
