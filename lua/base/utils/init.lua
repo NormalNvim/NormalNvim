@@ -384,7 +384,7 @@ end
 --- Add syntax matching rules for highlighting URLs/URIs.
 function M.set_url_effect()
   M.delete_url_effect()
-  if vim.g.highlighturl_enabled then
+  if vim.g.url_effect_enabled then
     vim.fn.matchadd("HighlightURL", M.url_matcher, 15)
   end
 end
