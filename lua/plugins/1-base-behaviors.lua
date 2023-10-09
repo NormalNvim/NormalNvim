@@ -636,7 +636,7 @@ return {
   -- lsp_signature.nvim [auto params help]
   -- https://github.com/ray-x/lsp_signature.nvim
   {
-    "Zeioth/lsp_signature.nvim",
+    "ray-x/lsp_signature.nvim",
     event = "User BaseFile",
     opts = function()
       -- Apply globals from 1-options.lua
