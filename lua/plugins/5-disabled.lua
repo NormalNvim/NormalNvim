@@ -4,6 +4,7 @@
 return {
 
   -- leetcode.nvim
+  -- https://github.com/kawre/leetcode.nvim
   -- You found an easter egg!
   -- To use it, uncomment this, exit nvim and write "nvim leetcode.nvim"
   -- {
