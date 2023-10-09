@@ -3,4 +3,24 @@
 
 return {
 
+  -- leetcode.nvim
+  -- You found an easter egg!
+  -- To use it, uncomment this, exit nvim and write "nvim leetcode.nvim"
+  -- {
+  --   "kawre/leetcode.nvim",
+  --   event = "VeryLazy",
+  --   dependencies = {
+  --     "nvim-treesitter/nvim-treesitter",
+  --     "nvim-telescope/telescope.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-tree/nvim-web-devicons",
+  --     "rcarriga/nvim-notify",
+  --   },
+  --   opts = {
+  --     lang = "c",
+  --   },
+  --   config = function(_, opts) require("leetcode").setup(opts) end,
+  -- },
+
 }
