@@ -18,7 +18,12 @@ return {
   --     "rcarriga/nvim-notify",
   --   },
   --   opts = {
-  --     lang = "c",
+  --     -- HOW TO ENABLE TYPESCRIPT/JAVASCRIPT LINTING:
+  --     -- * Install the eslint packages:
+  --     -- npm install @typescript-eslint/eslint-plugin @typescript-eslint/parser
+  --     -- * Then copy paste this into ~/.local/share/nvim/leetcode/.eslintrc.json
+  --     -- https://pastebin.com/raw/aQXjpLuE
+  --     lang = "typescript",
   --   },
   --   config = function(_, opts) require("leetcode").setup(opts) end,
   -- },
