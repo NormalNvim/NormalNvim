@@ -254,6 +254,7 @@ return {
             or vim.bo.filetype == "neo-tree"
             or vim.bo.filetype == "mason"
             or vim.bo.filetype == "notify"
+            or vim.bo.filetype == "leetcode.nvim"
           then
             vim.b.miniindentscope_disable = true
           end
