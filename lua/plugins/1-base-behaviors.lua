@@ -204,11 +204,9 @@ return {
       -- Auto save session
       vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
         callback = function ()
-          -- HOTFIX: Disable autosave while there is a nofile buffer open.
-          -- This won't be necessary once this neovim bug is solved.
-          -- https://github.com/neovim/neovim/issues/12242
+          -- Don't save while there's any 'nofile' open.
           for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-            local buftype = vim.api.nvim_buf_get_option(buf, 'buftype')
+            local buftype = vim.api.nvim_get_option_value("buftype", { buf = buf })
             if buftype == 'nofile' then return end
           end
           session_manager.save_current_session()
