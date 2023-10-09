@@ -20,6 +20,7 @@
 --       -> vim-matchup            [Improved % motion]
 --       -> hop.nvim               [go to word visually]
 --       -> nvim-autopairs         [auto close brackets]
+--       -> lsp_signature.nvim     [auto params help]
 
 local windows = vim.fn.has('win32') == 1             -- true if on windows
 local android = vim.fn.isdirectory('/system') == 1   -- true if on android
@@ -633,7 +634,7 @@ return {
     end
   },
 
-  -- Show help when writing parameters [auto params help]
+  -- lsp_signature.nvim [auto params help]
   -- https://github.com/ray-x/lsp_signature.nvim
   {
     "Zeioth/lsp_signature.nvim",
