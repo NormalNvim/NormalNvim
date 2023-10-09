@@ -593,7 +593,6 @@ return {
     cmd = { "HopWord" },
     opts = { keys = "etovxqpdygfblzhckisuran" },
     config = function(_, opts)
-      -- you can configure Hop the way you like here; see :h hop-config
       require("hop").setup(opts)
     end,
   },
