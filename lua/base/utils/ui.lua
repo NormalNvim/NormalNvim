@@ -31,6 +31,8 @@
 --      -> toggle_syntax
 --      -> toggle_url_effect
 --      -> toggle_zen_mode
+--      -> toggle_animations
+--      -> toggle_lsp_signature
 --      -> toggle_foldcolumn
 --      -> toggle_signcolumn
 --      -> set_indent
