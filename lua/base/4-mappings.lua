@@ -558,6 +558,7 @@ if is_available "alpha-nvim" then
       require("alpha").start(false, require("alpha").default_config)
       if is_available "mini.indentscope" then
         vim.b.miniindentscope_disable = true
+        vim.api.nvim_feedkeys('<Right>', 'n', true) -- force screen update
       end
     end,
     desc = "Home screen",
