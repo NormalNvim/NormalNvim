@@ -247,16 +247,27 @@ return {
       require("mini.indentscope").setup(opts)
 
       -- Disable for certain filetypes
-      vim.api.nvim_create_autocmd({ "User AlphaReady", "BufEnter" }, {
+      vim.api.nvim_create_autocmd({ "FileType" }, {
         desc = "Disable indentscope for certain filetypes",
-        callback = function()
-          if vim.bo.filetype == "alpha"
-            or vim.bo.filetype == "neo-tree"
-            or vim.bo.filetype == "mason"
-            or vim.bo.filetype == "notify"
-            or vim.bo.filetype == "leetcode.nvim"
-          then
-            vim.b.miniindentscope_disable = true
+        callback = function(event)
+          local ignore_filetypes = {
+            "alpha", -- also see alpha keymapping
+            "aerial",
+            "dashboard",
+            "help",
+            "lazy",
+            "leetcode.nvim",
+            "mason",
+            "neo-tree",
+            "NvimTree",
+            "neogitstatus",
+            "notify",
+            "startify",
+            "toggleterm",
+            "Trouble"
+          }
+          if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
+            vim.b[event.buf].miniindentscope_disable = true
           end
         end,
       })
