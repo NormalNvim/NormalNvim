@@ -37,8 +37,8 @@
 --       -> neotest.nvim                   [unit testing]
 --       -> nvim-coverage                  [code coverage]
 
---       ## NOT INSTALLED
---       -> distant.nvim                   [ssh to edit in a remote machine]
+--       ## LANGUAGE IMPROVEMENTS
+--       -> guttentags_plus                [auto generate C/C++ tags]
 
 local get_icon = require("base.utils").get_icon
 local windows = vim.fn.has('win32') == 1 -- true if on windows
@@ -680,7 +680,7 @@ return {
     },
   },
 
-  --  TESTING ----------------------------------------------------------------
+  --  TESTING -----------------------------------------------------------------
   --  Run tests inside of nvim [unit testing]
   --  https://github.com/nvim-neotest/neotest
   --
@@ -761,5 +761,30 @@ return {
     config = function() require("coverage").setup() end,
     requires = { "nvim-lua/plenary.nvim" },
   },
+
+  --  LANGUAGE IMPROVEMENTS ---------------------------------------------------
+  -- guttentags_plus [auto generate C/C++ tags]
+  -- https://github.com/skywind3000/gutentags_plus
+  -- This plugin is necessary for using <C-]> (go to ctag).
+  {
+    "skywind3000/gutentags_plus",
+    event = "VeryLazy",
+    dependencies = { "ludovicchabant/vim-gutentags" },
+    init = function()
+      vim.g.gutentags_plus_nomap = 1
+      vim.g.gutentags_resolve_symlinks = 1
+      vim.g.gutentags_cache_dir = vim.fn.stdpath "cache" .. "/tags"
+      vim.api.nvim_create_autocmd("FileType", {
+        desc = "Auto generate C/C++ tags",
+        callback = function()
+          local is_c = vim.bo.filetype == "c" or vim.bo.filetype == "cpp"
+          if is_c then vim.g.gutentags_enabled = 1
+          else vim.g.gutentags_enabled = 0
+          end
+        end,
+      })
+    end,
+  }
+
 
 }
