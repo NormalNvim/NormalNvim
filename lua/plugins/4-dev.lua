@@ -40,9 +40,6 @@
 --       ## LANGUAGE IMPROVEMENTS
 --       -> guttentags_plus                [auto generate C/C++ tags]
 
---       ## NOT INSTALLED
---       -> distant.nvim                   [ssh to edit in a remote machine]
-
 local get_icon = require("base.utils").get_icon
 local windows = vim.fn.has('win32') == 1 -- true if on windows
 return {
