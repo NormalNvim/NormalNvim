@@ -251,7 +251,6 @@ return {
         desc = "Disable indentscope for certain filetypes",
         callback = function()
           local ignore_filetypes = {
-            "alpha", -- also see alpha keymapping
             "aerial",
             "dashboard",
             "help",
