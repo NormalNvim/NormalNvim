@@ -556,10 +556,7 @@ if is_available "alpha-nvim" then
         vim.fn.win_gotoid(wins[2]) -- go to non-neo-tree window to toggle alpha
       end
       require("alpha").start(false, require("alpha").default_config)
-      if is_available "mini.indentscope" then
-        vim.b.miniindentscope_disable = true
-        vim.api.nvim_feedkeys('<Right>', 'n', true) -- force screen update
-      end
+      vim.b.miniindentscope_disable = true
     end,
     desc = "Home screen",
   }
