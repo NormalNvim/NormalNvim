@@ -548,8 +548,7 @@ if is_available "alpha-nvim" then
   maps.n["<leader>h"] = {
     function()
       local wins = vim.api.nvim_tabpage_list_wins(0)
-      if
-          #wins > 1
+      if #wins > 1
           and vim.api.nvim_get_option_value("filetype", { win = wins[1] })
           == "neo-tree"
       then
