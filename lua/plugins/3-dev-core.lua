@@ -328,17 +328,10 @@ return {
   --  https://github.com/folke/neodev.nvim
   {
     "folke/neodev.nvim",
-    opts = {
-      override = function(root_dir, library)
-        for _, base_config in ipairs(base.supported_configs) do
-          if root_dir:match(base_config) then
-            library.plugins = true
-            break
-          end
-        end
-        vim.b.neodev_enabled = library.enabled
-      end,
-    },
+    opts = {},
+    config = function(_, opts)
+      require("neodev").setup(opts)
+    end,
   },
 
   --  AUTO COMPLETION --------------------------------------------------------
