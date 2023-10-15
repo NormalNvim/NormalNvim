@@ -311,6 +311,10 @@ return {
     event = "User BaseFile",
     opts = function()
       local nls = require "null-ls"
+
+      -- Disable servers manually here
+      require("null-ls").disable("shellcheck")
+
       return {
         sources = {
           -- You can customize your formatters here.
@@ -318,6 +322,8 @@ return {
             command = "beautysh",
             args = { "--indent-size=2", "$FILENAME" },
           },
+          -- Shellcheck - Enable only code actions (for linting we use bashls)
+          nls.builtins.code_actions.shellcheck,
         },
         on_attach = require("base.utils.lsp").on_attach,
       }
