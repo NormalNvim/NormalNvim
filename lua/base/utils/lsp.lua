@@ -446,6 +446,9 @@ function M.config(server_name)
     pcall(require, "neodev")
     lsp_opts.settings = { Lua = { workspace = { checkThirdParty = false } } }
   end
+  if server_name == "bashls" then -- by default use mason shellcheck path
+    lsp_opts.settings = { bashIde = { shellcheckPath = vim.fn.stdpath "data" .. "/mason/bin/shellcheck" } }
+  end
   local opts = lsp_opts
   local old_on_attach = server.on_attach
   opts.on_attach = function(client, bufnr)
