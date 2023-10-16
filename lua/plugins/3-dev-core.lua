@@ -311,10 +311,6 @@ return {
     event = "User BaseFile",
     opts = function()
       local nls = require "null-ls"
-
-      -- Disable servers manually here
-      require("null-ls").disable("shellcheck")
-
       return {
         sources = {
           -- You can customize your formatters here.
@@ -322,12 +318,27 @@ return {
             command = "beautysh",
             args = { "--indent-size=2", "$FILENAME" },
           },
-          -- Shellcheck - Enable only code actions (for linting we use bashls)
+          -- TODO: Delete the next line once this has been merged.
+          -- https://github.com/bash-lsp/bash-language-server/issues/933
           nls.builtins.code_actions.shellcheck,
+          nls.builtins.diagnostics.shellcheck.with { diagnostics_format = "" },
         },
         on_attach = require("base.utils.lsp").on_attach,
       }
     end,
+    config = function(_, opts)
+      local nls = require "null-ls"
+      nls.setup(opts)
+
+      -- When running :LspStart, ensure null-ls starts too
+      vim.api.nvim_create_autocmd({ "LspAttach" }, {
+        desc = "Start null-ls when starting a lsp client",
+        callback = function()
+          pcall(function() require("null-ls").enable({}) end)
+        end,
+      })
+
+    end
   },
 
   --  neodev.nvim [lsp for nvim lua api]
