@@ -141,7 +141,7 @@ M.on_attach = function(client, bufnr)
     lsp_mappings.n["<leader>li"] = { "<cmd>LspInfo<cr>", desc = "LSP information" }
   end
 
-  if is_available "null-ls.nvim" then
+  if is_available "none-ls.nvim" then
     lsp_mappings.n["<leader>lI"] = { "<cmd>NullLsInfo<cr>", desc = "Null-ls information" }
   end
 
