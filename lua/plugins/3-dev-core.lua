@@ -318,7 +318,7 @@ return {
             command = "beautysh",
             args = { "--indent-size=2", "$FILENAME" },
           },
-          -- TODO: Delete the next line once this has been merged.
+          -- TODO: Disable the next feature once this has been merged.
           -- https://github.com/bash-lsp/bash-language-server/issues/933
           nls.builtins.code_actions.shellcheck,
           nls.builtins.diagnostics.shellcheck.with { diagnostics_format = "" },
