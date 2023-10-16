@@ -318,7 +318,7 @@ return {
             command = "beautysh",
             args = { "--indent-size=2", "$FILENAME" },
           },
-          -- TODO: Delete the next line once this has been merged.
+          -- TODO: Disable the next feature once this has been merged.
           -- https://github.com/bash-lsp/bash-language-server/issues/933
           nls.builtins.code_actions.shellcheck,
           nls.builtins.diagnostics.shellcheck.with { diagnostics_format = "" },
@@ -330,9 +330,9 @@ return {
       local nls = require "null-ls"
       nls.setup(opts)
 
-      -- When running :LspStart, ensure null-ls starts too
+      -- Ensure null-ls start its sources a lsp client starts.
       vim.api.nvim_create_autocmd({ "LspAttach" }, {
-        desc = "Start null-ls when starting a lsp client",
+        desc = "Ensure null-ls start its sources a lsp client starts",
         callback = function()
           pcall(function() require("null-ls").enable({}) end)
         end,
