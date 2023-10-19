@@ -50,7 +50,7 @@ return {
   { "mfussenegger/nvim-dap", version = "^0.7" },
   { "mfussenegger/nvim-jdtls", commit = "095dc490f362adc85be66dc14bd9665ddd94413b" },
   { "mrjones2014/smart-splits.nvim", version = "^1" },
-  { "neovim/nvim-lspconfig", commit = "360a895125ac4f39df6aa8f763635eff07e69fff" },
+  { "neovim/nvim-lspconfig", commit = "e49b1e90c1781ce372013de3fa93a91ea29fc34a" },
   { "numToStr/Comment.nvim", commit = "0236521ea582747b58869cb72f70ccfa967d2e89" },
   { "nvim-lua/plenary.nvim", version = "^0.1" },
   { "nvim-neo-tree/neo-tree.nvim", version = "^3" },
