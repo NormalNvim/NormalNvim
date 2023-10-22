@@ -9,7 +9,7 @@ return {
   -- To use it, uncomment this, exit nvim and write "nvim leetcode.nvim"
   -- {
   --   "kawre/leetcode.nvim",
-  --   event = "VeryLazy",
+  --   lazy = false,
   --   dependencies = {
   --     "nvim-treesitter/nvim-treesitter",
   --     "nvim-telescope/telescope.nvim",
@@ -27,7 +27,12 @@ return {
   --     -- https://pastebin.com/raw/aQXjpLuE
   --     lang = "typescript",
   --   },
-  --   config = function(_, opts) require("leetcode").setup(opts) end,
+  --   config = function(_, opts)
+  --     -- Require it only if neovim starts with the argument 'leetcode.nvim'
+  --     if vim.tbl_contains(vim.fn.argv(), 'leetcode.nvim') then
+  --       require("leetcode").setup(opts)
+  --     end
+  --   end,
   -- },
 
 }
