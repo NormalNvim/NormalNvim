@@ -183,7 +183,7 @@ return {
     },
   },
 
-  -- Session management [session]
+  -- session-manager [session]
   -- https://github.com/Shatur/neovim-session-manager
   {
     "Shatur/neovim-session-manager",
