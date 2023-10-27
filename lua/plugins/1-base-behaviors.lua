@@ -478,6 +478,7 @@ return {
             Y = "copy_selector",
             h = "parent_or_close",
             l = "child_or_open",
+          },
         },
         filesystem = {
           follow_current_file = {
