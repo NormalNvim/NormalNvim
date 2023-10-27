@@ -80,7 +80,7 @@ return {
   { "smoka7/hop.nvim", commit = "5681edd36cf858c821826178e77af78463c1c281" },
   { "stevearc/aerial.nvim", version = "^1" },
   { "stevearc/dressing.nvim", version = "^3" },
-  { "stevearc/overseer.nvim", version = "^1.4.0" },
+  { "stevearc/overseer.nvim", commit = "5e8498131867cd1b7c676ecdd1382ab2fd347dde" },
   { "stevearc/stickybuf.nvim", commit = "e3db41f2c1bb2df3ee6ff964ee74fe991f6f9566" },
   { "tpope/vim-fugitive", commit = "6fcb0ad03982de646e3fecb6915e585651b9a9fb" },
   { "tpope/vim-rhubarb", commit = "ee69335de176d9325267b0fd2597a22901d927b1" },

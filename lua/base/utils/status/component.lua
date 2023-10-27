@@ -449,6 +449,23 @@ function M.lsp(opts)
   )
 end
 
+--- A function to build a set of children components for a git branch section
+---@param opts? table options for configuring git branch and the overall padding
+---@return table # The Heirline component table
+-- @usage local heirline_component = require("astroui.status").component.git_branch()
+function M.virtual_env(opts)
+  opts = extend_tbl({
+    virtual_env = { icon = { kind = "Environment", padding = { right = 1 } } },
+    surround = {
+      separator = "right",
+      color = "virtual_env_bg",
+      condition = condition.has_virtual_env,
+    },
+    hl = hl.get_attributes "virtual_env",
+  }, opts)
+  return M.builder(status_utils.setup_providers(opts, { "virtual_env" }))
+end
+
 --- A function to build a set of components for a foldcolumn section in a statuscolumn.
 ---@param opts? table options for configuring foldcolumn and the overall padding.
 ---@return table # The Heirline component table.

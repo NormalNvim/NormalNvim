@@ -14,6 +14,7 @@ return {
   DiagnosticInfo = "i",
   DiagnosticWarn = "!",
   Ellipsis = "...",
+  Environment = "Env:",
   FileModified = "*",
   FileReadOnly = "[lock]",
   FoldClosed = "+",

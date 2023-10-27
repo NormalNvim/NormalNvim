@@ -18,6 +18,7 @@ return {
   DiagnosticInfo = "󰋼",
   DiagnosticWarn = "",
   Ellipsis = "…",
+  Environment = "",
   FileNew = "",
   FileModified = "",
   FileReadOnly = "",

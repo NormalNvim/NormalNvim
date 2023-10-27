@@ -478,16 +478,6 @@ return {
             Y = "copy_selector",
             h = "parent_or_close",
             l = "child_or_open",
-            o = "open",
-            ["f"] = function()
-              vim.api.nvim_exec("Neotree focus filesystem left", true)
-            end,
-            ["b"] = function()
-              vim.api.nvim_exec("Neotree focus buffers left", true)
-            end,
-            ["g"] = function()
-              vim.api.nvim_exec("Neotree focus git_status left", true)
-            end,
           },
         },
         filesystem = {

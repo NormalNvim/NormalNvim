@@ -78,6 +78,7 @@ M.attributes = {
   macro_recording = { bold = true },
   git_branch = { bold = true },
   git_diff = { bold = true },
+  virtual_env = { bold = true }
 }
 
 M.icon_highlights = {
