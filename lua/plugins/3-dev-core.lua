@@ -330,7 +330,7 @@ return {
       local nls = require "null-ls"
       nls.setup(opts)
 
-      -- Ensure null-ls start its sources a lsp client starts.
+      -- Ensure null-ls start its sources when a lsp client starts.
       vim.api.nvim_create_autocmd({ "LspAttach" }, {
         desc = "Ensure null-ls start its sources a lsp client starts",
         callback = function()

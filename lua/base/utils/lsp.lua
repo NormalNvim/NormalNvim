@@ -145,6 +145,7 @@ M.on_attach = function(client, bufnr)
     lsp_mappings.n["<leader>lI"] = { "<cmd>NullLsInfo<cr>", desc = "Null-ls information" }
   end
 
+  -- TODO: Remove jdtls once it supports "textDocument/codeAction"
   if client.supports_method "textDocument/codeAction"
      or client.name == "jdtls" then
     lsp_mappings.n["<leader>la"] = {
@@ -354,8 +355,6 @@ M.on_attach = function(client, bufnr)
       client.server_capabilities.semanticTokensProvider = nil
     end
   end
-
-
 
   if is_available "telescope.nvim" then -- setup telescope mappings if available
     if lsp_mappings.n.gd then lsp_mappings.n.gd[1] = function() require("telescope.builtin").lsp_definitions() end end
