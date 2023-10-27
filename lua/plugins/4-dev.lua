@@ -581,6 +581,20 @@ return {
       -- dap.configurations.typescriptreact = dap.configurations.typescript
       -- dap.configurations.javascriptreact = dap.configurations.typescript
 
+      -- PHP
+      dap.adapters.php = {
+        type = 'executable',
+        command = vim.fn.stdpath("data") .. '/mason/bin/php-debug-adapter',
+      }
+      dap.configurations.php = {
+        {
+          type = 'php',
+          request = 'launch',
+          name = 'Listen for Xdebug',
+          port = 9000
+        }
+      }
+
       -- Shell
       dap.adapters.bashdb = {
         type = 'executable';
@@ -781,7 +795,6 @@ return {
         end,
       })
     end,
-  }
-
+  },
 
 }
