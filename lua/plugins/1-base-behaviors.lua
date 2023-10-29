@@ -202,16 +202,15 @@ return {
       session_manager.setup(opts)
 
       -- Auto save session
-      vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-        callback = function ()
-          -- Don't save while there's any 'nofile' open.
-          for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-            local buftype = vim.api.nvim_get_option_value("buftype", { buf = buf })
-            if buftype == 'nofile' then return end
-          end
-          session_manager.save_current_session()
-        end
-      })
+      -- BUG: Temporary disabled until this neovim bux is fixed.
+      --      Until then, please manage your session manually.
+      --      https://github.com/neovim/neovim/issues/12242
+      --
+      -- vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+      --   callback = function ()
+      --     session_manager.save_current_session()
+      --   end
+      -- })
     end
   },
 
