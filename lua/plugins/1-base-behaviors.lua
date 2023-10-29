@@ -202,13 +202,14 @@ return {
       session_manager.setup(opts)
 
       -- Auto save session
+      -- BUG: This feature will auto-close anything nofile before saving.
+      --      This include neotree, aerial, mergetool, among others.
+      --      Consider commenting the next block if this is important for you.
+      --
+      --      This won't be necessary once neovim fixes:
+      --      https://github.com/neovim/neovim/issues/12242
       vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
         callback = function ()
-          -- Don't save while there's any 'nofile' open.
-          for _, buf in ipairs(vim.api.nvim_list_bufs()) do
-            local buftype = vim.api.nvim_get_option_value("buftype", { buf = buf })
-            if buftype == 'nofile' then return end
-          end
           session_manager.save_current_session()
         end
       })
