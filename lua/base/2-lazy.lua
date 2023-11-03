@@ -11,7 +11,7 @@
 --      -> setup using spec      → actual setup.
 
 
--- This collection is used to lock plugin versions.
+-- This table is used to lock plugin versions.
 --  To do so run ':NvimFreezePluginVersions'.
 --  Please don't manually delete ../lazy_snapshot.lua or you will get errors.
 base.updater = {
@@ -20,7 +20,7 @@ base.updater = {
   rollback_file = vim.fn.stdpath "cache" .. "/rollback.lua",
 
   -- You can update your nvim config from your repo by using ':NvimUpdateConfig'.
-  -- This comes handy if you use nivm in more than one device.
+  -- This comes handy if you use nvim in more than one device.
   -- You can use 'stable_version_release' to specify the version to install.
   -- If nil, :NvimUpdateConfig will use the latest available tag release of your
   -- git repository, starting by 'v', for example, "v1.0"
@@ -29,7 +29,7 @@ base.updater = {
 
 -- lazyload extra behavior
 --  * If plugins need to be installed → auto lanch lazy at startup.
---  * When lazy finithes updating     → check for mason updates too.
+--  * When lazy finishes updating     → check for mason updates too.
 --  * Then show notifications and stuff.
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 local luv = vim.uv or vim.loop

@@ -232,11 +232,17 @@ return {
     event = "User BaseFile",
     init = function()
       vim.g["lsp-timeout-config"] = {
-        stopTimeout = 1000*60*10, -- Stop unused lsp servers after 10 min.
-        startTimeout = 2000, -- Force server restart if nvim can't in 2s.
-        silent = true -- Notifications disabled
+        stopTimeout = 1000*60*10,        -- Stop unused lsp servers after 10 min.
+        startTimeout = 2000,             -- Force server restart if nvim can't in 2s.
+        silent = true,                   -- Notifications disabled
+        filetypes = {                    -- Exclude servers that miss behave on LSP stop/start.
+          ignore = {
+            'markdown',
+            'java'
+          }
+        },
       }
-    end
+    end,
   },
 
   --  mason [lsp package manager]
