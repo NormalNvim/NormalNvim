@@ -10,7 +10,7 @@
 
 --       ## LSP
 --       -> nvim-lspconfig                 [lsp config]
---       -> lsp-timeout                    [lsp garbage collector]
+--       -> garbage-day                    [lsp garbage collector]
 --       -> mason.nvim                     [lsp package manager]
 --       -> SchemaStore.nvim               [lsp schema manager]
 --       -> null-ls                        [lsp code formatting]
@@ -223,26 +223,20 @@ return {
     end,
   },
 
-  --  lsp-timeout [lsp garbage collector]
-  --  https://github.com/hinell/lsp-timeout.nvim
-  --  Stop inactive lsp servers until the buffer recover the focus.
+  --  garbage-day.nvim
+  --  https://github.com/zeioth/garbage-day.nvim
+  --  LSP garbage collector.
   {
-    "hinell/lsp-timeout.nvim",
-    dependencies={ "neovim/nvim-lspconfig" },
+    "zeioth/garbage-day.nvim",
     event = "User BaseFile",
-    init = function()
-      vim.g["lsp-timeout-config"] = {
-        stopTimeout = 1000*60*10,        -- Stop unused lsp servers after 10 min.
-        startTimeout = 2000,             -- Force server restart if nvim can't in 2s.
-        silent = true,                   -- Notifications disabled
-        filetypes = {                    -- Exclude servers that miss behave on LSP stop/start.
-          ignore = {
-            'markdown',
-            'java'
-          }
-        },
-      }
-    end,
+    opts = {
+      grace_period = (60*15), -- seconds after the cursor leave nvim.
+      excluded_languages = {  -- ignore languages which LSP server miss behave.
+        "java", "markdown"
+      },
+      stop_invisible = true,  -- also stop LSP for bufs not in a visible window.
+      notifications = false
+    }
   },
 
   --  mason [lsp package manager]
@@ -332,19 +326,6 @@ return {
         on_attach = require("base.utils.lsp").on_attach,
       }
     end,
-    config = function(_, opts)
-      local nls = require "null-ls"
-      nls.setup(opts)
-
-      -- Ensure null-ls start its sources when a lsp client starts.
-      vim.api.nvim_create_autocmd({ "LspAttach" }, {
-        desc = "Ensure null-ls start its sources a lsp client starts",
-        callback = function()
-          pcall(function() require("null-ls").enable({}) end)
-        end,
-      })
-
-    end
   },
 
   --  neodev.nvim [lsp for nvim lua api]
