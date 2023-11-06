@@ -110,4 +110,5 @@ Originally it took AstroNvim as base. But implements [this VIM config](https://g
 Special thanks to LeoRed04 for designing the logo.
 
 ## Roadmap
+* Once nvim 0.10 is oficially released, replace `get_active_clients` by `get_clients`.
 * Creating a landing page.
