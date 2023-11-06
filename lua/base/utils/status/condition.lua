@@ -122,7 +122,7 @@ function M.aerial_available() return package.loaded["aerial"] end
 function M.lsp_attached(bufnr)
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
   return package.loaded["base.utils.lsp"]
-      and next(vim.lsp.get_clients { bufnr = bufnr or 0 }) ~= nil
+      and next(vim.lsp.get_active_clients { bufnr = bufnr or 0 }) ~= nil
 end
 
 --- A condition function if treesitter is in use.
