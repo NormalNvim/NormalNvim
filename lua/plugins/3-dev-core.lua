@@ -231,7 +231,7 @@ return {
     event = "User BaseFile",
     opts = {
       grace_period = (60*15), -- seconds after the cursor leave nvim.
-      excluded_languages = {  -- ignore languages which LSP server miss behave.
+      excluded_filetypes = {  -- ignore languages which LSP server miss behave.
         "java", "markdown"
       },
       stop_invisible = true,  -- also stop LSP for bufs not in a visible window.
