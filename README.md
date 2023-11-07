@@ -11,9 +11,9 @@
 
 
 Tokyo Night (Night) theme by default
-![screenshot_2023-05-27_16-41-26_120206834](https://github.com/Zeioth/NormalNvim/assets/3357792/8f3b76c8-3ceb-4b8d-a0e1-50f73c94eb00)
+![screenshot_2023-05-27_16-41-26_120206834](https://github.com/NormalNvim/NormalNvim/assets/3357792/8f3b76c8-3ceb-4b8d-a0e1-50f73c94eb00)
 
-The space key shows [all you can do](https://github.com/Zeioth/NormalNvim/wiki/basic-mappings)
+The space key shows [all you can do](https://github.com/NormalNvim/NormalNvim/wiki/basic-mappings)
 ![screenshot_2023-06-14_11-41-03_398515538](https://github.com/NormalNvim/NormalNvim/assets/3357792/af73f0b2-b56e-47d8-9bb8-f68b76e4b577)
 
 
@@ -51,7 +51,7 @@ __You are expected to fork the project before cloning it. So you are the only on
 
 > This is not a distro you are expected to update often from upstream. It is meant to be used as a base to create your own distro.
 
-[NormalNvim](https://github.com/Zeioth/NormalNvim) won't be the next [/r/UnixPorn](https://www.reddit.com/r/unixporn/) sensation. It is a normal nvim config you can trust 100% will never unexpectedly break while you are working. Nothing flashy. Nothing brightful. Just bread and butter.
+[NormalNvim](https://github.com/NormalNvim/NormalNvim) won't be the next [/r/UnixPorn](https://www.reddit.com/r/unixporn/) sensation. It is a normal nvim config you can trust 100% will never unexpectedly break while you are working. Nothing flashy. Nothing brightful. Just bread and butter.
 
 ## Commands
 
@@ -67,7 +67,7 @@ __You are expected to fork the project before cloning it. So you are the only on
 | **:CloseNotificaitons** | Close all notifications. This is automatically triggered by default when writting a buffer. |
 | **:NvimVersion** | Prints the commit number of the current NormalNvim version. |
 
-For more info, [read the wiki](https://github.com/Zeioth/NormalNvim/wiki).
+For more info, [read the wiki](https://github.com/NormalNvim/NormalNvim/wiki).
 
 ## FAQ
 Please before opening an issue, check the [astrocommunity](https://github.com/AstroNvim/astrocommunity) repo where you can find help about how to install and configure most plugins.
@@ -91,7 +91,7 @@ OPENAI_API_KEY="my_key_here"
 
 * **What scenarios are not covered by this distro?**
   * **Kubernetes**: We do not provide a kubernetes plugin. But we recommend using friendly-snippets, to quickly write code, and [overseer.nvim](https://github.com/stevearc/overseer.nvim) to run kubernetes commands from inside nvim without having to wait for the server response.
-  * **e2e testing**: We do not provide an e2e plugin. But we do provide the :TestNodejsE2e command you can customize on [/lua/base/3-autocmds.lua](https://github.com/Zeioth/NormalNvim/blob/main/lua/base/3-autocmds.lua) along with all the other testing commands. You can also rename the commands to anything you want in case you don't use nodejs.
+  * **e2e testing**: We do not provide an e2e plugin. But we do provide the :TestNodejsE2e command you can customize on [/lua/base/3-autocmds.lua](https://github.com/NormalNvim/NormalNvim/blob/main/lua/base/3-autocmds.lua) along with all the other testing commands. You can also rename the commands to anything you want in case you don't use nodejs.
 
 ## 🌟 Support the project
 If you want to help me, please star this repository to increase the visibility of the project.
