@@ -230,11 +230,11 @@ return {
     "zeioth/garbage-day.nvim",
     event = "User BaseFile",
     opts = {
-      grace_period = (60*15), -- seconds after the cursor leave nvim.
-      excluded_filetypes = {  -- ignore languages which LSP server miss behave.
-        "java", "markdown"
+      grace_period = (60*15),  -- seconds after the cursor leave nvim.
+      excluded_lsp_clients = { -- ignore LSP clients that could miss behave.
+        "null-ls", "jdtls"
       },
-      stop_invisible = false,  -- also stop LSP for bufs not in a visible window.
+      stop_invisible = false,  -- aggressive mode.
       notifications = false
     }
   },
