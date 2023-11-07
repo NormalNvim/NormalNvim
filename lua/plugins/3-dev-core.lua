@@ -234,7 +234,7 @@ return {
       excluded_filetypes = {  -- ignore languages which LSP server miss behave.
         "java", "markdown"
       },
-      stop_invisible = true,  -- also stop LSP for bufs not in a visible window.
+      stop_invisible = false,  -- also stop LSP for bufs not in a visible window.
       notifications = false
     }
   },
