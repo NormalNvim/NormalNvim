@@ -234,7 +234,7 @@ return {
       excluded_lsp_clients = {
         "jdtls"
       },
-      grace_period = 3,
+      grace_period = (60*15),
       notifications = false,
       retries = 4,
     }
