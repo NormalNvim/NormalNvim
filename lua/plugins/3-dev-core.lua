@@ -230,12 +230,13 @@ return {
     "zeioth/garbage-day.nvim",
     event = "User BaseFile",
     opts = {
-      grace_period = (60*15),  -- seconds after the cursor leave nvim.
-      excluded_lsp_clients = { -- ignore LSP clients that could miss behave.
-        "null-ls", "jdtls"
+      aggressive_mode = true,
+      excluded_lsp_clients = {
+        "jdtls"
       },
-      stop_invisible = false,  -- aggressive mode.
-      notifications = false
+      grace_period = 3,
+      notifications = false,
+      retries = 4,
     }
   },
 
