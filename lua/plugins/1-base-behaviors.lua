@@ -318,7 +318,7 @@ return {
     },
   },
 
-  -- neotree
+  -- [neotree]
   -- https://github.com/nvim-neo-tree/neo-tree.nvim
   {
     "nvim-neo-tree/neo-tree.nvim",
