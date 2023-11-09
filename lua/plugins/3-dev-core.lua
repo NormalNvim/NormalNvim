@@ -234,6 +234,7 @@ return {
         "null-ls", "jdtls"
       },
       grace_period = (60*5),
+      wakeup_delay = 0,
       notifications = false,
       retries = 3,
       timeout = 100,
