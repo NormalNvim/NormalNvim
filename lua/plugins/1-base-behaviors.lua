@@ -318,7 +318,7 @@ return {
     },
   },
 
-  -- neotree
+  -- [neotree]
   -- https://github.com/nvim-neo-tree/neo-tree.nvim
   {
     "nvim-neo-tree/neo-tree.nvim",
@@ -578,7 +578,7 @@ return {
   },
 
   --  hop.nvim [go to word visually]
-  --  https://github.com/phaazon/hop.nvim
+  --  https://github.com/smoka7/hop.nvim
   {
     "smoka7/hop.nvim",
     cmd = { "HopWord" },
