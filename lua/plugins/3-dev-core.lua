@@ -232,11 +232,12 @@ return {
     opts = {
       aggressive_mode = true,
       excluded_lsp_clients = {
-        "jdtls"
+        "null-ls", "jdtls"
       },
-      grace_period = (60*15),
+      grace_period = (60*5),
       notifications = false,
-      retries = 4,
+      retries = 3,
+      timeout = 100,
     }
   },
 
