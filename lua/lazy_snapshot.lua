@@ -24,7 +24,7 @@ return {
   { "dense-analysis/neural", commit = "05b59bccc8c6cff8068e54e9b8a4c13cd1d80059" },
   { "echasnovski/mini.animate", commit = "230140aa0b06af87c9d345573aab1aaf50d8b539" },
   { "echasnovski/mini.bufremove", commit = "7821606e35c1ac931b56d8e3155f45ffe76ee7e5" },
-  { "echasnovski/mini.indentscope", commit = "f60e9b51a6214c73a170ffc5445ce91560981031" },
+  { "echasnovski/mini.indentscope", commit = "c8fdafa7bf603d758986a27eb546c55a5c73b1a3" },
   { "folke/lazy.nvim", version = "^10" },
   { "folke/neodev.nvim", version = "^3" },
   { "folke/noice.nvim", commit = "e50fc6de68333633fa9eaaa54cb4cdfe7de5f25a" },

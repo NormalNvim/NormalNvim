@@ -38,6 +38,7 @@ return {
   --   This way you can install and use 'ranger' and its dependency 'pynvim'.
   {
     "kevinhwang91/rnvimr",
+    event = "VeryLazy",
     cmd = { "RnvimrToggle" },
     enabled = not windows,
     config = function(_, opts)
