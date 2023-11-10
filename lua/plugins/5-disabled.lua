@@ -9,7 +9,6 @@ return {
   -- To use it, uncomment this, exit nvim and write "nvim leetcode.nvim"
   -- {
   --   "kawre/leetcode.nvim",
-  --   lazy = false,
   --   dependencies = {
   --     "nvim-treesitter/nvim-treesitter",
   --     "nvim-telescope/telescope.nvim",
@@ -18,6 +17,12 @@ return {
   --     "nvim-tree/nvim-web-devicons",
   --     "rcarriga/nvim-notify",
   --   },
+  --   init = function(_, opts)
+  --     -- Ensure we require
+  --     if vim.tbl_contains(vim.fn.argv(), 'leetcode.nvim') then
+  --       require("leetcode").setup(opts)
+  --     end
+  --   end,
   --   opts = {
   --     -- HOW TO ENABLE TYPESCRIPT/JAVASCRIPT LINTING FOR THIS PLUGIN
   --     -- -----------------------------------------------------------
@@ -27,12 +32,6 @@ return {
   --     -- https://pastebin.com/raw/aQXjpLuE
   --     lang = "typescript",
   --   },
-  --   config = function(_, opts)
-  --     -- Require it only if neovim starts with the argument 'leetcode.nvim'
-  --     if vim.tbl_contains(vim.fn.argv(), 'leetcode.nvim') then
-  --       require("leetcode").setup(opts)
-  --     end
-  --   end,
   -- },
 
 }
