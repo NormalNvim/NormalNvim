@@ -18,7 +18,7 @@ return {
   --     "rcarriga/nvim-notify",
   --   },
   --   init = function(_, opts)
-  --     -- Ensure we require
+  --     -- Require only when needed
   --     if vim.tbl_contains(vim.fn.argv(), 'leetcode.nvim') then
   --       require("leetcode").setup(opts)
   --     end
