@@ -111,4 +111,5 @@ Special thanks to LeoRed04 for designing the logo.
 
 ## Roadmap
 * Once nvim 0.10 is oficially released, replace `get_active_clients` by `get_clients`.
+* During 2024, add a toolbar for [Compiler.nvim](https://github.com/Zeioth/compiler.nvim) so users have a button to compile and manage their build automation utilities and current build_type in a friendly way.
 * Creating a landing page.
