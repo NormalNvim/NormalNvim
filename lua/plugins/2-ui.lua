@@ -250,7 +250,7 @@ return {
       vim.api.nvim_create_autocmd({ "FileType" }, {
         desc = "Disable indentscope for certain filetypes",
         callback = function()
-          local ignore_filetypes = {
+          local ignored_filetypes = {
             "aerial",
             "dashboard",
             "help",
@@ -265,7 +265,7 @@ return {
             "toggleterm",
             "Trouble"
           }
-          if vim.tbl_contains(ignore_filetypes, vim.bo.filetype) then
+          if vim.tbl_contains(ignored_filetypes, vim.bo.filetype) then
             vim.b.miniindentscope_disable = true
           end
         end,
