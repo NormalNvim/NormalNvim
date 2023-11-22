@@ -1,14 +1,13 @@
 --- ### base status components
 --
 -- DESCRIPTION:
--- Components we can load on the plugin heirline under the 'components' section.
---
+-- Components we can load on the plugin heirline 'components' section.
 -- A component is made of providers.
 -- So it is very easy to create your own components!
---
---
--- EXAMPLE: Here we create a component that uses the provider 'filename'
---          to show the current filename on heirline:
+
+-- EXAMPLE:
+-- Here we create a component that uses the provider 'filename'
+-- to show the current filename on heirline:
 --
 -- function M.my_component(opts)
 --  opts = extend_tbl({ filename = { padding = { left = 1, right = 1 } } }, opts)
@@ -17,6 +16,28 @@
 --
 -- NOTE: Because components use the builder design pattern, we don't need to
 --       manually require the providers from 'providers.lua'.
+
+--    Components:
+--      -> fill
+--      -> file_info
+--      -> file_encoding
+--      -> tabline_file_info
+--      -> nav
+--      -> cmd_info
+--      -> mode
+--      -> breadcrumbs
+--      -> separated_path
+--      -> git_branch
+--      -> git_diff
+--      -> diagnostics
+--      -> treesitter
+--      -> lsp
+--      -> virtualenv
+--      -> foldcolumn
+--      -> signcolumn
+--      -> compiler_state
+--      -> builder
+
 
 local M = {}
 
@@ -537,6 +558,33 @@ function M.signcolumn(opts)
   return M.builder(status_utils.setup_providers(opts, { "signcolumn" }))
 end
 
+--- Display an spinner while the compiler is compiling.
+---@param opts? table options for configuring compiler_state and the overall padding.
+---@return table # The Heirline component table.
+-- @usage local heirline_component = require("base.utils.status").component.compiler_state()
+function M.compiler_state(opts)
+  opts = extend_tbl({
+    compiler_state = {
+      condition = function()
+        return is_available "compiler.nvim"
+      end,
+      padding = { left = 1, right = 0 },
+    },
+    hl = hl.get_attributes "treesitter",
+    on_click = {
+      name = "compiler_open",
+      callback = function()
+        if is_available "compiler.nvim" then
+          vim.defer_fn(function() vim.cmd("CompilerToggleResults") end, 100)
+        end
+      end,
+    },
+  }, opts)
+  return M.builder(status_utils.setup_providers(opts, {
+    "compiler_state",
+  }))
+end
+
 --- A general function to build a section of base status providers with highlights,
 --- conditions, and section surrounding.
 ---@param opts? table a list of components to build into a section.
@@ -580,33 +628,6 @@ function M.builder(opts)
         opts.surround.condition
       )
     or children
-end
-
---- Display an spinner while the compiler is compiling.
----@param opts? table options for configuring compiler_state and the overall padding.
----@return table # The Heirline component table.
--- @usage local heirline_component = require("base.utils.status").component.compiler_state()
-function M.compiler_state(opts)
-  opts = extend_tbl({
-    compiler_state = {
-      condition = function()
-        return is_available "compiler.nvim"
-      end,
-      padding = { left = 1, right = 0 },
-    },
-    hl = hl.get_attributes "treesitter",
-    on_click = {
-      name = "compiler_open",
-      callback = function()
-        if is_available "compiler.nvim" then
-          vim.defer_fn(function() vim.cmd("CompilerToggleResults") end, 100)
-        end
-      end,
-    },
-  }, opts)
-  return M.builder(status_utils.setup_providers(opts, {
-    "compiler_state",
-  }))
 end
 
 return M
