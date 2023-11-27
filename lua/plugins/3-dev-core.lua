@@ -236,8 +236,8 @@ return {
       grace_period = (60*5),
       wakeup_delay = 3000,
       notifications = false,
-      retries = 5,
-      timeout = 200,
+      retries = 3,
+      timeout = 1000,
     }
   },
 
