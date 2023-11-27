@@ -93,6 +93,6 @@ return {
   { "williamboman/mason.nvim", version = "^1" },
   { "windwp/nvim-autopairs", commit = "defad64afbf19381fe31488a7582bbac421d6e38" },
   { "windwp/nvim-ts-autotag", commit = "6be1192965df35f94b8ea6d323354f7dc7a557e4" },
-  { "zeioth/garbage-day.nvim", commit = "135bcc7720755649542fbbb26d0613c68788a3bd" },
+  { "zeioth/garbage-day.nvim", version = "^1" },
   { "zeioth/nvim-spectre", commit = "f22e564db341e5cea71db9848ae60230e39f6cd4" },
 }
