@@ -1,7 +1,7 @@
 --- ### base status utilities
 --
 -- DESCRIPTION:
--- Statusline related uitility functions
+-- Statusline related uitility functions.
 
 local M = {}
 

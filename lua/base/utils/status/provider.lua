@@ -5,7 +5,6 @@
 --
 -- Be aware only things assigned inside a the return function will be updated.
 
-
 local M = {}
 
 local condition = require "base.utils.status.condition"
@@ -17,7 +16,6 @@ local extend_tbl = utils.extend_tbl
 local get_icon = utils.get_icon
 local luv = vim.uv or vim.loop -- TODO: REMOVE WHEN DROPPING SUPPORT FOR Neovim v0.9
 local is_available = utils.is_available
-
 
 
 --- A provider function for the fill string.

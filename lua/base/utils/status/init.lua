@@ -1,7 +1,7 @@
 --- ### base status initializers
 --
 -- DESCRIPTION:
--- Statusline related init functions for building dynamic statusline components
+-- Statusline related init functions for building dynamic statusline components.
 
 local M = {}
 
