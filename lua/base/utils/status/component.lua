@@ -8,14 +8,15 @@
 -- EXAMPLE:
 -- Here we create a component that uses the provider 'filename'
 -- to show the current filename on heirline:
---
+
 -- function M.my_component(opts)
 --  opts = extend_tbl({ filename = { padding = { left = 1, right = 1 } } }, opts)
 --  return M.builder(status_utils.setup_providers(opts, { "filename" }))
 -- end
---
--- NOTE: Because components use the builder design pattern, we don't need to
---       manually require the providers from 'providers.lua'.
+
+-- NOTE:
+-- Because components use the builder design pattern, we don't need to
+-- manually require the providers from 'providers.lua'.
 
 --    Components:
 --      -> fill
@@ -37,7 +38,6 @@
 --      -> signcolumn
 --      -> compiler_state
 --      -> builder
-
 
 local M = {}
 
