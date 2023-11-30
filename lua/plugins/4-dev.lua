@@ -552,7 +552,6 @@ return {
       }
       dap.configurations.javascript = dap.configurations.typescript
       dap.configurations.javascriptreact = dap.configurations.typescript
-      dap.configurations.typescript = dap.configurations.typescript
       dap.configurations.typescriptreact = dap.configurations.typescript
 
       -- Javascript / Typescript (chromium)
@@ -580,7 +579,6 @@ return {
       -- }
       -- dap.configurations.javascript = dap.configurations.typescript
       -- dap.configurations.javascriptreact = dap.configurations.typescript
-      -- dap.configurations.typescript = dap.configurations.typescript
       -- dap.configurations.typescriptreact = dap.configurations.typescript
 
       -- PHP
