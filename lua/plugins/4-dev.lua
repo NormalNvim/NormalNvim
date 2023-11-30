@@ -551,8 +551,9 @@ return {
         }
       }
       dap.configurations.javascript = dap.configurations.typescript
-      dap.configurations.typescriptreact = dap.configurations.typescript
       dap.configurations.javascriptreact = dap.configurations.typescript
+      dap.configurations.typescript = dap.configurations.typescript
+      dap.configurations.typescriptreact = dap.configurations.typescript
 
       -- Javascript / Typescript (chromium)
       -- If you prefer to use this adapter, comment the firefox one.
@@ -578,8 +579,9 @@ return {
       --  }
       -- }
       -- dap.configurations.javascript = dap.configurations.typescript
-      -- dap.configurations.typescriptreact = dap.configurations.typescript
       -- dap.configurations.javascriptreact = dap.configurations.typescript
+      -- dap.configurations.typescript = dap.configurations.typescript
+      -- dap.configurations.typescriptreact = dap.configurations.typescript
 
       -- PHP
       dap.adapters.php = {
