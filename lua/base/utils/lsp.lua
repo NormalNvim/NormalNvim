@@ -80,6 +80,7 @@ end
 --- Helper function to set up a given server with the LSP client
 ---@param server string The name of the server to be setup
 M.setup = function(server)
+  if server == "jdtls" then return end -- fix: don't auto-start jdtls (we use nvim-jdtls)
   local opts = M.config(server)
   local setup_handler = setup_handlers[server] or setup_handlers[1]
   if setup_handler then setup_handler(server, opts) end
