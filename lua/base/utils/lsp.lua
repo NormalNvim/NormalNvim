@@ -145,9 +145,7 @@ M.on_attach = function(client, bufnr)
     lsp_mappings.n["<leader>lI"] = { "<cmd>NullLsInfo<cr>", desc = "Null-ls information" }
   end
 
-  -- TODO: Remove jdtls once it supports "textDocument/codeAction"
-  if client.supports_method "textDocument/codeAction"
-     or client.name == "jdtls" then
+  if client.supports_method "textDocument/codeAction" then
     lsp_mappings.n["<leader>la"] = {
       function() vim.lsp.buf.code_action() end,
       desc = "LSP code action",

@@ -364,9 +364,7 @@ return {
       dap.configurations.vb = dap.configurations.cs
 
       -- Java
-      -- Note: The java debugger jdtls is automatically spawned and configured
-      --       when a java file is opened. You can check it out here:
-      --       ../base/3-autocmds.lua
+      -- Note: The plugin nvim-java is already taking care of this for us.
 
       -- Python
       dap.adapters.python = {
@@ -805,6 +803,31 @@ return {
         end,
       })
     end,
+  },
+
+  -- nvim-java
+  -- https://github.com/nvim-java/nvim-java
+  -- Adds full java support to nvim.
+   'nvim-java/nvim-java',
+    ft = { "java" },
+    dependencies = {
+      'nvim-java/lua-async-await',
+      'nvim-java/nvim-java-core',
+      'nvim-java/nvim-java-test',
+      'nvim-java/nvim-java-dap',
+      'nvim-java/neotest-jdtls',
+      'MunifTanjim/nui.nvim',
+      'neovim/nvim-lspconfig',
+      'mfussenegger/nvim-dap',
+    {
+      'williamboman/mason.nvim',
+      opts = {
+        registries = {
+          'github:nvim-java/mason-registry',
+          'github:mason-org/mason-registry',
+        },
+      },
+    }
   },
 
 }
