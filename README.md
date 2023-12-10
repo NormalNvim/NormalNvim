@@ -111,7 +111,7 @@ Originally it took AstroNvim as base. But implements [this VIM config](https://g
 Special thanks to LeoRed04 for designing the logo.
 
 ## Roadmap
-* fix: java is starting two lsp clients due to nvim-jdtls. We want to prevent lspconfig from auto start it. Also, we should add better documentation for configuring java projects.
+* fix: java is starting two lsp clients due to [nvim-jdtls](https://github.com/mfussenegger/nvim-jdtls). We want to prevent lspconfig from auto start it. Also, we should add better documentation for configuring java projects.
 * Once nvim 0.10 is oficially released, replace `get_active_clients` by `get_clients`.
 * During 2024, add a installer to take care of installing the system dependencies, which seems to be the main friction point people find.
 * During 2024, add a toolbar for [Compiler.nvim](https://github.com/Zeioth/compiler.nvim) so users have a button to compile and manage their build automation utilities and current build_type in a friendly way.
