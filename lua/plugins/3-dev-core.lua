@@ -161,7 +161,7 @@ return {
         end,
         config = function(_, opts)
           require("mason-lspconfig").setup(opts)
-          require("base.utils").event "MasonLspSetup"
+          require("base.utils").event("MasonLspSetup")
         end,
       },
     },
@@ -208,7 +208,7 @@ return {
       end
       local setup_servers = function()
         vim.api.nvim_exec_autocmds("FileType", {})
-        require("base.utils").event "LspSetup"
+        require("base.utils").event("LspSetup")
       end
       if require("base.utils").is_available "mason-lspconfig.nvim" then
         vim.api.nvim_create_autocmd("User", {
