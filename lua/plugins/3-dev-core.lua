@@ -9,6 +9,7 @@
 --       -> nvim-colorizer                 [hex colors]
 
 --       ## LSP
+--       -> nvim-java                      [java support]
 --       -> nvim-lspconfig                 [lsp config]
 --       -> garbage-day                    [lsp garbage collector]
 --       -> mason.nvim                     [lsp package manager]
@@ -147,6 +148,33 @@ return {
   },
 
   --  LSP -------------------------------------------------------------------
+
+  -- nvim-java [java support]
+  -- https://github.com/neovim/nvim-lspconfig
+  -- Reliable jdtls support. Must go before lsp-config.
+  {
+    'nvim-java/nvim-java',
+    ft = { "java" },
+    dependencies = {
+      'nvim-java/lua-async-await',
+      'nvim-java/nvim-java-core',
+      'nvim-java/nvim-java-test',
+      'nvim-java/nvim-java-dap',
+      'MunifTanjim/nui.nvim',
+      'neovim/nvim-lspconfig',
+      'mfussenegger/nvim-dap',
+      {
+        'williamboman/mason.nvim',
+        opts = {
+          registries = {
+            'github:nvim-java/mason-registry',
+            'github:mason-org/mason-registry',
+          },
+        },
+      }
+    },
+  },
+
   --  Syntax highlight [lsp config]
   --  https://github.com/neovim/nvim-lspconfig
   {
@@ -161,7 +189,7 @@ return {
         end,
         config = function(_, opts)
           require("mason-lspconfig").setup(opts)
-          require("base.utils").event "MasonLspSetup"
+          require("base.utils").event("MasonLspSetup")
         end,
       },
     },
@@ -208,7 +236,7 @@ return {
       end
       local setup_servers = function()
         vim.api.nvim_exec_autocmds("FileType", {})
-        require("base.utils").event "LspSetup"
+        require("base.utils").event("LspSetup")
       end
       if require("base.utils").is_available "mason-lspconfig.nvim" then
         vim.api.nvim_create_autocmd("User", {

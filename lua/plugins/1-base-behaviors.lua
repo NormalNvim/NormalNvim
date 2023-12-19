@@ -6,6 +6,7 @@
 --       -> project.nvim           [project search + auto cd]
 --       -> trim.nvim              [auto trim spaces]
 --       -> stickybuf.nvim         [lock special buffers]
+--       -> mini.bufremove         [smart bufdelete]
 --       -> nvim-window-picker     [select buffer with a letter]
 --       -> smart-splits           [move and resize buffers]
 --       -> better-scape.nvim      [esc]
@@ -117,6 +118,14 @@ return {
     "stevearc/stickybuf.nvim",
     event = "VeryLazy",
     config = function() require("stickybuf").setup() end
+  },
+
+  -- mini.bufremove [smart bufdelete]
+  -- https://github.com/echasnovski/mini.bufremove
+  -- Defines what tab to go on :bufdelete
+  {
+    "echasnovski/mini.bufremove",
+    event = "User BaseFile"
   },
 
   -- nvim-window-picker  [select buffer with a letter]
