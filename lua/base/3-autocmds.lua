@@ -267,7 +267,7 @@ cmd(
 )
 
 -- 12. Testing commands
--- Aditional commands to the ones implemented in neotest.
+-- Additional commands to the ones implemented in neotest.
 -------------------------------------------------------------------
 
 -- Customize this command to work as you like

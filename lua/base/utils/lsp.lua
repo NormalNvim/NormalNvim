@@ -23,7 +23,7 @@ local setup_handlers = {
   function(server, opts) require("lspconfig")[server].setup(opts) end,
 }
 
-base.lsp = { progress = {} }             -- globally accesible
+base.lsp = { progress = {} }             -- globally accessible
 M.diagnostics = { [0] = {}, {}, {}, {} } -- For diagnostics toggle in ./ui.lua
 
 -- LSP settings
@@ -61,7 +61,7 @@ M.setup_diagnostics = function(signs)
   vim.diagnostic.config(M.diagnostics[vim.g.diagnostics_mode])
 end
 
--- Formating settings
+-- Formatting settings
 M.formatting = { format_on_save = { enabled = true }, disabled = {} }
 if type(M.formatting.format_on_save) == "boolean" then
   M.formatting.format_on_save = { enabled = M.formatting.format_on_save }

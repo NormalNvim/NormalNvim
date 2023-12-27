@@ -648,7 +648,7 @@ return {
       end
       return {
         -- Window mode
-        floating_window = is_enabled, -- Dislay it as floating window.
+        floating_window = is_enabled, -- Display it as floating window.
         hi_parameter = "IncSearch",   -- Color to highlight floating window.
         handler_opts = round_borders, -- Window style
 
@@ -656,7 +656,7 @@ return {
         hint_enable = false,          -- Display it as hint.
         hint_prefix = "👈 "
 
-        -- Aditionally, you can use <space>ui to toggle inlay hints.
+        -- Additionally, you can use <space>ui to toggle inlay hints.
       } end,
     config = function(_, opts) require'lsp_signature'.setup(opts) end
   },
