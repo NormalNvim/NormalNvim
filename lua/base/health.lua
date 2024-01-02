@@ -236,7 +236,7 @@ function M.check()
     end
   end
   health.info("")
-  health.info("Write `:bw` to close `:checkhealth` gracefuly.")
+  health.info("Write `:bw` to close `:checkhealth` gracefully.")
 end
 
 return M

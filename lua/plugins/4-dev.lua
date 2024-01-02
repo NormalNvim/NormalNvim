@@ -237,7 +237,7 @@ return {
     config = function(_, opts) require("markmap").setup(opts) end,
   },
 
-  --  ARTIFICIAL INTELIGENCE  -------------------------------------------------
+  --  ARTIFICIAL INTELLIGENCE  -------------------------------------------------
   --  neural [chatgpt code generator]
   --  https://github.com/dense-analysis/neural
   {
@@ -306,7 +306,7 @@ return {
     cmd = { "CompilerOpen", "CompilerToggleResults" },
     opts = {
       -- Tasks are disposed 5 minutes after running to free resources.
-      -- If you need to close a task inmediatelly:
+      -- If you need to close a task immediately:
       -- press ENTER in the output menu on the task you wanna close.
       task_list = { -- this refers to the window that shows the result
         direction = "bottom",
