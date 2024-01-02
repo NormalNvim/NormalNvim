@@ -331,7 +331,7 @@ return {
               return status.condition.buffer_matches(
                 {
                   filetype = {
-                  "aerial", "dapui_.", "dap-repl", "neo%-tree", "NvimTree", "edgy"
+                  "aerial", "dapui_.", "dap%-repl", "neo%-tree", "NvimTree", "edgy"
                   }
                 },
                 vim.api.nvim_win_get_buf(self.winid)
