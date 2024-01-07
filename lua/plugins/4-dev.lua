@@ -17,7 +17,7 @@
 --       -> aerial.nvim                    [symbols tree]
 
 --       ## CODE DOCUMENTATION
---       -> dooku.nivm                     [html doc generator]
+--       -> dooku.nvim                     [html doc generator]
 --       -> markdown-preview.nvim          [markdown previewer]
 --       -> markmap.nvim                   [markdown mindmap]
 
