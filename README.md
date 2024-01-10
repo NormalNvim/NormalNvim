@@ -113,6 +113,6 @@ Special thanks to LeoRed04 for designing the logo.
 ## Roadmap
 * Once nvim 0.10 is officially released, replace `get_active_clients` by `get_clients`.
 * During 2024, add a installer to take care of installing the system dependencies, which seems to be the main friction point people find.
-* During 2024, create CI actions that can be triggered manually to ensure the dependencies install correctly (sometimes distros will change dependency names).
+* During 2024, create CD actions that can be triggered manually to ensure the dependencies install correctly (sometimes distros will change dependency names).
 * During 2024, add a toolbar for [Compiler.nvim](https://github.com/Zeioth/compiler.nvim) so users have a button to compile and manage their build automation utilities and current build_type in a friendly way.
 * During 2024, create a landing page. Pretty much it's gonna be the same thing we have on the wiki, but with sparkles.
