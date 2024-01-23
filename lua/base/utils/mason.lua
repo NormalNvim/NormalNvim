@@ -3,7 +3,7 @@
 --  DESCRIPTION:
 --  Functions called by the plugin mason in ../../plugins/3-dev-core.lua
 --
---  Thiese couple functions are a re-implementation of mason functions for
+--  These couple functions are a re-implementation of mason functions for
 --  better UX. Frindly notifications and stuff, so you know what's going on.
 --
 --  While you could technically delete this file, we encourage you to keep it
