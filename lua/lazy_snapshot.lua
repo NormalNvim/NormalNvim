@@ -67,8 +67,6 @@ return {
   { "nvim-telescope/telescope-fzf-native.nvim", commit = "6c921ca12321edaa773e324ef64ea301a1d0da62" },
   { "nvim-telescope/telescope.nvim", commit = "a19770625aed49ad2a9f591a5e3946707f7359f6" },
   { "nvim-tree/nvim-web-devicons", commit = "925e2aa30dc9fe9332060199c19f132ec0f3d493" },
-  { "nvim-treesitter/nvim-treesitter", commit = "65ef62092ef997d2ecf68ede01a0afbda17808c3" },
-  { "nvim-treesitter/nvim-treesitter-textobjects", commit = "85b9d0cbd4ff901abcda862b50dbb34e0901848b" },
   { "nvimtools/none-ls.nvim", commit = "358dd357a753f81412397b8a4cc01a2f41a1b594" },
   { "olimorris/neotest-phpunit", commit = "4e23b92d85a09b9731458ff7058ece4113c5d736" },
   { "onsails/lspkind.nvim", commit = "57610d5ab560c073c465d6faf0c19f200cb67e6e" },
