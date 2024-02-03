@@ -17,10 +17,11 @@
 --       -> 8. Customize right click contextual menu.
 --       -> 9. Unlist quickfix buffers if the filetype changes.
 --       -> 10. Close all notifications on BufWritePre.
+--       -> 11. Create parent directories when saving a file.
 --
 --       ## COMMANDS
---       -> 11. Nvim updater commands.
---       -> 12. Neotest commands.
+--       -> 12. Nvim updater commands.
+--       -> 13. Neotest commands.
 --       ->     Extra commands.
 
 local autocmd = vim.api.nvim_create_autocmd
@@ -221,6 +222,15 @@ autocmd("BufWritePre", {
   desc = "Close all notifications on BufWritePre",
   callback = function()
     require("notify").dismiss({pending = true, silent = true})
+  end,
+})
+
+-- 11. Create parent directories when saving a file.
+autocmd("BufWritePre", {
+  desc = "Automatically create parent directories if they don't exist when saving a file",
+  callback = function(args)
+    if args.match:match("^%w%w+:" .. (vim.fn.has "win32" == 0 and "//" or "\\\\")) then return end
+    vim.fn.mkdir(vim.fn.fnamemodify(vim.loop.fs_realpath(args.match) or args.match, ":p:h"), "p")
   end,
 })
 

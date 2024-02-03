@@ -99,13 +99,14 @@ function M.stylize(str, opts)
       or ""
 end
 
---- Surround component with separator and color adjustment.
----@param separator string|string[] the separator index to use in `env.separators`.
----@param color function|string|table the color to use as the separator foreground/component background.
----@param component table the component to surround.
----@param condition boolean|function the condition for displaying the surrounded component.
----@return table # the new surrounded component.
-function M.surround(separator, color, component, condition)
+--- Surround component with separator and color adjustment
+---@param separator string|string[] the separator index to use in the `separators` table
+---@param color function|string|table the color to use as the separator foreground/component background
+---@param component table the component to surround
+---@param condition boolean|function the condition for displaying the surrounded component
+---@param update events? control updating of separators, either a list of events or true to update freely
+---@return table # the new surrounded component
+function M.surround(separator, color, component, condition, update)
   local function surround_color(self)
     local colors = type(color) == "function" and color(self) or color
     return type(colors) == "string" and { main = colors } or colors
@@ -114,30 +115,42 @@ function M.surround(separator, color, component, condition)
   separator = type(separator) == "string" and env.separators[separator]
       or separator
   local surrounded = { condition = condition }
+  local base_separator = {
+    update = (update or type(color) ~= "function") and function() return false end,
+    init = update and require("base.utils.status.init").update_events(update),
+  }
   if separator[1] ~= "" then
-    table.insert(surrounded, {
-      provider = separator[1],
-      hl = function(self)
-        local s_color = surround_color(self)
-        if s_color then return { fg = s_color.main, bg = s_color.left } end
-      end,
-    })
+    table.insert(
+      surrounded,
+      extend_tbl {
+        provider = separator[1], --bind alt-j:down,alt-k:up
+        hl = function(self)
+          local s_color = surround_color(self)
+          if s_color then return { fg = s_color.main, bg = s_color.left } end
+        end,
+      }
+    )
   end
-  table.insert(surrounded, {
-    hl = function(self)
-      local s_color = surround_color(self)
-      if s_color then return { bg = s_color.main } end
-    end,
-    extend_tbl(component, {}),
-  })
+  local component_hl = component.hl
+  component.hl = function(self)
+    local hl = {}
+    if component_hl then hl = type(component_hl) == "table" and vim.deepcopy(component_hl) or component_hl(self) end
+    local s_color = surround_color(self)
+    if s_color then hl.bg = s_color.main end
+    return hl
+  end
+  table.insert(surrounded, component)
   if separator[2] ~= "" then
-    table.insert(surrounded, {
-      provider = separator[2],
-      hl = function(self)
-        local s_color = surround_color(self)
-        if s_color then return { fg = s_color.main, bg = s_color.right } end
-      end,
-    })
+    table.insert(
+      surrounded,
+      extend_tbl(base_separator, {
+        provider = separator[2],
+        hl = function(self)
+          local s_color = surround_color(self)
+          if s_color then return { fg = s_color.main, bg = s_color.right } end
+        end,
+      })
+    )
   end
   return surrounded
 end

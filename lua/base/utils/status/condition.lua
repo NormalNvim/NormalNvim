@@ -93,7 +93,15 @@ end
 -- @usage local heirline_component = { provider = "Example Provider", condition = require("base.utils.status").condition.has_diagnostics }
 function M.has_diagnostics(bufnr)
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
-  return vim.g.diagnostics_mode > 0 and #vim.diagnostic.get(bufnr or 0) > 0
+  if vim.diagnostic.count then
+    return vim.tbl_contains(
+      vim.diagnostic.count(bufnr or 0),
+      function(v) return v > 0 end,
+      { predicate = true }
+    )
+  else -- TODO: remove when dropping support for neovim 0.9
+    return #vim.diagnostic.get(bufnr or 0) > 0
+  end
 end
 
 --- A condition function if there is a defined filetype.
@@ -103,6 +111,15 @@ end
 function M.has_filetype(bufnr)
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
   return vim.bo[bufnr or 0].filetype and vim.bo[bufnr or 0].filetype ~= ""
+end
+
+--- A condition function if a buffer is a file
+---@param bufnr table|integer a buffer number to check the condition for, a table with bufnr property, or nil to get the current buffer
+---@return boolean # whether or not the buffer is a file
+-- @usage local heirline_component = { provider = "Example Provider", condition = require("astroui.status").condition.is_file }
+function M.is_file(bufnr)
+  if type(bufnr) == "table" then bufnr = bufnr.bufnr end
+  return vim.bo[bufnr or 0].buftype == ""
 end
 
 --- A condition function if a virtual environment is activated
@@ -147,5 +164,9 @@ function M.foldcolumn_enabled() return vim.opt.foldcolumn:get() ~= "0" end
 function M.numbercolumn_enabled()
   return vim.opt.number:get() or vim.opt.relativenumber:get()
 end
+
+--- A condition function if the signcolumn is enabled
+---@return boolean # false if vim.opt.signcolumn == "no", true otherwise
+function M.signcolumn_enabled() return vim.opt.signcolumn:get() ~= "no" end
 
 return M

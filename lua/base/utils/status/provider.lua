@@ -33,33 +33,60 @@ function M.signcolumn(opts)
   return status_utils.stylize("%s", opts)
 end
 
---- A provider function for the numbercolumn string.
----@param opts? table options passed to the stylize function.
----@return function # the statuscolumn string for adding the numbercolumn.
--- @usage local heirline_component = { provider = require("base.utils.status").provider.numbercolumn }
--- @see base.utils.status.utils.stylize
+-- local function to resolve the first sign in the signcolumn
+-- specifically for usage when `signcolumn=number`
+local function resolve_sign(bufnr, lnum)
+  --- TODO: remove when dropping support for Neovim v0.9
+  if vim.fn.has "nvim-0.10" == 0 then
+    for _, sign in ipairs(vim.fn.sign_getplaced(bufnr, { group = "*", lnum = lnum })[1].signs) do
+      local defined = vim.fn.sign_getdefined(sign.name)[1]
+      if defined then return defined end
+    end
+  end
+
+  local row = lnum - 1
+  local extmarks = vim.api.nvim_buf_get_extmarks(
+    bufnr, -1, { row, 0 }, { row, -1 }, { details = true, type = "sign" })
+  local ret
+  for _, extmark in pairs(extmarks) do
+    local sign_def = extmark[4]
+    if sign_def.sign_text and (
+      not ret or (ret.priority < sign_def.priority)) then ret = sign_def end
+  end
+  if ret then return { text = ret.sign_text, texthl = ret.sign_hl_group } end
+end
+
+--- A provider function for the numbercolumn string
+---@param opts? table options passed to the stylize function
+---@return function # the statuscolumn string for adding the numbercolumn
+-- @usage local heirline_component = { provider = require("astroui.status").provider.numbercolumn }
+-- @see astroui.status.utils.stylize
 function M.numbercolumn(opts)
-  opts =
-      extend_tbl({ thousands = false, culright = true, escape = false }, opts)
-  return function()
+  opts = extend_tbl({ thousands = false, culright = true, escape = false }, opts)
+  return function(self)
     local lnum, rnum, virtnum = vim.v.lnum, vim.v.relnum, vim.v.virtnum
     local num, relnum = vim.opt.number:get(), vim.opt.relativenumber:get()
+    if not self.bufnr then self.bufnr = vim.api.nvim_get_current_buf() end
+    local sign = vim.opt.signcolumn:get():find "nu" and resolve_sign(self.bufnr, lnum)
     local str
-    if not num and not relnum then
-      str = ""
-    elseif virtnum ~= 0 then
+    if virtnum ~= 0 then
+      str = "%="
+    elseif sign then
+      str = sign.text
+      if sign.texthl then str = "%#" .. sign.texthl .. "#" .. str .. "%*" end
+      str = "%=" .. str
+    elseif not num and not relnum then
       str = "%="
     else
       local cur = relnum and (rnum > 0 and rnum or (num and lnum or 0)) or lnum
       if opts.thousands and cur > 999 then
-        cur = string
-            .reverse(cur)
-            :gsub("%d%d%d", "%1" .. opts.thousands)
-            :reverse()
-            :gsub("^%" .. opts.thousands, "")
+        cur = cur
+          :reverse()
+          :gsub("%d%d%d", "%1" .. opts.thousands)
+          :reverse()
+          :gsub("^%" .. opts.thousands, "")
       end
-      str = (rnum == 0 and not opts.culright and relnum) and cur .. "%="
-          or "%=" .. cur
+      str = (rnum == 0 and not opts.culright and relnum) and cur .. "%=" or "%=" .. cur
     end
     return status_utils.stylize(str, opts)
   end
@@ -556,10 +583,16 @@ function M.diagnostics(opts)
   if not opts or not opts.severity then return end
   return function(self)
     local bufnr = self and self.bufnr or 0
-    local count = #vim.diagnostic.get(
-      bufnr,
-      opts.severity and { severity = vim.diagnostic.severity[opts.severity] }
-    )
+    local count
+    if vim.diagnostic.count then
+      count = vim.diagnostic.count(bufnr)[vim.diagnostic.severity[opts.severity]]
+        or 0
+    else -- TODO: remove when dropping support for neovim 0.9
+      count = #vim.diagnostic.get(
+        bufnr,
+        opts.severity and { severity = vim.diagnostic.severity[opts.severity] }
+      )
+    end
     return status_utils.stylize(count ~= 0 and tostring(count) or "", opts)
   end
 end
@@ -588,21 +621,29 @@ function M.lsp_progress(opts)
   end
 end
 
---- A provider function for showing the connected LSP client names.
----@param opts? table options for explanding null_ls clients,
----                   max width percentage, and options passed
----                   to the stylize function.
----@return function # the function for outputting the LSP client names.
--- @usage local heirline_component = { provider = require("base.utils.status").provider.lsp_client_names({ expand_null_ls = true, truncate = 0.25 }) }
--- @see base.utils.status.utils.stylize
+--- A provider function for showing the connected LSP client names
+---@param opts? table options for explanding null_ls clients, max width percentage, and options passed to the stylize function.
+---@return function # the function for outputting the LSP client names
+-- @usage local heirline_component = { provider = require("astroui.status").provider.lsp_client_names({ integrations = { null_ls = true, conform = true, lint = true }, truncate = 0.25 }) }
+-- @see astroui.status.utils.stylize
 function M.lsp_client_names(opts)
-  opts = extend_tbl({ expand_null_ls = true, truncate = 0.25 }, opts)
+  opts = extend_tbl(
+    {
+      integrations = { null_ls = true, conform = true, lint = true },
+      truncate = 0.25,
+    },
+    opts
+  )
   return function(self)
+    local bufnr = self and self.bufnr or 0
     local buf_client_names = {}
+    -- TODO: remove get_active_clients when dropping support for Neovim 0.9
     for _, client in
-    pairs(vim.lsp.get_active_clients { bufnr = self and self.bufnr or 0 })
+    pairs(
+      (vim.lsp.get_clients or vim.lsp.get_active_clients) { bufnr = bufnr }
+    )
     do
-      if client.name == "null-ls" and opts.expand_null_ls then
+      if client.name == "null-ls" and opts.integrations.null_ls then
         local null_ls_sources = {}
         for _, type in ipairs { "FORMATTING", "DIAGNOSTICS" } do
           for _, source in
@@ -616,6 +657,24 @@ function M.lsp_client_names(opts)
         table.insert(buf_client_names, client.name)
       end
     end
+    if opts.integrations.lint then -- nvim-lint integration
+      local lint_avail, lint = pcall(require, "lint")
+      if lint_avail then
+        vim.list_extend(buf_client_names, lint.get_running(bufnr))
+      end
+    end
+    if opts.integrations.conform then -- conform integration
+      local conform_avail, conform = pcall(require, "conform")
+      if conform_avail then
+        vim.list_extend(
+          buf_client_names,
+          vim.tbl_map(
+            function(c) return c.name end,
+            conform.list_formatters(bufnr)
+          )
+        )
+      end
+    end
     local str = table.concat(buf_client_names, ", ")
     if type(opts.truncate) == "number" then
       local max_width = math.floor(status_utils.width() * opts.truncate)
@@ -624,6 +683,7 @@ function M.lsp_client_names(opts)
     return status_utils.stylize(str, opts)
   end
 end
+
 
 --- A provider function for showing the current virtual environment name
 ---@param opts table options passed to the stylize function

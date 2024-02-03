@@ -59,7 +59,17 @@ local is_available = utils.is_available
 ---                   of the heirline component.
 ---@return table # The heirline component table.
 -- @usage local heirline_component = require("base.utils.status").component.fill()
-function M.fill(opts) return extend_tbl({ provider = provider.fill() }, opts) end
+function M.fill(opts)
+  return extend_tbl({
+    provider = provider.fill(),
+    -- Due to a bug in heirline, using update = function on a component present
+    -- in "heirline > tabline > statuscolumn" will cause a error.
+    -- uncomment the next line once this is fixed (nvim 0.10?).
+    -- This is a minor optimization and it is not really important.
+    -- update = function() return false end
+  },
+  opts)
+end
 
 --- A function to build a set of children components
 --- for an entire file information section.
@@ -72,10 +82,15 @@ function M.file_info(opts)
     file_icon = {
       hl = hl.file_icon "statusline",
       padding = { left = 1, right = 1 },
+      condition = condition.is_file
     },
-    filename = {},
-    file_modified = { padding = { left = 1 } },
-    file_read_only = { padding = { left = 1 } },
+    filename = false,
+    filetype = {},
+    file_modified = false,
+    file_read_only = {
+      padding = { left = 1, right = 1 },
+      condition = condition.is_file
+    },
     surround = {
       separator = "left",
       color = "file_info_bg",
@@ -119,6 +134,12 @@ function M.tabline_file_info(opts)
     file_icon = {
       condition = function(self) return not self._show_picker end,
       hl = hl.file_icon "tabline",
+    },
+    filename = {},
+    filetype = false,
+    file_modified = {
+      padding = { left = 1, right = 1 },
+      condition = condition.is_file
     },
     unique_path = {
       hl = function(self) return hl.get_attributes(self.tab_type .. "_path") end,
@@ -218,7 +239,12 @@ function M.mode(opts)
     mode_text = false,
     paste = false,
     spell = false,
-    surround = { separator = "left", color = hl.mode_bg },
+    surround = {
+      separator = "left",
+      color = hl.mode_bg,
+      update = { "ModeChanged",
+        pattern = "*:*" }
+    },
     hl = hl.get_attributes "mode",
     update = {
       "ModeChanged",
@@ -279,10 +305,7 @@ function M.git_branch(opts)
       name = "heirline_branch",
       callback = function()
         if is_available "telescope.nvim" then
-          vim.defer_fn(
-            function() require("telescope.builtin").git_branches() end,
-            100
-          )
+          require("telescope.builtin").git_branches { use_file_path = true }
         end
       end,
     },
@@ -310,10 +333,7 @@ function M.git_diff(opts)
       name = "heirline_git",
       callback = function()
         if is_available "telescope.nvim" then
-          vim.defer_fn(
-            function() require("telescope.builtin").git_status() end,
-            100
-          )
+          require("telescope.builtin").git_status { use_file_path = true }
         end
       end,
     },
@@ -370,10 +390,7 @@ function M.diagnostics(opts)
       name = "heirline_diagnostic",
       callback = function()
         if is_available "telescope.nvim" then
-          vim.defer_fn(
-            function() require("telescope.builtin").diagnostics() end,
-            100
-          )
+          require("telescope.builtin").diagnostics()
         end
       end,
     },
@@ -436,6 +453,7 @@ function M.lsp(opts)
         "LspAttach",
         "LspDetach",
         "BufEnter",
+        "VimResized",
         callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
       },
       icon = { kind = "ActiveLSP", padding = { right = 2 } },
@@ -448,9 +466,7 @@ function M.lsp(opts)
     },
     on_click = {
       name = "heirline_lsp",
-      callback = function()
-        vim.defer_fn(function() vim.cmd.LspInfo() end, 100)
-      end,
+      callback = function() vim.schedule(vim.cmd.LspInfo) end,
     },
   }, opts)
   return M.builder(
@@ -470,10 +486,10 @@ function M.lsp(opts)
   )
 end
 
---- A function to build a set of children components for a git branch section
----@param opts? table options for configuring git branch and the overall padding
+--- A function to get the current python virtual env
+---@param opts? table options for configuring the virtual env indicator.
 ---@return table # The Heirline component table
--- @usage local heirline_component = require("astroui.status").component.git_branch()
+-- @usage local heirline_component = require("base.utils.status").virtual_env()
 function M.virtual_env(opts)
   opts = extend_tbl({
     virtual_env = { icon = { kind = "Environment", padding = { right = 1 } } },
@@ -524,8 +540,7 @@ function M.numbercolumn(opts)
       callback = function(...)
         local args = status_utils.statuscolumn_clickargs(...)
         if args.mods:find "c" then
-          local dap_avail, dap = pcall(require, "dap")
-          if dap_avail then vim.schedule(dap.toggle_breakpoint) end
+          if is_available "nvim-dap" then require("dap").toggle_breakpoint() end
         end
       end,
     },
@@ -552,6 +567,7 @@ function M.signcolumn(opts)
         then
           env.sign_handlers[args.sign.name](args)
         end
+        vim.cmd(":Gitsigns preview_hunk") -- Show hunk on click
       end,
     },
   }, opts)
@@ -625,7 +641,8 @@ function M.builder(opts)
         opts.surround.separator,
         opts.surround.color,
         children,
-        opts.surround.condition
+        opts.surround.condition,
+        opts.surround.update
       )
     or children
 end
