@@ -72,10 +72,15 @@ function M.file_info(opts)
     file_icon = {
       hl = hl.file_icon "statusline",
       padding = { left = 1, right = 1 },
+      condition = condition.is_file
     },
-    filename = {},
-    file_modified = { padding = { left = 1 } },
-    file_read_only = { padding = { left = 1 } },
+    filename = false,
+    filetype = {},
+    file_modified = false,
+    file_read_only = {
+      padding = { left = 1, right = 1 },
+      condition = condition.is_file
+    },
     surround = {
       separator = "left",
       color = "file_info_bg",
@@ -120,6 +125,8 @@ function M.tabline_file_info(opts)
       condition = function(self) return not self._show_picker end,
       hl = hl.file_icon "tabline",
     },
+    filename = {},
+    filetype = false,
     unique_path = {
       hl = function(self) return hl.get_attributes(self.tab_type .. "_path") end,
     },
