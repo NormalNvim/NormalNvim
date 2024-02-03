@@ -434,7 +434,6 @@ function M.lsp(opts)
         "LspAttach",
         "LspDetach",
         "BufEnter",
-        "FileType",
         "VimResized",
         callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
       },
