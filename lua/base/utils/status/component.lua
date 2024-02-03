@@ -427,6 +427,7 @@ function M.lsp(opts)
         "LspAttach",
         "LspDetach",
         "BufEnter",
+        "VimResized",
         callback = vim.schedule_wrap(function() vim.cmd.redrawstatus() end),
       },
       icon = { kind = "ActiveLSP", padding = { right = 2 } },
