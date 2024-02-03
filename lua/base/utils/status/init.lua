@@ -195,9 +195,14 @@ function M.update_events(opts)
         local event_opts = { callback = clear_cache }
         if type(event) == "table" then
           event_opts.pattern = event.pattern
-          event_opts.callback = event.callback or clear_cache
-          event.pattern = nil
-          event.callback = nil
+          if event.callback then
+            local callback = event.callback
+            event_opts.callback = function(args)
+              clear_cache()
+              callback(self, args)
+            end
+          end
+          event = event[1]
         end
         vim.api.nvim_create_autocmd(event, event_opts)
       end
