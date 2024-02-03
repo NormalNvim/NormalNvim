@@ -621,21 +621,29 @@ function M.lsp_progress(opts)
   end
 end
 
---- A provider function for showing the connected LSP client names.
----@param opts? table options for explanding null_ls clients,
----                   max width percentage, and options passed
----                   to the stylize function.
----@return function # the function for outputting the LSP client names.
--- @usage local heirline_component = { provider = require("base.utils.status").provider.lsp_client_names({ expand_null_ls = true, truncate = 0.25 }) }
--- @see base.utils.status.utils.stylize
+--- A provider function for showing the connected LSP client names
+---@param opts? table options for explanding null_ls clients, max width percentage, and options passed to the stylize function.
+---@return function # the function for outputting the LSP client names
+-- @usage local heirline_component = { provider = require("astroui.status").provider.lsp_client_names({ integrations = { null_ls = true, conform = true, lint = true }, truncate = 0.25 }) }
+-- @see astroui.status.utils.stylize
 function M.lsp_client_names(opts)
-  opts = extend_tbl({ expand_null_ls = true, truncate = 0.25 }, opts)
+  opts = extend_tbl(
+    {
+      integrations = { null_ls = true, conform = true, lint = true },
+      truncate = 0.25,
+    },
+    opts
+  )
   return function(self)
+    local bufnr = self and self.bufnr or 0
     local buf_client_names = {}
+    -- TODO: remove get_active_clients when dropping support for Neovim 0.9
     for _, client in
-    pairs(vim.lsp.get_active_clients { bufnr = self and self.bufnr or 0 })
+    pairs(
+      (vim.lsp.get_clients or vim.lsp.get_active_clients) { bufnr = bufnr }
+    )
     do
-      if client.name == "null-ls" and opts.expand_null_ls then
+      if client.name == "null-ls" and opts.integrations.null_ls then
         local null_ls_sources = {}
         for _, type in ipairs { "FORMATTING", "DIAGNOSTICS" } do
           for _, source in
@@ -649,6 +657,24 @@ function M.lsp_client_names(opts)
         table.insert(buf_client_names, client.name)
       end
     end
+    if opts.integrations.lint then -- nvim-lint integration
+      local lint_avail, lint = pcall(require, "lint")
+      if lint_avail then
+        vim.list_extend(buf_client_names, lint.get_running(bufnr))
+      end
+    end
+    if opts.integrations.conform then -- conform integration
+      local conform_avail, conform = pcall(require, "conform")
+      if conform_avail then
+        vim.list_extend(
+          buf_client_names,
+          vim.tbl_map(
+            function(c) return c.name end,
+            conform.list_formatters(bufnr)
+          )
+        )
+      end
+    end
     local str = table.concat(buf_client_names, ", ")
     if type(opts.truncate) == "number" then
       local max_width = math.floor(status_utils.width() * opts.truncate)
@@ -657,6 +683,7 @@ function M.lsp_client_names(opts)
     return status_utils.stylize(str, opts)
   end
 end
+
 
 --- A provider function for showing the current virtual environment name
 ---@param opts table options passed to the stylize function
