@@ -567,6 +567,7 @@ function M.signcolumn(opts)
         then
           env.sign_handlers[args.sign.name](args)
         end
+        vim.cmd(":Gitsigns preview_hunk") -- Show hunk on click
       end,
     },
   }, opts)
