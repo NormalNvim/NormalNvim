@@ -59,7 +59,17 @@ local is_available = utils.is_available
 ---                   of the heirline component.
 ---@return table # The heirline component table.
 -- @usage local heirline_component = require("base.utils.status").component.fill()
-function M.fill(opts) return extend_tbl({ provider = provider.fill() }, opts) end
+function M.fill(opts)
+  return extend_tbl({
+    provider = provider.fill(),
+    -- Due to a bug in heirline, using update = function on a component present
+    -- in "heirline > tabline > statuscolumn" will cause a error.
+    -- uncomment the next line once this is fixed (nvim 0.10?).
+    -- This is a minor optimization and it is not really important.
+    -- update = function() return false end
+  },
+  opts)
+end
 
 --- A function to build a set of children components
 --- for an entire file information section.
@@ -229,7 +239,12 @@ function M.mode(opts)
     mode_text = false,
     paste = false,
     spell = false,
-    surround = { separator = "left", color = hl.mode_bg },
+    surround = {
+      separator = "left",
+      color = hl.mode_bg,
+      update = { "ModeChanged",
+        pattern = "*:*" }
+    },
     hl = hl.get_attributes "mode",
     update = {
       "ModeChanged",
@@ -471,10 +486,10 @@ function M.lsp(opts)
   )
 end
 
---- A function to build a set of children components for a git branch section
----@param opts? table options for configuring git branch and the overall padding
+--- A function to get the current python virtual env
+---@param opts? table options for configuring the virtual env indicator.
 ---@return table # The Heirline component table
--- @usage local heirline_component = require("astroui.status").component.git_branch()
+-- @usage local heirline_component = require("base.utils.status").virtual_env()
 function M.virtual_env(opts)
   opts = extend_tbl({
     virtual_env = { icon = { kind = "Environment", padding = { right = 1 } } },
@@ -625,7 +640,8 @@ function M.builder(opts)
         opts.surround.separator,
         opts.surround.color,
         children,
-        opts.surround.condition
+        opts.surround.condition,
+        opts.surround.update
       )
     or children
 end

@@ -188,6 +188,7 @@ end
 ---@return function # The Heirline init function.
 -- @usage local heirline_component = { init = require("base.utils.status").init.update_events { "BufEnter", { "User", pattern = "LspProgressUpdate" } } }
 function M.update_events(opts)
+  if not vim.tbl_islist(opts) then opts = { opts } end
   return function(self)
     if not rawget(self, "once") then
       local clear_cache = function() self._win_cache = nil end
