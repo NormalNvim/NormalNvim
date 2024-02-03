@@ -110,6 +110,7 @@ return {
     enabled = vim.fn.executable "git" == 1,
     event = "User BaseGitFile",
     opts = {
+      max_file_length = vim.g.big_file.lines,
       signs = {
         add = { text = get_icon "GitSign" },
         change = { text = get_icon "GitSign" },
