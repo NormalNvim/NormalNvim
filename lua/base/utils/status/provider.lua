@@ -33,33 +33,60 @@ function M.signcolumn(opts)
   return status_utils.stylize("%s", opts)
 end
 
---- A provider function for the numbercolumn string.
----@param opts? table options passed to the stylize function.
----@return function # the statuscolumn string for adding the numbercolumn.
--- @usage local heirline_component = { provider = require("base.utils.status").provider.numbercolumn }
--- @see base.utils.status.utils.stylize
+-- local function to resolve the first sign in the signcolumn
+-- specifically for usage when `signcolumn=number`
+local function resolve_sign(bufnr, lnum)
+  --- TODO: remove when dropping support for Neovim v0.9
+  if vim.fn.has "nvim-0.10" == 0 then
+    for _, sign in ipairs(vim.fn.sign_getplaced(bufnr, { group = "*", lnum = lnum })[1].signs) do
+      local defined = vim.fn.sign_getdefined(sign.name)[1]
+      if defined then return defined end
+    end
+  end
+
+  local row = lnum - 1
+  local extmarks = vim.api.nvim_buf_get_extmarks(
+    bufnr, -1, { row, 0 }, { row, -1 }, { details = true, type = "sign" })
+  local ret
+  for _, extmark in pairs(extmarks) do
+    local sign_def = extmark[4]
+    if sign_def.sign_text and (
+      not ret or (ret.priority < sign_def.priority)) then ret = sign_def end
+  end
+  if ret then return { text = ret.sign_text, texthl = ret.sign_hl_group } end
+end
+
+--- A provider function for the numbercolumn string
+---@param opts? table options passed to the stylize function
+---@return function # the statuscolumn string for adding the numbercolumn
+-- @usage local heirline_component = { provider = require("astroui.status").provider.numbercolumn }
+-- @see astroui.status.utils.stylize
 function M.numbercolumn(opts)
-  opts =
-      extend_tbl({ thousands = false, culright = true, escape = false }, opts)
-  return function()
+  opts = extend_tbl({ thousands = false, culright = true, escape = false }, opts)
+  return function(self)
     local lnum, rnum, virtnum = vim.v.lnum, vim.v.relnum, vim.v.virtnum
     local num, relnum = vim.opt.number:get(), vim.opt.relativenumber:get()
+    if not self.bufnr then self.bufnr = vim.api.nvim_get_current_buf() end
+    local sign = vim.opt.signcolumn:get():find "nu" and resolve_sign(self.bufnr, lnum)
     local str
-    if not num and not relnum then
-      str = ""
-    elseif virtnum ~= 0 then
+    if virtnum ~= 0 then
+      str = "%="
+    elseif sign then
+      str = sign.text
+      if sign.texthl then str = "%#" .. sign.texthl .. "#" .. str .. "%*" end
+      str = "%=" .. str
+    elseif not num and not relnum then
       str = "%="
     else
       local cur = relnum and (rnum > 0 and rnum or (num and lnum or 0)) or lnum
       if opts.thousands and cur > 999 then
-        cur = string
-            .reverse(cur)
-            :gsub("%d%d%d", "%1" .. opts.thousands)
-            :reverse()
-            :gsub("^%" .. opts.thousands, "")
+        cur = cur
+          :reverse()
+          :gsub("%d%d%d", "%1" .. opts.thousands)
+          :reverse()
+          :gsub("^%" .. opts.thousands, "")
       end
-      str = (rnum == 0 and not opts.culright and relnum) and cur .. "%="
-          or "%=" .. cur
+      str = (rnum == 0 and not opts.culright and relnum) and cur .. "%=" or "%=" .. cur
     end
     return status_utils.stylize(str, opts)
   end
