@@ -156,4 +156,8 @@ function M.numbercolumn_enabled()
   return vim.opt.number:get() or vim.opt.relativenumber:get()
 end
 
+--- A condition function if the signcolumn is enabled
+---@return boolean # false if vim.opt.signcolumn == "no", true otherwise
+function M.signcolumn_enabled() return vim.opt.signcolumn:get() ~= "no" end
+
 return M
