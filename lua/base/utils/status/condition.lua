@@ -93,7 +93,15 @@ end
 -- @usage local heirline_component = { provider = "Example Provider", condition = require("base.utils.status").condition.has_diagnostics }
 function M.has_diagnostics(bufnr)
   if type(bufnr) == "table" then bufnr = bufnr.bufnr end
-  return vim.g.diagnostics_mode > 0 and #vim.diagnostic.get(bufnr or 0) > 0
+  if vim.diagnostic.count then
+    return vim.tbl_contains(
+      vim.diagnostic.count(bufnr or 0),
+      function(v) return v > 0 end,
+      { predicate = true }
+    )
+  else -- TODO: remove when dropping support for neovim 0.9
+    return #vim.diagnostic.get(bufnr or 0) > 0
+  end
 end
 
 --- A condition function if there is a defined filetype.

@@ -583,10 +583,16 @@ function M.diagnostics(opts)
   if not opts or not opts.severity then return end
   return function(self)
     local bufnr = self and self.bufnr or 0
-    local count = #vim.diagnostic.get(
-      bufnr,
-      opts.severity and { severity = vim.diagnostic.severity[opts.severity] }
-    )
+    local count
+    if vim.diagnostic.count then
+      count = vim.diagnostic.count(bufnr)[vim.diagnostic.severity[opts.severity]]
+        or 0
+    else -- TODO: remove when dropping support for neovim 0.9
+      count = #vim.diagnostic.get(
+        bufnr,
+        opts.severity and { severity = vim.diagnostic.severity[opts.severity] }
+      )
+    end
     return status_utils.stylize(count ~= 0 and tostring(count) or "", opts)
   end
 end
