@@ -113,6 +113,15 @@ function M.has_filetype(bufnr)
   return vim.bo[bufnr or 0].filetype and vim.bo[bufnr or 0].filetype ~= ""
 end
 
+--- A condition function if a buffer is a file
+---@param bufnr table|integer a buffer number to check the condition for, a table with bufnr property, or nil to get the current buffer
+---@return boolean # whether or not the buffer is a file
+-- @usage local heirline_component = { provider = "Example Provider", condition = require("astroui.status").condition.is_file }
+function M.is_file(bufnr)
+  if type(bufnr) == "table" then bufnr = bufnr.bufnr end
+  return vim.bo[bufnr or 0].buftype == ""
+end
+
 --- A condition function if a virtual environment is activated
 ---@return boolean # whether or not virtual environment is activated
 -- @usage local heirline_component = { provider = "Example Provider", condition = require("astroui.status").condition.has_virtual_env }
