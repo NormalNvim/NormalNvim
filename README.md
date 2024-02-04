@@ -111,6 +111,7 @@ Originally it took AstroNvim as base. But implements [this VIM config](https://g
 Special thanks to LeoRed04 for designing the logo.
 
 ## Roadmap
+* During the next days the files `git.lua`, `update.lua` and `mason.lua` from the `base/utils` directory are gonna be removed from NormalNvim, and isolated into the plugin [distroupdate.nvim](https://github.com/Zeioth/distroupdate.nvim). The reason is: It's extremely unlikely a user decide to modify this functionality (which will be still possible, and easier, by forking distroupdate.nvim).
 * Once nvim 0.10 is officially released, replace `get_active_clients` by `get_clients`.
 * During 2024, add a installer to take care of installing the system dependencies, which seems to be the main friction point people find.
 * During 2024, create CD actions that can be triggered manually to ensure the dependencies install correctly (sometimes distros will change dependency names).
