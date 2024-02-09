@@ -125,7 +125,7 @@ if not android then
   maps.x["<C-y>"] = { '"+y<esc>', desc = "Copy to cliboard" }
   maps.n["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
   maps.x["<C-d>"] = { '"+y<esc>dd', desc = "Copy to clipboard and delete line" }
-  maps.n["<C-p>"] = { '"+p<esc>', desc = "Paste from cliboard" }
+  maps.n["<C-p>"] = { '"+p<esc>', desc = "Paste from clipboard" }
 end
 
 -- Make 'c' key not copy to clipboard when changing a character.
@@ -178,7 +178,7 @@ maps.x["X"] = { '"_X', desc = "Delete all characters in line" }
 maps.x["p"] = { "P", desc = "Paste content you've previourly yanked" }
 maps.x["P"] = { "p", desc = "Yank what you are going to override, then paste" }
 
--- search highlighing ------------------------------------------------------
+-- search highlighting ------------------------------------------------------
 -- use ESC to clear hlsearch, while preserving its original functionality.
 --
 -- TIP: If you prefer,  use <leader>ENTER instead of <ESC>
@@ -932,7 +932,7 @@ if is_available "telescope.nvim" then
         require("telescope.builtin").lsp_document_symbols()
       end
     end,
-    desc = "Search symbol in bufffer", -- Useful to find every time a variable is assigned.
+    desc = "Search symbol in buffer", -- Useful to find every time a variable is assigned.
   }
 
   -- extra - project.nvim
@@ -1184,7 +1184,7 @@ if is_available "nvim-coverage" then
   maps.n["<leader>Tc"] = {
     function()
       utils.notify(
-        "Attemping to find coverage/lcov.info in project root...",
+        "Attempting to find coverage/lcov.info in project root...",
         3
       )
       require("coverage").load(false)
