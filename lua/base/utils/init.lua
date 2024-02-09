@@ -25,51 +25,10 @@
 --      -> delete_url_effect     → Don't show an effect for urls.
 --      -> set_url_effect        → Show an effect for urls.
 --      -> cmd                   → Run a shell command and return true/false
+--      -> os_path               → Convert the current path to the current OS.
 --      -> confirm_quit          → Ask for confirmation before exit.
 
 local M = {}
-
---- Partially reload Nvim user settings. Includes core vim options, mappings,
---- and highlights. This is an experimental feature and may lead to.
---- instabilities until restart.
----@param quiet? boolean Whether or not to notify on completion of reloading.
----@return boolean # True if the reload was successful, False otherwise.
-function M.reload(quiet)
-  -- Reload options, mappings and plugins (this is managed automatically by lazy).
-  -- Never reload base.3-autocmds to avoid issues.
-  local was_modifiable = vim.opt.modifiable:get()
-  if not was_modifiable then vim.opt.modifiable = true end
-  local core_modules = { "base.1-options", "base.4-mappings" }
-  local modules = vim.tbl_filter(
-    function(module) return module:find "^user%." end,
-    vim.tbl_keys(package.loaded)
-  )
-
-  vim.tbl_map(
-    require("plenary.reload").reload_module,
-    vim.list_extend(modules, core_modules)
-  )
-  local success = true
-  for _, module in ipairs(core_modules) do
-    local status_ok, fault = pcall(require, module)
-    if not status_ok then
-      vim.api.nvim_err_writeln("Failed to load " .. module .. "\n\n" .. fault)
-      success = false
-    end
-  end
-  if not was_modifiable then vim.opt.modifiable = false end
-  if not quiet then -- if not quiet, then notify of result.
-    if success then
-      M.notify("Nvim successfully reloaded", vim.log.levels.INFO)
-    else
-      M.notify("Error reloading Nvim...", vim.log.levels.ERROR)
-    end
-  end
-  vim.cmd.doautocmd "ColorScheme" -- sFor heirline.
-  vim.cmd("colorscheme " .. base.default_colorscheme)
-
-  return success
-end
 
 --- Merge extended options with a default table of options
 ---@param default? table The default table that you want to merge into
@@ -404,6 +363,17 @@ function M.cmd(cmd, show_error)
     vim.api.nvim_err_writeln(("Error running command %s\nError message:\n%s"):format(table.concat(cmd, " "), result))
   end
   return success and result:gsub("[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]", "") or nil
+end
+
+---Given a string, convert 'slash' to 'inverted slash' if on windows, and vice versa on UNIX.
+---Then return the resulting string.
+---@param path string A path string.
+---@return string|nil,nil path A path string formatted for the current OS.
+function M.os_path(path)
+  if path == nil then return nil end
+  -- Get the platform-specific path separator
+  local separator = package.config:sub(1,1)
+  return string.gsub(path, '[/\\]', separator)
 end
 
 --- Always ask before exiting nvim, even if there is nothing to be saved.

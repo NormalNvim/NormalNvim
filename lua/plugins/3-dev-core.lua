@@ -296,7 +296,7 @@ return {
       require("mason").setup(opts)
 
       local cmd = vim.api.nvim_create_user_command
-      cmd("MasonUpdate", function(options) require("base.utils.mason").update(options.fargs) end, {
+      cmd("MasonUpdate", function(options) require("distroupdate.utils.mason").update(options.fargs) end, {
         nargs = "*",
         desc = "Update Mason Package",
         complete = function(arg_lead)
@@ -309,7 +309,7 @@ return {
       })
       cmd(
         "MasonUpdateAll",
-        function() require("base.utils.mason").update_all() end,
+        function() require("distroupdate.utils.mason").update_all() end,
         { desc = "Update Mason Packages" }
       )
 

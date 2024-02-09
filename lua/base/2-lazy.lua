@@ -5,26 +5,17 @@
 
 --    Sections:
 --
---      -> nvim updater options  → choose your updates channel here.
+--      -> lazy updater options  → choose your lazy updates channel here.
 --      -> extra behaviors       → extra stuff we add to lazy for better UX.
 --      -> assign spec           → if channel==stable, uses lazy_snatshot.lua
 --      -> setup using spec      → actual setup.
 
 
--- This table is used to lock plugin versions.
---  To do so run ':NvimFreezePluginVersions'.
---  Please don't manually delete ../lazy_snapshot.lua or you will get errors.
+-- lazy updater options
+-- Use the same values you have in the plugin `distroupdate.nvim`
 base.updater = {
-  options = { remote = "origin", channel = "stable" }, -- 'nightly', or 'stable'
-  snapshot = { module = "lazy_snapshot", path = vim.fn.stdpath "config" .. "/lua/lazy_snapshot.lua" },
-  rollback_file = vim.fn.stdpath "cache" .. "/rollback.lua",
-
-  -- You can update your nvim config from your repo by using ':NvimUpdateConfig'.
-  -- This comes handy if you use nvim in more than one device.
-  -- You can use 'stable_version_release' to specify the version to install.
-  -- If nil, :NvimUpdateConfig will use the latest available tag release of your
-  -- git repository, starting by 'v', for example, "v1.0"
-  stable_version_release = nil,
+  channel = "stable" ,               -- 'nightly', or 'stable'
+  snapshot_module = "lazy_snapshot"  -- snapshot file name without extension.
 }
 
 -- lazyload extra behavior
@@ -63,14 +54,14 @@ end
 vim.opt.rtp:prepend(lazypath)
 
  -- true if channel is 'stable'
-local pin_plugins = base.updater.options.channel == "stable"
+local pin_plugins = base.updater.channel == "stable"
 
 -- assign spec (if pin_plugins is true, load ./lua/lazy_snapshot.lua)
-local spec = pin_plugins and {{ import = base.updater.snapshot.module }} or {}
+local spec = pin_plugins and {{ import = base.updater.snapshot_module }} or {}
 vim.list_extend(spec, { { import = "plugins" } })
 
 
--- the actual setup
+-- Setup using spec
 require("lazy").setup({
   spec = spec,
   defaults = { lazy = true },
