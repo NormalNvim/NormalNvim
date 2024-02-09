@@ -22,6 +22,7 @@
 --       -> hop.nvim               [go to word visually]
 --       -> nvim-autopairs         [auto close brackets]
 --       -> lsp_signature.nvim     [auto params help]
+--       -> distroupdate.nvim      [distro update]
 
 local windows = vim.fn.has('win32') == 1             -- true if on windows
 local android = vim.fn.isdirectory('/system') == 1   -- true if on android
@@ -659,6 +660,23 @@ return {
         -- Aditionally, you can use <space>ui to toggle inlay hints.
       } end,
     config = function(_, opts) require'lsp_signature'.setup(opts) end
+  },
+
+  -- distroupdate.nvim [distro update]
+  -- https://github.com/Zeioth/distroupdate.nvim
+  {
+    "Zeioth/distroupdate.nvim",
+    event = "VeryLazy",
+    opts = {
+      remote = "origin",
+      channel = "stable",                                                    -- stable/nightly
+      release_tag = nil,                                                     -- in case you wanna freeze a distro version.
+      hot_reload_files = { "base.1-options", "base.4-mappings" },
+      hot_reload_exta_behavior = function()
+        vim.cmd ":silent! doautocmd ColorScheme"                             -- Heirline colorscheme reload event
+        vim.cmd(":silent! colorscheme " .. base.default_colorscheme)         -- Nvm theme reload command
+      end
+    }
   },
 
 }
