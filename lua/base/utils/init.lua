@@ -25,6 +25,7 @@
 --      -> delete_url_effect     → Don't show an effect for urls.
 --      -> set_url_effect        → Show an effect for urls.
 --      -> cmd                   → Run a shell command and return true/false
+--      -> os_path               → Convert the current path to the current OS.
 --      -> confirm_quit          → Ask for confirmation before exit.
 
 local M = {}
@@ -362,6 +363,17 @@ function M.cmd(cmd, show_error)
     vim.api.nvim_err_writeln(("Error running command %s\nError message:\n%s"):format(table.concat(cmd, " "), result))
   end
   return success and result:gsub("[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]", "") or nil
+end
+
+---Given a string, convert 'slash' to 'inverted slash' if on windows, and vice versa on UNIX.
+---Then return the resulting string.
+---@param path string A path string.
+---@return string|nil,nil path A path string formatted for the current OS.
+function M.os_path(path)
+  if path == nil then return nil end
+  -- Get the platform-specific path separator
+  local separator = package.config:sub(1,1)
+  return string.gsub(path, '[/\\]', separator)
 end
 
 --- Always ask before exiting nvim, even if there is nothing to be saved.

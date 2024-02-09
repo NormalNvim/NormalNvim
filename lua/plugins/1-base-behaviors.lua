@@ -667,16 +667,23 @@ return {
   {
     "Zeioth/distroupdate.nvim",
     event = "VeryLazy",
-    opts = {
-      remote = "origin",
-      channel = "stable",                                                    -- stable/nightly
-      release_tag = nil,                                                     -- in case you wanna freeze a distro version.
-      hot_reload_files = { "base.1-options", "base.4-mappings" },
-      hot_reload_exta_behavior = function()
-        vim.cmd ":silent! doautocmd ColorScheme"                             -- Heirline colorscheme reload event
-        vim.cmd(":silent! colorscheme " .. base.default_colorscheme)         -- Nvm theme reload command
-      end
-    }
+    opts = function()
+      local utils = require "base.utils"
+      local config_dir = utils.os_path(vim.fn.stdpath "config" .. "/lua/base/")
+      return {
+        remote = "origin",
+        channel = "stable",                                                  -- stable/nightly
+        release_tag = nil,                                                   -- in case you wanna freeze a distro version.
+        hot_reload_files = {
+          config_dir .. "1-options.lua",
+          config_dir .. "4-mappings.lua"
+        },
+        hot_reload_extra_behavior = function()
+          vim.cmd ":silent! doautocmd ColorScheme"                           -- Heirline colorscheme reload event
+          vim.cmd(":silent! colorscheme " .. base.default_colorscheme)       -- Nvm theme reload command
+        end
+      }
+    end
   },
 
 }
