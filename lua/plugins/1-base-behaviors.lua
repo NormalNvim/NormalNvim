@@ -666,7 +666,17 @@ return {
   -- https://github.com/Zeioth/distroupdate.nvim
   {
     "Zeioth/distroupdate.nvim",
-    event = "VeryLazy",
+    dependencies = { "nvim-lua/plenary.nvim" },
+    cmd = {
+      "NvimChangelog",
+      "NvimFreezePluginVersions",
+      "NvimReload",
+      "NvimRollbackCreate",
+      "NvimRollbackRestore",
+      "NvimUpdateConfig",
+      "NvimUpdatePlugins",
+      "NvimVersions"
+    },
     opts = function()
       local utils = require "base.utils"
       local config_dir = utils.os_path(vim.fn.stdpath "config" .. "/lua/base/")
