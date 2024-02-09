@@ -9,19 +9,17 @@
 --       -> 1. Events to load plugins faster.
 --       -> 2. Save/restore window layout when possible.
 --       -> 3. Launch alpha greeter on startup.
---       -> 4. Hot reload on config change.
---       -> 5. Update neotree when closing the git client.
+--       -> 4. Update neotree when closing the git client.
 --
 --       ## COOL HACKS
---       -> 7. Effect: URL underline.
---       -> 8. Customize right click contextual menu.
---       -> 9. Unlist quickfix buffers if the filetype changes.
---       -> 10. Close all notifications on BufWritePre.
---       -> 11. Create parent directories when saving a file.
+--       -> 5. Effect: URL underline.
+--       -> 6. Customize right click contextual menu.
+--       -> 7. Unlist quickfix buffers if the filetype changes.
+--       -> 8. Close all notifications on BufWritePre.
+--       -> 9. Create parent directories when saving a file.
 --
 --       ## COMMANDS
---       -> 12. Nvim updater commands.
---       -> 13. Neotest commands.
+--       -> 10. Neotest commands.
 --       ->     Extra commands.
 
 local autocmd = vim.api.nvim_create_autocmd
@@ -148,23 +146,7 @@ if is_available "alpha-nvim" then
   })
 end
 
--- 4. Hot reload on config change.
-autocmd({ "BufWritePost" }, {
-  desc = "When writing a buffer, :NvimReload if the buffer is a config file.",
-  callback = function()
-    local filesThatTriggerReload = {
-      vim.fn.stdpath "config" .. "lua/base/1-options.lua",
-      vim.fn.stdpath "config" .. "lua/base/4-mappings.lua",
-    }
-
-    local bufPath = vim.fn.expand "%:p"
-    for _, filePath in ipairs(filesThatTriggerReload) do
-      if filePath == bufPath then vim.cmd "NvimReload" end
-    end
-  end,
-})
-
--- 5. Update neotree when closin the git client.
+-- 4. Update neotree when closin the git client.
 if is_available "neo-tree.nvim" then
   autocmd("TermClose", {
     pattern = { "*lazygit", "*gitui" },
@@ -188,13 +170,13 @@ if is_available "neo-tree.nvim" then
 end
 
 -- ## COOL HACKS ------------------------------------------------------------
--- 7. Effect: URL underline.
+-- 5. Effect: URL underline.
 autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   desc = "URL Highlighting",
   callback = function() utils.set_url_effect() end,
 })
 
--- 8. Customize right click contextual menu.
+-- 6. Customize right click contextual menu.
 autocmd("VimEnter", {
   desc = "Disable right contextual menu warning message",
   callback = function()
@@ -210,14 +192,14 @@ autocmd("VimEnter", {
   end,
 })
 
--- 9. Unlist quickfix buffers if the filetype changes.
+-- 7. Unlist quickfix buffers if the filetype changes.
 autocmd("FileType", {
   desc = "Unlist quickfist buffers",
   pattern = "qf",
   callback = function() vim.opt_local.buflisted = false end,
 })
 
--- 10. Close all notifications on BufWritePre.
+-- 8. Close all notifications on BufWritePre.
 autocmd("BufWritePre", {
   desc = "Close all notifications on BufWritePre",
   callback = function()
@@ -225,7 +207,7 @@ autocmd("BufWritePre", {
   end,
 })
 
--- 11. Create parent directories when saving a file.
+-- 9. Create parent directories when saving a file.
 autocmd("BufWritePre", {
   desc = "Automatically create parent directories if they don't exist when saving a file",
   callback = function(args)
@@ -235,48 +217,8 @@ autocmd("BufWritePre", {
 })
 
 -- ## COMMANDS --------------------------------------------------------------
--- 11. Nvim updater commands
-cmd(
-  "NvimChangelog",
-  function() require("base.utils.updater").changelog() end,
-  { desc = "Check Nvim Changelog" }
-)
-cmd(
-  "NvimUpdatePlugins",
-  function() require("base.utils.updater").update_packages() end,
-  { desc = "Update Plugins and Mason" }
-)
-cmd(
-  "NvimRollbackCreate",
-  function() require("base.utils.updater").create_rollback(true) end,
-  { desc = "Create a rollback of '~/.config/nvim'." }
-)
-cmd(
-  "NvimRollbackRestore",
-  function() require("base.utils.updater").rollback() end,
-  { desc = "Restores '~/.config/nvim' to the last rollbacked state." }
-)
-cmd(
-  "NvimFreezePluginVersions",
-  function() require("base.utils.updater").generate_snapshot(true) end,
-  { desc = "Lock package versions (only lazy, not mason)." }
-)
-cmd(
-  "NvimUpdateConfig", function() require("base.utils.updater").update() end,
-  { desc = "Update Nvim distro" }
-)
-cmd(
-  "NvimVersion",
-  function() require("base.utils.updater").version() end,
-  { desc = "Check Nvim distro Version" }
-)
-cmd(
-  "NvimReload",
-  function() require("base.utils").reload() end,
-  { desc = "Reload Nvim without closing it (Experimental)" }
-)
 
--- 12. Testing commands
+-- 10. Testing commands
 -- Aditional commands to the ones implemented in neotest.
 -------------------------------------------------------------------
 
