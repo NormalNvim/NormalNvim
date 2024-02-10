@@ -7,7 +7,7 @@
 --       -> alpha-nvim                  [greeter]
 --       -> nvim-notify                 [notifications]
 --       -> mini.indentscope            [guides]
---       -> heirline                    [statusbar]
+--       -> heirline                    [ui components]
 --       -> telescope                   [search]
 --       -> telescope-fzf-native.nvim   [search backend]
 --       -> smart-splits                [window-dimming]
@@ -273,8 +273,10 @@ return {
     end
   },
 
-  --  heirline [statusbar]
+  --  heirline [ui components]
   --  https://github.com/rebelot/heirline.nvim
+  --  Use it to customize all the components of your user interface,
+  --  Including statusline, winbar, tabline, statuscolumn.
   {
     "rebelot/heirline.nvim",
     dependencies = { "Zeioth/heirline-components.nvim" },
