@@ -275,6 +275,7 @@ return {
 
   --  heirline [ui components]
   --  https://github.com/rebelot/heirline.nvim
+  --  https://github.com/Zeioth/heirline-components.nvim
   --  Use it to customize all the components of your user interface,
   --  Including statusline, winbar, tabline, statuscolumn.
   {
