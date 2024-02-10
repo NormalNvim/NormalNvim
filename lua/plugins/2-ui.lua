@@ -7,7 +7,7 @@
 --       -> alpha-nvim                  [greeter]
 --       -> nvim-notify                 [notifications]
 --       -> mini.indentscope            [guides]
---       -> heirline                    [statusbar]
+--       -> heirline                    [ui components]
 --       -> telescope                   [search]
 --       -> telescope-fzf-native.nvim   [search backend]
 --       -> smart-splits                [window-dimming]
@@ -273,13 +273,16 @@ return {
     end
   },
 
-  --  heirline [statusbar]
+  --  heirline [ui components]
   --  https://github.com/rebelot/heirline.nvim
+  --  Use it to customize all the components of your user interface,
+  --  Including statusline, winbar, tabline, statuscolumn.
   {
     "rebelot/heirline.nvim",
+    dependencies = { "Zeioth/heirline-components.nvim" },
     event = "BufEnter",
     opts = function()
-      local status = require "base.utils.status"
+      local status = require "heirline-components.all"
       return {
         opts = {
           disable_winbar_cb = function(args)
@@ -372,8 +375,8 @@ return {
     end,
     config = function(_, opts)
       local heirline = require "heirline"
-      local hl = require "base.utils.status.hl"
-      local C = require("base.utils.status.env").fallback_colors
+      local hl = require "heirline-components.core.hl"
+      local C = require("heirline-components.core.env").fallback_colors
       local get_hlgroup = require("base.utils").get_hlgroup
 
       local function setup_colors()
