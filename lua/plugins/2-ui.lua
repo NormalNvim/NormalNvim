@@ -276,19 +276,19 @@ return {
   --  heirline [ui components]
   --  https://github.com/rebelot/heirline.nvim
   --  https://github.com/Zeioth/heirline-components.nvim
-  --  Use it to customize all the components of your user interface,
+  --  Use it to customize the components of your user interface,
   --  Including statusline, winbar, tabline, statuscolumn.
   {
     "rebelot/heirline.nvim",
     dependencies = { "Zeioth/heirline-components.nvim" },
     event = "BufEnter",
     opts = function()
-      local status = require "heirline-components.all"
+      local lib = require "heirline-components.all" -- collection of components.
       return {
         opts = {
           disable_winbar_cb = function(args)
             return not require("base.utils.buffer").is_valid(args.buf)
-              or status.condition.buffer_matches({
+              or lib.condition.buffer_matches({
                 buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
                 filetype = { "NvimTree", "neo%-tree", "dashboard", "Outline", "aerial" },
               }, args.buf)
@@ -296,43 +296,43 @@ return {
         },
         statusline = { -- statusline
           hl = { fg = "fg", bg = "bg" },
-          status.component.mode(),
-          status.component.git_branch(),
-          status.component.file_info { filetype = {}, filename = false, file_modified = false },
-          status.component.git_diff(),
-          status.component.diagnostics(),
-          status.component.fill(),
-          status.component.cmd_info(),
-          status.component.fill(),
-          status.component.lsp(),
-          status.component.compiler_state(),
-          status.component.virtual_env(),
+          lib.component.mode(),
+          lib.component.git_branch(),
+          lib.component.file_info { filetype = {}, filename = false, file_modified = false },
+          lib.component.git_diff(),
+          lib.component.diagnostics(),
+          lib.component.fill(),
+          lib.component.cmd_info(),
+          lib.component.fill(),
+          lib.component.lsp(),
+          lib.component.compiler_state(),
+          lib.component.virtual_env(),
           --status.component.file_encoding(), -- uncomment to enable
-          status.component.nav(),
-          status.component.mode { surround = { separator = "right" } },
+          lib.component.nav(),
+          lib.component.mode { surround = { separator = "right" } },
         },
         winbar = { -- winbar
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
           fallthrough = false,
           {
-            condition = function() return not status.condition.is_active() end,
-            status.component.separated_path(),
-            status.component.file_info {
-              file_icon = { hl = status.hl.file_icon "winbar", padding = { left = 0 } },
+            condition = function() return not lib.condition.is_active() end,
+            lib.component.separated_path(),
+            lib.component.file_info {
+              file_icon = { hl = lib.hl.file_icon "winbar", padding = { left = 0 } },
               file_modified = false,
               file_read_only = false,
-              hl = status.hl.get_attributes("winbarnc", true),
+              hl = lib.hl.get_attributes("winbarnc", true),
               surround = false,
               update = "BufEnter",
             },
           },
-          status.component.breadcrumbs { hl = status.hl.get_attributes("winbar", true) },
+          lib.component.breadcrumbs { hl = lib.hl.get_attributes("winbar", true) },
         },
         tabline = { -- bufferline
           { -- file tree padding
             condition = function(self)
               self.winid = vim.api.nvim_tabpage_list_wins(0)[1]
-              return status.condition.buffer_matches(
+              return lib.condition.buffer_matches(
                 {
                   filetype = {
                   "aerial", "dapui_.", "dap%-repl", "neo%-tree", "NvimTree", "edgy"
@@ -344,20 +344,20 @@ return {
             provider = function(self) return string.rep(" ", vim.api.nvim_win_get_width(self.winid) + 1) end,
             hl = { bg = "tabline_bg" },
           },
-          status.heirline.make_buflist(status.component.tabline_file_info()), -- component for each buffer tab
-          status.component.fill { hl = { bg = "tabline_bg" } }, -- fill the rest of the tabline with background color
+          lib.heirline.make_buflist(lib.component.tabline_file_info()), -- component for each buffer tab
+          lib.component.fill { hl = { bg = "tabline_bg" } }, -- fill the rest of the tabline with background color
           { -- tab list
             condition = function()
               -- only show tabs if there are more than one
               return #vim.api.nvim_list_tabpages() >= 2
             end,
-            status.heirline.make_tablist { -- component for each tab
-              provider = status.provider.tabnr(),
-              hl = function(self) return status.hl.get_attributes(status.heirline.tab_type(self, "tab"), true) end,
+            lib.heirline.make_tablist { -- component for each tab
+              provider = lib.provider.tabnr(),
+              hl = function(self) return lib.hl.get_attributes(lib.heirline.tab_type(self, "tab"), true) end,
             },
             { -- close button for current tab
-              provider = status.provider.close_button { kind = "TabClose", padding = { left = 1, right = 1 } },
-              hl = status.hl.get_attributes("tab_close", true),
+              provider = lib.provider.close_button { kind = "TabClose", padding = { left = 1, right = 1 } },
+              hl = lib.hl.get_attributes("tab_close", true),
               on_click = {
                 callback = function() require("base.utils.buffer").close_tab() end,
                 name = "heirline_tabline_close_tab_callback",
@@ -367,17 +367,18 @@ return {
         },
         statuscolumn = vim.fn.has "nvim-0.9" == 1 and {
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
-          status.component.foldcolumn(),
-          status.component.fill(),
-          status.component.numbercolumn(),
-          status.component.signcolumn(),
+          lib.component.foldcolumn(),
+          lib.component.fill(),
+          lib.component.numbercolumn(),
+          lib.component.signcolumn(),
         } or nil,
       }
     end,
     config = function(_, opts)
       local heirline = require "heirline"
-      local hl = require "heirline-components.core.hl"
-      local C = require("heirline-components.core.env").fallback_colors
+      local lib = require "heirline-components.all" -- library of components.
+      local hl = lib.hl
+      local C = lib.env.fallback_colors
       local get_hlgroup = require("base.utils").get_hlgroup
 
       local function setup_colors()
