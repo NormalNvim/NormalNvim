@@ -4,18 +4,14 @@
 --  General utility functions to use within Nvim.
 
 --    Helpers:
---      -> reload                → Reload nvim settings.
 --      -> extend_tbl            → Add the content of a table to another table.
---      -> list_insert_unique    → Insert in a table without repetition.
 --      -> conditional_func      → Run a function if conditions are met.
 --      -> get_icon              → Return an icon from the icons directory.
---      -> get_spinner           → Like the former but for animated iconns.
 --      -> get_hlgroup           → Get highlight properties a highlight name.
 --      -> notify                → Send a notification asynchronously.
 --      -> event                 → Manually emit a system event.
 --      -> system_open           → Open the file or URL under the cursor.
 --      -> toggle_term_cmd       → get/set a re-usable toggleterm session.
---      -> alpha_button          → Nice way to create a button for alpha.
 --      -> is_available          → Return true if the plugin is available.
 --      -> plugin_opts           → Return a plugin opts table.
 --      -> load_plugin_with_func → Load a plugin before running a command.
@@ -37,27 +33,6 @@ local M = {}
 function M.extend_tbl(default, opts)
   opts = opts or {}
   return default and vim.tbl_deep_extend("force", default, opts) or opts
-end
-
---- Insert one or more values into a list like table and maintain that you
---- do not insert non-unique values (THIS MODIFIES `lst`).
----@param lst any[]|nil The list like table that you want to insert into.
----@param vals any|any[] Either a list like table of values to be inserted
----                      or a single value to be inserted.
----@return any[] # The modified list like table.
-function M.list_insert_unique(lst, vals)
-  if not lst then lst = {} end
-  assert(vim.tbl_islist(lst), "Provided table is not a list like table")
-  if not vim.tbl_islist(vals) then vals = { vals } end
-  local added = {}
-  vim.tbl_map(function(v) added[v] = true end, lst)
-  for _, val in ipairs(vals) do
-    if not added[val] then
-      table.insert(lst, val)
-      added[val] = true
-    end
-  end
-  return lst
 end
 
 --- Call function if a condition is met.
@@ -82,22 +57,6 @@ function M.get_icon(kind, padding, no_fallback)
   end
   local icon = M[icon_pack] and M[icon_pack][kind]
   return icon and icon .. string.rep(" ", padding or 0) or ""
-end
-
---- Get a icon spinner table if it is available in the Nvim icons.
---- Icons in format `kind1`,`kind2`, `kind3`, ...
----@param kind string The kind of icon to check for sequential entries of.
----@return string[]|nil spinners # A collected table of spinning icons
----                                in sequential order or nil if none exist.
-function M.get_spinner(kind, ...)
-  local spinner = {}
-  local counter = 1
-  repeat
-    local icon = M.get_icon(("%s%d"):format(kind, counter), ...)
-    if icon ~= "" then spinner[counter] = icon end
-    counter = counter + 1
-  until not icon or icon == ""
-  if #spinner > 0 then return spinner end
 end
 
 --- Get highlight properties for a given highlight name.
@@ -191,39 +150,6 @@ function M.toggle_term_cmd(opts)
   end
   -- toggle the terminal
   terms[opts.cmd][num]:toggle()
-end
-
---- Create a button entity to use with the alpha dashboard.
----@param sc string The keybinding string to convert to a button.
----@param txt string The explanation text of what the keybinding does.
----@return table # A button entity table for an alpha configuration.
-function M.alpha_button(sc, txt)
-  -- replace <leader> in shortcut text with LDR for nicer printing.
-  local sc_ = sc:gsub("%s", ""):gsub("LDR", "<leader>")
-  -- if the leader is set, replace the text with the actual leader key.
-  if vim.g.mapleader then
-    sc = sc:gsub("LDR", vim.g.mapleader == " " and "SPC" or vim.g.mapleader)
-  end
-  -- return the button entity to display the correct text
-  -- and send the correct keybinding on press.
-  return {
-    type = "button",
-    val = txt,
-    on_press = function()
-      local key = vim.api.nvim_replace_termcodes(sc_, true, false, true)
-      vim.api.nvim_feedkeys(key, "normal", false)
-    end,
-    opts = {
-      position = "center",
-      text = txt,
-      shortcut = sc,
-      cursor = 5,
-      width = 36,
-      align_shortcut = "right",
-      hl = "DashboardCenter",
-      hl_shortcut = "DashboardShortcut",
-    },
-  }
 end
 
 --- Check if a plugin is defined in lazy. Useful with lazy loading
