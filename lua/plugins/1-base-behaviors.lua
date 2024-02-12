@@ -234,7 +234,7 @@ return {
   -- To start the search press <ESC>.
   -- It doesn't have ctrl-z so please always commit before using it.
   {
-    "zeioth/nvim-spectre",
+    "nvim-pack/nvim-spectre",
     cmd = "Spectre",
     opts = {
       default = {
@@ -248,7 +248,8 @@ return {
           cmd = "sed"
         },
       },
-      is_insert_mode = true, -- start open panel on is_insert_mode
+      is_insert_mode = true,    -- start open panel on is_insert_mode
+      is_block_ui_break = true, -- prevent the UI from breaking
       mapping = {
         ["toggle_line"] = {
           map = "d",
