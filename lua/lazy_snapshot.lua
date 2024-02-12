@@ -13,7 +13,7 @@ return {
   { "Zeioth/distroupdate.nvim", version = "^0.1" },
   { "Zeioth/dooku.nvim", version = "^2" },
   { "Zeioth/heirline-components.nvim", version = "^0.1" },
-  { "Zeioth/markmap.nvim", commit = "3befc2a54c2448a16c30c1c7762aab263f22946a" },
+  { "Zeioth/markmap.nvim", version = "^3" },
   { "Zeioth/project.nvim", commit = "3d30a4ddaf0f0c30892fb2f36fa4669499d7e6db" },
   { "Zeioth/tokyonight.nvim", version = "^2" },
   { "akinsho/toggleterm.nvim", version = "^2" },
