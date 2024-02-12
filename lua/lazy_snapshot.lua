@@ -72,7 +72,7 @@ return {
   { "nvim-tree/nvim-web-devicons", commit = "925e2aa30dc9fe9332060199c19f132ec0f3d493" },
   { "nvim-treesitter/nvim-treesitter", commit = "177a775fd8b2a9de97011a43f13c74ad8d3739c8" },
   { "nvim-treesitter/nvim-treesitter-textobjects", commit = "19a91a38b02c1c28c14e0ba468d20ae1423c39b2" },
-  { "nvimtools/none-ls.nvim", commit = "358dd357a753f81412397b8a4cc01a2f41a1b594" },
+  { "nvimtools/none-ls.nvim", commit = "d991c8952defd654ed78cce0abce63a5c06d0bc6" },
   { "olimorris/neotest-phpunit", commit = "4e23b92d85a09b9731458ff7058ece4113c5d736" },
   { "onsails/lspkind.nvim", commit = "57610d5ab560c073c465d6faf0c19f200cb67e6e" },
   { "petertriho/nvim-scrollbar", commit = "35f99d559041c7c0eff3a41f9093581ceea534e8" },
@@ -101,5 +101,5 @@ return {
   { "williamboman/mason.nvim", version = "^1" },
   { "windwp/nvim-autopairs", commit = "defad64afbf19381fe31488a7582bbac421d6e38" },
   { "windwp/nvim-ts-autotag", commit = "6be1192965df35f94b8ea6d323354f7dc7a557e4" },
-  { "zeioth/garbage-day.nvim", version = "^1" },
+  { "zeioth/garbage-day.nvim", version = "^2" },
 }
