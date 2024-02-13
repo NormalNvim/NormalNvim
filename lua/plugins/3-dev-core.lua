@@ -189,7 +189,7 @@ return {
         end,
         config = function(_, opts)
           require("mason-lspconfig").setup(opts)
-          require("base.utils").event("MasonLspSetup")
+          require("base.utils").trigger_event("MasonLspSetup")
         end,
       },
     },
@@ -222,10 +222,10 @@ return {
         if progress[id].kind == "end" then
           vim.defer_fn(function()
             progress[id] = nil
-            utils.event "LspProgress"
+            utils.trigger_event "LspProgress"
           end, 100)
         end
-        utils.event "LspProgress"
+        utils.trigger_event "LspProgress"
         orig_handler(_, msg, info)
       end
 
@@ -236,7 +236,7 @@ return {
       end
       local setup_servers = function()
         vim.api.nvim_exec_autocmds("FileType", {})
-        require("base.utils").event("LspSetup")
+        require("base.utils").trigger_event("LspSetup")
       end
       if require("base.utils").is_available "mason-lspconfig.nvim" then
         vim.api.nvim_create_autocmd("User", {

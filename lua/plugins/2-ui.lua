@@ -277,24 +277,45 @@ return {
   --  https://github.com/rebelot/heirline.nvim
   --  https://github.com/Zeioth/heirline-components.nvim
   --  Use it to customize the components of your user interface,
-  --  Including statusline, winbar, tabline, statuscolumn.
+  --  Including tabline, winbar, statuscolumn, statusline.
+  --  Be aware some components are positional. Read heirline documentation.
   {
     "rebelot/heirline.nvim",
     dependencies = { "Zeioth/heirline-components.nvim" },
     event = "BufEnter",
     opts = function()
-      local lib = require "heirline-components.all" -- collection of components.
+      local lib = require "heirline-components.all"
       return {
         opts = {
-          disable_winbar_cb = function(args)
-            return not require("base.utils.buffer").is_valid(args.buf)
-              or lib.condition.buffer_matches({
-                buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
-                filetype = { "NvimTree", "neo%-tree", "dashboard", "Outline", "aerial" },
-              }, args.buf)
+          disable_winbar_cb = function(args) -- make the breadcrumbs bar inactive when...
+            local is_disabled = not require("base.utils.buffer").is_valid(args.buf) or
+            lib.condition.buffer_matches({
+              buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
+              filetype = { "NvimTree", "neo%-tree", "dashboard", "Outline", "aerial" },
+            }, args.buf)
+            return is_disabled
           end,
         },
-        statusline = { -- statusline
+        tabline = { -- UI upper bar
+          lib.component.tabline_conditional_padding(),
+          lib.heirline.make_buflist(lib.component.tabline_file_info()), -- create 1 buffer component per buffer.
+          lib.component.fill { hl = { bg = "tabline_bg" } },
+          lib.component.tabline_tabpages()                              -- create 1 tabpages component at the right.
+        },
+        winbar = { -- UI breadcrumbs bar
+          init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
+          fallthrough = false,
+          lib.component.breadcrumbs_when_inactive {},
+          lib.component.breadcrumbs { hl = lib.hl.get_attributes("winbar", true) },
+        },
+        statuscolumn = { -- UI left column
+          init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
+          lib.component.foldcolumn(),
+          lib.component.fill(),
+          lib.component.numbercolumn(),
+          lib.component.signcolumn(),
+        } or nil,
+        statusline = { -- UI statusbar
           hl = { fg = "fg", bg = "bg" },
           lib.component.mode(),
           lib.component.git_branch(),
@@ -307,265 +328,21 @@ return {
           lib.component.lsp(),
           lib.component.compiler_state(),
           lib.component.virtual_env(),
-          --status.component.file_encoding(), -- uncomment to enable
           lib.component.nav(),
           lib.component.mode { surround = { separator = "right" } },
         },
-        winbar = { -- winbar
-          init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
-          fallthrough = false,
-          {
-            condition = function() return not lib.condition.is_active() end,
-            lib.component.separated_path(),
-            lib.component.file_info {
-              file_icon = { hl = lib.hl.file_icon "winbar", padding = { left = 0 } },
-              file_modified = false,
-              file_read_only = false,
-              hl = lib.hl.get_attributes("winbarnc", true),
-              surround = false,
-              update = "BufEnter",
-            },
-          },
-          lib.component.breadcrumbs { hl = lib.hl.get_attributes("winbar", true) },
-        },
-        tabline = { -- bufferline
-          { -- file tree padding
-            condition = function(self)
-              self.winid = vim.api.nvim_tabpage_list_wins(0)[1]
-              return lib.condition.buffer_matches(
-                {
-                  filetype = {
-                  "aerial", "dapui_.", "dap%-repl", "neo%-tree", "NvimTree", "edgy"
-                  }
-                },
-                vim.api.nvim_win_get_buf(self.winid)
-              )
-            end,
-            provider = function(self) return string.rep(" ", vim.api.nvim_win_get_width(self.winid) + 1) end,
-            hl = { bg = "tabline_bg" },
-          },
-          lib.heirline.make_buflist(lib.component.tabline_file_info()), -- component for each buffer tab
-          lib.component.fill { hl = { bg = "tabline_bg" } }, -- fill the rest of the tabline with background color
-          { -- tab list
-            condition = function()
-              -- only show tabs if there are more than one
-              return #vim.api.nvim_list_tabpages() >= 2
-            end,
-            lib.heirline.make_tablist { -- component for each tab
-              provider = lib.provider.tabnr(),
-              hl = function(self) return lib.hl.get_attributes(lib.heirline.tab_type(self, "tab"), true) end,
-            },
-            { -- close button for current tab
-              provider = lib.provider.close_button { kind = "TabClose", padding = { left = 1, right = 1 } },
-              hl = lib.hl.get_attributes("tab_close", true),
-              on_click = {
-                callback = function() require("base.utils.buffer").close_tab() end,
-                name = "heirline_tabline_close_tab_callback",
-              },
-            },
-          },
-        },
-        statuscolumn = vim.fn.has "nvim-0.9" == 1 and {
-          init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
-          lib.component.foldcolumn(),
-          lib.component.fill(),
-          lib.component.numbercolumn(),
-          lib.component.signcolumn(),
-        } or nil,
       }
     end,
     config = function(_, opts)
       local heirline = require "heirline"
-      local lib = require "heirline-components.all" -- library of components.
-      local hl = lib.hl
-      local C = lib.env.fallback_colors
-      local get_hlgroup = require("base.utils").get_hlgroup
+      local lib = require "heirline-components.all"
 
-      local function setup_colors()
-        local Normal = get_hlgroup("Normal", { fg = C.fg, bg = C.bg })
-        local Comment =
-            get_hlgroup("Comment", { fg = C.bright_grey, bg = C.bg })
-        local Error = get_hlgroup("Error", { fg = C.red, bg = C.bg })
-        local StatusLine =
-            get_hlgroup("StatusLine", { fg = C.fg, bg = C.dark_bg })
-        local TabLine = get_hlgroup("TabLine", { fg = C.grey, bg = C.none })
-        local TabLineFill =
-            get_hlgroup("TabLineFill", { fg = C.fg, bg = C.dark_bg })
-        local TabLineSel =
-            get_hlgroup("TabLineSel", { fg = C.fg, bg = C.none })
-        local WinBar = get_hlgroup("WinBar", { fg = C.bright_grey, bg = C.bg })
-        local WinBarNC = get_hlgroup("WinBarNC", { fg = C.grey, bg = C.bg })
-        local Conditional =
-            get_hlgroup("Conditional", { fg = C.bright_purple, bg = C.dark_bg })
-        local String = get_hlgroup("String", { fg = C.green, bg = C.dark_bg })
-        local TypeDef =
-            get_hlgroup("TypeDef", { fg = C.yellow, bg = C.dark_bg })
-        local NvimEnvironmentName =
-            get_hlgroup("NvimEnvironmentName", { fg = C.yellow, bg = C.dark_bg })
-        local GitSignsAdd =
-            get_hlgroup("GitSignsAdd", { fg = C.green, bg = C.dark_bg })
-        local GitSignsChange =
-            get_hlgroup("GitSignsChange", { fg = C.orange, bg = C.dark_bg })
-        local GitSignsDelete =
-            get_hlgroup("GitSignsDelete", { fg = C.bright_red, bg = C.dark_bg })
-        local DiagnosticError =
-            get_hlgroup("DiagnosticError", { fg = C.bright_red, bg = C.dark_bg })
-        local DiagnosticWarn =
-            get_hlgroup("DiagnosticWarn", { fg = C.orange, bg = C.dark_bg })
-        local DiagnosticInfo =
-            get_hlgroup("DiagnosticInfo", { fg = C.white, bg = C.dark_bg })
-        local DiagnosticHint = get_hlgroup(
-          "DiagnosticHint",
-          { fg = C.bright_yellow, bg = C.dark_bg }
-        )
-        local HeirlineInactive = get_hlgroup("HeirlineInactive", { bg = nil }).bg
-            or hl.lualine_mode("inactive", C.dark_grey)
-        local HeirlineNormal = get_hlgroup("HeirlineNormal", { bg = nil }).bg
-            or hl.lualine_mode("normal", C.blue)
-        local HeirlineInsert = get_hlgroup("HeirlineInsert", { bg = nil }).bg
-            or hl.lualine_mode("insert", C.green)
-        local HeirlineVisual = get_hlgroup("HeirlineVisual", { bg = nil }).bg
-            or hl.lualine_mode("visual", C.purple)
-        local HeirlineReplace = get_hlgroup("HeirlineReplace", { bg = nil }).bg
-            or hl.lualine_mode("replace", C.bright_red)
-        local HeirlineCommand = get_hlgroup("HeirlineCommand", { bg = nil }).bg
-            or hl.lualine_mode("command", C.bright_yellow)
-        local HeirlineTerminal = get_hlgroup("HeirlineTerminal", { bg = nil }).bg
-            or hl.lualine_mode("insert", HeirlineInsert)
+      -- Heirline-componets events
+      lib.init.subscribe_to_events()
 
-        local colors = {
-          close_fg = Error.fg,
-          fg = StatusLine.fg,
-          bg = StatusLine.bg,
-          section_fg = StatusLine.fg,
-          section_bg = StatusLine.bg,
-          git_branch_fg = Conditional.fg,
-          mode_fg = StatusLine.bg,
-          treesitter_fg = String.fg,
-          virtual_env_fg = NvimEnvironmentName.fg,
-          scrollbar = TypeDef.fg,
-          git_added = GitSignsAdd.fg,
-          git_changed = GitSignsChange.fg,
-          git_removed = GitSignsDelete.fg,
-          diag_ERROR = DiagnosticError.fg,
-          diag_WARN = DiagnosticWarn.fg,
-          diag_INFO = DiagnosticInfo.fg,
-          diag_HINT = DiagnosticHint.fg,
-          winbar_fg = WinBar.fg,
-          winbar_bg = WinBar.bg,
-          winbarnc_fg = WinBarNC.fg,
-          winbarnc_bg = WinBarNC.bg,
-          tabline_bg = TabLineFill.bg,
-          tabline_fg = TabLineFill.bg,
-          buffer_fg = Comment.fg,
-          buffer_path_fg = WinBarNC.fg,
-          buffer_close_fg = Comment.fg,
-          buffer_bg = TabLineFill.bg,
-          buffer_active_fg = Normal.fg,
-          buffer_active_path_fg = WinBarNC.fg,
-          buffer_active_close_fg = Error.fg,
-          buffer_active_bg = Normal.bg,
-          buffer_visible_fg = Normal.fg,
-          buffer_visible_path_fg = WinBarNC.fg,
-          buffer_visible_close_fg = Error.fg,
-          buffer_visible_bg = Normal.bg,
-          buffer_overflow_fg = Comment.fg,
-          buffer_overflow_bg = TabLineFill.bg,
-          buffer_picker_fg = Error.fg,
-          tab_close_fg = Error.fg,
-          tab_close_bg = TabLineFill.bg,
-          tab_fg = TabLine.fg,
-          tab_bg = TabLine.bg,
-          tab_active_fg = TabLineSel.fg,
-          tab_active_bg = TabLineSel.bg,
-          inactive = HeirlineInactive,
-          normal = HeirlineNormal,
-          insert = HeirlineInsert,
-          visual = HeirlineVisual,
-          replace = HeirlineReplace,
-          command = HeirlineCommand,
-          terminal = HeirlineTerminal,
-        }
-
-        for _, section in ipairs {
-          "git_branch",
-          "file_info",
-          "git_diff",
-          "diagnostics",
-          "lsp",
-          "macro_recording",
-          "mode",
-          "cmd_info",
-          "treesitter",
-          "nav",
-          "virtual_env",
-        } do
-          if not colors[section .. "_bg"] then
-            colors[section .. "_bg"] = colors["section_bg"]
-          end
-          if not colors[section .. "_fg"] then
-            colors[section .. "_fg"] = colors["section_fg"]
-          end
-        end
-        return colors
-      end
-      heirline.load_colors(setup_colors())
+      -- Heirline colors
+      heirline.load_colors(lib.hl.get_colors())
       heirline.setup(opts)
-
-      -- Autocmds --
-
-      -- 0. Apply colors defined above to heirline after applying a theme
-      vim.api.nvim_create_autocmd("ColorScheme", {
-        desc = "Refresh heirline colors",
-        callback = function()
-          require("heirline.utils").on_colorscheme(setup_colors())
-        end,
-      })
-
-      -- 1. Update tabs when adding new buffers
-      vim.api.nvim_create_autocmd({ "BufAdd", "BufEnter", "TabNewEntered" }, {
-        desc = "Update buffers when adding new buffers",
-        callback = function(args)
-          local buf_utils = require "base.utils.buffer"
-          if not vim.t.bufs then vim.t.bufs = {} end
-          if not buf_utils.is_valid(args.buf) then return end
-          if args.buf ~= buf_utils.current_buf then
-            buf_utils.last_buf = buf_utils.current_buf
-            buf_utils.current_buf = args.buf
-          end
-          local bufs = vim.t.bufs
-          if not vim.tbl_contains(bufs, args.buf) then
-            table.insert(bufs, args.buf)
-            vim.t.bufs = bufs
-          end
-          vim.t.bufs = vim.tbl_filter(buf_utils.is_valid, vim.t.bufs)
-          utils.event "BufsUpdated"
-        end,
-      })
-
-      -- 2. Update tabs when deleting buffers
-      vim.api.nvim_create_autocmd("BufDelete", {
-        desc = "Update buffers when deleting buffers",
-        callback = function(args)
-          local removed
-          for _, tab in ipairs(vim.api.nvim_list_tabpages()) do
-            local bufs = vim.t[tab].bufs
-            if bufs then
-              for i, bufnr in ipairs(bufs) do
-                if bufnr == args.buf then
-                  removed = true
-                  table.remove(bufs, i)
-                  vim.t[tab].bufs = bufs
-                  break
-                end
-              end
-            end
-          end
-          vim.t.bufs = vim.tbl_filter(require("base.utils.buffer").is_valid, vim.t.bufs)
-          if removed then utils.event "BufsUpdated" end
-          vim.cmd.redrawtabline()
-        end,
-      })
     end,
   },
 

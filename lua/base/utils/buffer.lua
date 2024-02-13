@@ -118,7 +118,7 @@ function M.move(n)
     end
   end
   vim.t.bufs = bufs       -- set buffers
-  require("base.utils").event "BufsUpdated"
+  require("base.utils").trigger_event "BufsUpdated"
   vim.cmd.redrawtabline() -- redraw tabline
 end
 
@@ -248,7 +248,7 @@ function M.sort(compare_func, skip_autocmd)
     local bufs = vim.t.bufs
     table.sort(bufs, compare_func)
     vim.t.bufs = bufs
-    if not skip_autocmd then require("base.utils").event "BufsUpdated" end
+    if not skip_autocmd then require("base.utils").trigger_event "BufsUpdated" end
     vim.cmd.redrawtabline()
     return true
   end
@@ -259,7 +259,7 @@ end
 function M.close_tab()
   if #vim.api.nvim_list_tabpages() > 1 then
     vim.t.bufs = nil
-    require("base.utils").event "BufsUpdated" -- Emit BaseBufsUpdated event
+    require("base.utils").trigger_event "BufsUpdated" -- Emit BaseBufsUpdated event
     vim.cmd.tabclose()
   end
 end
