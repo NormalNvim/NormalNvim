@@ -7,9 +7,8 @@
 --      -> extend_tbl            → Add the content of a table to another table.
 --      -> conditional_func      → Run a function if conditions are met.
 --      -> get_icon              → Return an icon from the icons directory.
---      -> get_hlgroup           → Get highlight properties a highlight name.
 --      -> notify                → Send a notification asynchronously.
---      -> event                 → Manually emit a system event.
+--      -> trigger               → Manually execute a user event.
 --      -> system_open           → Open the file or URL under the cursor.
 --      -> toggle_term_cmd       → get/set a re-usable toggleterm session.
 --      -> is_available          → Return true if the plugin is available.
@@ -59,30 +58,6 @@ function M.get_icon(kind, padding, no_fallback)
   return icon and icon .. string.rep(" ", padding or 0) or ""
 end
 
---- Get highlight properties for a given highlight name.
----@param name string The highlight group name.
----@param fallback? table The fallback highlight properties.
----@return table properties # the highlight group properties.
-function M.get_hlgroup(name, fallback)
-  if vim.fn.hlexists(name) == 1 then
-    local hl
-    if vim.api.nvim_get_hl then -- check for new neovim 0.9 API
-      hl = vim.api.nvim_get_hl(0, { name = name, link = false })
-      if not hl.fg then hl.fg = "NONE" end
-      if not hl.bg then hl.bg = "NONE" end
-    else
-      hl = vim.api.nvim_get_hl_by_name(name, vim.o.termguicolors)
-      if not hl.foreground then hl.foreground = "NONE" end
-      if not hl.background then hl.background = "NONE" end
-      hl.fg, hl.bg = hl.foreground, hl.background
-      hl.ctermfg, hl.ctermbg = hl.fg, hl.bg
-      hl.sp = hl.special
-    end
-    return hl
-  end
-  return fallback or {}
-end
-
 --- Serve a notification with a title of Neovim.
 ---@param msg string The notification body.
 ---@param type number|nil The type of the notification (:help vim.log.levels).
@@ -92,11 +67,11 @@ function M.notify(msg, type, opts)
     msg, type, M.extend_tbl({ title = "Neovim" }, opts)) end)
 end
 
---- Trigger an internal NormalNvim event.
+--- Trigger a user event.
 ---@param event string The event name to be appended to Base.
 -- @usage If you pass the event 'Foo' to this method, it will trigger.
 --        the autocmds including the pattern 'BaseFoo'.
-function M.event(event)
+function M.trigger_event(event)
   vim.schedule(
     function()
       vim.api.nvim_exec_autocmds(
