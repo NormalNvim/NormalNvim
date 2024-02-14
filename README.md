@@ -108,7 +108,6 @@ Special thanks to LeoRed04 for designing the logo.
 Did you know NormalNvim was the first Neovim distro to ship a compiler that [support 22+ programming languages out of the box](https://www.youtube.com/watch?v=O42uCIBaCIQ)?
 
 ## Roadmap
-* Cleanup the config of the plugin `Mason`.
 * Once nvim 0.10 is officially released, replace `get_active_clients` by `get_clients`.
 * During 2024, add a installer to take care of installing the system dependencies, which seems to be the main friction point people find.
 * During 2024, create CD actions that can be triggered manually to ensure the dependencies install correctly (sometimes distros will change dependency names).
