@@ -107,11 +107,6 @@ Special thanks to LeoRed04 for designing the logo.
 ## Trivia
 Did you know NormalNvim was the first distro ever to ship a compiler that [support 22+ programming languages](https://www.youtube.com/watch?v=O42uCIBaCIQ)?
 
-* A compiler.
-* A LSP garbage collector.
-* A keymapping to generate code documentation.
-* A distro agnostic collection of customizable user interface components.
-
 ## Roadmap
 * Cleanup the config of the plugin `Mason`.
 * Once nvim 0.10 is officially released, replace `get_active_clients` by `get_clients`.
