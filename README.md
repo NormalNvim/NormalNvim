@@ -60,7 +60,7 @@ The next relevant commands are provided by [distroupdate.nvim](https://github.co
 
 |  Command            | Description                             |
 |---------------------|-----------------------------------------|
-| **:NvimUpdateConfig** | Pulls the latest changes from the current git repository of your nvim config. |
+| **:NvimUpdateConfig** | To update the distro from git origin. Local uncommited changes will be lost. |
 | **:NvimFreezePluginVersions** | Saves your current plugin versions into `lazy_versions.lua`. |
 
 ## FAQ
