@@ -104,6 +104,7 @@ Originally it took AstroNvim as base. But implements [this VIM config](https://g
 Special thanks to LeoRed04 for designing the logo.
 
 ## Roadmap
+* The config of the plugin Mason should be way more simple. Let's move stuff to `updater.nvim`.
 * Once nvim 0.10 is officially released, replace `get_active_clients` by `get_clients`.
 * During 2024, add a installer to take care of installing the system dependencies, which seems to be the main friction point people find.
 * During 2024, create CD actions that can be triggered manually to ensure the dependencies install correctly (sometimes distros will change dependency names).
