@@ -654,7 +654,7 @@ return {
   --  highlight-undo
   --  https://github.com/tzachar/highlight-undo.nvim
   --  This plugin only flases on redo.
-  --  But we also have a autocmd to flash on undo.
+  --  But we also have a autocmd to flash on yank.
   {
     "tzachar/highlight-undo.nvim",
     event = "VeryLazy",
@@ -669,7 +669,7 @@ return {
     config = function(_, opts)
       require("highlight-undo").setup(opts)
 
-      -- Also flash on undo.
+      -- Also flash on yank.
       vim.api.nvim_create_autocmd("TextYankPost", {
         desc = "Highlight yanked text",
         pattern = "*",
