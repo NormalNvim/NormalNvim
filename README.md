@@ -105,7 +105,7 @@ Originally it took AstroNvim as base. But implements [this VIM config](https://g
 Special thanks to LeoRed04 for designing the logo.
 
 ## Trivia
-Did you know NormalNvim was the first Neovim distro to ship a compiler that [support 22+ programming languages](https://www.youtube.com/watch?v=O42uCIBaCIQ) out of the box?
+Did you know NormalNvim was the first Neovim distro to ship a compiler that [support 22+ programming languages out of the box](https://www.youtube.com/watch?v=O42uCIBaCIQ)?
 
 ## Roadmap
 * Cleanup the config of the plugin `Mason`.
