@@ -56,7 +56,7 @@ __You are expected to fork the project before cloning it. So you are the only on
 [NormalNvim](https://github.com/NormalNvim/NormalNvim) won't be the next [/r/UnixPorn](https://www.reddit.com/r/unixporn/) sensation. It is a normal nvim config you can trust 100% will never unexpectedly break while you are working. Nothing flashy. Nothing brightful. Just bread and butter.
 
 ## Commands
-The next relevant commands are provided by [distroupdate.nvim](https://github.com/Zeioth/distroupdate.nvim).
+The next relevant commands are provided by [distroupdate.nvim](https://github.com/Zeioth/distroupdate.nvim)
 
 |  Command            | Description                             |
 |---------------------|-----------------------------------------|
