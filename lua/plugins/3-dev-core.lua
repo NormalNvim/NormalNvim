@@ -293,12 +293,12 @@ return {
     },
     build = ":MasonUpdate",
     config = function(_, opts)
+      local updater = require("distroupdate.utils.mason")
       require("mason").setup(opts)
-
       local cmd = vim.api.nvim_create_user_command
-      cmd("MasonUpdate", function(options) require("distroupdate.utils.mason").update(options.fargs) end, {
+      cmd("MasonUpdateAll", function() updater.update_all() end)
+      cmd("MasonUpdate", function(options) updater.update(options.fargs) end, {
         nargs = "*",
-        desc = "Update Mason Package",
         complete = function(arg_lead)
           local _ = require "mason-core.functional"
           return _.sort_by(
@@ -307,11 +307,6 @@ return {
            )
         end,
       })
-      cmd(
-        "MasonUpdateAll",
-        function() require("distroupdate.utils.mason").update_all() end,
-        { desc = "Update Mason Packages" }
-      )
 
       for _, plugin in ipairs {
         "mason-lspconfig",
