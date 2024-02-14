@@ -261,7 +261,7 @@ return {
       excluded_lsp_clients = {
         "null-ls", "jdtls"
       },
-      grace_period = (60*5),
+      grace_period = (60*10),
       wakeup_delay = 3000,
       notifications = false,
       retries = 3,
