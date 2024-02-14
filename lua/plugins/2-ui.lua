@@ -298,14 +298,14 @@ return {
         },
         tabline = { -- UI upper bar
           lib.component.tabline_conditional_padding(),
-          lib.heirline.make_buflist(lib.component.tabline_file_info()), -- create 1 buffer component per buffer.
+          lib.component.tabline_buffers(),
           lib.component.fill { hl = { bg = "tabline_bg" } },
-          lib.component.tabline_tabpages()                              -- create 1 tabpages component at the right.
+          lib.component.tabline_tabpages()
         },
         winbar = { -- UI breadcrumbs bar
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
           fallthrough = false,
-          lib.component.breadcrumbs_when_inactive {},
+          lib.component.breadcrumbs_when_inactive(),
           lib.component.breadcrumbs { hl = lib.hl.get_attributes("winbar", true) },
         },
         statuscolumn = { -- UI left column
@@ -335,13 +335,11 @@ return {
     end,
     config = function(_, opts)
       local heirline = require "heirline"
-      local lib = require "heirline-components.all"
+      local heirline_components = require "heirline-components.all"
 
-      -- Heirline-componets events
-      lib.init.subscribe_to_events()
-
-      -- Heirline colors
-      heirline.load_colors(lib.hl.get_colors())
+      -- Setup
+      heirline_components.init.subscribe_to_events()
+      heirline.load_colors(heirline_components.hl.get_colors())
       heirline.setup(opts)
     end,
   },
