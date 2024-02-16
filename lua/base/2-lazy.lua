@@ -19,7 +19,7 @@ base.updater = {
 }
 
 -- lazyload extra behavior
---  * If plugins need to be installed → auto lanch lazy at startup.
+--  * If plugins need to be installed → auto launch lazy at startup.
 --  * When lazy finishes updating     → check for mason updates too.
 --  * Then show notifications and stuff.
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
