@@ -1,11 +1,7 @@
 -- HELLO, welcome to NormalNvim!
 -- -------------------------------------
 -- Here you can define your nvim globals.
---
--- For plugin updates:
--- Check ./2-lazy.lua to know more about "stable" and "nightly" channels.
--- And how to lock your package versions.
-
+-- -------------------------------------
 
 -- NormalNvin lua globals
 _G.base = {}
