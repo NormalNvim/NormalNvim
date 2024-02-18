@@ -20,13 +20,13 @@ If you are new here don't forget to [check the wiki](https://github.com/NormalNv
 
 ## How to install
 
-### Installer (Linux/MacOS/WSL)
+### Install automatically (Linux/MacOS/WSL)
 You can preview it [here](https://raw.githubusercontent.com/NormalNvim/installer/main/installer.sh)
 ```sh
 wget https://raw.githubusercontent.com/NormalNvim/installer/main/installer.sh && chmod +x installer.sh && ./installer.sh
 ```
 
-### Manually (Linux/MacOS/WSL)
+### Clone manually (Linux/MacOS/WSL)
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
 git clone https://github.com/NormalNvim/NormalNvim.git ~/.config/nvim
