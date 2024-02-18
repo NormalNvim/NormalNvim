@@ -23,7 +23,7 @@ If you are new here don't forget to [check the wiki](https://github.com/NormalNv
 ### Install automatically (Linux/MacOS/WSL)
 You can preview it [here](https://raw.githubusercontent.com/NormalNvim/installer/main/installer.sh)
 ```sh
-wget https://raw.githubusercontent.com/NormalNvim/installer/main/installer.sh && chmod +x installer.sh && ./installer.sh
+wget -q https://raw.githubusercontent.com/NormalNvim/installer/main/installer.sh && chmod +x installer.sh && ./installer.sh
 ```
 
 ### Clone manually (Linux/MacOS/WSL)
