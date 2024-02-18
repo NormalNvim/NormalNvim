@@ -18,20 +18,27 @@ The space key shows [all you can do](https://github.com/NormalNvim/NormalNvim/wi
 
 If you are new here don't forget to [check the wiki](https://github.com/NormalNvim/NormalNvim/wiki).
 
-## Install (Linux/MacOS)
+## How to install
+
+### Installer (Linux/MacOS/WSL)
+```sh
+wget https://raw.githubusercontent.com/NormalNvim/installer/main/installer.sh && chmod +x installer.sh && ./installer.sh
+```
+
+### Manually (Linux/MacOS/WSL)
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
 git clone https://github.com/NormalNvim/NormalNvim.git ~/.config/nvim
 ```
 
-## Install (Windows)
+### Clone manually (Windows)
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
 git clone https://github.com/NormalNvim/NormalNvim.git %USERPROFILE%\AppData\Local\nvim && nvim
 ```
 
-## Dependencies
-NormalNvim will connect to the internet the first time you open it to download the plugins. But [to unlock all features you must install the dependencies](https://github.com/NormalNvim/NormalNvim/wiki/dependencies).
+### Optional dependencies
+This is only necessary if you installed NormalNvim by cloning manually. [To unlock all features you will have to install the dependencies](https://github.com/NormalNvim/NormalNvim/wiki/dependencies).
 
 ## Distro features
 
