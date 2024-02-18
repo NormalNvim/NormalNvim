@@ -20,7 +20,7 @@ If you are new here don't forget to [check the wiki](https://github.com/NormalNv
 
 ## How to install
 
-### Install automatically (Linux/MacOS/WSL)
+### Installer (Linux/MacOS/WSL)
 You can preview it [here](https://raw.githubusercontent.com/NormalNvim/installer/main/installer.sh)
 ```sh
 wget -q https://raw.githubusercontent.com/NormalNvim/installer/main/installer.sh && chmod +x installer.sh && ./installer.sh
