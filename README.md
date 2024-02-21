@@ -79,8 +79,7 @@ Please before opening an issue, check the [astrocommunity](https://github.com/As
 
     `:checkhealth base`
 
-* **Supports Windows?**
-Yes, 100%. This is not necessary, but we strongly recommend you to launch NormalNvim [using WLS](https://www.youtube.com/watch?v=fFbLUEQsRhM) so you can install [the required dependencies](https://github.com/NormalNvim/NormalNvim/wiki/dependencies) to unlock all features.
+* **Why can't I see the icons?** You must install the [nerdfont version of your font](https://www.nerdfonts.com/), and use it on your terminal. Alternatively you can edit `lua/base/icons/nerd_fond.lua` to manually specify your own icons.
 
 * **How can I disable the tabline?** You can delete the plugin heirline.
 
@@ -92,7 +91,6 @@ Yes, 100%. This is not necessary, but we strongly recommend you to launch Normal
 OPENAI_API_KEY="my_key_here"
 ```
 
-* **Why can't I see the icons?** You must install the [nerdfont version of your font](https://www.nerdfonts.com/), and use it on your terminal. Alternatively you can edit `lua/base/icons/nerd_fond.lua` to manually specify your own icons.
 
 * **What scenarios are not covered by this distro?**
   * **Kubernetes**: We do not provide a kubernetes plugin. But we recommend using friendly-snippets, to quickly write code, and [overseer.nvim](https://github.com/stevearc/overseer.nvim) to run kubernetes commands from inside nvim without having to wait for the server response.
