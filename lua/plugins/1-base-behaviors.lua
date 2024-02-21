@@ -219,11 +219,11 @@ return {
       --
       --      This won't be necessary once neovim fixes:
       --      https://github.com/neovim/neovim/issues/12242
-      vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
-        callback = function ()
-          session_manager.save_current_session()
-        end
-      })
+      -- vim.api.nvim_create_autocmd({ 'BufWritePre' }, {
+      --   callback = function ()
+      --     session_manager.save_current_session()
+      --   end
+      -- })
     end
   },
 

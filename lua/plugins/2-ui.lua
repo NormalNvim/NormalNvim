@@ -7,6 +7,7 @@
 --       -> alpha-nvim                  [greeter]
 --       -> nvim-notify                 [notifications]
 --       -> mini.indentscope            [guides]
+--       -> heirline-components.nvim    [ui components]
 --       -> heirline                    [ui components]
 --       -> telescope                   [search]
 --       -> telescope-fzf-native.nvim   [search backend]
@@ -273,15 +274,24 @@ return {
     end
   },
 
+  -- heirline-components.nvim [ui components]
+  -- https://github.com/Zeioth/heirline-components.nvim
+  -- Collection of components to use on your heirline config.
+  {
+    "zeioth/heirline-components.nvim",
+    opts = {
+      icons = require("base.icons.nerd_font")
+    }
+  },
+
   --  heirline [ui components]
   --  https://github.com/rebelot/heirline.nvim
-  --  https://github.com/Zeioth/heirline-components.nvim
   --  Use it to customize the components of your user interface,
   --  Including tabline, winbar, statuscolumn, statusline.
   --  Be aware some components are positional. Read heirline documentation.
   {
     "rebelot/heirline.nvim",
-    dependencies = { "Zeioth/heirline-components.nvim" },
+    dependencies = { "zeioth/heirline-components.nvim" },
     event = "BufEnter",
     opts = function()
       local lib = require "heirline-components.all"
