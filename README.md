@@ -117,7 +117,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 
 ## Roadmap
 * ~~During 2024, add a installer to take care of installing the system dependencies, which seems to be the main friction point people find.~~
-* During 2024, create CD actions that can be triggered manually to ensure the dependencies install correctly (sometimes distros will change dependency names). → Add it to [NormalNvim/installer](https://github.com/NormalNvim/installer)
+* ~~During 2024, create CD actions that can be triggered manually to ensure the dependencies install correctly (sometimes distros will change dependency names). → Add it to [NormalNvim/installer](https://github.com/NormalNvim/installer)~~
 * Once we remove all complexity we possibly can from all configs, lets's start moving to Neovim 0.10, as it is likely to be officially released around april of this year.
 * Once nvim 0.10 is officially released, replace `get_active_clients` by `get_clients`.
 * During 2024, add a toolbar for [Compiler.nvim](https://github.com/Zeioth/compiler.nvim) so users have a button to compile and manage their build automation utilities and current build_type in a friendly way.
