@@ -92,6 +92,8 @@ Yes, 100%. This is not necessary, but we strongly recommend you to launch Normal
 OPENAI_API_KEY="my_key_here"
 ```
 
+* **Why can't I see the icons?** You must install the [nerdfont version of your font](https://www.nerdfonts.com/), and use it on your terminal. Alternatively you can edit `lua/base/icons/nerd_fond.lua` to manually specify your own icons.
+
 * **What scenarios are not covered by this distro?**
   * **Kubernetes**: We do not provide a kubernetes plugin. But we recommend using friendly-snippets, to quickly write code, and [overseer.nvim](https://github.com/stevearc/overseer.nvim) to run kubernetes commands from inside nvim without having to wait for the server response.
   * **e2e testing**: We do not provide an e2e plugin. But we do provide the :TestNodejsE2e command you can customize on [/lua/base/3-autocmds.lua](https://github.com/NormalNvim/NormalNvim/blob/main/lua/base/3-autocmds.lua) along with all the other testing commands. You can also rename the commands to anything you want in case you don't use nodejs.
@@ -116,6 +118,7 @@ Special thanks to LeoRed04 for designing the logo.
 Did you know NormalNvim was the first Neovim distro to ship a compiler that [support 22+ programming languages out of the box](https://www.youtube.com/watch?v=O42uCIBaCIQ)?
 
 ## Roadmap
+* minor fix: We should explicitely pass the ops icons to the plugin `heirline-components` to ensure the plugin use the icons defined in the distro.
 * Once we remove all complexity we possibly can from all configs, lets's start moving to Neovim 0.10, as it is likely to be officially released around april of this year.
 * Once nvim 0.10 is officially released, replace `get_active_clients` by `get_clients`.
 * During 2024, add a toolbar for [Compiler.nvim](https://github.com/Zeioth/compiler.nvim) so users have a button to compile and manage their build automation utilities and current build_type in a friendly way.
