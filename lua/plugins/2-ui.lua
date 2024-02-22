@@ -329,7 +329,7 @@ return {
           hl = { fg = "fg", bg = "bg" },
           lib.component.mode(),
           lib.component.git_branch(),
-          lib.component.file_info { filetype = {}, filename = false, file_modified = false },
+          lib.component.file_info(),
           lib.component.git_diff(),
           lib.component.diagnostics(),
           lib.component.fill(),
