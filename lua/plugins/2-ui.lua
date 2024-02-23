@@ -316,7 +316,7 @@ return {
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
           fallthrough = false,
           lib.component.breadcrumbs_when_inactive(),
-          lib.component.breadcrumbs { hl = lib.hl.get_attributes("winbar", true) },
+          lib.component.breadcrumbs(),
         },
         statuscolumn = { -- UI left column
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
