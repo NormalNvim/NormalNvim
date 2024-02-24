@@ -35,10 +35,6 @@ M.comparator = {}
 
 local fnamemodify = vim.fn.fnamemodify
 local function bufinfo(bufnr) return vim.fn.getbufinfo(bufnr)[1] end
-local function unique_path(bufnr)
-  return require("base.utils.status").provider.unique_path() { bufnr = bufnr }
-      .. fnamemodify(bufinfo(bufnr).name, ":t")
-end
 
 --- Check if a buffer is valid.
 ---@param bufnr number The buffer to check.
@@ -73,15 +69,6 @@ end
 function M.comparator.full_path(bufnr_a, bufnr_b)
   return fnamemodify(bufinfo(bufnr_a).name, ":p")
       < fnamemodify(bufinfo(bufnr_b).name, ":p")
-end
-
---- Comparator of two buffers based on their unique path.
----@param bufnr_a integer buffer number A.
----@param bufnr_b integer buffer number B.
----@return boolean comparison true if A is sorted before B,
----                           false if B should be sorted before A.
-function M.comparator.unique_path(bufnr_a, bufnr_b)
-  return unique_path(bufnr_a) < unique_path(bufnr_b)
 end
 
 --- Comparator of two buffers based on modification date.

@@ -334,7 +334,7 @@ maps.n["<leader>bC"] = {
 }
 maps.n["<leader>bb"] = {
   function()
-    require("base.utils.status").heirline.buffer_picker(
+    require("heirline-components.all").heirline.buffer_picker(
       function(bufnr) vim.api.nvim_win_set_buf(0, bufnr) end
     )
   end,
@@ -342,7 +342,7 @@ maps.n["<leader>bb"] = {
 }
 maps.n["<leader>bd"] = {
   function()
-    require("base.utils.status").heirline.buffer_picker(
+    require("heirline-components.all").heirline.buffer_picker(
       function(bufnr) require("base.utils.buffer").close(bufnr) end
     )
   end,
@@ -379,7 +379,7 @@ maps.n["<leader>bsm"] = {
 }
 maps.n["<leader>b\\"] = {
   function()
-    require("base.utils.status").heirline.buffer_picker(function(bufnr)
+    require("heirline-components.all").heirline.buffer_picker(function(bufnr)
       vim.cmd.split()
       vim.api.nvim_win_set_buf(0, bufnr)
     end)
@@ -388,7 +388,7 @@ maps.n["<leader>b\\"] = {
 }
 maps.n["<leader>b|"] = {
   function()
-    require("base.utils.status").heirline.buffer_picker(function(bufnr)
+    require("heirline-components.all").heirline.buffer_picker(function(bufnr)
       vim.cmd.vsplit()
       vim.api.nvim_win_set_buf(0, bufnr)
     end)
