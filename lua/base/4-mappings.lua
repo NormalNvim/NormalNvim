@@ -672,7 +672,7 @@ end
 
 -- neotree
 if is_available "neo-tree.nvim" then
-  maps.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "neotree" }
+  maps.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Neotree" }
   maps.n["<leader>o"] = {
     function()
       if vim.bo.filetype == "neo-tree" then
