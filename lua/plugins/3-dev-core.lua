@@ -17,7 +17,7 @@
 --       -> none-ls                        [lsp code formatting]
 --       -> neodev                         [lsp for nvim lua api]
 
---       ## AUTO COMPLETON
+--       ## AUTO COMPLETION
 --       -> nvim-cmp                       [auto completion engine]
 --       -> cmp-nvim-buffer                [auto completion buffer]
 --       -> cmp-nvim-path                  [auto completion path]
