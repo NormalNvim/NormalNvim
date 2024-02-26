@@ -69,6 +69,7 @@ function M.notify(msg, type, opts)
 end
 
 --- Convenient wapper to save code when we Trigger events.
+--- To listen for a event triggered by this function you can use `autocmd`.
 ---@param event string Name of the event.
 -- @usage To run a User event:   `trigger_event("User MyUserEvent")`
 -- @usage To run a Neovim event: `trigger_event("BufEnter")`
