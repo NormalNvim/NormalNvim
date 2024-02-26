@@ -24,8 +24,8 @@
 --       -> lsp_signature.nvim     [auto params help]
 --       -> distroupdate.nvim      [distro update]
 
-local windows = vim.fn.has('win32') == 1             -- true if on windows
-local android = vim.fn.isdirectory('/system') == 1   -- true if on android
+local is_windows = vim.fn.has('win32') == 1             -- true if on windows
+local is_android = vim.fn.isdirectory('/system') == 1   -- true if on android
 
 -- configures plugins
 return {
@@ -42,12 +42,12 @@ return {
     "kevinhwang91/rnvimr",
     event = "VeryLazy",
     cmd = { "RnvimrToggle" },
-    enabled = not windows,
+    enabled = not is_windows,
     config = function(_, opts)
       -- vim.g.rnvimr_vanilla = 1            -- Often solves issues in your ranger config.
       vim.g.rnvimr_enable_picker = 1         -- Close rnvimr after choosing a file.
       vim.g.rnvimr_ranger_cmd = { "ranger" } -- By passing a script like TERM=foot ranger "$@" you can open terminals inside ranger.
-      if android then -- Open on full screenn
+      if is_android then -- Open on full screenn
         vim.g.rnvimr_layout = {
           relative = "editor",
           width = 200,
@@ -687,9 +687,9 @@ return {
           config_dir .. "1-options.lua",
           config_dir .. "4-mappings.lua"
         },
-        hot_reload_extra_behavior = function()
-          vim.cmd ":silent! doautocmd ColorScheme"                           -- heirline colorscheme reload event
+        hot_reload_callback = function()
           vim.cmd(":silent! colorscheme " .. base.default_colorscheme)       -- nvim     colorscheme reload command
+          vim.cmd ":silent! doautocmd ColorScheme"                           -- heirline colorscheme reload event
         end
       }
     end

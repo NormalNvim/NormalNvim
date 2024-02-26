@@ -22,8 +22,8 @@
 --       -> which-key                   [on-screen keybinding]
 
 local utils = require "base.utils"
-local windows = vim.fn.has('win32') == 1             -- true if on windows
-local android = vim.fn.isdirectory('/system') == 1   -- true if on android
+local is_windows = vim.fn.has('win32') == 1             -- true if on windows
+local is_android = vim.fn.isdirectory('/system') == 1   -- true if on android
 
 return {
 
@@ -119,7 +119,7 @@ return {
       --   [[ \/_/\/_/\/__/    \/_/\/_/\/_/\/_/]],
       -- }
 
-      if android then dashboard.section.header.val = {
+      if is_android then dashboard.section.header.val = {
         [[         __                ]],
         [[ __  __ /\_\    ___ ___    ]],
         [[/\ \/\ \\/\ \ /' __` __`\  ]],
@@ -150,7 +150,7 @@ return {
 
       -- If on windows, don't show the 'ranger' button
       local ranger_button = dashboard.button("r", "🐍 Ranger  ", "<cmd>RnvimrToggle<CR>")
-      if windows then ranger_button = nil end
+      if is_windows then ranger_button = nil end
 
       -- Buttons
       dashboard.section.buttons.val = {
@@ -621,7 +621,7 @@ return {
   {
     "echasnovski/mini.animate",
     event = "User BaseFile",
-    enabled = not android,
+    enabled = not is_android,
     opts = function()
       -- don't use animate when scrolling with the mouse
       local mouse_scrolled = false

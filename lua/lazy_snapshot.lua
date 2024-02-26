@@ -10,7 +10,7 @@ return {
   { "Shatur/neovim-session-manager", commit = "df544e17798dd0e6e33ecf0991dfde9174367837" },
   { "Zeioth/NormalSnippets", commit = "e91dbace3e221ee58de39d852c93ceca166f05c3" },
   { "Zeioth/compiler.nvim", version = "^4" },
-  { "Zeioth/distroupdate.nvim", version = "^0.1" },
+  { "Zeioth/distroupdate.nvim", commit = "8aedd365363f82b82011934e442e2ed8f1ddc512" },
   { "Zeioth/dooku.nvim", version = "^2" },
   { "Zeioth/markmap.nvim", version = "^3" },
   { "Zeioth/project.nvim", commit = "3d30a4ddaf0f0c30892fb2f36fa4669499d7e6db" },
@@ -101,5 +101,5 @@ return {
   { "windwp/nvim-autopairs", commit = "defad64afbf19381fe31488a7582bbac421d6e38" },
   { "windwp/nvim-ts-autotag", commit = "6be1192965df35f94b8ea6d323354f7dc7a557e4" },
   { "zeioth/garbage-day.nvim", version = "^2" },
-  { "zeioth/heirline-components.nvim", version = "^0.4" },
+  { "zeioth/heirline-components.nvim", commit = "f95fe13a36d1c8565c315ac57fcc55e698c94800" },
 }

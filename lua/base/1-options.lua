@@ -49,7 +49,7 @@ local options = {
     virtualedit = "block", -- allow going past end of line in visual block mode.
     writebackup = false, -- Disable making a backup before overwriting a file.
 
-    -- Aditions
+    -- Additions
     shada = "!,'1000,<50,s10,h", -- Remember the last 1000 opened files
     undodir = vim.fn.stdpath "data" .. "/undodir", -- Chooses where to store the undodir.
     history = 1000, -- Number of commands to remember in a history table (per buffer).
@@ -66,7 +66,7 @@ local options = {
   g = {
     mapleader = " ", -- Set leader key.
     maplocalleader = ",", -- Set default local leader key.
-    big_file = { size = 1024 * 100, lines = 10000 }, -- For files bigger than this, disable 'treesitter'.
+    big_file = { size = 1024 * 100, lines = 10000 }, -- For files bigger than this, disable 'treesitter' (+100kb).
 
     -- All these options are toggleable with <space + l + u>
     autoformat_enabled = false, -- Enable auto formatting at start.
@@ -86,10 +86,10 @@ local options = {
 }
 
 -- extra logic ----------------------------------------------------------------
-local android = vim.fn.isdirectory('/system') == 1   -- true if on android
+local is_android = vim.fn.isdirectory('/system') == 1   -- true if on android
 
 -- mouse mode
-if android then
+if is_android then
   vim.opt.mouse = "v"
 else
   vim.opt.mouse = "a"

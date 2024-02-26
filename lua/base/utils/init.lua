@@ -8,18 +8,19 @@
 --      -> conditional_func      → Run a function if conditions are met.
 --      -> get_icon              → Return an icon from the icons directory.
 --      -> notify                → Send a notification asynchronously.
---      -> trigger               → Manually execute a user event.
+--      -> trigger_event         → Manually execute a user event.
 --      -> system_open           → Open the file or URL under the cursor.
 --      -> toggle_term_cmd       → get/set a re-usable toggleterm session.
 --      -> is_available          → Return true if the plugin is available.
 --      -> plugin_opts           → Return a plugin opts table.
 --      -> load_plugin_with_func → Load a plugin before running a command.
 --      -> which_key_register    → When setting a mapping, add it to whichkey.
---      -> M.empty_map_table     → Return a mappings table.
+--      -> empty_map_table       → Return a mappings table.
 --      -> set_mappings          → We use it to create mappings in a clean way.
 --      -> delete_url_effect     → Don't show an effect for urls.
 --      -> set_url_effect        → Show an effect for urls.
 --      -> cmd                   → Run a shell command and return true/false
+--      -> is_big_file           → Return true if the file is too big.
 --      -> os_path               → Convert the current path to the current OS.
 --      -> confirm_quit          → Ask for confirmation before exit.
 
@@ -67,19 +68,24 @@ function M.notify(msg, type, opts)
     msg, type, M.extend_tbl({ title = "Neovim" }, opts)) end)
 end
 
---- Trigger a user event.
----@param event string The event name to be appended to Base.
--- @usage If you pass the event 'Foo' to this method, it will trigger.
---        the autocmds including the pattern 'BaseFoo'.
+--- Convenient wapper to save code when we Trigger events.
+--- To listen for a event triggered by this function you can use `autocmd`.
+---@param event string Name of the event.
+-- @usage To run a User event:   `trigger_event("User MyUserEvent")`
+-- @usage To run a Neovim event: `trigger_event("BufEnter")`
 function M.trigger_event(event)
-  vim.schedule(
-    function()
-      vim.api.nvim_exec_autocmds(
-        "User",
-        { pattern = "Base" .. event, modeline = false }
-      )
+  -- detect if event start with the substring "User "
+  local is_user_event = string.match(event, "^User ") ~= nil
+
+  vim.schedule(function()
+    if is_user_event then
+      -- Substract the substring "User " from the beginning of the event.
+      event = event:gsub("^User ", "")
+      vim.api.nvim_exec_autocmds("User", { pattern = event, modeline = false })
+    else
+      vim.api.nvim_exec_autocmds(event, { modeline = false })
     end
-  )
+  end)
 end
 
 --- Open a URL under the cursor with the current operating system.
@@ -264,6 +270,19 @@ function M.cmd(cmd, show_error)
     vim.api.nvim_err_writeln(("Error running command %s\nError message:\n%s"):format(table.concat(cmd, " "), result))
   end
   return success and result:gsub("[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]", "") or nil
+end
+
+--- Returns true if the file is considered a big file,
+--- according to the criteria defined in `vim.g.big_file`.
+---@param bufnr number|nil buffer number. 0 by default, which means current buf.
+---@return boolean is_big_file true or false.
+function M.is_big_file(bufnr)
+  if bufnr == nil then bufnr = 0 end
+  local filesize = vim.fn.getfsize(vim.api.nvim_buf_get_name(bufnr))
+  local nlines = vim.api.nvim_buf_line_count(bufnr)
+  local is_big_file = (filesize > vim.g.big_file.size)
+    or (nlines > vim.g.big_file.lines)
+  return is_big_file
 end
 
 ---Given a string, convert 'slash' to 'inverted slash' if on windows, and vice versa on UNIX.
