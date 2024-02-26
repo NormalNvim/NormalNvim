@@ -40,11 +40,11 @@ autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
 
     -- For any file exept empty buffer, or the greeter (alpha)
     if not (empty_buffer or greeter) then
-      utils.trigger_event "File" -- Emit event 'BaseFile'
+      utils.trigger_event("User BaseFile")
 
       -- Is the buffer part of a git repo?
       if git_repo then
-        utils.trigger_event "GitFile" -- Emit event 'BaseGitFile'
+        utils.trigger_event("User BaseGitFile")
       end
 
     end

@@ -8,7 +8,7 @@
 --      -> conditional_func      → Run a function if conditions are met.
 --      -> get_icon              → Return an icon from the icons directory.
 --      -> notify                → Send a notification asynchronously.
---      -> trigger               → Manually execute a user event.
+--      -> trigger_event         → Manually execute a user event.
 --      -> system_open           → Open the file or URL under the cursor.
 --      -> toggle_term_cmd       → get/set a re-usable toggleterm session.
 --      -> is_available          → Return true if the plugin is available.
@@ -67,19 +67,23 @@ function M.notify(msg, type, opts)
     msg, type, M.extend_tbl({ title = "Neovim" }, opts)) end)
 end
 
---- Trigger a user event.
----@param event string The event name to be appended to Base.
--- @usage If you pass the event 'Foo' to this method, it will trigger.
---        the autocmds including the pattern 'BaseFoo'.
+--- Convenient wapper to save code when we Trigger events.
+---@param event string Name of the event.
+-- @usage To run a User event:   `trigger_event("User MyUserEvent")`
+-- @usage To run a Neovim event: `trigger_event("BufEnter")`
 function M.trigger_event(event)
-  vim.schedule(
-    function()
-      vim.api.nvim_exec_autocmds(
-        "User",
-        { pattern = "Base" .. event, modeline = false }
-      )
+  -- detect if event start with the substring "User "
+  local is_user_event = string.match(event, "^User ") ~= nil
+
+  vim.schedule(function()
+    if is_user_event then
+      -- Substract the substring "User " from the beginning of the event.
+      event = event:gsub("^User ", "")
+      vim.api.nvim_exec_autocmds("User", { pattern = event, modeline = false })
+    else
+      vim.api.nvim_exec_autocmds(event, { modeline = false })
     end
-  )
+  end)
 end
 
 --- Open a URL under the cursor with the current operating system.
