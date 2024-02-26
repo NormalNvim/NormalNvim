@@ -10,7 +10,7 @@ return {
   { "Shatur/neovim-session-manager", commit = "df544e17798dd0e6e33ecf0991dfde9174367837" },
   { "Zeioth/NormalSnippets", commit = "e91dbace3e221ee58de39d852c93ceca166f05c3" },
   { "Zeioth/compiler.nvim", version = "^4" },
-  { "Zeioth/distroupdate.nvim", commit = "fb424692e3715d687f282e826388dd2bf0fa6ba0" },
+  { "Zeioth/distroupdate.nvim", commit = "8aedd365363f82b82011934e442e2ed8f1ddc512" },
   { "Zeioth/dooku.nvim", version = "^2" },
   { "Zeioth/markmap.nvim", version = "^3" },
   { "Zeioth/project.nvim", commit = "3d30a4ddaf0f0c30892fb2f36fa4669499d7e6db" },
