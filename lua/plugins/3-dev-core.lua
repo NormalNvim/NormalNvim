@@ -61,20 +61,12 @@ return {
       context_commentstring = { enable = true, enable_autocmd = false },
       highlight = {
         enable = true,
-        disable = function(_, bufnr)
-          local nlines = vim.api.nvim_buf_line_count(bufnr)
-          local is_big_file = nlines > vim.g.big_file.lines
-          return is_big_file
-        end,
+        disable = function(_, bufnr) return require("base.utils").is_big_file(bufnr) end,
       },
       matchup = {
         enable = true,
         enable_quotes = true,
-        disable = function(_, bufnr)
-          local nlines = vim.api.nvim_buf_line_count(bufnr)
-          local is_big_file = nlines > vim.g.big_file.lines
-          return is_big_file
-        end,
+        disable = function(_, bufnr) return require("base.utils").is_big_file(bufnr) end,
       },
       incremental_selection = { enable = true },
       indent = { enable = true },

@@ -70,7 +70,7 @@ local options = {
   g = {
     mapleader = " ", -- Set leader key.
     maplocalleader = ",", -- Set default local leader key.
-    big_file = { size = 1024 * 100, lines = 10000 }, -- For files bigger than this, disable 'treesitter'.
+    big_file = { size = 1024 * 100, lines = 10000 }, -- For files bigger than this, disable 'treesitter' (+100kb).
 
     -- All these options are toggleable with <space + l + u>
     autoformat_enabled = false, -- Enable auto formatting at start.
