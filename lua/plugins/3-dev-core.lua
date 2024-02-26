@@ -61,11 +61,20 @@ return {
       context_commentstring = { enable = true, enable_autocmd = false },
       highlight = {
         enable = true,
-        disable = function(_, bufnr) return vim.b[bufnr].large_buf end,
+        disable = function(_, bufnr)
+          local nlines = vim.api.nvim_buf_line_count(bufnr)
+          local is_big_file = nlines > vim.g.big_file.lines
+          return is_big_file
+        end,
       },
       matchup = {
         enable = true,
         enable_quotes = true,
+        disable = function(_, bufnr)
+          local nlines = vim.api.nvim_buf_line_count(bufnr)
+          local is_big_file = nlines > vim.g.big_file.lines
+          return is_big_file
+        end,
       },
       incremental_selection = { enable = true },
       indent = { enable = true },
@@ -189,7 +198,7 @@ return {
         end,
         config = function(_, opts)
           require("mason-lspconfig").setup(opts)
-          require("base.utils").trigger_event("MasonLspSetup")
+          require("base.utils").trigger_event("User BaseMasonLspSetup")
         end,
       },
     },
@@ -222,10 +231,10 @@ return {
         if progress[id].kind == "end" then
           vim.defer_fn(function()
             progress[id] = nil
-            utils.trigger_event "LspProgress"
+            utils.trigger_event("User BaseLspProgress")
           end, 100)
         end
-        utils.trigger_event "LspProgress"
+        utils.trigger_event("User BaseLspProgress")
         orig_handler(_, msg, info)
       end
 
@@ -236,7 +245,7 @@ return {
       end
       local setup_servers = function()
         vim.api.nvim_exec_autocmds("FileType", {})
-        require("base.utils").trigger_event("LspSetup")
+        require("base.utils").trigger_event("User BaseLspSetup")
       end
       if require("base.utils").is_available "mason-lspconfig.nvim" then
         vim.api.nvim_create_autocmd("User", {
