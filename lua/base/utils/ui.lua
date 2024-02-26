@@ -17,7 +17,6 @@
 --      -> toggle_autoformat
 --      -> toggle_buffer_autoformat
 --      -> toggle_buffer_semantic_tokens
---      -> toggle_semantic_tokens
 --      -> toggle_buffer_inlay_hints
 --      -> toggle_inlay_hints
 --      -> toggle_codelens
@@ -28,7 +27,7 @@
 --      -> toggle_spell
 --      -> toggle_paste
 --      -> toggle_wrap
---      -> toggle_syntax
+--      -> toggle_buffer_syntax
 --      -> toggle_url_effect
 --      -> toggle_zen_mode
 --      -> toggle_animations
