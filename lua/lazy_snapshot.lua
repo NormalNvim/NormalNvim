@@ -100,5 +100,5 @@ return {
   { "windwp/nvim-autopairs", commit = "defad64afbf19381fe31488a7582bbac421d6e38" },
   { "windwp/nvim-ts-autotag", commit = "6be1192965df35f94b8ea6d323354f7dc7a557e4" },
   { "zeioth/garbage-day.nvim", version = "^2" },
-  { "zeioth/heirline-components.nvim", commit = "f95fe13a36d1c8565c315ac57fcc55e698c94800" },
+  { "zeioth/heirline-components.nvim", commit = "8edd71e63b30bd02eff0e1fac3fe25428caf1452" },
 }
