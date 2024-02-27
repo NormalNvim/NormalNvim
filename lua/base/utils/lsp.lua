@@ -5,11 +5,11 @@
 --  so avoid touching here when possible. High risk of breaking important stuff.
 
 --    Functions:
---      -> LSP settings
---      -> Formatting settings
---      -> setup
---      -> on_attach
---      -> config
+--      -> M.setup_diagnostics   → Apply default settings for diagnostics and formatting.
+--                                 You run it only once per session, normally on lsp-config.
+--      -> M.on_attach           → Called from M.config().
+--      -> M.config              → Called from M.setup().
+--      -> M.setup               → Function responsible of starting a lsp server.
 
 local M = {}
 local tbl_contains = vim.tbl_contains
@@ -23,10 +23,10 @@ local setup_handlers = {
   function(server, opts) require("lspconfig")[server].setup(opts) end,
 }
 
-base.lsp = { progress = {} }             -- globally accessible
 M.diagnostics = { [0] = {}, {}, {}, {} } -- For diagnostics toggle in ./ui.lua
 
--- LSP settings
+--- Helper function to apply default settings for diagnostics and formatting.
+--- It only need to be executed once, normally on lsp-config.
 M.setup_diagnostics = function(signs)
   -- Diagnostics
   local default_diagnostics = {
@@ -83,14 +83,6 @@ M.format_opts.filter = function(client)
   local disabled = M.formatting.disabled or {}
   -- check if client is fully disabled or filtered by function
   return not (vim.tbl_contains(disabled, client.name) or (type(filter) == "function" and not filter(client)))
-end
-
---- Helper function to set up a given server with the LSP client
----@param server string The name of the server to be setup
-M.setup = function(server)
-  local opts = M.config(server)
-  local setup_handler = setup_handlers[server] or setup_handlers[1]
-  if setup_handler then setup_handler(server, opts) end
 end
 
 --- Helper function to check if any active LSP clients given a filter provide a specific capability
@@ -409,12 +401,7 @@ M.on_attach = function(client, bufnr)
   end
   utils.set_mappings(lsp_mappings, { buffer = bufnr })
 
-  for id, _ in pairs(base.lsp.progress) do -- clear lingering progress messages
-    if not next(vim.lsp.get_active_clients { id = tonumber(id:match "^%d+") }) then base.lsp.progress[id] = nil end
-  end
 
-  local on_attach_override = nil -- todo: clean this
-  conditional_func(on_attach_override, true, client, bufnr)
 end
 
 --- The default LSP capabilities
@@ -462,6 +449,16 @@ function M.config(server_name)
     M.on_attach(client, bufnr)
   end
   return opts
+end
+
+
+--- Helper function to set up a given server with the LSP client.
+--- It calls M.config(), which calls M.on_attach().
+---@param server string The name of the server to be setup
+M.setup = function(server)
+  local opts = M.config(server)
+  local setup_handler = setup_handlers[server] or setup_handlers[1]
+  if setup_handler then setup_handler(server, opts) end
 end
 
 return M
