@@ -83,7 +83,7 @@ Please before opening an issue, check the [astrocommunity](https://github.com/As
 
 * **How can I install a new colorscheme?** Go to `plugins/2-ui.lua`, and add the theme you want. Re-open nvim and now you can set your new colorcheme on `base/1-options.lua`. You can also preview all your installed themes with `<space>+ft`.
 
-* **How can I change the user interface?** We use the plugin heirline to define the NormalNvim user interface. You can re-order or change any component of your user interface in `plugins/2-ui.lua`. If you preffer the classic vim appearance, you can delete the plugin.
+* **How can I change the user interface?** We use the plugin heirline to create the user interface. You can re-order or change any component of your user interface in `plugins/2-ui.lua`. If you preffer the classic vim appearance, you can delete the plugin.
 
 * **How can I disable the animations?** You can delete the plugin [mini.animate](https://github.com/echasnovski/mini.animate). In case you only want to disable some animations look into the plugin docs.
 
