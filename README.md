@@ -118,7 +118,7 @@ Special thanks to LeoRed04 for designing the logo.
 Did you know NormalNvim was the first Neovim distro to ship a compiler that [support 22+ programming languages out of the box](https://www.youtube.com/watch?v=O42uCIBaCIQ)?
 
 ## Roadmap
-* Refactor for the config of the plugin `lsp-config` → The fact it works is not enough: This is a crucial plugin, and we must make extremely clear to the user what's going on in the internals.
+* Refactor of the config of the plugin `lsp-config` → The fact it works is not enough: This is a crucial plugin, and we must make extremely clear to the user what's going on in the internals.
 * Once we remove all complexity we possibly can from all configs, lets's start moving to Neovim 0.10, as it is likely to be officially released around april of this year.
 * Once nvim 0.10 is officially released, replace `get_active_clients` by `get_clients`.
 * During 2024, add a toolbar for [Compiler.nvim](https://github.com/Zeioth/compiler.nvim) so users have a button to compile and manage their build automation utilities and current build_type in a friendly way.
