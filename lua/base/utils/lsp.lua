@@ -1,12 +1,18 @@
 --- ### Nvim LSP utils
 --
 --  DESCRIPTION:
---  LSP setup. Most options defined here can be tweaked on ../1-options.lua
+--  Functions we use to configure the plugin mason-lspconfig.nvim
+--
+--  NOTE:
+--  Most options defined here can be tweaked on ../1-options.lua
 --  so avoid touching here when possible. High risk of breaking important stuff.
 
+--    Helpers:
+--      -> M.has_capability      → Returns true if the client has the capability.
+--      -> M.add_buffer_autocmd  →
+
 --    Functions:
---      -> M.setup_diagnostics   → Apply default settings for diagnostics and formatting.
---                                 You run it only once per session, normally on lsp-config.
+--      -> M.setup_defaults      → Default settings for diagnostics and formatting.
 --      -> M.on_attach           → Called from M.config().
 --      -> M.config              → Called from M.setup().
 --      -> M.setup               → Function responsible of starting a lsp server.
@@ -18,17 +24,77 @@ local tbl_isempty = vim.tbl_isempty
 local utils = require "base.utils"
 local conditional_func = utils.conditional_func
 local is_available = utils.is_available
+local stored_handlers = {} -- we store the handlers in this table
 
-local setup_handlers = {
-  function(server, opts) require("lspconfig")[server].setup(opts) end,
-}
 
-M.diagnostics = { [0] = {}, {}, {}, {} } -- For diagnostics toggle in ./ui.lua
 
---- Helper function to apply default settings for diagnostics and formatting.
---- It only need to be executed once, normally on lsp-config.
-M.setup_diagnostics = function(signs)
-  -- Diagnostics
+--- Helper function to check if any active LSP clients given a filter provide a specific capability
+---@param capability string The server capability to check for (example: "documentFormattingProvider")
+---@param filter vim.lsp.get_active_clients.filter|nil (table|nil) A table with
+---              key-value pairs used to filter the returned clients.
+---              The available keys are:
+---               - id (number): Only return clients with the given id
+---               - bufnr (number): Only return clients attached to this buffer
+---               - name (string): Only return clients with the given name
+---@return boolean # Whether or not any of the clients provide the capability
+function M.has_capability(capability, filter)
+  for _, client in ipairs(vim.lsp.get_active_clients(filter)) do
+    if client.supports_method(capability) then return true end
+  end
+  return false
+end
+
+-- TODO: Document this.
+local function add_buffer_autocmd(augroup, bufnr, autocmds)
+  if not vim.tbl_islist(autocmds) then autocmds = { autocmds } end
+  local cmds_found, cmds = pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
+  if not cmds_found or vim.tbl_isempty(cmds) then
+    vim.api.nvim_create_augroup(augroup, { clear = false })
+    for _, autocmd in ipairs(autocmds) do
+      local events = autocmd.events
+      autocmd.events = nil
+      autocmd.group = augroup
+      autocmd.buffer = bufnr
+      vim.api.nvim_create_autocmd(events, autocmd)
+    end
+  end
+end
+
+local function del_buffer_autocmd(augroup, bufnr)
+  local cmds_found, cmds = pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
+  if cmds_found then vim.tbl_map(function(cmd) vim.api.nvim_del_autocmd(cmd.id) end, cmds) end
+end
+
+--- Apply default settings for diagnostics and formatting.
+--- It only need to be executed once, normally on mason-lspconfig.
+M.setup_defaults = function()
+  -- Icons
+  -- Apply the icons defined in ../icons/nerd_font.lua
+  local get_icon = utils.get_icon
+  local signs = {
+    { name = "DiagnosticSignError", text = get_icon "DiagnosticError", texthl = "DiagnosticSignError" },
+    { name = "DiagnosticSignWarn", text = get_icon "DiagnosticWarn", texthl = "DiagnosticSignWarn" },
+    { name = "DiagnosticSignHint", text = get_icon "DiagnosticHint", texthl = "DiagnosticSignHint" },
+    { name = "DiagnosticSignInfo", text = get_icon "DiagnosticInfo", texthl = "DiagnosticSignInfo" },
+    { name = "DapStopped", text = get_icon "DapStopped", texthl = "DiagnosticWarn" },
+    { name = "DapBreakpoint", text = get_icon "DapBreakpoint", texthl = "DiagnosticInfo" },
+    { name = "DapBreakpointRejected", text = get_icon "DapBreakpointRejected", texthl = "DiagnosticError" },
+    { name = "DapBreakpointCondition", text = get_icon "DapBreakpointCondition", texthl = "DiagnosticInfo" },
+    { name = "DapLogPoint", text = get_icon "DapLogPoint", texthl = "DiagnosticInfo" },
+  }
+  for _, sign in ipairs(signs) do
+    vim.fn.sign_define(sign.name, sign)
+  end
+
+  -- Borders
+  -- Apply the option lsp_round_borders_enabled from ../1-options.lua
+  if vim.g.lsp_round_borders_enabled then
+    vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", silent = true })
+    vim.lsp.handlers["textDocument/signatureHelp"] =
+      vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded", silent = true })
+  end
+
+  -- Set default diagnostics
   local default_diagnostics = {
     virtual_text = true,
     signs = {
@@ -52,7 +118,9 @@ M.setup_diagnostics = function(signs)
       prefix = "",
     },
   }
-  -- For diagnostics toggle in ./ui.lua
+
+  -- Apply default diagnostics
+  -- Apply the opiton diagnostics_mode from ../1-options.lua
   M.diagnostics = {
     -- diagnostics off
     [0] = utils.extend_tbl(
@@ -67,58 +135,38 @@ M.setup_diagnostics = function(signs)
     default_diagnostics,
   }
   vim.diagnostic.config(M.diagnostics[vim.g.diagnostics_mode])
-end
 
--- Formatting settings
-M.formatting = { format_on_save = { enabled = true }, disabled = {} }
-if type(M.formatting.format_on_save) == "boolean" then
-  M.formatting.format_on_save = { enabled = M.formatting.format_on_save }
-end
 
-M.format_opts = vim.deepcopy(M.formatting)
-M.format_opts.disabled = nil
-M.format_opts.format_on_save = nil
-M.format_opts.filter = function(client)
-  local filter = M.formatting.filter
-  local disabled = M.formatting.disabled or {}
-  -- check if client is fully disabled or filtered by function
-  return not (vim.tbl_contains(disabled, client.name) or (type(filter) == "function" and not filter(client)))
-end
-
---- Helper function to check if any active LSP clients given a filter provide a specific capability
----@param capability string The server capability to check for (example: "documentFormattingProvider")
----@param filter vim.lsp.get_active_clients.filter|nil (table|nil) A table with
----              key-value pairs used to filter the returned clients.
----              The available keys are:
----               - id (number): Only return clients with the given id
----               - bufnr (number): Only return clients attached to this buffer
----               - name (string): Only return clients with the given name
----@return boolean # Whether or not any of the clients provide the capability
-function M.has_capability(capability, filter)
-  for _, client in ipairs(vim.lsp.get_active_clients(filter)) do
-    if client.supports_method(capability) then return true end
+  -- Apply formatting settings
+  M.formatting = { format_on_save = { enabled = true }, disabled = {} }
+  if type(M.formatting.format_on_save) == "boolean" then
+    M.formatting.format_on_save = { enabled = M.formatting.format_on_save }
   end
-  return false
-end
-
-local function add_buffer_autocmd(augroup, bufnr, autocmds)
-  if not vim.tbl_islist(autocmds) then autocmds = { autocmds } end
-  local cmds_found, cmds = pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
-  if not cmds_found or vim.tbl_isempty(cmds) then
-    vim.api.nvim_create_augroup(augroup, { clear = false })
-    for _, autocmd in ipairs(autocmds) do
-      local events = autocmd.events
-      autocmd.events = nil
-      autocmd.group = augroup
-      autocmd.buffer = bufnr
-      vim.api.nvim_create_autocmd(events, autocmd)
-    end
+  M.format_opts = vim.deepcopy(M.formatting)
+  M.format_opts.disabled = nil
+  M.format_opts.format_on_save = nil
+  M.format_opts.filter = function(client)
+    local filter = M.formatting.filter
+    local disabled = M.formatting.disabled or {}
+    -- check if client is fully disabled or filtered by function
+    return not (vim.tbl_contains(disabled, client.name) or (type(filter) == "function" and not filter(client)))
   end
-end
 
-local function del_buffer_autocmd(augroup, bufnr)
-  local cmds_found, cmds = pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
-  if cmds_found then vim.tbl_map(function(cmd) vim.api.nvim_del_autocmd(cmd.id) end, cmds) end
+  --- Apply the default LSP capabilities
+  M.capabilities = vim.lsp.protocol.make_client_capabilities()
+  M.capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown", "plaintext" }
+  M.capabilities.textDocument.completion.completionItem.snippetSupport = true
+  M.capabilities.textDocument.completion.completionItem.preselectSupport = true
+  M.capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+  M.capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+  M.capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+  M.capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+  M.capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+  M.capabilities.textDocument.completion.completionItem.resolveSupport =
+    { properties = { "documentation", "detail", "additionalTextEdits" } }
+  M.capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
+  M.flags = {}
+
 end
 
 --- The `on_attach` function used by neovim
@@ -404,20 +452,6 @@ M.on_attach = function(client, bufnr)
 
 end
 
---- The default LSP capabilities
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
-M.capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown", "plaintext" }
-M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-M.capabilities.textDocument.completion.completionItem.preselectSupport = true
-M.capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-M.capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-M.capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-M.capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-M.capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
-M.capabilities.textDocument.completion.completionItem.resolveSupport =
-  { properties = { "documentation", "detail", "additionalTextEdits" } }
-M.capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
-M.flags = {}
 
 --- Get the server configuration for a given language server to be provided to the server's `setup()` call
 ---@param server_name string The name of the server
@@ -452,12 +486,17 @@ function M.config(server_name)
 end
 
 
---- Helper function to set up a given server with the LSP client.
---- It calls M.config(), which calls M.on_attach().
+--- Function to set up a given server with the LSP client.
+--- NOTE: Be aware M.config() call M.on_attach() for us.
 ---@param server string The name of the server to be setup
 M.setup = function(server)
-  local opts = M.config(server)
-  local setup_handler = setup_handlers[server] or setup_handlers[1]
+  -- Apply our settings to the the server.
+  local opts = M.config(server) -- M.config() call M.on_attach()
+
+  -- Apply the lspconfig settings to the server.
+  local setup_handler = stored_handlers[server] or require("lspconfig")[server].setup(opts)
+
+  -- Start the server
   if setup_handler then setup_handler(server, opts) end
 end
 
