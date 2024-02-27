@@ -25,8 +25,8 @@
 --       -> cmp-nvim-lsp                   [auto completion lsp]
 --       -> cmp-luasnip                    [auto completion snippets]
 
-local utils = require "base.utils"
-local utils_lsp = require "base.utils.lsp"
+local utils = require("base.utils")
+local utils_lsp = require("base.utils.lsp")
 
 return {
   --  TREE SITTER ---------------------------------------------------------
