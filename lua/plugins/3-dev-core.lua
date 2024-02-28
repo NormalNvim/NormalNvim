@@ -180,32 +180,31 @@ return {
     },
   },
 
+  --  nvim-lspconfig [lsp configs]
+  --  https://github.com/neovim/nvim-lspconfig
+  --  This plugin provide default configs for the lsp servers available on mason.
+  {
+    "neovim/nvim-lspconfig",
+    event = "User BaseFile",
+  },
+
   -- mason-lspconfig [auto start lsp]
   -- https://github.com/williamboman/mason-lspconfig.nvim
   -- This plugin auto starts the lsp servers installed by Mason
   -- every time Neovim trigger the event FileType.
   {
     "williamboman/mason-lspconfig.nvim",
+    dependencies = { "neovim/nvim-lspconfig" },
     event = "User BaseFile",
     opts = function(_, opts)
-      -- for each server, start it
       if not opts.handlers then opts.handlers = {} end
       opts.handlers[1] = function(server) utils_lsp.setup(server) end
     end,
     config = function(_, opts)
       require("mason-lspconfig").setup(opts)
-      utils_lsp.setup_defaults()       -- Apply our lsp settings.
-      utils.trigger_event("FileType")  -- This line starts this plugin.
+      utils_lsp.apply_default_lsp_settings() -- Apply our default lsp settings.
+      utils.trigger_event("FileType")        -- This line starts this plugin.
     end,
-  },
-
-  --  nvim-lspconfig [lsp configs]
-  --  https://github.com/neovim/nvim-lspconfig
-  --  This plugin provide default configs for the lsp servers available on mason.
-  {
-    "neovim/nvim-lspconfig",
-    dependencies = { "williamboman/mason-lspconfig.nvim" },
-    event = "User BaseFile",
   },
 
   --  mason [lsp package manager]

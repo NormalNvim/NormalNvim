@@ -56,6 +56,7 @@
 --   l[nore]map     |  -   | yes | yes |  -  |  -  |  -  |  -   | yes  |
 --   -------------------------------------------------------------------
 
+local M = {}
 local utils = require "base.utils"
 local get_icon = utils.get_icon
 local is_available = utils.is_available
@@ -1571,3 +1572,4 @@ function M.lsp_mappings(client, bufnr)
 end
 
 utils.set_mappings(maps)
+return M

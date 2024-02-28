@@ -2,34 +2,31 @@
 --
 --  DESCRIPTION:
 --  Functions we use to configure the plugin mason-lspconfig.nvim
+--  You can specify your own lsp settings inside M.apply_user_lsp_settings()
 --
 --  NOTE:
---  Most options defined here can be tweaked on ../1-options.lua
---  so avoid touching here when possible. High risk of breaking important stuff.
+--  Most options we use in M.apply_default_lsp_settings()
+--  Can be tweaked on the file ../1-options.lua
+--  Take this into consideration to minimize the risk of breaking stuff.
 
 --    Helpers:
---      -> M.has_capability      → Returns true if the client has the capability.
+--      -> M.has_capability     → Returns true if the client has the capability.
 
 --    Functions:
---      -> M.setup_defaults      → Default settings for diagnostics and formatting.
---      -> M.on_attach           → Called from M.config().
---      -> M.config              → Called from M.setup().
---      -> M.setup               → Function responsible of starting a lsp server.
+--      -> M.apply_default_lsp_settings  → Apply our default lsp settings.
+--      -> M.apply_user_lsp_settings     → Apply the user lsp settings.
+--      -> M.setup                       → Gives the user settings to lspconfig.
 
 local M = {}
 local utils = require "base.utils"
 local stored_handlers = {}
 
 
---- Helper function to check if any active LSP clients given a filter provide a specific capability
----@param capability string The server capability to check for (example: "documentFormattingProvider")
----@param filter vim.lsp.get_active_clients.filter|nil (table|nil) A table with
----              key-value pairs used to filter the returned clients.
----              The available keys are:
----               - id (number): Only return clients with the given id
----               - bufnr (number): Only return clients attached to this buffer
----               - name (string): Only return clients with the given name
----@return boolean # Whether or not any of the clients provide the capability
+--- Helper function to check if any active LSP clients
+--- given a filter provide a specific capability.
+---@param capability string The server capability to check for (example: "documentFormattingProvider").
+---@param filter vim.lsp.get_active_clients.filter|nil A valid get_active_clients filter (see function docs).
+---@return boolean # `true` if any of the clients provide the capability.
 function M.has_capability(capability, filter)
   for _, client in ipairs(vim.lsp.get_active_clients(filter)) do
     if client.supports_method(capability) then return true end
@@ -37,22 +34,23 @@ function M.has_capability(capability, filter)
   return false
 end
 
---- Apply default settings for diagnostics and formatting.
+--- Apply default settings for diagnostics, formatting, and lsp capabilities.
 --- It only need to be executed once, normally on mason-lspconfig.
-M.apply_defaults = function()
+---@return nil
+M.apply_default_lsp_settings = function()
   -- Icons
   -- Apply the icons defined in ../icons/nerd_font.lua
   local get_icon = utils.get_icon
   local signs = {
-    { name = "DiagnosticSignError", text = get_icon "DiagnosticError", texthl = "DiagnosticSignError" },
-    { name = "DiagnosticSignWarn", text = get_icon "DiagnosticWarn", texthl = "DiagnosticSignWarn" },
-    { name = "DiagnosticSignHint", text = get_icon "DiagnosticHint", texthl = "DiagnosticSignHint" },
-    { name = "DiagnosticSignInfo", text = get_icon "DiagnosticInfo", texthl = "DiagnosticSignInfo" },
-    { name = "DapStopped", text = get_icon "DapStopped", texthl = "DiagnosticWarn" },
-    { name = "DapBreakpoint", text = get_icon "DapBreakpoint", texthl = "DiagnosticInfo" },
-    { name = "DapBreakpointRejected", text = get_icon "DapBreakpointRejected", texthl = "DiagnosticError" },
+    { name = "DiagnosticSignError",    text = get_icon "DiagnosticError",        texthl = "DiagnosticSignError" },
+    { name = "DiagnosticSignWarn",     text = get_icon "DiagnosticWarn",         texthl = "DiagnosticSignWarn" },
+    { name = "DiagnosticSignHint",     text = get_icon "DiagnosticHint",         texthl = "DiagnosticSignHint" },
+    { name = "DiagnosticSignInfo",     text = get_icon "DiagnosticInfo",         texthl = "DiagnosticSignInfo" },
+    { name = "DapStopped",             text = get_icon "DapStopped",             texthl = "DiagnosticWarn" },
+    { name = "DapBreakpoint",          text = get_icon "DapBreakpoint",          texthl = "DiagnosticInfo" },
+    { name = "DapBreakpointRejected",  text = get_icon "DapBreakpointRejected",  texthl = "DiagnosticError" },
     { name = "DapBreakpointCondition", text = get_icon "DapBreakpointCondition", texthl = "DiagnosticInfo" },
-    { name = "DapLogPoint", text = get_icon "DapLogPoint", texthl = "DiagnosticInfo" },
+    { name = "DapLogPoint",            text = get_icon "DapLogPoint",            texthl = "DiagnosticInfo" },
   }
   for _, sign in ipairs(signs) do
     vim.fn.sign_define(sign.name, sign)
@@ -63,7 +61,7 @@ M.apply_defaults = function()
   if vim.g.lsp_round_borders_enabled then
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", silent = true })
     vim.lsp.handlers["textDocument/signatureHelp"] =
-      vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded", silent = true })
+        vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded", silent = true })
   end
 
   -- Set default diagnostics
@@ -92,7 +90,7 @@ M.apply_defaults = function()
   }
 
   -- Apply default diagnostics
-  -- Apply the opiton diagnostics_mode from ../1-options.lua
+  -- Applies the option diagnostics_mode from ../1-options.lua
   M.diagnostics = {
     -- diagnostics off
     [0] = utils.extend_tbl(
@@ -135,31 +133,16 @@ M.apply_defaults = function()
   M.capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
   M.capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
   M.capabilities.textDocument.completion.completionItem.resolveSupport =
-    { properties = { "documentation", "detail", "additionalTextEdits" } }
+  { properties = { "documentation", "detail", "additionalTextEdits" } }
   M.capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
   M.flags = {}
-
 end
 
---- Things we do when a lsp client is attached to a buffer.
----@param client table The LSP client details when attaching
----@param bufnr number The buffer that the LSP client is attaching to
-M.on_attach = function(client, bufnr)
-  local lsp_mappings = require("base.git-ignored.mappings-colemak-dh").lsp_mappings(client, bufnr)
-
-  -- Add mappings
-  if not vim.tbl_isempty(lsp_mappings.v) then
-    lsp_mappings.v["<leader>l"] = { desc = utils.get_icon("ActiveLSP", 1, true) .. "LSP" }
-  end
-  utils.set_mappings(lsp_mappings, { buffer = bufnr })
-
-end
-
-
---- Get the server configuration for a given language server to be provided to the server's `setup()` call
+--- Here you can specify custom settings for the lsp servers you install.
+--- This is not normally necessary. But you can.
 ---@param server_name string The name of the server
 ---@return table # The table of LSP options used when setting up the given language server
-function M.config(server_name)
+function M.apply_user_lsp_settings(server_name)
   local server = require("lspconfig")[server_name]
   local lsp_opts = utils.extend_tbl(server, { capabilities = M.capabilities, flags = M.flags })
   if server_name == "jsonls" then -- by default add json schemas
@@ -183,25 +166,31 @@ function M.config(server_name)
   local old_on_attach = server.on_attach
   opts.on_attach = function(client, bufnr)
     utils.conditional_func(old_on_attach, true, client, bufnr)
-    M.on_attach(client, bufnr)
+
+    -- Apply lsp_mappings to the buffer
+    local lsp_mappings = require("base.4-mappings").lsp_mappings(client, bufnr)
+    if not vim.tbl_isempty(lsp_mappings.v) then
+      lsp_mappings.v["<leader>l"] = { desc = utils.get_icon("ActiveLSP", 1, true) .. "LSP" }
+    end
+    utils.set_mappings(lsp_mappings, { buffer = bufnr })
   end
   return opts
 end
 
-
---- Function to set up a given server with the LSP client.
---- You normally call this function from the plugin `mason-lspconfig.nvim`.
+--- This function passes the `user lsp settings` to lspconfig,
+--- which is the responsible of configuring everything for us.
 ---
--- NOTE: This function call M.config() which call M.on_attach() for us.
----@param server string The name of the server to be setup.
+--- You are meant to call this function from the plugin `mason-lspconfig.nvim`.
+---@param server string A lsp server name.
+---@return nil
 M.setup = function(server)
-  -- Apply our settings to the the server.
-  local opts = M.config(server)
+  -- Get the user settings.
+  local opts = M.apply_user_lsp_settings(server)
 
-  -- Apply the lspconfig settings to the server.
+  --- Get a handler from lspconfig.
   local setup_handler = stored_handlers[server] or require("lspconfig")[server].setup(opts)
 
-  -- Start the server
+  -- Apply our user settings to the lspconfig handler.
   if setup_handler then setup_handler(server, opts) end
 end
 
