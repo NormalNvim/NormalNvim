@@ -10,12 +10,13 @@
 
 --       ## LSP
 --       -> nvim-java                      [java support]
---       -> nvim-lspconfig                 [lsp config]
---       -> garbage-day                    [lsp garbage collector]
+--       -> mason-lspconfig                [auto start lsp]
+--       -> nvim-lspconfig                 [lsp configs]
 --       -> mason.nvim                     [lsp package manager]
 --       -> SchemaStore.nvim               [lsp schema manager]
 --       -> none-ls                        [lsp code formatting]
 --       -> neodev                         [lsp for nvim lua api]
+--       -> garbage-day                    [lsp garbage collector]
 
 --       ## AUTO COMPLETION
 --       -> nvim-cmp                       [auto completion engine]
@@ -23,6 +24,9 @@
 --       -> cmp-nvim-path                  [auto completion path]
 --       -> cmp-nvim-lsp                   [auto completion lsp]
 --       -> cmp-luasnip                    [auto completion snippets]
+
+local utils = require("base.utils")
+local utils_lsp = require("base.utils.lsp")
 
 return {
   --  TREE SITTER ---------------------------------------------------------
@@ -61,12 +65,12 @@ return {
       context_commentstring = { enable = true, enable_autocmd = false },
       highlight = {
         enable = true,
-        disable = function(_, bufnr) return require("base.utils").is_big_file(bufnr) end,
+        disable = function(_, bufnr) return utils.is_big_file(bufnr) end,
       },
       matchup = {
         enable = true,
         enable_quotes = true,
-        disable = function(_, bufnr) return require("base.utils").is_big_file(bufnr) end,
+        disable = function(_, bufnr) return utils.is_big_file(bufnr) end,
       },
       incremental_selection = { enable = true },
       indent = { enable = true },
@@ -151,8 +155,8 @@ return {
   --  LSP -------------------------------------------------------------------
 
   -- nvim-java [java support]
-  -- https://github.com/neovim/nvim-lspconfig
-  -- Reliable jdtls support. Must go before lsp-config.
+  -- https://github.com/nvim-java/nvim-java
+  -- Reliable jdtls support. Must go before mason-lspconfig nad lsp-config.
   {
     'nvim-java/nvim-java',
     ft = { "java" },
@@ -176,91 +180,31 @@ return {
     },
   },
 
-  --  Syntax highlight [lsp config]
+  --  nvim-lspconfig [lsp configs]
   --  https://github.com/neovim/nvim-lspconfig
+  --  This plugin provide default configs for the lsp servers available on mason.
   {
     "neovim/nvim-lspconfig",
-    dependencies = {
-      {
-        "williamboman/mason-lspconfig.nvim",
-        cmd = { "LspInstall", "LspUninstall" },
-        opts = function(_, opts)
-          if not opts.handlers then opts.handlers = {} end
-          opts.handlers[1] = function(server) require("base.utils.lsp").setup(server) end
-        end,
-        config = function(_, opts)
-          require("mason-lspconfig").setup(opts)
-          require("base.utils").trigger_event("User BaseMasonLspSetup")
-        end,
-      },
-    },
     event = "User BaseFile",
-    config = function(_, _)
-      local lsp = require "base.utils.lsp"
-      local utils = require "base.utils"
-
-      -- setup LSP icons
-      -- TODO: Can this be moved to the lsp file?
-      local get_icon = utils.get_icon
-      local signs = {
-        { name = "DiagnosticSignError", text = get_icon "DiagnosticError", texthl = "DiagnosticSignError" },
-        { name = "DiagnosticSignWarn", text = get_icon "DiagnosticWarn", texthl = "DiagnosticSignWarn" },
-        { name = "DiagnosticSignHint", text = get_icon "DiagnosticHint", texthl = "DiagnosticSignHint" },
-        { name = "DiagnosticSignInfo", text = get_icon "DiagnosticInfo", texthl = "DiagnosticSignInfo" },
-        { name = "DapStopped", text = get_icon "DapStopped", texthl = "DiagnosticWarn" },
-        { name = "DapBreakpoint", text = get_icon "DapBreakpoint", texthl = "DiagnosticInfo" },
-        { name = "DapBreakpointRejected", text = get_icon "DapBreakpointRejected", texthl = "DiagnosticError" },
-        { name = "DapBreakpointCondition", text = get_icon "DapBreakpointCondition", texthl = "DiagnosticInfo" },
-        { name = "DapLogPoint", text = get_icon "DapLogPoint", texthl = "DiagnosticInfo" },
-      }
-      for _, sign in ipairs(signs) do
-        vim.fn.sign_define(sign.name, sign)
-      end
-      lsp.setup_diagnostics(signs)
-
-      -- apply round borders for signature help
-      -- TODO: Move this to the lsp file and just call it from here.
-      if vim.g.lsp_round_borders_enabled then
-        vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", silent = true })
-        vim.lsp.handlers["textDocument/signatureHelp"] =
-          vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded", silent = true })
-      end
-
-      -- start lsp servers
-      -- TODO: Explain what's going on here to make it obvious.
-      local setup_servers = function()
-        vim.api.nvim_exec_autocmds("FileType", {})
-        require("base.utils").trigger_event("User BaseLspSetup")
-      end
-      if require("base.utils").is_available "mason-lspconfig.nvim" then
-        vim.api.nvim_create_autocmd("User", {
-          desc = "set up LSP servers after mason-lspconfig",
-          pattern = "BaseMasonLspSetup",
-          once = true,
-          callback = setup_servers,
-        })
-      else
-        setup_servers()
-      end
-    end,
   },
 
-  --  garbage-day.nvim [lsp garbage collector]
-  --  https://github.com/zeioth/garbage-day.nvim
+  -- mason-lspconfig [auto start lsp]
+  -- https://github.com/williamboman/mason-lspconfig.nvim
+  -- This plugin auto starts the lsp servers installed by Mason
+  -- every time Neovim trigger the event FileType.
   {
-    "zeioth/garbage-day.nvim",
+    "williamboman/mason-lspconfig.nvim",
+    dependencies = { "neovim/nvim-lspconfig" },
     event = "User BaseFile",
-    opts = {
-      aggressive_mode = false,
-      excluded_lsp_clients = {
-        "null-ls", "jdtls"
-      },
-      grace_period = (60*10),
-      wakeup_delay = 3000,
-      notifications = false,
-      retries = 3,
-      timeout = 1000,
-    }
+    opts = function(_, opts)
+      if not opts.handlers then opts.handlers = {} end
+      opts.handlers[1] = function(server) utils_lsp.setup(server) end
+    end,
+    config = function(_, opts)
+      require("mason-lspconfig").setup(opts)
+      utils_lsp.apply_default_lsp_settings() -- Apply our default lsp settings.
+      utils.trigger_event("FileType")        -- This line starts this plugin.
+    end,
   },
 
   --  mason [lsp package manager]
@@ -346,7 +290,7 @@ return {
           nls.builtins.code_actions.shellcheck,
           nls.builtins.diagnostics.shellcheck.with { diagnostics_format = "" },
         },
-        on_attach = require("base.utils.lsp").on_attach,
+        on_attach = utils_lsp.on_attach,
       }
     end,
   },
@@ -359,6 +303,24 @@ return {
     config = function(_, opts)
       require("neodev").setup(opts)
     end,
+  },
+
+  --  garbage-day.nvim [lsp garbage collector]
+  --  https://github.com/zeioth/garbage-day.nvim
+  {
+    "zeioth/garbage-day.nvim",
+    event = "User BaseFile",
+    opts = {
+      aggressive_mode = false,
+      excluded_lsp_clients = {
+        "null-ls", "jdtls"
+      },
+      grace_period = (60*10),
+      wakeup_delay = 3000,
+      notifications = false,
+      retries = 3,
+      timeout = 1000,
+    }
   },
 
   --  AUTO COMPLETION --------------------------------------------------------
@@ -377,7 +339,6 @@ return {
       local cmp = require "cmp"
       local snip_status_ok, luasnip = pcall(require, "luasnip")
       local lspkind_status_ok, lspkind = pcall(require, "lspkind")
-      local utils = require "base.utils"
       if not snip_status_ok then return end
       local border_opts = {
         border = "rounded",
@@ -391,7 +352,7 @@ return {
 
       return {
         enabled = function()
-          local dap_prompt = utils.is_available "cmp-dap" -- add interoperability with cmp-dap
+          local dap_prompt = utils.is_available("cmp-dap") -- add interoperability with cmp-dap
             and vim.tbl_contains(
               { "dap-repl", "dapui_watches", "dapui_hover" },
               vim.api.nvim_get_option_value("filetype", { buf = 0 })
@@ -504,7 +465,5 @@ return {
       }
     end,
   },
-
-
 
 } -- end of return

@@ -9,6 +9,8 @@
 --      -> get_icon              → Return an icon from the icons directory.
 --      -> notify                → Send a notification asynchronously.
 --      -> trigger_event         → Manually execute a user event.
+--      -> add_autocmd           → Add the specified autocmd to a bufnr.
+--      -> del_autocmd           → Delete the specified autocmd from a bufnr.
 --      -> system_open           → Open the file or URL under the cursor.
 --      -> toggle_term_cmd       → get/set a re-usable toggleterm session.
 --      -> is_available          → Return true if the plugin is available.
@@ -86,6 +88,54 @@ function M.trigger_event(event)
       vim.api.nvim_exec_autocmds(event, { modeline = false })
     end
   end)
+end
+
+--- Adds autocmds to a specific buffer if they don't already exist.
+---
+--- @param augroup string       The name of the autocmd group to which the autocmds belong.
+--- @param bufnr number         The buffer number to which the autocmds should be applied.
+--- @param autocmds table|any  A table or a single autocmd definition containing the autocmds to add.
+function M.add_autocmds(augroup, bufnr, autocmds)
+  -- Check if autocmds is a list, if not convert it to a list
+  if not vim.tbl_islist(autocmds) then autocmds = { autocmds } end
+
+  -- Attempt to retrieve existing autocmds associated with the specified augroup and bufnr
+  local cmds_found, cmds = pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
+
+  -- If no existing autocmds are found or the cmds_found call fails
+  if not cmds_found or vim.tbl_isempty(cmds) then
+    -- Create a new augroup if it doesn't already exist
+    vim.api.nvim_create_augroup(augroup, { clear = false })
+
+    -- Iterate over each autocmd provided
+    for _, autocmd in ipairs(autocmds) do
+      -- Extract the events from the autocmd and remove the events key
+      local events = autocmd.events
+      autocmd.events = nil
+
+      -- Set the group and buffer keys for the autocmd
+      autocmd.group = augroup
+      autocmd.buffer = bufnr
+
+      -- Create the autocmd
+      vim.api.nvim_create_autocmd(events, autocmd)
+    end
+  end
+end
+
+--- Deletes autocmds associated with a specific buffer and autocmd group.
+---
+--- @param augroup string  The name of the autocmd group from which the autocmds should be removed.
+--- @param bufnr number    The buffer number from which the autocmds should be removed.
+function M.del_autocmds(augroup, bufnr)
+  -- Attempt to retrieve existing autocmds associated with the specified augroup and bufnr
+  local cmds_found, cmds = pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
+
+  -- If retrieval was successful
+  if cmds_found then
+    -- Map over each retrieved autocmd and delete it
+    vim.tbl_map(function(cmd) vim.api.nvim_del_autocmd(cmd.id) end, cmds)
+  end
 end
 
 --- Open a URL under the cursor with the current operating system.
