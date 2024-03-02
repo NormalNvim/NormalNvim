@@ -19,7 +19,7 @@ function M.check()
   health.start "NormalNvim"
 
   health.info(
-    "NormalNvim Version: " .. require("base.utils.updater").version(true)
+    "NormalNvim Version: " .. require("distroupdate.utils.updater").version(true)
   )
   health.info(
     "Neovim Version: v"
@@ -215,7 +215,7 @@ function M.check()
     {
       cmd = { "godoc" },
       type = "warn",
-      msg = "Used by dooku.nvim to generate go html docs\nNOTE: If you have it installed but you can run it on the terminal, ensure you have added 'go' to your OS path (optional)",
+      msg = "Used by dooku.nvim to generate go html docs\nNOTE: If you have it installed but you can't run it on the terminal, ensure you have added 'go' to your OS path (optional)",
     },
     {
       cmd = { "doxygen" },
