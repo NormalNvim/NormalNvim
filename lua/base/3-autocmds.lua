@@ -211,8 +211,13 @@ autocmd("BufWritePre", {
 autocmd("BufWritePre", {
   desc = "Automatically create parent directories if they don't exist when saving a file",
   callback = function(args)
-    if not require("base.utils.buffer").is_valid(args.buf) then return end
-    vim.fn.mkdir(vim.fn.fnamemodify(vim.loop.fs_realpath(args.match) or args.match, ":p:h"), "p")
+    local buf_is_valid_and_listed = vim.api.nvim_buf_is_valid(args.buf)
+      and vim.bo[args.buf].buflisted
+
+    if buf_is_valid_and_listed then
+      vim.fn.mkdir(vim.fn.fnamemodify(
+        vim.loop.fs_realpath(args.match) or args.match, ":p:h"), "p")
+    end
   end,
 })
 
