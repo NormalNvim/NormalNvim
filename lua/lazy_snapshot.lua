@@ -24,7 +24,7 @@ return {
   { "debugloop/telescope-undo.nvim", commit = "3dec002ea3e7952071d26fbb5d01e2038a58a554" },
   { "dense-analysis/neural", commit = "05b59bccc8c6cff8068e54e9b8a4c13cd1d80059" },
   { "echasnovski/mini.animate", commit = "230140aa0b06af87c9d345573aab1aaf50d8b539" },
-  { "echasnovski/mini.bufremove", commit = "931a3bb514147d9e812767275c4beba6b779b1d3" },
+  { "echasnovski/mini.bufremove", version = "^0.12" },
   { "echasnovski/mini.indentscope", commit = "c8fdafa7bf603d758986a27eb546c55a5c73b1a3" },
   { "folke/lazy.nvim", version = "^10" },
   { "folke/neodev.nvim", version = "^3" },

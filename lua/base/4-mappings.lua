@@ -284,16 +284,16 @@ maps.n["<leader>pl"] = { "<cmd>NvimChangelog<cr>", desc = "Nvim Changelog" }
 
 -- buffers/tabs [buffers ]--------------------------------------------------
 maps.n["<leader>c"] = { -- Close window and buffer at the same time.
-  function() require("base.utils.buffer").wipe() end,
+  function() require("heirline-components.buffer").wipe() end,
   desc = "Wipe buffer",
 }
 maps.n["<leader>C"] = { -- Close buffer keeping the window.
-  function() require("base.utils.buffer").close() end,
+  function() require("heirline-components.buffer").close() end,
   desc = "Close buffer",
 }
 -- Close buffer keeping the window → Without confirmation.
 -- maps.n["<leader>X"] = {
---   function() require("base.utils.buffer").close(0, true) end,
+--   function() require("heirline-components.buffer").close(0, true) end,
 --   desc = "Force close buffer",
 --
 maps.n["<leader>ba"] = {
@@ -302,36 +302,36 @@ maps.n["<leader>ba"] = {
 }
 maps.n["]b"] = {
   function()
-    require("base.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1)
+    require("heirline-components.buffer").nav(vim.v.count > 0 and vim.v.count or 1)
   end,
   desc = "Next buffer",
 }
 maps.n["[b"] = {
   function()
-    require("base.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1))
+    require("heirline-components.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1))
   end,
   desc = "Previous buffer",
 }
 maps.n[">b"] = {
   function()
-    require("base.utils.buffer").move(vim.v.count > 0 and vim.v.count or 1)
+    require("heirline-components.buffer").move(vim.v.count > 0 and vim.v.count or 1)
   end,
   desc = "Move buffer tab right",
 }
 maps.n["<b"] = {
   function()
-    require("base.utils.buffer").move(-(vim.v.count > 0 and vim.v.count or 1))
+    require("heirline-components.buffer").move(-(vim.v.count > 0 and vim.v.count or 1))
   end,
   desc = "Move buffer tab left",
 }
 
 maps.n["<leader>b"] = icons.b
 maps.n["<leader>bc"] = {
-  function() require("base.utils.buffer").close_all(true) end,
+  function() require("heirline-components.buffer").close_all(true) end,
   desc = "Close all buffers except current",
 }
 maps.n["<leader>bC"] = {
-  function() require("base.utils.buffer").close_all() end,
+  function() require("heirline-components.buffer").close_all() end,
   desc = "Close all buffers",
 }
 maps.n["<leader>bb"] = {
@@ -345,38 +345,38 @@ maps.n["<leader>bb"] = {
 maps.n["<leader>bd"] = {
   function()
     require("heirline-components.all").heirline.buffer_picker(
-      function(bufnr) require("base.utils.buffer").close(bufnr) end
+      function(bufnr) require("heirline-components.buffer").close(bufnr) end
     )
   end,
   desc = "Delete buffer from tabline",
 }
 maps.n["<leader>bl"] = {
-  function() require("base.utils.buffer").close_left() end,
+  function() require("heirline-components.buffer").close_left() end,
   desc = "Close all buffers to the left",
 }
 maps.n["<leader>br"] = {
-  function() require("base.utils.buffer").close_right() end,
+  function() require("heirline-components.buffer").close_right() end,
   desc = "Close all buffers to the right",
 }
 maps.n["<leader>bs"] = icons.bs
 maps.n["<leader>bse"] = {
-  function() require("base.utils.buffer").sort "extension" end,
+  function() require("heirline-components.buffer").sort "extension" end,
   desc = "Sort by extension (buffers)",
 }
 maps.n["<leader>bsr"] = {
-  function() require("base.utils.buffer").sort "unique_path" end,
+  function() require("heirline-components.buffer").sort "unique_path" end,
   desc = "Sort by relative path (buffers)",
 }
 maps.n["<leader>bsp"] = {
-  function() require("base.utils.buffer").sort "full_path" end,
+  function() require("heirline-components.buffer").sort "full_path" end,
   desc = "Sort by full path (buffers)",
 }
 maps.n["<leader>bsi"] = {
-  function() require("base.utils.buffer").sort "bufnr" end,
+  function() require("heirline-components.buffer").sort "bufnr" end,
   desc = "Sort by buffer number (buffers)",
 }
 maps.n["<leader>bsm"] = {
-  function() require("base.utils.buffer").sort "modified" end,
+  function() require("heirline-components.buffer").sort "modified" end,
   desc = "Sort by modification (buffers)",
 }
 maps.n["<leader>b\\"] = {
@@ -401,13 +401,13 @@ maps.n["<leader>b|"] = {
 -- quick movement aliases
 maps.n["<C-k>"] = {
   function()
-    require("base.utils.buffer").nav(vim.v.count > 0 and vim.v.count or 1)
+    require("heirline-components.buffer").nav(vim.v.count > 0 and vim.v.count or 1)
   end,
   desc = "Next buffer",
 }
 maps.n["<C-j>"] = {
   function()
-    require("base.utils.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1))
+    require("heirline-components.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1))
   end,
   desc = "Previous buffer",
 }

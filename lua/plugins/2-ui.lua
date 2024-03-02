@@ -298,7 +298,7 @@ return {
       return {
         opts = {
           disable_winbar_cb = function(args) -- make the breadcrumbs bar inactive when...
-            local is_disabled = not require("base.utils.buffer").is_valid(args.buf) or
+            local is_disabled = not require("heirline-components.buffer").is_valid(args.buf) or
             lib.condition.buffer_matches({
               buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
               filetype = { "NvimTree", "neo%-tree", "dashboard", "Outline", "aerial" },
