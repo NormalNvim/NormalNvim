@@ -53,7 +53,7 @@ This is only necessary if you installed NormalNvim by cloning manually. [To unlo
 * 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
 * 📱 **Phone friendly:** You can also install it on Android Termux. Did you ever have a compiler in your pocket? 😉
 * ⌨️ **Alternative mappings:** By default the distro uses qwerty, but colemak-dh can be found [here](https://github.com/NormalNvim/NormalNvim/wiki).
-* ✨ **fully modular:** Every feature is a small plugin.
+* ✨ **Fully modular:** Every feature is a small plugin.
 * 👽 **100% agnostic:** Any plugin NormalNvim ship, can be used in any distro.
 * ❤️ **We don't treat you like you are stupid:** Code comments guide you to easily customize everything. We will never [hide or abstract](https://i.imgur.com/FCiZvp2.png) stuff from you.
 
