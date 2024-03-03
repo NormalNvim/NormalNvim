@@ -7,7 +7,6 @@
 --       -> trim.nvim              [auto trim spaces]
 --       -> stickybuf.nvim         [lock special buffers]
 --       -> mini.bufremove         [smart bufdelete]
---       -> nvim-window-picker     [select buffer with a letter]
 --       -> smart-splits           [move and resize buffers]
 --       -> better-scape.nvim      [esc]
 --       -> toggleterm.nvim        [term]
@@ -127,21 +126,6 @@ return {
   {
     "echasnovski/mini.bufremove",
     event = "User BaseFile"
-  },
-
-  -- nvim-window-picker  [select buffer with a letter]
-  -- https://github.com/s1n7ax/nvim-window-picker
-  -- Warning: currently no keybinding assigned for this plugin.
-  {
-    "s1n7ax/nvim-window-picker",
-    name = "window-picker",
-    opts = {
-      picker_config = {
-        statusline_winbar_picker = {
-          use_winbar = "smart",
-        },
-      },
-    },
   },
 
   --  smart-splits [move and resize buffers]

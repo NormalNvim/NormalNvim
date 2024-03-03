@@ -83,7 +83,6 @@ return {
   { "rcasia/neotest-java", commit = "aaecf247619a2e81192bd03170c54dee50c17912" },
   { "rebelot/heirline.nvim", commit = "03cff30d7e7d3ba6fdc00925f015822f79cef908" },
   { "rouge8/neotest-rust", commit = "a9cd2ed69d6930a33bd97765fee49b0e13d7d7d0" },
-  { "s1n7ax/nvim-window-picker", commit = "41cfaa428577c53552200a404ae9b3a0b5719706" },
   { "saadparwaiz1/cmp_luasnip", commit = "18095520391186d634a0045dacaa346291096566" },
   { "sidlatau/neotest-dart", commit = "178c62282d5fa82f3d564b3c256b4d316804da67" },
   { "skywind3000/gutentags_plus", commit = "21cc952f006cd335b6bd571e1af0bdee50b2b4b1" },
