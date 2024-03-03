@@ -84,6 +84,7 @@ return {
   { "rebelot/heirline.nvim", commit = "03cff30d7e7d3ba6fdc00925f015822f79cef908" },
   { "rouge8/neotest-rust", commit = "a9cd2ed69d6930a33bd97765fee49b0e13d7d7d0" },
   { "s1n7ax/nvim-window-picker", version = "^2" },
+  { "s1n7ax/nvim-window-picker", version = "^2" },
   { "saadparwaiz1/cmp_luasnip", commit = "18095520391186d634a0045dacaa346291096566" },
   { "sidlatau/neotest-dart", commit = "178c62282d5fa82f3d564b3c256b4d316804da67" },
   { "skywind3000/gutentags_plus", commit = "21cc952f006cd335b6bd571e1af0bdee50b2b4b1" },
@@ -100,5 +101,5 @@ return {
   { "windwp/nvim-autopairs", commit = "defad64afbf19381fe31488a7582bbac421d6e38" },
   { "windwp/nvim-ts-autotag", commit = "6be1192965df35f94b8ea6d323354f7dc7a557e4" },
   { "zeioth/garbage-day.nvim", version = "^2" },
-  { "zeioth/heirline-components.nvim", version = "^0.6" },
+  { "zeioth/heirline-components.nvim", commit = "3f97a2f454c5f9a7c7592b430c112085566f5573" },
 }
