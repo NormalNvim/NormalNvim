@@ -1,8 +1,7 @@
 -- nvim keybindings (qwerty).
 --
 -- DESCRIPTION:
--- All mappings are defined here, and on "../utils/lsp.lua".
--- Note that "../utils/lsp.lua" will always prevail over "mappings.lua".
+-- All mappings are defined here
 
 --    Sections:
 --
@@ -61,7 +60,7 @@ local utils = require "base.utils"
 local get_icon = utils.get_icon
 local is_available = utils.is_available
 local ui = require "base.utils.ui"
-local maps = require("base.utils").empty_map_table()
+local maps = require("base.utils").get_mappings_tempate()
 local is_android = vim.fn.isdirectory('/system') == 1   -- true if on android
 
 -- -------------------------------------------------------------------------
@@ -1293,7 +1292,7 @@ end
 -- A function we call from the script to start lsp.
 ---@return table lsp_mappings #
 function M.lsp_mappings(client, bufnr)
-  local lsp_mappings = require("base.utils").empty_map_table()
+  local lsp_mappings = require("base.utils").get_mappings_tempate()
   local has_capability = require("base.utils.lsp").has_capability
 
   lsp_mappings.n["<leader>ld"] = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" }

@@ -163,9 +163,9 @@ function M.apply_user_lsp_settings(server_name)
     lsp_opts.settings = { bashIde = { shellcheckPath = vim.fn.stdpath "data" .. "/mason/bin/shellcheck" } }
   end
   local opts = lsp_opts
-  local old_on_attach = server.on_attach
+  local old_on_attach_function = server.on_attach
   opts.on_attach = function(client, bufnr)
-    utils.conditional_func(old_on_attach, true, client, bufnr)
+    utils.conditional_func(old_on_attach_function, true, client, bufnr)
 
     -- Apply lsp_mappings to the buffer
     local lsp_mappings = require("base.4-mappings").lsp_mappings(client, bufnr)
