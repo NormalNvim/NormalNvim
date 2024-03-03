@@ -171,6 +171,7 @@ end
 
 -- ## COOL HACKS ------------------------------------------------------------
 -- 5. Effect: URL underline.
+vim.api.nvim_set_hl(0, 'HighlightURL', { underline = true })
 autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   desc = "URL Highlighting",
   callback = function() utils.set_url_effect() end,
