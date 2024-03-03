@@ -1,3 +1,12 @@
+-- ### Nerd fonts
+
+-- DESCRIPTION:
+-- Here you can edit the icons displayed in NormalNvim.
+
+-- If you can't see the default icons:
+-- Install nerd fonts and set it as your terminal font:
+-- https://www.nerdfonts.com/
+
 return {
   ActiveLSP = "",
   ActiveTS = "",

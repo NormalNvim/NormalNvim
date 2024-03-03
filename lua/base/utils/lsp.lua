@@ -1,12 +1,11 @@
---- ### Nvim LSP utils
+--- ### LSP utils.
 --
 --  DESCRIPTION:
---  Functions we use to configure the plugin mason-lspconfig.nvim
---  You can specify your own lsp settings inside M.apply_user_lsp_settings()
+--  Functions we use to configure the plugin `mason-lspconfig.nvim`.
+--  You can specify your own lsp settings inside `M.apply_user_lsp_settings()`.
 --
---  NOTE:
---  Most options we use in M.apply_default_lsp_settings()
---  Can be tweaked on the file ../1-options.lua
+--  Most options we use in `M.apply_default_lsp_settings()`
+--  can be tweaked on the file `../1-options.lua`.
 --  Take this into consideration to minimize the risk of breaking stuff.
 
 --    Helpers:

@@ -1,5 +1,5 @@
--- nvim keybindings (qwerty).
---
+-- Keybindings (qwerty).
+
 -- DESCRIPTION:
 -- All mappings are defined here
 

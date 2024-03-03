@@ -19,8 +19,9 @@ local updater = {
 }
 
 -- lazyload extra behavior
---  * If plugins need to be installed → auto launch lazy at startup.
---  * When lazy finishes updating     → check for mason updates too.
+--  * If plugins need to be installed         → auto launch lazy at startup.
+--  * When lazy finishes installing plugins   → check for mason updates too.
+--    (but not when updating them)
 --  * Then show notifications and stuff.
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
 local luv = vim.uv or vim.loop
@@ -53,15 +54,12 @@ if not luv.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
- -- true if channel is 'stable'
+-- assign spec (if pin_plugins is true, load ./lua/lazy_snapshot.lua).
 local pin_plugins = updater.channel == "stable"
-
--- assign spec (if pin_plugins is true, load ./lua/lazy_snapshot.lua)
 local spec = pin_plugins and {{ import = updater.snapshot_module }} or {}
 vim.list_extend(spec, { { import = "plugins" } })
 
-
--- Setup using spec
+-- Require lazy and pass the spec.
 require("lazy").setup({
   spec = spec,
   defaults = { lazy = true },

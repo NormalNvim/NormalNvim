@@ -1,9 +1,9 @@
---- ### Nvim general utils
+--- ### General utils.
 --
 --  DESCRIPTION:
 --  General utility functions to use within Nvim.
 
---    Helpers:
+--    Functions:
 --      -> cmd                   → Run a shell command and return true/false
 --      -> conditional_func      → Run a function if conditions are met.
 --      -> confirm_quit          → Ask for confirmation before exit.

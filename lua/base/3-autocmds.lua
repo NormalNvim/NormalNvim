@@ -1,5 +1,5 @@
--- Autocmds file.
---
+-- General usage autocmds.
+
 -- DESCRIPTION:
 -- All autocmds are defined here.
 

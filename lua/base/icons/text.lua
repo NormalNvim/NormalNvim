@@ -1,3 +1,10 @@
+-- ### Text fonts
+
+-- DESCRIPTION:
+-- Fallback icons that will be displayed
+-- if you don't have nerd fonts installed,
+-- or if you set `vim.g.icons_enabled = false` on `../1-options.lua`.
+
 return {
   ActiveLSP = "LSP:",
   ArrowLeft = "<",

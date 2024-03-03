@@ -9,7 +9,7 @@ _G.base = {}
 -- Theme
 base.default_colorscheme = "tokyonight-night"
 
--- define variables -----------------------------------------------------------
+-- Define variables -----------------------------------------------------------
 local options = {
   opt = {
     breakindent = true, -- Wrap indent to match  line start.
@@ -27,6 +27,7 @@ local options = {
     foldcolumn = vim.fn.has "nvim-0.9" == 1 and "1" or nil, -- show foldcolumn in nvim 0.9+.
     ignorecase = true, -- Case insensitive searching.
     infercase = true, -- Infer cases in keyword completion.
+
     laststatus = 3, -- globalstatus.
     linebreak = true, -- Wrap lines at'breakat'.
     number = true, -- Show numberline.
@@ -42,14 +43,13 @@ local options = {
     splitbelow = true, -- Splitting a new window below the current one.
     splitright = true, -- Splitting a new window at the right of the current one.
     tabstop = 2, -- Number of space in a tab.
+
     termguicolors = true, -- Enable 24-bit RGB color in the TUI.
     timeoutlen = 500, -- Shorten key timeout length a little bit for which-key.
     undofile = true, -- Enable persistent undo between session and reboots.
     updatetime = 300, -- Length of time to wait before triggering the plugin.
     virtualedit = "block", -- allow going past end of line in visual block mode.
     writebackup = false, -- Disable making a backup before overwriting a file.
-
-    -- Additions
     shada = "!,'1000,<50,s10,h", -- Remember the last 1000 opened files
     undodir = vim.fn.stdpath "data" .. "/undodir", -- Chooses where to store the undodir.
     history = 1000, -- Number of commands to remember in a history table (per buffer).
@@ -59,6 +59,7 @@ local options = {
     mousescroll = "ver:1,hor:0", -- Disables hozirontal scroll in neovim.
     guicursor = "n:blinkon200,i-ci-ve:ver25", -- Enable cursor blink.
     autochdir = true, -- Use current file dir as working dir (See project.nvim).
+
     scrolloff = 1000, -- Number of lines to leave before/after the cursor when scrolling. Setting a high value keep the cursor centered.
     sidescrolloff = 8, -- Same but for side scrolling.
     selection = "old", -- Don't select the newline symbol when using <End> on visual mode.
@@ -85,7 +86,7 @@ local options = {
   t = vim.t.bufs and vim.t.bufs or { bufs = vim.api.nvim_list_bufs() }, -- initialize buffers for the current tab.
 }
 
--- extra logic ----------------------------------------------------------------
+-- Apply extra logic ----------------------------------------------------------
 local is_android = vim.fn.isdirectory('/system') == 1   -- true if on android
 
 -- mouse mode
@@ -101,7 +102,7 @@ vim.opt.shortmess:append { s = true, I = true } -- disable startup message.
 vim.opt.backspace:append { "nostop" } -- Don't stop backspace at insert.
 vim.opt.diffopt:append "linematch:60" -- Enable linematch diff algorithm.
 
--- apply variables ------------------------------------------------------------
+-- Apply variables ------------------------------------------------------------
 for scope, table in pairs(options) do
   for setting, value in pairs(table) do
     vim[scope][setting] = value
