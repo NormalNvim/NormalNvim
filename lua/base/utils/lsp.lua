@@ -163,12 +163,12 @@ function M.apply_user_lsp_settings(server_name)
     lsp_opts.settings = { bashIde = { shellcheckPath = vim.fn.stdpath "data" .. "/mason/bin/shellcheck" } }
   end
   local opts = lsp_opts
-  local old_on_attach_function = server.on_attach
+  local old_on_attach = server.on_attach
   opts.on_attach = function(client, bufnr)
-    utils.conditional_func(old_on_attach_function, true, client, bufnr)
+    utils.conditional_func(old_on_attach, true, client, bufnr)
 
     -- Apply lsp_mappings to the buffer
-    local lsp_mappings = require("base.4-mappings").lsp_mappings(client, bufnr)
+    local lsp_mappings = require("base.git-ignored.mappings-colemak-dh").lsp_mappings(client, bufnr)
     if not vim.tbl_isempty(lsp_mappings.v) then
       lsp_mappings.v["<leader>l"] = { desc = utils.get_icon("ActiveLSP", 1, true) .. "LSP" }
     end
