@@ -1330,12 +1330,12 @@ function M.lsp_mappings(client, bufnr)
     utils.add_autocmds("lsp_codelens_refresh", bufnr, {
       events = { "InsertLeave", "BufEnter" },
       desc = "Refresh codelens",
-      callback = function()
+      callback = function(args)
         if not has_capability("textDocument/codeLens", { bufnr = bufnr }) then
           utils.del_autocmds("lsp_codelens_refresh", bufnr)
           return
         end
-        if vim.g.codelens_enabled then vim.lsp.codelens.refresh() end
+        if vim.g.codelens_enabled then vim.lsp.codelens.refresh({ bufnr = args.buf }) end
       end,
     })
     if vim.g.codelens_enabled then vim.lsp.codelens.refresh() end

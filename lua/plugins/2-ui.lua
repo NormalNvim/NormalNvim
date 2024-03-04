@@ -211,6 +211,8 @@ return {
       require("base.utils").load_plugin_with_func("nvim-notify", vim, "notify")
     end,
     opts = {
+      max_height = function() return math.floor(vim.o.lines * 0.75) end,
+      max_width = function() return math.floor(vim.o.columns * 0.75) end,
       on_open = function(win)
         vim.api.nvim_win_set_config(win, { zindex = 175 })
         if not vim.g.notifications_enabled then
@@ -321,7 +323,6 @@ return {
         statuscolumn = { -- UI left column
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
           lib.component.foldcolumn(),
-          lib.component.fill(),
           lib.component.numbercolumn(),
           lib.component.signcolumn(),
         } or nil,
