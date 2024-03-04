@@ -790,7 +790,7 @@ return {
     config = function() require("coverage").setup() end,
   },
 
-  --  LANGUAGE IMPROVEMENTS ---------------------------------------------------
+  -- LANGUAGE IMPROVEMENTS ----------------------------------------------------
   -- guttentags_plus [auto generate C/C++ tags]
   -- https://github.com/skywind3000/gutentags_plus
   -- This plugin is necessary for using <C-]> (go to ctag).
