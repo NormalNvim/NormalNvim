@@ -18,6 +18,17 @@ The space key shows [all you can do](https://github.com/NormalNvim/NormalNvim/wi
 
 If you are new here don't forget to [check the wiki](https://github.com/NormalNvim/NormalNvim/wiki).
 
+## Table of contents
+
+- [How to install](#how-to-install)
+- [Distro features](#distro-features)
+- [Philosophy and design decisions](#philosophy-and-design-decisions)
+- [Commands](#commands)
+- [faq](#faq)
+- [Wiki](https://github.com/NormalNvim/NormalNvim/wiki)
+
+- [FAQ](#faq)
+
 ## How to install
 
 ### Installer (Linux/MacOS/WSL)
