@@ -1,6 +1,6 @@
 return {
   { "AckslD/nvim-neoclip.lua", commit = "4e406ae0f759262518731538f2585abb9d269bac" },
-  { "AstroNvim/astrotheme", version = "^3" },
+  { "AstroNvim/astrotheme", version = "^3.4" },
   { "Issafalcon/neotest-dotnet", commit = "6528e761e4528aed3f4b60aff4c9f3406beb3cdd" },
   { "JoosepAlviste/nvim-ts-context-commentstring", commit = "9bff161dfece6ecf3459e6e46ca42e49f9ed939f" },
   { "L3MON4D3/LuaSnip", version = "^3" },
