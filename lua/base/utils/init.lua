@@ -9,7 +9,7 @@
 --      -> confirm_quit          → Ask for confirmation before exit.
 --      -> add_autocmds          → Add the specified autocmds to a bufnr.
 --      -> del_autocmds          → Delete the specified autocmds from a bufnr.
---      -> get_mappings_tempate  → Return a mappings table.
+--      -> get_mappings_template → Return a mappings table.
 --      -> extend_tbl            → Add the content of a table to another table.
 --      -> get_icon              → Return an icon from the icons directory.
 --      -> is_available          → Return true if the plugin is available.
@@ -118,7 +118,7 @@ end
 
 --- Get an empty table of mappings with a key for each map mode
 ---@return table<string,table> # a table with entries for each map mode
-function M.get_mappings_tempate()
+function M.get_mappings_template()
   local maps = {}
   for _, mode in ipairs { "", "n", "v", "x", "s", "o", "!", "i", "l", "c", "t" } do
     maps[mode] = {}
