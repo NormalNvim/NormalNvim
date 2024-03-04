@@ -9,7 +9,6 @@
 
 ---
 
-## Table of contents
 - [Screenshots](#screenshots)
 - [How to install](#how-to-install)
 - [Distro features](#distro-features)
