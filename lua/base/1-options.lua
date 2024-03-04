@@ -12,21 +12,21 @@ base.default_colorscheme = "tokyonight-night"
 -- Options --------------------------------------------------------------------
 vim.opt.breakindent = true -- Wrap indent to match  line start.
 vim.opt.clipboard = "unnamedplus" -- Connection to the system clipboard.
-vim.opt.cmdheight = 0 -- hide command line unless needed.
+vim.opt.cmdheight = 0 -- Hide command line unless needed.
 vim.opt.completeopt = { "menu", "menuone", "noselect" } -- Options for insert mode completion.
 vim.opt.copyindent = true -- Copy the previous indentation on autoindenting.
 vim.opt.cursorline = true -- Highlight the text line of the cursor.
 vim.opt.expandtab = true -- Enable the use of space in tab.
 vim.opt.fileencoding = "utf-8" -- File content encoding for the buffer.
 vim.opt.fillchars = { eob = " " } -- Disable `~` on nonexistent lines.
-vim.opt.foldenable = true -- enable fold for nvim-ufo.
+vim.opt.foldenable = true -- Enable fold for nvim-ufo.
 vim.opt.foldlevel = 99 -- set highest foldlevel for nvim-ufo.
-vim.opt.foldlevelstart = 99 -- start with all code unfolded.
-vim.opt.foldcolumn = "1" -- show foldcolumn in nvim 0.9+.
+vim.opt.foldlevelstart = 99 -- Start with all code unfolded.
+vim.opt.foldcolumn = "1" -- Show foldcolumn in nvim 0.9+.
 vim.opt.ignorecase = true -- Case insensitive searching.
 vim.opt.infercase = true -- Infer cases in keyword completion.
 
-vim.opt.laststatus = 3 -- globalstatus.
+vim.opt.laststatus = 3 -- Globalstatus.
 vim.opt.linebreak = true -- Wrap lines at'breakat'.
 vim.opt.number = true                                       -- Show numberline.
 vim.opt.preserveindent = true -- Preserve indent structure as much as possible.
@@ -46,7 +46,7 @@ vim.opt.termguicolors = true -- Enable 24-bit RGB color in the TUI.
 vim.opt.timeoutlen = 500 -- Shorten key timeout length a little bit for which-key.
 vim.opt.undofile = true -- Enable persistent undo between session and reboots.
 vim.opt.updatetime = 300 -- Length of time to wait before triggering the plugin.
-vim.opt.virtualedit = "block" -- allow going past end of line in visual block mode.
+vim.opt.virtualedit = "block" -- Allow going past end of line in visual block mode.
 vim.opt.writebackup = false -- Disable making a backup before overwriting a file.
 vim.opt.shada = "!,'1000,<50,s10,h" -- Remember the last 1000 opened files
 vim.opt.undodir = vim.fn.stdpath "data" .. "/undodir" -- Chooses where to store the undodir.
@@ -62,9 +62,9 @@ vim.opt.sidescrolloff = 8 -- Same but for side scrolling.
 vim.opt.selection = "old" -- Don't select the newline symbol when using <End> on visual mode.
 
 vim.opt.viewoptions:remove "curdir" -- Disable saving current directory with views.
-vim.opt.shortmess:append { s = true, I = true } -- disable startup message.
+vim.opt.shortmess:append { s = true, I = true } -- Disable startup message.
 vim.opt.backspace:append { "nostop" } -- Don't stop backspace at insert.
-vim.opt.diffopt:append "linematch:60" -- Enable linematch diff algorithm.
+vim.opt.diffopt:append { "algorithm:histogram", "linematch:60" } -- Enable linematch diff algorithm
 
 local is_android = vim.fn.isdirectory('/system') == 1
 if is_android then vim.opt.mouse = "v" else vim.opt.mouse = "a" end -- Enable scroll for android
