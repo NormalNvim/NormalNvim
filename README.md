@@ -10,7 +10,7 @@
 ---
 
 ## Table of contents
-
+- [Screenshots](#screenshots)
 - [How to install](#how-to-install)
 - [Distro features](#distro-features)
 - [Philosophy and design decisions](#philosophy-and-design-decisions)
@@ -18,6 +18,7 @@
 - [Wiki](https://github.com/NormalNvim/NormalNvim/wiki)
 - [FAQ](#faq)
 
+## Screenshots
 
 Tokyo Night (Night) theme by default
 ![screenshot_2023-11-11_05-07-36_209146790](https://github.com/NormalNvim/NormalNvim/assets/3357792/d487a27a-d314-4f20-b209-90f0d25c10d1)
