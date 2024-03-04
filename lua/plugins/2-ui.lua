@@ -635,7 +635,7 @@ return {
 
       local animate = require "mini.animate"
       return {
-        open = { enable = false }, -- causes issues on spectre toggle.
+        open = { enable = false }, -- true causes issues on nvim-spectre
         resize = {
           timing = animate.gen_timing.linear { duration = 33, unit = "total" },
         },
@@ -702,4 +702,4 @@ return {
   },
 
 
-}
+}  -- end of return

@@ -26,7 +26,6 @@
 local is_windows = vim.fn.has('win32') == 1             -- true if on windows
 local is_android = vim.fn.isdirectory('/system') == 1   -- true if on android
 
--- configures plugins
 return {
   -- [ranger] file browser
   -- https://github.com/kevinhwang91/rnvimr
@@ -77,6 +76,7 @@ return {
         "Makefile",
         "package.json",
         ".solution",
+        ".solution.toml"
       },
       -- Don't list the next projects
       exclude_dirs = {
@@ -132,13 +132,14 @@ return {
   --  https://github.com/mrjones2014/smart-splits.nvim
   {
     "mrjones2014/smart-splits.nvim",
+    event = "User BaseFile",
     opts = {
       ignored_filetypes = { "nofile", "quickfix", "qf", "prompt" },
       ignored_buftypes = { "nofile" },
     },
   },
 
-  -- Improved [esc]
+  -- better-scape.nvim [esc]
   -- https://github.com/max397574/better-escape.nvim
   {
     "max397574/better-escape.nvim",
@@ -544,8 +545,9 @@ return {
   --  By default registers are deleted between sessions.
   {
     "AckslD/nvim-neoclip.lua",
-    requires = { {'nvim-telescope/telescope.nvim'} },
-    config = function() require('neoclip').setup() end,
+    requires = 'nvim-telescope/telescope.nvim',
+    event = "User BaseFile",
+    opts = {}
   },
 
   --  zen-mode.nivm [distraction free mode]
@@ -578,10 +580,7 @@ return {
   {
     "smoka7/hop.nvim",
     cmd = { "HopWord" },
-    opts = { keys = "etovxqpdygfblzhckisuran" },
-    config = function(_, opts)
-      require("hop").setup(opts)
-    end,
+    opts = { keys = "etovxqpdygfblzhckisuran" }
   },
 
   --  nvim-autopairs [auto close brackets]
@@ -679,4 +678,4 @@ return {
     end
   },
 
-}
+}  -- end of return
