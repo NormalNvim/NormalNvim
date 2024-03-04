@@ -321,7 +321,6 @@ return {
         statuscolumn = { -- UI left column
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
           lib.component.foldcolumn(),
-          lib.component.fill(),
           lib.component.numbercolumn(),
           lib.component.signcolumn(),
         } or nil,
