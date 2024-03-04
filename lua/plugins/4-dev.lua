@@ -372,8 +372,7 @@ return {
 
       -- Java
       -- Note: The java debugger jdtls is automatically spawned and configured
-      -- when a java file is opened. You can check it out here:
-      -- ../base/3-autocmds.lua
+      -- when a java file is opened by the plugin nvim-java.
 
       -- Python
       dap.adapters.python = {
