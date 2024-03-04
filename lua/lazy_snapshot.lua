@@ -1,5 +1,5 @@
 return {
-  { "AckslD/nvim-neoclip.lua", commit = "4e406ae0f759262518731538f2585abb9d269bac" },
+  { "AckslD/nvim-neoclip.lua", commit = "798cd0592a81c185465db3a091a0ff8a21af60fd" },
   { "AstroNvim/astrotheme", version = "^3.4" },
   { "Issafalcon/neotest-dotnet", commit = "6528e761e4528aed3f4b60aff4c9f3406beb3cdd" },
   { "JoosepAlviste/nvim-ts-context-commentstring", commit = "9bff161dfece6ecf3459e6e46ca42e49f9ed939f" },

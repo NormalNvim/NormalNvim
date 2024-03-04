@@ -40,8 +40,8 @@
 --       ## LANGUAGE IMPROVEMENTS
 --       -> guttentags_plus                [auto generate C/C++ tags]
 
-local get_icon = require("base.utils").get_icon
 local is_windows = vim.fn.has('win32') == 1 -- true if on windows
+
 return {
   --  COMMENTS ----------------------------------------------------------------
   --  Advanced comment features [comment with a key]
@@ -109,17 +109,20 @@ return {
     "lewis6991/gitsigns.nvim",
     enabled = vim.fn.executable "git" == 1,
     event = "User BaseGitFile",
-    opts = {
-      max_file_length = vim.g.big_file.lines,
-      signs = {
-        add = { text = get_icon "GitSign" },
-        change = { text = get_icon "GitSign" },
-        delete = { text = get_icon "GitSign" },
-        topdelete = { text = get_icon "GitSign" },
-        changedelete = { text = get_icon "GitSign" },
-        untracked = { text = get_icon "GitSign" },
-      },
-    },
+    opts = function()
+      local get_icon = require("base.utils").get_icon
+      return {
+        max_file_length = vim.g.big_file.lines,
+        signs = {
+          add = { text = get_icon "GitSign" },
+          change = { text = get_icon "GitSign" },
+          delete = { text = get_icon "GitSign" },
+          topdelete = { text = get_icon "GitSign" },
+          changedelete = { text = get_icon "GitSign" },
+          untracked = { text = get_icon "GitSign" },
+        },
+      }
+    end
   },
 
   --  Git fugitive mergetool + [git commands]
@@ -219,13 +222,12 @@ return {
   --  Note: If you change the build command, wipe ~/.local/data/nvim/lazy
   {
     "iamcco/markdown-preview.nvim",
-    ft = "markdown",
+    build = "cd app && yarn install",
     cmd = {
       "MarkdownPreview",
       "MarkdownPreviewStop",
       "MarkdownPreviewToggle",
     },
-    build = "cd app && yarn install",
   },
 
   --  [markdown markmap]
@@ -281,7 +283,7 @@ return {
   -- [guess-indent]
   -- https://github.com/NMAC427/guess-indent.nvim
   -- Note that this plugin won't autoformat the code.
-  -- It just set the buffer options to tabuate in a certain way.
+  -- It just set the buffer options to tabluate in a certain way.
   {
     "NMAC427/guess-indent.nvim",
     event = "VeryLazy",
@@ -370,8 +372,7 @@ return {
 
       -- Java
       -- Note: The java debugger jdtls is automatically spawned and configured
-      -- when a java file is opened. You can check it out here:
-      -- ../base/3-autocmds.lua
+      -- when a java file is opened by the plugin nvim-java.
 
       -- Python
       dap.adapters.python = {
@@ -655,7 +656,7 @@ return {
       {
         "jay-babu/mason-nvim-dap.nvim",
         "jbyuki/one-small-step-for-vimkind",
-        "mfussenegger/nvim-jdtls",
+        "nvim-java/nvim-java",
         dependencies = { "nvim-dap" },
         cmd = { "DapInstall", "DapUninstall" },
         opts = { handlers = {} },
@@ -788,7 +789,7 @@ return {
     config = function() require("coverage").setup() end,
   },
 
-  --  LANGUAGE IMPROVEMENTS ---------------------------------------------------
+  -- LANGUAGE IMPROVEMENTS ----------------------------------------------------
   -- guttentags_plus [auto generate C/C++ tags]
   -- https://github.com/skywind3000/gutentags_plus
   -- This plugin is necessary for using <C-]> (go to ctag).
@@ -812,4 +813,4 @@ return {
     end,
   },
 
-}
+}  -- end of return

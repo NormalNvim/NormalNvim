@@ -964,13 +964,13 @@ if is_available "telescope.nvim" then
   -- extra - nvim-neoclip (neovim internal clipboard)
   --         Specially useful if you disable the shared clipboard in options.
   if is_available "nvim-neoclip.lua" then
-    maps.n["<leader>fc"] = {
+    maps.n["<leader>fy"] = {
       function() require("telescope").extensions.neoclip.default() end,
-      desc = "Find recorded macros",
+      desc = "Find yank history",
     }
     maps.n["<leader>fq"] = {
       function() require("telescope").extensions.macroscope.default() end,
-      desc = "Find recorded macros",
+      desc = "Find macro history",
     }
   end
 
