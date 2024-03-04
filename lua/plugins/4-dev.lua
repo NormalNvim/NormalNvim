@@ -657,7 +657,7 @@ return {
       {
         "jay-babu/mason-nvim-dap.nvim",
         "jbyuki/one-small-step-for-vimkind",
-        "mfussenegger/nvim-jdtls",
+        "nvim-java/nvim-java",
         dependencies = { "nvim-dap" },
         cmd = { "DapInstall", "DapUninstall" },
         opts = { handlers = {} },
