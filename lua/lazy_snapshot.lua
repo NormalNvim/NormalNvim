@@ -18,7 +18,7 @@ return {
   { "akinsho/toggleterm.nvim", version = "^2" },
   { "andymass/vim-matchup", commit = "7f81ae12542b2a35819f0324895df9bd8626c8ba" },
   { "andythigpen/nvim-coverage", commit = "4634dfb00961a86948518c7e6f85737c24364308" },
-  { "b0o/SchemaStore.nvim", commit = "91b56a811d87b9e7e0600c95f80ff2d08245bf61" },
+  { "b0o/SchemaStore.nvim", commit = "d91daa5bf63c409f9e752e55082c3ba088b04c0b" },
   { "benfowler/telescope-luasnip.nvim", commit = "849c4ee1951f34041a26744d2a88284545564ff0" },
   { "cappyzawa/trim.nvim", commit = "2df124c2c2844d3143091ebd3ae8b49bbe06bc5e" },
   { "debugloop/telescope-undo.nvim", commit = "3dec002ea3e7952071d26fbb5d01e2038a58a554" },
