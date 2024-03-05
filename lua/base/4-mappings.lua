@@ -282,7 +282,7 @@ end
 -- nvim updater
 maps.n["<leader>pa"] =
 { "<cmd>NvimUpdatePlugins<cr>", desc = "Update Plugins and Mason" }
-maps.n["<leader>pD"] = { "<cmd>NvimUpdateConfig<cr>", desc = "Distro update" }
+maps.n["<leader>pD"] = { "<cmd>NvimDistroUpdate<cr>", desc = "Distro update" }
 maps.n["<leader>pv"] = { "<cmd>NvimVersion<cr>", desc = "Distro version" }
 maps.n["<leader>pc"] = { "<cmd>NvimChangelog<cr>", desc = "Distro Changelog" }
 
