@@ -62,7 +62,6 @@ return {
     opts = {
       auto_install = false, -- Currently bugged. Use [:TSInstall all] and [:TSUpdate all]
       autotag = { enable = true },
-      context_commentstring = { enable = true, enable_autocmd = false },
       highlight = {
         enable = true,
         disable = function(_, bufnr) return utils.is_big_file(bufnr) end,
@@ -134,7 +133,9 @@ return {
     },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
-      vim.cmd ""
+      require('ts_context_commentstring').setup(
+        { enable = true, enable_autocmd = false })      -- Enable commentstring
+      vim.g.skip_ts_context_commentstring_module = true -- Increase performance
     end,
   },
 
