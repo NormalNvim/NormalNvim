@@ -291,7 +291,7 @@ return {
           nls.builtins.code_actions.shellcheck,
           nls.builtins.diagnostics.shellcheck.with { diagnostics_format = "" },
         },
-        on_attach = utils_lsp.apply_lsp_keymappings,
+        on_attach = utils_lsp.apply_user_lsp_mappings,
       }
     end,
   },

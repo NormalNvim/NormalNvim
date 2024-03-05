@@ -13,7 +13,7 @@
 
 --    Functions:
 --      -> M.apply_default_lsp_settings  → Apply our default lsp settings.
---      -> M.apply_lsp_mappings          → Apply our lsp keymappings.
+--      -> M.apply_user_lsp_mappings     → Apply our lsp keymappings.
 --      -> M.apply_user_lsp_settings     → Apply the user lsp settings.
 --      -> M.setup                       → Gives the user settings to lspconfig.
 
@@ -142,7 +142,7 @@ end
 --- We have this function, bucause we use it on none-ls.
 ---@param client string The client where the lsp mappings will load.
 ---@param bufnr string The bufnr where the lsp mappings will load.
-function M.apply_lsp_mappings(client, bufnr)
+function M.apply_user_lsp_mappings(client, bufnr)
   local lsp_mappings = require("base.4-mappings").lsp_mappings(client, bufnr)
   if not vim.tbl_isempty(lsp_mappings.v) then
     lsp_mappings.v["<leader>l"] = { desc = utils.get_icon("ActiveLSP", 1, true) .. "LSP" }
@@ -157,7 +157,7 @@ end
 function M.apply_user_lsp_settings(server_name)
   local server = require("lspconfig")[server_name]
 
-  -- Custom server rules
+  -- Define user server rules.
   local opts = utils.extend_tbl(server, { capabilities = M.capabilities, flags = M.flags })
   if server_name == "jsonls" then -- by default add json schemas
     local schemastore_avail, schemastore = pcall(require, "schemastore")
@@ -177,15 +177,15 @@ function M.apply_user_lsp_settings(server_name)
     opts.settings = { bashIde = { shellcheckPath = vim.fn.stdpath "data" .. "/mason/bin/shellcheck" } }
   end
 
+
   -- Apply them
   local old_on_attach = server.on_attach
   opts.on_attach = function(client, bufnr)
     -- If the server on_attach function exist → server.on_attach(client, bufnr)
     utils.conditional_func(old_on_attach, true, client, bufnr)
-    -- Apply lsp_mappings to the buffer
-    M.apply_lsp_mappings(client, bufnr)
+    -- Also, apply mappings to the buffer.
+    M.apply_user_lsp_mappings(client, bufnr)
   end
-
   return opts
 end
 
