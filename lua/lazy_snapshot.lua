@@ -75,7 +75,7 @@ return {
   { "onsails/lspkind.nvim", commit = "1735dd5a5054c1fb7feaf8e8658dbab925f4f0cf" },
   { "petertriho/nvim-scrollbar", commit = "35f99d559041c7c0eff3a41f9093581ceea534e8" },
   { "rafamadriz/friendly-snippets", commit = "dcd4a586439a1c81357d5b9d26319ae218cc9479" },
-  { "ray-x/lsp_signature.nvim", commit = "9768d5b32c97539aa87c553a6527d58a345e5cb1" },
+  { "ray-x/lsp_signature.nvim", commit = "e92b4e7073345b2a30a56b20db3d541a9aa2771e" },
   { "rcarriga/cmp-dap", commit = "ea92773e84c0ad3288c3bc5e452ac91559669087" },
   { "rcarriga/nvim-dap-ui", commit = "9720eb5fa2f41988e8770f973cd11b76dd568a5d" },
   { "rcarriga/nvim-notify", commit = "5371f4bfc1f6d3adf4fe9d62cd3a9d44356bfd15" },
