@@ -654,11 +654,11 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     cmd = {
       "NvimChangelog",
+      "NvimDistroUpdate",
       "NvimFreezePluginVersions",
       "NvimReload",
       "NvimRollbackCreate",
       "NvimRollbackRestore",
-      "NvimUpdateConfig",
       "NvimUpdatePlugins",
       "NvimVersions"
     },

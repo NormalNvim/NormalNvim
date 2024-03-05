@@ -167,7 +167,7 @@ function M.apply_user_lsp_settings(server_name)
     utils.conditional_func(old_on_attach, true, client, bufnr)
 
     -- Apply lsp_mappings to the buffer
-    local lsp_mappings = require("base.4-mappings").lsp_mappings(client, bufnr)
+    local lsp_mappings = require("base.git-ignored.mappings-colemak-dh").lsp_mappings(client, bufnr)
     if not vim.tbl_isempty(lsp_mappings.v) then
       lsp_mappings.v["<leader>l"] = { desc = utils.get_icon("ActiveLSP", 1, true) .. "LSP" }
     end
