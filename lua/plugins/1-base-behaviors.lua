@@ -656,7 +656,6 @@ return {
       "NvimChangelog",
       "NvimDistroUpdate",
       "NvimFreezePluginVersions",
-      "NvimReload",
       "NvimRollbackCreate",
       "NvimRollbackRestore",
       "NvimUpdatePlugins",
