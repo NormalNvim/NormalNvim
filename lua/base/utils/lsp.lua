@@ -156,32 +156,36 @@ end
 ---@return table # The table of LSP options used when setting up the given language server
 function M.apply_user_lsp_settings(server_name)
   local server = require("lspconfig")[server_name]
-  local lsp_opts = utils.extend_tbl(server, { capabilities = M.capabilities, flags = M.flags })
+
+  -- Custom server rules
+  local opts = utils.extend_tbl(server, { capabilities = M.capabilities, flags = M.flags })
   if server_name == "jsonls" then -- by default add json schemas
     local schemastore_avail, schemastore = pcall(require, "schemastore")
     if schemastore_avail then
-      lsp_opts.settings = { json = { schemas = schemastore.json.schemas(), validate = { enable = true } } }
+      opts.settings = { json = { schemas = schemastore.json.schemas(), validate = { enable = true } } }
     end
   end
   if server_name == "yamlls" then -- by default add yaml schemas
     local schemastore_avail, schemastore = pcall(require, "schemastore")
-    if schemastore_avail then lsp_opts.settings = { yaml = { schemas = schemastore.yaml.schemas() } } end
+    if schemastore_avail then opts.settings = { yaml = { schemas = schemastore.yaml.schemas() } } end
   end
   if server_name == "lua_ls" then -- by default initialize neodev and disable third party checking
     pcall(require, "neodev")
-    lsp_opts.settings = { Lua = { workspace = { checkThirdParty = false } } }
+    opts.settings = { Lua = { workspace = { checkThirdParty = false } } }
   end
   if server_name == "bashls" then -- by default use mason shellcheck path
-    lsp_opts.settings = { bashIde = { shellcheckPath = vim.fn.stdpath "data" .. "/mason/bin/shellcheck" } }
+    opts.settings = { bashIde = { shellcheckPath = vim.fn.stdpath "data" .. "/mason/bin/shellcheck" } }
   end
-  local opts = lsp_opts
+
+  -- Apply them
   local old_on_attach = server.on_attach
   opts.on_attach = function(client, bufnr)
+    -- If the server on_attach function exist → server.on_attach(client, bufnr)
     utils.conditional_func(old_on_attach, true, client, bufnr)
-
     -- Apply lsp_mappings to the buffer
     M.apply_lsp_mappings(client, bufnr)
   end
+
   return opts
 end
 
