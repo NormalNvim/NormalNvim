@@ -1293,6 +1293,7 @@ if is_available "hop.nvim" then
 end
 
 -- mason-lspconfig.nvim [lsp] -------------------------------------------------
+-- WARNING: Don't delete this section, or you won't have LSP keymappings
 
 -- A function we call from the script to start lsp.
 ---@return table lsp_mappings #

@@ -264,7 +264,7 @@ return {
   --  https://github.com/b0o/SchemaStore.nvim
   "b0o/SchemaStore.nvim",
 
-  --  null-ls [lsp code formatting]
+  --  none-ls [lsp code formatting]
   --  https://github.com/nvimtools/none-ls.nvim
   {
     "nvimtools/none-ls.nvim",
@@ -290,7 +290,7 @@ return {
           nls.builtins.code_actions.shellcheck,
           nls.builtins.diagnostics.shellcheck.with { diagnostics_format = "" },
         },
-        on_attach = utils_lsp.on_attach,
+        on_attach = utils_lsp.apply_lsp_keymappings,
       }
     end,
   },

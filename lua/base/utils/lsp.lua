@@ -13,6 +13,7 @@
 
 --    Functions:
 --      -> M.apply_default_lsp_settings  → Apply our default lsp settings.
+--      -> M.apply_lsp_mappings          → Apply our lsp keymappings.
 --      -> M.apply_user_lsp_settings     → Apply the user lsp settings.
 --      -> M.setup                       → Gives the user settings to lspconfig.
 
@@ -137,6 +138,18 @@ M.apply_default_lsp_settings = function()
   M.flags = {}
 end
 
+--- This function has the sole purpose of passing the lsp keymappings to lsp.
+--- We have this function, bucause we use it on none-ls.
+---@param client string The client where the lsp mappings will load.
+---@param bufnr string The bufnr where the lsp mappings will load.
+function M.apply_lsp_mappings(client, bufnr)
+  local lsp_mappings = require("base.4-mappings").lsp_mappings(client, bufnr)
+  if not vim.tbl_isempty(lsp_mappings.v) then
+    lsp_mappings.v["<leader>l"] = { desc = utils.get_icon("ActiveLSP", 1, true) .. "LSP" }
+  end
+  utils.set_mappings(lsp_mappings, { buffer = bufnr })
+end
+
 --- Here you can specify custom settings for the lsp servers you install.
 --- This is not normally necessary. But you can.
 ---@param server_name string The name of the server
@@ -167,11 +180,7 @@ function M.apply_user_lsp_settings(server_name)
     utils.conditional_func(old_on_attach, true, client, bufnr)
 
     -- Apply lsp_mappings to the buffer
-    local lsp_mappings = require("base.git-ignored.mappings-colemak-dh").lsp_mappings(client, bufnr)
-    if not vim.tbl_isempty(lsp_mappings.v) then
-      lsp_mappings.v["<leader>l"] = { desc = utils.get_icon("ActiveLSP", 1, true) .. "LSP" }
-    end
-    utils.set_mappings(lsp_mappings, { buffer = bufnr })
+    M.apply_lsp_mappings(client, bufnr)
   end
   return opts
 end
