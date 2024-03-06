@@ -285,7 +285,6 @@ return {
     "nvimtools/none-ls.nvim",
     dependencies = {
       "jay-babu/mason-null-ls.nvim",
-      "nvimtools/none-ls-extras.nvim",
       "gbprod/none-ls-shellcheck.nvim"
     },
     event = "User BaseFile",
