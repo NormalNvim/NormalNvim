@@ -265,18 +265,26 @@ return {
   --  https://github.com/b0o/SchemaStore.nvim
   "b0o/SchemaStore.nvim",
 
+  -- mason-null-ls.nivm
+  -- https://github.com/jay-babu/mason-null-ls.nvim
+  -- Allows none-ls to use clients installed by mason.
+  {
+    "jay-babu/mason-null-ls.nvim",
+    cmd = {
+      "NullLsInstall",
+      "NullLsUninstall",
+      "NoneLsInstall",
+      "NoneLsUninstall"
+    },
+    opts = { handlers = {} },
+  },
+
   --  none-ls [lsp code formatting]
   --  https://github.com/nvimtools/none-ls.nvim
   {
     "nvimtools/none-ls.nvim",
     dependencies = {
-      {
-        "jay-babu/mason-null-ls.nvim",
-        cmd = {
-          "NullLsInstall", "NullLsUninstall", "NoneLsInstall", "NoneLsUninstall"
-        },
-        opts = { handlers = {} },
-      },
+      "jay-babu/mason-null-ls.nvim",
       "nvimtools/none-ls-extras.nvim",
       "gbprod/none-ls-shellcheck.nvim"
     },
