@@ -277,23 +277,26 @@ return {
         },
         opts = { handlers = {} },
       },
-      "gbprod/none-ls-shellcheck.nvim",
+      "nvimtools/none-ls-extras.nvim",
+      "gbprod/none-ls-shellcheck.nvim"
     },
     event = "User BaseFile",
     opts = function()
       local nls = require "null-ls"
-      require("null-ls").register(require("none-ls-shellcheck.code_actions"))
+      local shellcheck_code_actions = require("none-ls-shellcheck.code_actions")
+
+      -- You can customize your formatters here.
+      nls.register(shellcheck_code_actions)
+      nls.builtins.formatting.shfmt.with({
+        command = "shfmt",
+        args = { "-i", "2", "-filename", "$FILENAME" },
+      })
+
+      -- Attach the user lsp mappings to every none-ls client.
       return {
-        sources = {
-          -- You can customize your formatters here.
-          nls.builtins.formatting.shfmt.with {
-            command = "shfmt",
-            args = { "-i", "2", "-filename", "$FILENAME" },
-          },
-        },
         on_attach = utils_lsp.apply_user_lsp_mappings,
       }
-    end,
+    end
   },
 
   --  neodev.nvim [lsp for nvim lua api]
