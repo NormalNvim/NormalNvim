@@ -289,12 +289,12 @@ return {
     },
     event = "User BaseFile",
     opts = function()
-      local nls = require "null-ls"
+      local nls = require("null-ls")
       local shellcheck_code_actions = require("none-ls-shellcheck.code_actions")
 
       -- You can customize your formatters here.
-      nls.register(shellcheck_code_actions)
-      nls.builtins.formatting.shfmt.with({
+      nls.register(shellcheck_code_actions)  -- shell code actions.
+      nls.builtins.formatting.shfmt.with({   -- shell formatter settings.
         command = "shfmt",
         args = { "-i", "2", "-filename", "$FILENAME" },
       })
