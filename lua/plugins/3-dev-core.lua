@@ -277,10 +277,12 @@ return {
         },
         opts = { handlers = {} },
       },
+      "gbprod/none-ls-shellcheck.nvim",
     },
     event = "User BaseFile",
     opts = function()
       local nls = require "null-ls"
+      require("null-ls").register(require("none-ls-shellcheck.code_actions"))
       return {
         sources = {
           -- You can customize your formatters here.
@@ -288,10 +290,6 @@ return {
             command = "shfmt",
             args = { "-i", "2", "-filename", "$FILENAME" },
           },
-          -- https://github.com/bash-lsp/bash-language-server/issues/933
-          -- TODO: Disable the next feature once this has been merged.
-          nls.builtins.code_actions.shellcheck,
-          nls.builtins.diagnostics.shellcheck.with { diagnostics_format = "" },
         },
         on_attach = utils_lsp.apply_user_lsp_mappings,
       }
