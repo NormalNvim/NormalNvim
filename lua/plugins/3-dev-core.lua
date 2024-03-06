@@ -286,7 +286,7 @@ return {
           -- You can customize your formatters here.
           nls.builtins.formatting.shfmt.with {
             command = "shfmt",
-            args = { "-i","2","-filename", "$FILENAME" },
+            args = { "-i", "2", "-filename", "$FILENAME" },
           },
         },
         on_attach = utils_lsp.apply_user_lsp_mappings,
