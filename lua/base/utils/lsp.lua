@@ -177,7 +177,6 @@ function M.apply_user_lsp_settings(server_name)
     opts.settings = { bashIde = { shellcheckPath = vim.fn.stdpath "data" .. "/mason/bin/shellcheck" } }
   end
 
-
   -- Apply them
   local old_on_attach = server.on_attach
   opts.on_attach = function(client, bufnr)
