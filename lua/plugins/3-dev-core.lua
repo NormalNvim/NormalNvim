@@ -284,9 +284,9 @@ return {
       return {
         sources = {
           -- You can customize your formatters here.
-          nls.builtins.formatting.beautysh.with {
-            command = "beautysh",
-            args = { "--indent-size=2", "$FILENAME" },
+          nls.builtins.formatting.shfmt.with {
+            command = "shfmt",
+            args = { "-i","2","-filename", "$FILENAME" },
           },
           -- TODO: Disable the next feature once this has been merged.
           -- https://github.com/bash-lsp/bash-language-server/issues/933
