@@ -1,7 +1,7 @@
 -- Keybindings (qwerty).
 
 -- DESCRIPTION:
--- All mappings are defined here
+-- All mappings are defined here.
 
 --    Sections:
 --
