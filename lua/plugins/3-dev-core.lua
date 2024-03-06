@@ -243,7 +243,7 @@ return {
           return _.sort_by(
             _.identity,
             _.filter(_.starts_with(arg_lead), require("mason-registry").get_installed_package_names())
-           )
+          )
         end,
       })
       cmd(
@@ -288,6 +288,10 @@ return {
             command = "shfmt",
             args = { "-i", "2", "-filename", "$FILENAME" },
           },
+          -- https://github.com/bash-lsp/bash-language-server/issues/933
+          -- TODO: Disable the next feature once this has been merged.
+          nls.builtins.code_actions.shellcheck,
+          nls.builtins.diagnostics.shellcheck.with { diagnostics_format = "" },
         },
         on_attach = utils_lsp.apply_user_lsp_mappings,
       }
@@ -457,9 +461,9 @@ return {
         },
         sources = cmp.config.sources {
           { name = "nvim_lsp", priority = 1000 },
-          { name = "luasnip", priority = 750 },
-          { name = "buffer", priority = 500 },
-          { name = "path", priority = 250 },
+          { name = "luasnip",  priority = 750 },
+          { name = "buffer",   priority = 500 },
+          { name = "path",     priority = 250 },
         },
       }
     end,
