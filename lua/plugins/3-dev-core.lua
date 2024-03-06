@@ -265,37 +265,46 @@ return {
   --  https://github.com/b0o/SchemaStore.nvim
   "b0o/SchemaStore.nvim",
 
+  -- mason-null-ls.nivm
+  -- https://github.com/jay-babu/mason-null-ls.nvim
+  -- Allows none-ls to use clients installed by mason.
+  {
+    "jay-babu/mason-null-ls.nvim",
+    cmd = {
+      "NullLsInstall",
+      "NullLsUninstall",
+      "NoneLsInstall",
+      "NoneLsUninstall"
+    },
+    opts = { handlers = {} },
+  },
+
   --  none-ls [lsp code formatting]
   --  https://github.com/nvimtools/none-ls.nvim
   {
     "nvimtools/none-ls.nvim",
     dependencies = {
-      {
-        "jay-babu/mason-null-ls.nvim",
-        cmd = {
-          "NullLsInstall", "NullLsUninstall", "NoneLsInstall", "NoneLsUninstall"
-        },
-        opts = { handlers = {} },
-      },
+      "jay-babu/mason-null-ls.nvim",
+      "nvimtools/none-ls-extras.nvim",
+      "gbprod/none-ls-shellcheck.nvim"
     },
     event = "User BaseFile",
     opts = function()
       local nls = require "null-ls"
+      local shellcheck_code_actions = require("none-ls-shellcheck.code_actions")
+
+      -- You can customize your formatters here.
+      nls.register(shellcheck_code_actions)
+      nls.builtins.formatting.shfmt.with({
+        command = "shfmt",
+        args = { "-i", "2", "-filename", "$FILENAME" },
+      })
+
+      -- Attach the user lsp mappings to every none-ls client.
       return {
-        sources = {
-          -- You can customize your formatters here.
-          nls.builtins.formatting.shfmt.with {
-            command = "shfmt",
-            args = { "-i", "2", "-filename", "$FILENAME" },
-          },
-          -- https://github.com/bash-lsp/bash-language-server/issues/933
-          -- TODO: Disable the next feature once this has been merged.
-          nls.builtins.code_actions.shellcheck,
-          nls.builtins.diagnostics.shellcheck.with { diagnostics_format = "" },
-        },
         on_attach = utils_lsp.apply_user_lsp_mappings,
       }
-    end,
+    end
   },
 
   --  neodev.nvim [lsp for nvim lua api]
