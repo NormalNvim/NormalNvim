@@ -48,7 +48,7 @@ if not luv.fs_stat(lazypath) then
       vim.cmd.bw()
       vim.opt.cmdheight = oldcmdheight
       vim.tbl_map(function(module) pcall(require, module) end, { "nvim-treesitter", "mason" })
-      require("base.utils").notify "Mason is installing packages if configured, check status with `:Mason`"
+      -- Note: This event will also trigger a Mason update in distroupdate.nvim
     end,
   })
 end

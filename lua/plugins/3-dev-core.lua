@@ -62,7 +62,6 @@ return {
     opts = {
       auto_install = false, -- Currently bugged. Use [:TSInstall all] and [:TSUpdate all]
       autotag = { enable = true },
-      context_commentstring = { enable = true, enable_autocmd = false },
       highlight = {
         enable = true,
         disable = function(_, bufnr) return utils.is_big_file(bufnr) end,
@@ -134,7 +133,9 @@ return {
     },
     config = function(_, opts)
       require("nvim-treesitter.configs").setup(opts)
-      vim.cmd ""
+      require('ts_context_commentstring').setup(
+        { enable = true, enable_autocmd = false })      -- Enable commentstring
+      vim.g.skip_ts_context_commentstring_module = true -- Increase performance
     end,
   },
 
@@ -264,7 +265,7 @@ return {
   --  https://github.com/b0o/SchemaStore.nvim
   "b0o/SchemaStore.nvim",
 
-  --  null-ls [lsp code formatting]
+  --  none-ls [lsp code formatting]
   --  https://github.com/nvimtools/none-ls.nvim
   {
     "nvimtools/none-ls.nvim",
@@ -290,7 +291,7 @@ return {
           nls.builtins.code_actions.shellcheck,
           nls.builtins.diagnostics.shellcheck.with { diagnostics_format = "" },
         },
-        on_attach = utils_lsp.on_attach,
+        on_attach = utils_lsp.apply_user_lsp_mappings,
       }
     end,
   },
