@@ -288,10 +288,6 @@ return {
             command = "shfmt",
             args = { "-i","2","-filename", "$FILENAME" },
           },
-          -- TODO: Disable the next feature once this has been merged.
-          -- https://github.com/bash-lsp/bash-language-server/issues/933
-          nls.builtins.code_actions.shellcheck,
-          nls.builtins.diagnostics.shellcheck.with { diagnostics_format = "" },
         },
         on_attach = utils_lsp.apply_user_lsp_mappings,
       }
