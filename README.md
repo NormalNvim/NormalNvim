@@ -128,6 +128,7 @@ Special thanks to LeoRed04 for designing the logo.
 Did you know NormalNvim was the first Neovim distro to ship a compiler that [support 22+ programming languages out of the box](https://www.youtube.com/watch?v=O42uCIBaCIQ)?
 
 ## Roadmap
+* News: `NormalNvim v3.7.2` is gonna migrate to the latest version of none-ls. This doesn't bring any new feature, it is just a requirement now that [none-ls is deprecating all builts in that haven't been maintained in the last year](https://github.com/nvimtools/none-ls.nvim/discussions/81). → TODOS: Testing the builtins we use and moving them to external builtins, which are now none-ls dependencies.
 * We are currently in a stable state.
 * Once nvim 0.10 is officially released, replace `get_active_clients` by `get_clients`.
 * During 2024, add a toolbar for [Compiler.nvim](https://github.com/Zeioth/compiler.nvim) so users have a button to compile and manage their build automation utilities and current build_type in a friendly way.
