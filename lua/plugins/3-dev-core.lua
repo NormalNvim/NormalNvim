@@ -272,7 +272,9 @@ return {
     dependencies = {
       {
         "jay-babu/mason-null-ls.nvim",
-        cmd = { "NullLsInstall", "NullLsUninstall" },
+        cmd = {
+          "NullLsInstall", "NullLsUninstall", "NoneLsInstall", "NoneLsUninstall"
+        },
         opts = { handlers = {} },
       },
     },
