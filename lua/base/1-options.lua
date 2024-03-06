@@ -28,7 +28,7 @@ vim.opt.infercase = true -- Infer cases in keyword completion.
 
 vim.opt.laststatus = 3 -- Globalstatus.
 vim.opt.linebreak = true -- Wrap lines at'breakat'.
-vim.opt.number = true                                       -- Show numberline.
+vim.opt.number = true -- Show numberline.
 vim.opt.preserveindent = true -- Preserve indent structure as much as possible.
 vim.opt.pumheight = 10 -- Height of the pop up menu.
 vim.opt.relativenumber = false -- Show relative numberline.
