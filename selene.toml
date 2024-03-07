@@ -1,4 +1,4 @@
-std="selene-schema"
+std=".selene-schema"
 
 [lints]
 global_usage = "allow"

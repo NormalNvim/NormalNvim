@@ -543,7 +543,7 @@ return {
 
   --  nvim-neoclip [nvim clipboard]
   --  https://github.com/AckslD/nvim-neoclip.lua
-  --  By default registers are deleted between sessions.
+  --  Read their docs to enable cross-session history.
   {
     "AckslD/nvim-neoclip.lua",
     requires = 'nvim-telescope/telescope.nvim',
