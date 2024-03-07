@@ -285,16 +285,12 @@ return {
     "nvimtools/none-ls.nvim",
     dependencies = {
       "jay-babu/mason-null-ls.nvim",
-      "gbprod/none-ls-shellcheck.nvim"
     },
     event = "User BaseFile",
     opts = function()
-      local nls = require("null-ls")
-      local shellcheck_code_actions = require("none-ls-shellcheck.code_actions")
-
       -- You can customize your formatters here.
-      nls.register(shellcheck_code_actions)  -- shell code actions.
-      nls.builtins.formatting.shfmt.with({   -- shell formatter settings.
+      local nls = require("null-ls")
+      nls.builtins.formatting.shfmt.with({ -- shell formatter settings.
         command = "shfmt",
         args = { "-i", "2", "-filename", "$FILENAME" },
       })

@@ -70,7 +70,7 @@ return {
   { "nvim-tree/nvim-web-devicons", commit = "4adea17610d140a99c313e3f79a9dc01825d59ae" },
   { "nvim-treesitter/nvim-treesitter", commit = "cc6b108ea1251bd361f091b7d5a0dd41c04f8611" },
   { "nvim-treesitter/nvim-treesitter-textobjects", commit = "b7a0bfa3e93697ca5b61b15df633404bf8f45883" },
-  { "nvimtools/none-ls.nvim", commit = "d991c8952defd654ed78cce0abce63a5c06d0bc6" },
+  { "nvimtools/none-ls.nvim", commit = "ff3819c52ca04232fb70fbd6c1639de9abcbe122" },
   { "olimorris/neotest-phpunit", commit = "2f01e83eedbcf6f0257934b32b5d4fda404a9f11" },
   { "onsails/lspkind.nvim", commit = "1735dd5a5054c1fb7feaf8e8658dbab925f4f0cf" },
   { "petertriho/nvim-scrollbar", commit = "35f99d559041c7c0eff3a41f9093581ceea534e8" },
