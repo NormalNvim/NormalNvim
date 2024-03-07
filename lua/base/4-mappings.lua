@@ -1167,11 +1167,11 @@ if is_available "neotest" then
   }
   maps.n["<leader>Tt"] = {
     function() require("neotest").summary.toggle() end,
-    desc = "neotest summary",
+    desc = "Neotest summary",
   }
   maps.n["<leader>TT"] = {
     function() require("neotest").output_panel.toggle() end,
-    desc = "output panel",
+    desc = "Output panel",
   }
 end
 
