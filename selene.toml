@@ -1,7 +1,7 @@
 std="selene-schema"
 
 [lints]
-mixed_table = "allow"
-shadowing = "warn"
 global_usage = "allow"
+mixed_table = "allow"
 multiple_statements = "allow"
+shadowing = "warn"
