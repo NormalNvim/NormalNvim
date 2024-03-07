@@ -193,7 +193,7 @@ return {
             " ",
             " ",
             "Loaded " .. stats.count .. " plugins  in " .. ms .. "ms",
-            "..............................",
+            "...............................",
           }
           opts.section.footer.opts.hl = "DashboardFooter"
           vim.cmd "highlight DashboardFooter guifg=#D29B68"
