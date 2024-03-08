@@ -294,9 +294,7 @@ return {
       })
 
       -- Attach the user lsp mappings to every none-ls client.
-      return {
-        on_attach = utils_lsp.apply_user_lsp_mappings,
-      }
+      return { on_attach = utils_lsp.apply_user_lsp_mappings }
     end
   },
 
@@ -304,10 +302,8 @@ return {
   --  https://github.com/folke/neodev.nvim
   {
     "folke/neodev.nvim",
-    opts = {},
-    config = function(_, opts)
-      require("neodev").setup(opts)
-    end,
+    ft = { "lua" },
+    opts = {}
   },
 
   --  garbage-day.nvim [lsp garbage collector]
