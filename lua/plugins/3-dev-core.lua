@@ -283,14 +283,12 @@ return {
   --  https://github.com/nvimtools/none-ls.nvim
   {
     "nvimtools/none-ls.nvim",
-    dependencies = {
-      "jay-babu/mason-null-ls.nvim",
-    },
+    dependencies = { "jay-babu/mason-null-ls.nvim" },
     event = "User BaseFile",
     opts = function()
       -- You can customize your formatters here.
       local nls = require("null-ls")
-      nls.builtins.formatting.shfmt.with({ -- shell formatter settings.
+      nls.builtins.formatting.shfmt.with({
         command = "shfmt",
         args = { "-i", "2", "-filename", "$FILENAME" },
       })
