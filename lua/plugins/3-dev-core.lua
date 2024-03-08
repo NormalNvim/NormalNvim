@@ -294,9 +294,7 @@ return {
       })
 
       -- Attach the user lsp mappings to every none-ls client.
-      return {
-        on_attach = utils_lsp.apply_user_lsp_mappings,
-      }
+      return { on_attach = utils_lsp.apply_user_lsp_mappings }
     end
   },
 
