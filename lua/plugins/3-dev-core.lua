@@ -283,9 +283,7 @@ return {
   --  https://github.com/nvimtools/none-ls.nvim
   {
     "nvimtools/none-ls.nvim",
-    dependencies = {
-      "jay-babu/mason-null-ls.nvim",
-    },
+    dependencies = { "jay-babu/mason-null-ls.nvim" },
     event = "User BaseFile",
     opts = function()
       -- You can customize your formatters here.
