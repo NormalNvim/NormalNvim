@@ -302,10 +302,8 @@ return {
   --  https://github.com/folke/neodev.nvim
   {
     "folke/neodev.nvim",
-    opts = {},
-    config = function(_, opts)
-      require("neodev").setup(opts)
-    end,
+    ft = { "lua" },
+    opts = {}
   },
 
   --  garbage-day.nvim [lsp garbage collector]
