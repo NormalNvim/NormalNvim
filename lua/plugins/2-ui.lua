@@ -544,7 +544,10 @@ return {
     enabled = vim.g.icons_enabled,
     opts = {
       override = {
-        default_icon = { icon = require("base.utils").get_icon "DefaultFile" },
+        default_icon = {
+          icon = require("base.utils").get_icon("DefaultFile"),
+          name = "default"
+        },
         deb = { icon = "", name = "Deb" },
         lock = { icon = "󰌾", name = "Lock" },
         mp3 = { icon = "󰎆", name = "Mp3" },
@@ -559,6 +562,10 @@ return {
         zip = { icon = "", name = "Zip" },
       },
     },
+    config = function(_, opts)
+      require("nvim-web-devicons").setup(opts)
+      pcall(vim.api.nvim_del_user_command, "NvimWebDeviconsHiTest")
+    end
   },
 
   --  LSP icons [icons]
