@@ -559,6 +559,10 @@ return {
         zip = { icon = "", name = "Zip" },
       },
     },
+    config = function(_, opts)
+      require("nvim-web-devicons").setup(opts)
+      pcall(vim.api.nvim_del_user_command, "NvimWebDeviconsHiTest")
+    end
   },
 
   --  LSP icons [icons]
