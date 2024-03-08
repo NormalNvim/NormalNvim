@@ -288,7 +288,7 @@ return {
     opts = function()
       -- You can customize your formatters here.
       local nls = require("null-ls")
-      nls.builtins.formatting.shfmt.with({ -- shell formatter settings.
+      nls.builtins.formatting.shfmt.with({
         command = "shfmt",
         args = { "-i", "2", "-filename", "$FILENAME" },
       })
