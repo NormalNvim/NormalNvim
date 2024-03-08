@@ -30,7 +30,7 @@ If you are new here don't forget to [check the wiki](https://github.com/NormalNv
 ## How to install
 
 ### Installer (Linux/MacOS/WSL)
-You can preview it [here](https://raw.githubusercontent.com/NormalNvim/installer)
+You can preview it [here](https://github.com/NormalNvim/installer)
 ```sh
 wget -q https://raw.githubusercontent.com/NormalNvim/installer/main/installer.sh && chmod +x installer.sh && ./installer.sh
 ```
