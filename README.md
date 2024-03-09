@@ -129,7 +129,6 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 
 ## Roadmap
 * We are currently in a stable state.
-* Keep an eye on [this](https://github.com/nvim-tree/nvim-web-devicons/issues/412) issue of web-devicons.
 * Once selene add [this](https://github.com/Kampfkarren/selene/issues/224) and [this](https://github.com/Kampfkarren/selene/issues/524) and [this](https://github.com/Kampfkarren/selene/issues/469), let's add the new rules.
 * Once nvim 0.10 is officially released, replace `get_active_clients` by `get_clients`.
 * During 2024, add a toolbar for [Compiler.nvim](https://github.com/Zeioth/compiler.nvim) so users have a button to compile and manage their build automation utilities and current build_type in a friendly way.
