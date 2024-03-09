@@ -1,3 +1,4 @@
+call_parentheses = "Always"
 collapse_simple_statement = "Always"
 column_width = 79
 indent_type = "Spaces"
