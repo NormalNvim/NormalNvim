@@ -1,8 +1,8 @@
-call_parentheses = "None"
+call_parentheses = "Always"
 collapse_simple_statement = "Always"
 column_width = 79
 indent_type = "Spaces"
 indent_width = 2
 line_endings = "Unix"
-quote_style = "AutoPreferDouble"
 remove_trailing_separators = false
+quote_style = "AutoPreferDouble"
