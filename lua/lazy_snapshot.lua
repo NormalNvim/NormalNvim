@@ -13,7 +13,7 @@ return {
   { "Zeioth/distroupdate.nvim", version = "^0.4" },
   { "Zeioth/dooku.nvim", version = "^2" },
   { "Zeioth/markmap.nvim", version = "^3" },
-  { "Zeioth/mason-extra-cmds", commit = "a4e9228be2c87226fcad81249f8774a1233c894d" },
+  { "Zeioth/mason-extra-cmds", commit = "1188781b69a09814081f1524d3b46b437df348d8" },
   { "Zeioth/project.nvim", commit = "3d30a4ddaf0f0c30892fb2f36fa4669499d7e6db" },
   { "Zeioth/tokyonight.nvim", version = "^2" },
   { "akinsho/toggleterm.nvim", version = "^2" },

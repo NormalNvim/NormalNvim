@@ -653,19 +653,14 @@ return {
   {
     "Zeioth/distroupdate.nvim",
     dependencies = {
-      "nvim-lua/plenary.nvim",
-      "Zeioth/mason-extra-cmds"
+      "nvim-lua/plenary.nvim"
     },
     cmd = {
-      "NvimChangelog",
-      "NvimDistroUpdate",
-      "NvimFreezePluginVersions",
-      "NvimRollbackCreate",
-      "NvimRollbackRestore",
-      "NvimUpdatePlugins", -- if mason-extra-cmds is present, updates mason too.
-      "NvimVersions",
-      "MasonUpdate",
-      "NvimVersions"
+      "DistroFreezePluginVersions",
+      "DistroReadChangelog",
+      "DistroReadVersion",
+      "DistroUpdate",
+      "DistroUpdateRevert"
     },
     opts = function()
       local utils = require "base.utils"
