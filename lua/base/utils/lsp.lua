@@ -8,9 +8,6 @@
 --  can be tweaked on the file `../1-options.lua`.
 --  Take this into consideration to minimize the risk of breaking stuff.
 
---    Helpers:
---      -> M.has_capability     → Returns true if the client has the capability.
-
 --    Functions:
 --      -> M.apply_default_lsp_settings  → Apply our default lsp settings.
 --      -> M.apply_user_lsp_mappings     → Apply our lsp keymappings.
@@ -20,19 +17,6 @@
 local M = {}
 local utils = require "base.utils"
 local stored_handlers = {}
-
-
---- Helper function to check if any active LSP clients
---- given a filter provide a specific capability.
----@param capability string The server capability to check for (example: "documentFormattingProvider").
----@param filter vim.lsp.get_active_clients.filter|nil A valid get_active_clients filter (see function docs).
----@return boolean # `true` if any of the clients provide the capability.
-function M.has_capability(capability, filter)
-  for _, client in ipairs(vim.lsp.get_active_clients(filter)) do
-    if client.supports_method(capability) then return true end
-  end
-  return false
-end
 
 --- Apply default settings for diagnostics, formatting, and lsp capabilities.
 --- It only need to be executed once, normally on mason-lspconfig.
@@ -125,11 +109,11 @@ M.apply_default_lsp_settings = function()
 end
 
 --- This function has the sole purpose of passing the lsp keymappings to lsp.
---- We have this function, bucause we use it on none-ls.
+--- We have this function, because we use it on none-ls.
 ---@param client string The client where the lsp mappings will load.
 ---@param bufnr string The bufnr where the lsp mappings will load.
 function M.apply_user_lsp_mappings(client, bufnr)
-  local lsp_mappings = require("base.4-mappings").lsp_mappings(client, bufnr)
+  local lsp_mappings = require("base.mappings").lsp_mappings(client, bufnr)
   if not vim.tbl_isempty(lsp_mappings.v) then
     lsp_mappings.v["<leader>l"] = { desc = utils.get_icon("ActiveLSP", 1, true) .. "LSP" }
   end
