@@ -1,41 +1,42 @@
+---
 base: lua51+lua52
 name: .selene-schema
 globals:
   after_each:
     args:
-    - type: function
+      - type: function
   assert.equals:
     args:
-    - type: any
-    - type: any
-    - required: false
-      type: any
+      - type: any
+      - type: any
+      - required: false
+        type: any
   assert.is_not:
     any: true
   assert.same:
     args:
-    - type: any
-    - type: any
+      - type: any
+      - type: any
   assert.spy:
     args:
-    - type: any
+      - type: any
   assert.stub:
     args:
-    - type: any
+      - type: any
   assert.truthy:
     args:
-    - type: any
+      - type: any
   before_each:
     args:
-    - type: function
+      - type: function
   describe:
     args:
-    - type: string
-    - type: function
+      - type: string
+      - type: function
   it:
     args:
-    - type: string
-    - type: function
+      - type: string
+      - type: function
   jit:
     any: true
   vim:
