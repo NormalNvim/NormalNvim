@@ -652,14 +652,19 @@ return {
   -- https://github.com/Zeioth/distroupdate.nvim
   {
     "Zeioth/distroupdate.nvim",
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      "nvim-lua/plenary.nvim",
+      "Zeioth/mason-extra-cmds"
+    },
     cmd = {
       "NvimChangelog",
       "NvimDistroUpdate",
       "NvimFreezePluginVersions",
       "NvimRollbackCreate",
       "NvimRollbackRestore",
-      "NvimUpdatePlugins",
+      "NvimUpdatePlugins", -- if mason-extra-cmds is present, updates mason too.
+      "NvimVersions",
+      "MasonUpdate",
       "NvimVersions"
     },
     opts = function()
