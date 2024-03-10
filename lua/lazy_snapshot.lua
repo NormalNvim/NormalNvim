@@ -94,7 +94,7 @@ return {
   { "tpope/vim-rhubarb", commit = "ee69335de176d9325267b0fd2597a22901d927b1" },
   { "tzachar/highlight-undo.nvim", commit = "50a6884a8476be04ecce8f1c4ed692c5000ef0a1" },
   { "williamboman/mason-lspconfig.nvim", version = "^2" },
-  { "williamboman/mason.nvim", version = "^1" },
+  { "williamboman/mason.nvim", version = "^2" },
   { "windwp/nvim-autopairs", commit = "c6139ca0d5ad7af129ea6c89cb4c56093f2c034a" },
   { "windwp/nvim-ts-autotag", commit = "531f48334c422222aebc888fd36e7d109cb354cd" },
   { "zeioth/garbage-day.nvim", version = "^2" },

@@ -10,9 +10,9 @@
 
 --    Functions:
 --      -> M.apply_default_lsp_settings  → Apply our default lsp settings.
---      -> M.apply_user_lsp_mappings     → Apply our lsp keymappings.
+--      -> M.apply_user_lsp_mappings     → Apply the user lsp keymappings.
 --      -> M.apply_user_lsp_settings     → Apply the user lsp settings.
---      -> M.setup                       → Gives the user settings to lspconfig.
+--      -> M.setup                       → It passes the user lsp settings to lspconfig.
 
 local M = {}
 local utils = require "base.utils"
@@ -89,7 +89,6 @@ M.apply_default_lsp_settings = function()
     default_diagnostics,
   }
   vim.diagnostic.config(M.diagnostics[vim.g.diagnostics_mode])
-
 
   -- Apply formatting settings
   M.formatting = { format_on_save = { enabled = true }, disabled = {} }
