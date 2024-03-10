@@ -160,17 +160,17 @@ function M.apply_user_lsp_settings(server_name)
   local opts = utils.extend_tbl(server, { capabilities = M.capabilities, flags = M.flags })
 
   -- Define user server rules.
-  if server_name == "jsonls" then -- by default add json schemas
+  if server_name == "jsonls" then -- Add schemastore schemas
     local schemastore_avail, schemastore = pcall(require, "schemastore")
     if schemastore_avail then
       opts.settings = { json = { schemas = schemastore.json.schemas(), validate = { enable = true } } }
     end
   end
-  if server_name == "yamlls" then -- by default add yaml schemas
+  if server_name == "yamlls" then -- Add schemastore schemas
     local schemastore_avail, schemastore = pcall(require, "schemastore")
     if schemastore_avail then opts.settings = { yaml = { schemas = schemastore.yaml.schemas() } } end
   end
-  if server_name == "lua_ls" then -- by default initialize neodev and disable third party checking
+  if server_name == "lua_ls" then -- Disable third party checking
     pcall(require, "neodev")
     opts.settings = { Lua = { workspace = { checkThirdParty = false } } }
   end
