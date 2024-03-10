@@ -10,13 +10,13 @@
 --       -> 2. Save/restore window layout when possible.
 --       -> 3. Launch alpha greeter on startup.
 --       -> 4. Update neotree when closing the git client.
+--       -> 5. Create parent directories when saving a file.
 --
 --       ## COOL HACKS
---       -> 5. Effect: URL underline.
---       -> 6. Customize right click contextual menu.
---       -> 7. Unlist quickfix buffers if the filetype changes.
---       -> 8. Close all notifications on BufWritePre.
---       -> 9. Create parent directories when saving a file.
+--       -> 6. Effect: URL underline.
+--       -> 7. Customize right click contextual menu.
+--       -> 8. Unlist quickfix buffers if the filetype changes.
+--       -> 9. Close all notifications on BufWritePre.
 --
 --       ## COMMANDS
 --       -> 10. Neotest commands.
@@ -169,15 +169,29 @@ if is_available "neo-tree.nvim" then
   })
 end
 
+-- 5. Create parent directories when saving a file.
+autocmd("BufWritePre", {
+  desc = "Automatically create parent directories if they don't exist when saving a file",
+  callback = function(args)
+    local buf_is_valid_and_listed = vim.api.nvim_buf_is_valid(args.buf)
+      and vim.bo[args.buf].buflisted
+
+    if buf_is_valid_and_listed then
+      vim.fn.mkdir(vim.fn.fnamemodify(
+        vim.loop.fs_realpath(args.match) or args.match, ":p:h"), "p")
+    end
+  end,
+})
+
 -- ## COOL HACKS ------------------------------------------------------------
--- 5. Effect: URL underline.
+-- 6. Effect: URL underline.
 vim.api.nvim_set_hl(0, 'HighlightURL', { underline = true })
 autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   desc = "URL Highlighting",
   callback = function() utils.set_url_effect() end,
 })
 
--- 6. Customize right click contextual menu.
+-- 7. Customize right click contextual menu.
 autocmd("VimEnter", {
   desc = "Disable right contextual menu warning message",
   callback = function()
@@ -193,32 +207,18 @@ autocmd("VimEnter", {
   end,
 })
 
--- 7. Unlist quickfix buffers if the filetype changes.
+-- 8. Unlist quickfix buffers if the filetype changes.
 autocmd("FileType", {
   desc = "Unlist quickfist buffers",
   pattern = "qf",
   callback = function() vim.opt_local.buflisted = false end,
 })
 
--- 8. Close all notifications on BufWritePre.
+-- 9. Close all notifications on BufWritePre.
 autocmd("BufWritePre", {
   desc = "Close all notifications on BufWritePre",
   callback = function()
     require("notify").dismiss({pending = true, silent = true})
-  end,
-})
-
--- 9. Create parent directories when saving a file.
-autocmd("BufWritePre", {
-  desc = "Automatically create parent directories if they don't exist when saving a file",
-  callback = function(args)
-    local buf_is_valid_and_listed = vim.api.nvim_buf_is_valid(args.buf)
-      and vim.bo[args.buf].buflisted
-
-    if buf_is_valid_and_listed then
-      vim.fn.mkdir(vim.fn.fnamemodify(
-        vim.loop.fs_realpath(args.match) or args.match, ":p:h"), "p")
-    end
   end,
 })
 
