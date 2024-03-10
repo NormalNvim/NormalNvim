@@ -213,7 +213,7 @@ return {
   --  https://github.com/zeioth/mason-extra-cmds
   {
     "williamboman/mason.nvim",
-    dependencies = { "Zeioth/mason-extra-cmds", opts = {}},
+    dependencies = { "Zeioth/mason-extra-cmds", opts = {} },
     cmd = {
       "Mason",
       "MasonInstall",
