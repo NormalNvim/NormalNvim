@@ -258,33 +258,33 @@ maps.n["<C-a>"] = { -- to move to the previous position press ctrl + oo
 -- lazy
 maps.n["<leader>p"] = icons.p
 maps.n["<leader>pi"] =
-  { function() require("lazy").install() end, desc = "Plugins Install" }
+  { function() require("lazy").install() end, desc = "Plugins install" }
 maps.n["<leader>ps"] =
-  { function() require("lazy").home() end, desc = "Plugins Status" }
+  { function() require("lazy").home() end, desc = "Plugins status" }
 maps.n["<leader>pS"] =
-  { function() require("lazy").sync() end, desc = "Plugins Sync" }
+  { function() require("lazy").sync() end, desc = "Plugins sync" }
 maps.n["<leader>pu"] =
-  { function() require("lazy").check() end, desc = "Plugins Check Updates" }
+  { function() require("lazy").check() end, desc = "Plugins check updates" }
 maps.n["<leader>pU"] =
-  { function() require("lazy").update() end, desc = "Plugins Update" }
+  { function() require("lazy").update() end, desc = "Plugins update" }
 
 -- mason
 if is_available "mason.nvim" then
-  maps.n["<leader>pm"] = { "<cmd>Mason<cr>", desc = "Mason Install" }
-  maps.n["<leader>pM"] = { "<cmd>MasonUpdateAll<cr>", desc = "Mason Update" }
+  maps.n["<leader>pm"] = { "<cmd>Mason<cr>", desc = "Mason open" }
+  maps.n["<leader>pM"] = { "<cmd>MasonUpdateAll<cr>", desc = "Mason update" }
 end
 
 -- treesitter
 if is_available "nvim-treesitter" then
-  maps.n["<leader>pt"] = { "<cmd>TSUpdate<cr>", desc = "Treesitter Update" }
+  maps.n["<leader>pt"] = { "<cmd>TSUpdate<cr>", desc = "Treesitter update" }
 end
 
 -- nvim updater
 maps.n["<leader>pa"] =
-{ "<cmd>NvimUpdatePlugins<cr>", desc = "Update Plugins and Mason" }
+{ "<cmd>NvimUpdatePlugins<cr>", desc = "Update all packages" }
 maps.n["<leader>pD"] = { "<cmd>NvimDistroUpdate<cr>", desc = "Distro update" }
 maps.n["<leader>pv"] = { "<cmd>NvimVersion<cr>", desc = "Distro version" }
-maps.n["<leader>pc"] = { "<cmd>NvimChangelog<cr>", desc = "Distro Changelog" }
+maps.n["<leader>pc"] = { "<cmd>NvimChangelog<cr>", desc = "Distro changelog" }
 
 -- buffers/tabs [buffers ]--------------------------------------------------
 maps.n["<leader>c"] = { -- Close window and buffer at the same time.

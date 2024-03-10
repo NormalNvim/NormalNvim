@@ -210,8 +210,10 @@ return {
 
   --  mason [lsp package manager]
   --  https://github.com/williamboman/mason.nvim
+  --  https://github.com/zeioth/mason-extra-cmds
   {
     "williamboman/mason.nvim",
+    dependencies = { "Zeioth/mason-extra-cmds", opts = {} },
     cmd = {
       "Mason",
       "MasonInstall",
@@ -219,7 +221,7 @@ return {
       "MasonUninstallAll",
       "MasonLog",
       "MasonUpdate",
-      "MasonUpdateAll",
+      "MasonUpdateAll", -- this cmd is provided by mason-extra-cmds
     },
     opts = {
       ui = {
@@ -229,36 +231,7 @@ return {
           package_pending = "⟳",
         },
       },
-    },
-    build = ":MasonUpdate",
-    config = function(_, opts)
-      local updater = require("distroupdate.utils.mason")
-      require("mason").setup(opts)
-      local cmd = vim.api.nvim_create_user_command
-      cmd("MasonUpdate", function(options) updater.update(options.fargs) end, {
-        nargs = "*",
-        desc = "Update Mason Package",
-        complete = function(arg_lead)
-          local _ = require "mason-core.functional"
-          return _.sort_by(
-            _.identity,
-            _.filter(_.starts_with(arg_lead), require("mason-registry").get_installed_package_names())
-          )
-        end,
-      })
-      cmd(
-        "MasonUpdateAll", function() updater.update_all() end,
-        { desc = "Update Mason Packages" }
-      )
-
-      for _, plugin in ipairs {
-        "mason-lspconfig",
-        "mason-null-ls",
-        "mason-nvim-dap",
-      } do
-        pcall(require, plugin)
-      end
-    end,
+    }
   },
 
   --  Schema Store [lsp schema manager]
