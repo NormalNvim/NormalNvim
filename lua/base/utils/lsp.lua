@@ -10,7 +10,7 @@
 
 --    Functions:
 --      -> M.apply_default_lsp_settings  → Apply our default lsp settings.
---      -> M.apply_user_lsp_mappings     → Apply our lsp keymappings.
+--      -> M.apply_user_lsp_mappings     → Apply the user lsp keymappings.
 --      -> M.apply_user_lsp_settings     → Apply the user lsp settings.
 --      -> M.setup                       → It passes the user lsp settings to lspconfig.
 
