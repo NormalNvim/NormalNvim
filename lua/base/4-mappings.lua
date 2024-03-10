@@ -1298,9 +1298,19 @@ end
 -- A function we call from the script to start lsp.
 ---@return table lsp_mappings #
 function M.lsp_mappings(client, bufnr)
-  local lsp_mappings = require("base.utils").get_mappings_template()
-  local has_capability = require("base.utils.lsp").has_capability
+  --- Helper function to check if any active LSP clients
+  --- given a filter provide a specific capability.
+  ---@param capability string The server capability to check for (example: "documentFormattingProvider").
+  ---@param filter vim.lsp.get_active_clients.filter|nil A valid get_active_clients filter (see function docs).
+  ---@return boolean # `true` if any of the clients provide the capability.
+  local function has_capability(capability, filter)
+    for _, lsp_client in ipairs(vim.lsp.get_active_clients(filter)) do
+      if lsp_client.supports_method(capability) then return true end
+    end
+    return false
+  end
 
+  local lsp_mappings = require("base.utils").get_mappings_template()
   lsp_mappings.n["<leader>ld"] = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" }
   lsp_mappings.n["[d"] = { function() vim.diagnostic.goto_prev() end, desc = "Previous diagnostic" }
   lsp_mappings.n["]d"] = { function() vim.diagnostic.goto_next() end, desc = "Next diagnostic" }
