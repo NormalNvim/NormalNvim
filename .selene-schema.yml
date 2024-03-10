@@ -40,3 +40,5 @@ globals:
     any: true
   vim:
     any: true
+  base:
+    any: true
