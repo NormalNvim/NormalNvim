@@ -122,20 +122,6 @@ M.apply_default_lsp_settings = function()
     return not (vim.tbl_contains(disabled, client.name) or (type(filter) == "function" and not filter(client)))
   end
 
-  --- Apply the default LSP capabilities
-  M.capabilities = vim.lsp.protocol.make_client_capabilities()
-  M.capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown", "plaintext" }
-  M.capabilities.textDocument.completion.completionItem.snippetSupport = true
-  M.capabilities.textDocument.completion.completionItem.preselectSupport = true
-  M.capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
-  M.capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
-  M.capabilities.textDocument.completion.completionItem.deprecatedSupport = true
-  M.capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
-  M.capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
-  M.capabilities.textDocument.completion.completionItem.resolveSupport =
-  { properties = { "documentation", "detail", "additionalTextEdits" } }
-  M.capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
-  M.flags = {}
 end
 
 --- This function has the sole purpose of passing the lsp keymappings to lsp.
@@ -157,8 +143,23 @@ end
 function M.apply_user_lsp_settings(server_name)
   local server = require("lspconfig")[server_name]
 
-  -- Define user server rules.
+  -- Define user server capabilities.
+  M.capabilities = vim.lsp.protocol.make_client_capabilities()
+  M.capabilities.textDocument.completion.completionItem.documentationFormat = { "markdown", "plaintext" }
+  M.capabilities.textDocument.completion.completionItem.snippetSupport = true
+  M.capabilities.textDocument.completion.completionItem.preselectSupport = true
+  M.capabilities.textDocument.completion.completionItem.insertReplaceSupport = true
+  M.capabilities.textDocument.completion.completionItem.labelDetailsSupport = true
+  M.capabilities.textDocument.completion.completionItem.deprecatedSupport = true
+  M.capabilities.textDocument.completion.completionItem.commitCharactersSupport = true
+  M.capabilities.textDocument.completion.completionItem.tagSupport = { valueSet = { 1 } }
+  M.capabilities.textDocument.completion.completionItem.resolveSupport =
+  { properties = { "documentation", "detail", "additionalTextEdits" } }
+  M.capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
+  M.flags = {}
   local opts = utils.extend_tbl(server, { capabilities = M.capabilities, flags = M.flags })
+
+  -- Define user server rules.
   if server_name == "jsonls" then -- by default add json schemas
     local schemastore_avail, schemastore = pcall(require, "schemastore")
     if schemastore_avail then
