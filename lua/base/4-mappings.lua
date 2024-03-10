@@ -257,16 +257,10 @@ maps.n["<C-a>"] = { -- to move to the previous position press ctrl + oo
 -- packages -----------------------------------------------------------------
 -- lazy
 maps.n["<leader>p"] = icons.p
-maps.n["<leader>pi"] =
-  { function() require("lazy").install() end, desc = "Plugins install" }
-maps.n["<leader>ps"] =
-  { function() require("lazy").home() end, desc = "Plugins status" }
-maps.n["<leader>pS"] =
-  { function() require("lazy").sync() end, desc = "Plugins sync" }
 maps.n["<leader>pu"] =
-  { function() require("lazy").check() end, desc = "Plugins check updates" }
+  { function() require("lazy").check() end, desc = "Lazy open" }
 maps.n["<leader>pU"] =
-  { function() require("lazy").update() end, desc = "Plugins update" }
+  { function() require("lazy").update() end, desc = "Lazy update" }
 
 -- mason
 if is_available "mason.nvim" then
@@ -276,15 +270,14 @@ end
 
 -- treesitter
 if is_available "nvim-treesitter" then
-  maps.n["<leader>pt"] = { "<cmd>TSUpdate<cr>", desc = "Treesitter update" }
+  maps.n["<leader>pT"] = { "<cmd>TSUpdate<cr>", desc = "Treesitter update" }
+  maps.n["<leader>pt"] = { "<cmd>TSInstallInfo<cr>", desc = "Treesitter open" }
 end
 
 -- nvim updater
-maps.n["<leader>pa"] =
-{ "<cmd>NvimUpdatePlugins<cr>", desc = "Update all packages" }
-maps.n["<leader>pD"] = { "<cmd>NvimDistroUpdate<cr>", desc = "Distro update" }
-maps.n["<leader>pv"] = { "<cmd>NvimVersion<cr>", desc = "Distro version" }
-maps.n["<leader>pc"] = { "<cmd>NvimChangelog<cr>", desc = "Distro changelog" }
+maps.n["<leader>pD"] = { "<cmd>DistroUpdate<cr>", desc = "Distro update" }
+maps.n["<leader>pv"] = { "<cmd>DistroReadVersion<cr>", desc = "Distro version" }
+maps.n["<leader>pc"] = { "<cmd>DistroReadChangelog<cr>", desc = "Distro changelog" }
 
 -- buffers/tabs [buffers ]--------------------------------------------------
 maps.n["<leader>c"] = { -- Close window and buffer at the same time.
