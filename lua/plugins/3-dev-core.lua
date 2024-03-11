@@ -328,14 +328,13 @@ return {
       end
 
       return {
-        enabled = function()
-          -- add interoperability with cmp-dap
-          local is_filetype_dap = utils.is_available("cmp-dap")
+        enabled = function() -- disable in certain instanced for dap
+          local is_ignored_dap_filetype = utils.is_available("cmp-dap")
               and vim.tbl_contains({ "dap-repl", "dapui_watches", "dapui_hover" },
                 vim.bo.filetype)
           local is_buftype_prompt = vim.bo.buftype == "prompt"
 
-          if is_filetype_dap and not is_buftype_prompt then
+          if not is_ignored_dap_filetype or not is_buftype_prompt then
             return vim.g.cmp_enabled
           else
             return false
