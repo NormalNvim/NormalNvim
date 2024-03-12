@@ -185,7 +185,7 @@ return {
         "Interface",
         -- "Module",
         "Method",
-        "Struct",
+        -- "Struct",
       },
       open_automatic = false, -- Open if the buffer is compatible
       autojump = true,
