@@ -178,13 +178,22 @@ return {
     },
     opts = {
       open_automatic = false, -- Open if the buffer is compatible
+      filter_kind = { -- Symbols that will appear on the tree
+        "Class",
+        "Constructor",
+        "Enum",
+        "Function",
+        "Interface",
+        "Module",
+        "Method",
+        "Struct",
+      },
       attach_mode = "global",
       backends = { "lsp", "treesitter", "markdown", "man" },
       disable_max_lines = vim.g.big_file.lines,
       disable_max_size = vim.g.big_file.size,
       layout = { min_width = 28 },
       show_guides = true,
-      filter_kind = false,
       guides = {
         mid_item = "├ ",
         last_item = "└ ",
