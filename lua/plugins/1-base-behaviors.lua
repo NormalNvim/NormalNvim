@@ -15,7 +15,7 @@
 --       -> neotree file browser   [neotree]
 --       -> nvim-ufo               [folding mod]
 --       -> nvim-neoclip           [nvim clipboard]
---       -> zen.nvim               [distraction free mode]
+--       -> zen-mode.nvim          [distraction free mode]
 --       -> suda.vim               [write as sudo]
 --       -> vim-matchup            [Improved % motion]
 --       -> hop.nvim               [go to word visually]
@@ -551,7 +551,7 @@ return {
     opts = {}
   },
 
-  --  zen-mode.nivm [distraction free mode]
+  --  zen-mode.nvim [distraction free mode]
   --  https://github.com/folke/zen-mode.nvim
   {
     "folke/zen-mode.nvim",
