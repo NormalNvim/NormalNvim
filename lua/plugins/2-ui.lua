@@ -294,16 +294,16 @@ return {
   {
     "rebelot/heirline.nvim",
     dependencies = { "zeioth/heirline-components.nvim" },
-    event = "BufReadPost",
+    event = "BufEnter",
     opts = function()
       local lib = require "heirline-components.all"
       return {
         opts = {
-          disable_winbar_cb = function(args) -- consider the winbar inactive when...
+          disable_winbar_cb = function(args) -- We do this to avoid showing it on the greeter.
             local is_disabled = not require("heirline-components.buffer").is_valid(args.buf) or
             lib.condition.buffer_matches({
-              buftype = { "terminal" },
-              filetype = { },
+              buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
+              filetype = { "NvimTree", "neo%-tree", "dashboard", "Outline", "aerial" },
             }, args.buf)
             return is_disabled
           end,
@@ -317,7 +317,19 @@ return {
         winbar = { -- UI breadcrumbs bar
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
           fallthrough = false,
-          lib.component.winbar_when_inactive(),
+          -- Winbar for terminal, neotree, and aerial.
+          {
+            condition = function() return not lib.condition.is_active() end,
+            {
+              lib.component.neotree(),
+              lib.component.compiler_play(),
+              lib.component.fill(),
+              lib.component.compiler_build_type(),
+              lib.component.compiler_redo(),
+              lib.component.aerial(),
+            },
+          },
+          -- Regular winbar
           {
             lib.component.neotree(),
             lib.component.compiler_play(),
