@@ -189,8 +189,8 @@ return {
       },
       open_automatic = false, -- Open if the buffer is compatible
       autojump = true,
-      wintypes = false,
-      buftypes = false,
+      link_folds_to_tree = false,
+      link_tree_to_folds = false,
       attach_mode = "global",
       backends = { "lsp", "treesitter", "markdown", "man" },
       disable_max_lines = vim.g.big_file.lines,
