@@ -294,7 +294,7 @@ return {
   {
     "rebelot/heirline.nvim",
     dependencies = { "zeioth/heirline-components.nvim" },
-    cond = function() return vim.bo.filetype ~= "alpha" end,
+    event = "BufReadPost",
     opts = function()
       local lib = require "heirline-components.all"
       return {
