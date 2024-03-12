@@ -294,7 +294,7 @@ return {
   {
     "rebelot/heirline.nvim",
     dependencies = { "zeioth/heirline-components.nvim" },
-    event = "BufEnter",
+    cond = function() return vim.bo.filetype ~= "alpha" end,
     opts = function()
       local lib = require "heirline-components.all"
       return {
@@ -317,8 +317,17 @@ return {
         winbar = { -- UI breadcrumbs bar
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
           fallthrough = false,
-          lib.component.breadcrumbs_when_inactive(),
-          lib.component.breadcrumbs()
+          lib.component.winbar_when_inactive(),
+          {
+            lib.component.neotree(),
+            lib.component.compiler_play(),
+            lib.component.fill(),
+            lib.component.breadcrumbs(),
+            lib.component.fill(),
+            lib.component.compiler_build_type(),
+            lib.component.compiler_redo(),
+            lib.component.aerial(),
+          }
         },
         statuscolumn = { -- UI left column
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
