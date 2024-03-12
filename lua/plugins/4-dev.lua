@@ -188,7 +188,7 @@ return {
         "Struct",
       },
       open_automatic = false, -- Open if the buffer is compatible
-      autojump = false,
+      autojump = true,
       link_folds_to_tree = false,
       link_tree_to_folds = false,
       attach_mode = "global",
