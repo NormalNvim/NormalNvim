@@ -188,6 +188,8 @@ return {
         "Method",
         "Struct",
       },
+      link_folds_to_tree = false,
+      link_tree_to_folds = false,
       attach_mode = "global",
       backends = { "lsp", "treesitter", "markdown", "man" },
       disable_max_lines = vim.g.big_file.lines,
