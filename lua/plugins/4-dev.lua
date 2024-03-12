@@ -177,17 +177,18 @@ return {
       "AerialClose",
     },
     opts = {
-      open_automatic = false, -- Open if the buffer is compatible
       filter_kind = { -- Symbols that will appear on the tree
-        "Class",
+        -- "Class",
         "Constructor",
         "Enum",
         "Function",
         "Interface",
-        "Module",
+        -- "Module",
         "Method",
         "Struct",
       },
+      open_automatic = false, -- Open if the buffer is compatible
+      autojump = false,
       link_folds_to_tree = false,
       link_tree_to_folds = false,
       attach_mode = "global",
