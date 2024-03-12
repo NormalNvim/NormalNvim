@@ -128,5 +128,5 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 * On aerial, let's keep an eye on [this](https://github.com/stevearc/aerial.nvim/issues/352) UX improvement.
 * Once nvim 0.10 is officially released, replace `get_active_clients` by `get_clients`.
 * Once nvim 0.10 is officially released, remove `unpack` in favor of `table.unpack`.
-* During 2024, add a toolbar for [Compiler.nvim](https://github.com/Zeioth/compiler.nvim) so users have a button to compile and manage their build automation utilities and current build_type in a friendly way.
+* ~~During 2024, add a toolbar for [Compiler.nvim](https://github.com/Zeioth/compiler.nvim) so users have a button to compile and manage their build automation utilities and current build_type in a friendly way~~.
 * During 2024, create a landing page. Pretty much it's gonna be the same thing we have on the wiki, but with sparkles.
