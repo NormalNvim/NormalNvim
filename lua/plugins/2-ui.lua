@@ -336,7 +336,6 @@ return {
             lib.component.fill(),
             lib.component.breadcrumbs(),
             lib.component.fill(),
-            lib.component.compiler_build_type(),
             lib.component.compiler_redo(),
             lib.component.aerial(),
           }
