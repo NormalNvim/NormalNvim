@@ -30,7 +30,7 @@ If you are new here don't forget to [check the wiki](https://github.com/NormalNv
 ## How to install
 
 ### Installer (Linux/MacOS/WSL)
-You can preview it [here](https://github.com/NormalNvim/installer)
+You can preview it [here](https://github.com/Revnixcad/installer)
 ```sh
 wget -q https://raw.githubusercontent.com/NormalNvim/installer/main/installer.sh && chmod +x installer.sh && ./installer.sh
 ```
@@ -38,13 +38,13 @@ wget -q https://raw.githubusercontent.com/NormalNvim/installer/main/installer.sh
 ### Clone manually (Linux/MacOS/WSL)
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
-git clone https://github.com/NormalNvim/NormalNvim.git ~/.config/nvim
+git clone https://github.com/Revnixcad/NormalNvim.git ~/.config/nvim
 ```
 
 ### Clone manually (Windows)
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
-git clone https://github.com/NormalNvim/NormalNvim.git %USERPROFILE%\AppData\Local\nvim && nvim
+git clone https://github.com/Revnixcad/NormalNvim.git %USERPROFILE%\AppData\Local\nvim && nvim
 ```
 
 ### Optional dependencies
