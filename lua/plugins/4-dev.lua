@@ -356,7 +356,6 @@ return {
       "OverseerQuickAction",
       "OverseerTaskAction",
       "OverseerClearCache"
-
     },
     opts = {
       -- Tasks are disposed 5 minutes after running to free resources.
