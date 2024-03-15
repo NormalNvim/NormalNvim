@@ -20,7 +20,7 @@ for _, source in ipairs {
 end
 
 -- ONCE ALL SOURCE FILES HAVE LOADED:
--- load the color scheme defined in ./lua/1-options.lua
+-- Load the color scheme defined in ./lua/1-options.lua
 if base.default_colorscheme then
   if not pcall(vim.cmd.colorscheme, base.default_colorscheme) then
     require("base.utils").notify(
