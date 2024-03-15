@@ -342,7 +342,22 @@ return {
   --  https://github.com/stevearc/overseer.nvim
   {
     "stevearc/overseer.nvim",
-    cmd = { "CompilerOpen", "CompilerToggleResults" },
+    cmd = {
+      "OverseerOpen",
+      "OverseerClose",
+      "OverseerToggle",
+      "OverseerSaveBundle",
+      "OverseerLoadBundle",
+      "OverseerDeleteBundle",
+      "OverseerRunCmd",
+      "OverseerRun",
+      "OverseerInfo",
+      "OverseerBuild",
+      "OverseerQuickAction",
+      "OverseerTaskAction",
+      "OverseerClearCache"
+
+    },
     opts = {
       -- Tasks are disposed 5 minutes after running to free resources.
       -- If you need to close a task immediately:
