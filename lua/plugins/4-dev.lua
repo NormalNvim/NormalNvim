@@ -68,7 +68,7 @@ return {
   --  https://github.com/rafamadriz/friendly-snippets
   {
     "L3MON4D3/LuaSnip",
-    build = vim.fn.has "win32" ~= 0 and "make install_jsregexp" or nil,
+    build = not is_windows and "make install_jsregexp" or nil,
     dependencies = {
       "rafamadriz/friendly-snippets",
       "Zeioth/NormalSnippets",
