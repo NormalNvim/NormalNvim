@@ -329,15 +329,14 @@ return {
 
       return {
         enabled = function() -- disable in certain cases on dap.
-          local is_buftype_prompt = vim.bo.buftype == "prompt"
-          local is_disabled_filetype = utils.is_available("cmp-dap")
-              and vim.tbl_contains({ "dap-repl", "dapui_watches", "dapui_hover" },
-                vim.bo.filetype)
-
-          if not is_disabled_filetype or is_buftype_prompt then
-            return vim.g.cmp_enabled
-          else
+          local is_prompt = vim.bo.buftype == "prompt"
+          local is_dap_prompt = utils.is_available("cmp-dap")
+            and vim.tbl_contains(
+              { "dap-repl", "dapui_watches", "dapui_hover" }, vim.bo.filetype)
+          if is_prompt and not is_dap_prompt then
             return false
+          else
+            return vim.g.cmp_enabled
           end
         end,
         preselect = cmp.PreselectMode.None,
