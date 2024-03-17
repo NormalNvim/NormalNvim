@@ -99,8 +99,8 @@ function M.del_autocmds(augroup, bufnr)
   end
 end
 
---- Get an empty table of mappings with a key for each map mode
----@return table<string,table> # a table with entries for each map mode
+--- Get an empty table of mappings with a key for each map mode.
+---@return table<string,table> # a table with entries for each map mode.
 function M.get_mappings_template()
   local maps = {}
   for _, mode in ipairs { "", "n", "v", "x", "s", "o", "!", "i", "l", "c", "t" } do
@@ -112,15 +112,6 @@ function M.get_mappings_template()
     end
   end
   return maps
-end
-
---- Merge extended options with a default table of options
----@param default? table The default table that you want to merge into
----@param opts? table The new options that should be merged with the default table
----@return table # The merged table
-function M.extend_tbl(default, opts)
-  opts = opts or {}
-  return default and vim.tbl_deep_extend("force", default, opts) or opts
 end
 
 --- Get an icon from `lspkind` if it is available and return it.
@@ -166,7 +157,7 @@ end
 ---@param opts? table The nvim-notify options to use (:help notify-options).
 function M.notify(msg, type, opts)
   vim.schedule(function() vim.notify(
-    msg, type, M.extend_tbl({ title = "Neovim" }, opts)) end)
+    msg, type, vim.tbl_deep_extend("force", { title = "Neovim" }, opts)) end)
 end
 
 ---Given a string, convert 'slash' to 'inverted slash' if on windows, and vice versa on UNIX.

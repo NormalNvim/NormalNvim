@@ -77,14 +77,15 @@ M.apply_default_lsp_settings = function()
   -- Applies the option diagnostics_mode from ../1-options.lua
   M.diagnostics = {
     -- diagnostics off
-    [0] = utils.extend_tbl(
+    [0] = vim.tbl_deep_extend(
+      "force",
       default_diagnostics,
       { underline = false, virtual_text = false, signs = false, update_in_insert = false }
     ),
     -- status only
-    utils.extend_tbl(default_diagnostics, { virtual_text = false, signs = false }),
+    vim.tbl_deep_extend("force", default_diagnostics, { virtual_text = false, signs = false }),
     -- virtual text off, signs on
-    utils.extend_tbl(default_diagnostics, { virtual_text = false }),
+    vim.tbl_deep_extend("force", default_diagnostics, { virtual_text = false }),
     -- all diagnostics on
     default_diagnostics,
   }
@@ -140,7 +141,7 @@ function M.apply_user_lsp_settings(server_name)
   { properties = { "documentation", "detail", "additionalTextEdits" } }
   M.capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
   M.flags = {}
-  local opts = utils.extend_tbl(server, { capabilities = M.capabilities, flags = M.flags })
+  local opts = vim.tbl_deep_extend("force", server, { capabilities = M.capabilities, flags = M.flags })
 
   -- Define user server rules.
   if server_name == "jsonls" then -- Add schemastore schemas
