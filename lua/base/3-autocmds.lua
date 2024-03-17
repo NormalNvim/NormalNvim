@@ -50,6 +50,19 @@ autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
     end
   end,
 })
+autocmd({ "VimEnter" }, {
+  desc = "Nvim user event that trigger a few ms after nvim starts",
+  callback = function()
+    -- If nvim is opened passing a filename, trigger the event inmediatelly.
+    if #vim.fn.argv() >= 1 then
+      utils.trigger_event("User BaseDefered")
+    else -- Wait some ms before triggering the event.
+      vim.defer_fn(function()
+        utils.trigger_event("User BaseDefered")
+      end, 100)
+     end
+  end,
+})
 
 -- 2. Save/restore window layout when possible.
 autocmd({ "BufWinLeave", "BufWritePost", "WinLeave" }, {

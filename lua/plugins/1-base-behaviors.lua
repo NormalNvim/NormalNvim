@@ -38,7 +38,7 @@ return {
   --   This way you can install and use 'ranger' and its dependency 'pynvim'.
   {
     "kevinhwang91/rnvimr",
-    event = "VeryLazy",
+    event = "User BaseDefered",
     cmd = { "RnvimrToggle" },
     enabled = not is_windows,
     config = function(_, opts)
@@ -63,7 +63,7 @@ return {
   -- https://github.com/ahmedkhalf/project.nvim
   {
     "Zeioth/project.nvim",
-    event = "VeryLazy",
+    event = "User BaseDefered",
     cmd = "ProjectRoot",
     opts = {
       -- How to find root directory
@@ -116,7 +116,7 @@ return {
   -- By default it support neovim/aerial and others.
   {
     "stevearc/stickybuf.nvim",
-    event = "VeryLazy",
+    event = "User BaseDefered",
     config = function() require("stickybuf").setup() end
   },
 
@@ -183,7 +183,7 @@ return {
   -- https://github.com/Shatur/neovim-session-manager
   {
     "Shatur/neovim-session-manager",
-    event = "User BaseFile",
+    event = "User BaseDefered",
     cmd = "SessionManager",
     opts = function()
       local config = require('session_manager.config')
@@ -319,10 +319,10 @@ return {
   -- https://github.com/nvim-neo-tree/neo-tree.nvim
   {
     "nvim-neo-tree/neo-tree.nvim",
-    dependencies = { "MunifTanjim/nui.nvim" },
+    dependencies = "MunifTanjim/nui.nvim",
     cmd = "Neotree",
-    init = function() vim.g.neo_tree_remove_legacy_commands = true end,
     opts = function()
+      vim.g.neo_tree_remove_legacy_commands = true
       local utils = require "base.utils"
       local get_icon = utils.get_icon
       return {
@@ -569,7 +569,7 @@ return {
   --  https://github.com/andymass/vim-matchup
   {
     "andymass/vim-matchup",
-    event = "VeryLazy",
+    event = "User BaseFile",
     config = function()
       vim.g.matchup_matchparen_deferred = 1   -- work async
       vim.g.matchup_matchparen_offscreen = {} -- disable status bar icon
@@ -609,8 +609,8 @@ return {
       local npairs = require "nvim-autopairs"
       npairs.setup(opts)
       if not vim.g.autopairs_enabled then npairs.disable() end
-      local cmp_status_ok, cmp = pcall(require, "cmp")
-      if cmp_status_ok then
+      local status_ok, cmp = pcall(require, "cmp")
+      if status_ok then
         cmp.event:on(
           "confirm_done",
           require("nvim-autopairs.completion.cmp").on_confirm_done {
