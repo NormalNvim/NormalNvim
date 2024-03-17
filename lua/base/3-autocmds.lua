@@ -28,7 +28,7 @@ local utils = require "base.utils"
 local is_available = utils.is_available
 
 -- ## EXTRA LOGIC -----------------------------------------------------------
--- 1. Events to load plugins faster → 'BaseFile'/'BaseGitFile':
+-- 1. Events to load plugins faster → 'BaseFile'/'BaseGitFile'/'BaseDefered':
 --    this is pretty much the same thing as the event 'BufEnter',
 --    but without increasing the startup time displayed in the greeter.
 autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
