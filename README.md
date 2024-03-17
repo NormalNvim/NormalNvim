@@ -20,7 +20,7 @@
 ## Screenshots
 
 Tokyo Night (Night) theme by default
-![screenshot_2023-11-11_05-07-36_209146790](https://github.com/NormalNvim/NormalNvim/assets/3357792/d487a27a-d314-4f20-b209-90f0d25c10d1)
+![screenshot_2024-03-17_17-12-10_712765529](https://github.com/NormalNvim/NormalNvim/assets/3357792/096b260b-6678-405c-88b4-376a358e47d5)
 
 The space key shows [all you can do](https://github.com/NormalNvim/NormalNvim/wiki/basic-mappings)
 ![screenshot_2024-03-12_22-48-45_446272370](https://github.com/NormalNvim/NormalNvim/assets/3357792/1fb4a576-e04f-481b-9692-67cdcc071d13)
