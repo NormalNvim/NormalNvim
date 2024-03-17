@@ -4,21 +4,21 @@
 --  General utility functions to use within Nvim.
 
 --    Functions:
---      -> cmd                   → Run a shell command and return true/false
---      -> add_autocmds          → Add the specified autocmds to a bufnr.
---      -> del_autocmds          → Delete the specified autocmds from a bufnr.
---      -> get_icon              → Return an icon from the icons directory.
---      -> get_mappings_template → Return a mappings table.
---      -> is_available          → Return true if the plugin exist.
---      -> is_big_file           → Return true if the file is too big.
---      -> notify                → Send a notification with a default title.
---      -> os_path               → Convert a path to the current OS.
---      -> get_plugin_opts       → Return a plugin opts table.
---      -> set_mappings          → We use it to create mappings in a clean way.
---      -> set_url_effect        → Show an effect for urls.
---      -> system_open           → Open the file or URL under the cursor.
---      -> trigger_event         → Manually execute a user event.
---      -> which_key_register    → When setting a mapping, add it to whichkey.
+--      -> cmd                      → Run a shell command and return true/false
+--      -> add_autocmds_to_buffer   → Add autocmds to a bufnr.
+--      -> del_autocmds_from_buffer → Delete autocmds from a bufnr.
+--      -> get_icon                 → Return an icon from the icons directory.
+--      -> get_mappings_template    → Return a mappings table.
+--      -> is_available             → Return true if the plugin exist.
+--      -> is_big_file              → Return true if the file is too big.
+--      -> notify                   → Send a notification with a default title.
+--      -> os_path                  → Convert a path to the current OS.
+--      -> get_plugin_opts          → Return a plugin opts table.
+--      -> set_mappings             → We use it to create mappings in a clean way.
+--      -> set_url_effect           → Show an effect for urls.
+--      -> open_with_program        → Open the file or URL under the cursor.
+--      -> trigger_event            → Manually execute a user event.
+--      -> which_key_register       → When setting a mapping, add it to whichkey.
 
 
 local M = {}
@@ -45,7 +45,7 @@ end
 --- @param augroup string       The name of the autocmd group to which the autocmds belong.
 --- @param bufnr number         The buffer number to which the autocmds should be applied.
 --- @param autocmds table|any  A table or a single autocmd definition containing the autocmds to add.
-function M.add_autocmds(augroup, bufnr, autocmds)
+function M.add_autocmds_to_buffer(augroup, bufnr, autocmds)
   -- Check if autocmds is a list, if not convert it to a list
   if not vim.tbl_islist(autocmds) then autocmds = { autocmds } end
 
@@ -77,7 +77,7 @@ end
 ---
 --- @param augroup string  The name of the autocmd group from which the autocmds should be removed.
 --- @param bufnr number    The buffer number from which the autocmds should be removed.
-function M.del_autocmds(augroup, bufnr)
+function M.del_autocmds_from_buffer(augroup, bufnr)
   -- Attempt to retrieve existing autocmds associated with the specified augroup and bufnr
   local cmds_found, cmds = pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
 
@@ -236,9 +236,9 @@ function M.delete_url_effect()
   end
 end
 
---- Open a URL under the cursor with the current operating system.
+--- Open the file or url under the cursor.
 ---@param path string The path of the file to open with the system opener.
-function M.system_open(path)
+function M.open_with_program(path)
   if vim.ui.open then return vim.ui.open(path) end
   local cmd
   if vim.fn.has "mac" == 1 then
