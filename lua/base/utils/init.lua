@@ -4,7 +4,7 @@
 --  General utility functions to use within Nvim.
 
 --    Functions:
---      -> cmd                      → Run a shell command and return true/false
+--      -> run_cmd                  → Run a shell command and return true/false.
 --      -> add_autocmds_to_buffer   → Add autocmds to a bufnr.
 --      -> del_autocmds_from_buffer → Delete autocmds from a bufnr.
 --      -> get_icon                 → Return an icon from the icons directory.
@@ -12,7 +12,7 @@
 --      -> is_available             → Return true if the plugin exist.
 --      -> is_big_file              → Return true if the file is too big.
 --      -> notify                   → Send a notification with a default title.
---      -> os_path                  → Convert a path to the current OS.
+--      -> os_path                  → Converts a path to the current OS.
 --      -> get_plugin_opts          → Return a plugin opts table.
 --      -> set_mappings             → Set a list of mappings in a clean way.
 --      -> set_url_effect           → Show an effect for urls.
@@ -29,7 +29,7 @@ local M = {}
 ---@param show_error? boolean Whether or not to show an unsuccessful command
 ---                           as an error to the user
 ---@return string|nil # The result of a successfully executed command or nil
-function M.cmd(cmd, show_error)
+function M.run_cmd(cmd, show_error)
   if type(cmd) == "string" then cmd = vim.split(cmd, " ") end
   if vim.fn.has "win32" == 1 then cmd = vim.list_extend({ "cmd.exe", "/C" }, cmd) end
   local result = vim.fn.system(cmd)
