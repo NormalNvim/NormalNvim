@@ -7,8 +7,8 @@
 --      -> cmd                   → Run a shell command and return true/false
 --      -> add_autocmds          → Add the specified autocmds to a bufnr.
 --      -> del_autocmds          → Delete the specified autocmds from a bufnr.
---      -> get_mappings_template → Return a mappings table.
 --      -> get_icon              → Return an icon from the icons directory.
+--      -> get_mappings_template → Return a mappings table.
 --      -> is_available          → Return true if the plugin is available.
 --      -> is_big_file           → Return true if the file is too big.
 --      -> notify                → Send a notification asynchronously.
@@ -88,6 +88,21 @@ function M.del_autocmds(augroup, bufnr)
   end
 end
 
+--- Get an icon from `lspkind` if it is available and return it.
+---@param kind string The kind of icon in `lspkind` to retrieve.
+---@return string icon.
+function M.get_icon(kind, padding, no_fallback)
+  if not vim.g.icons_enabled and no_fallback then return "" end
+  local icon_pack = vim.g.icons_enabled and "icons" or "text_icons"
+  if not M[icon_pack] then
+    M.icons = require "base.icons.nerd_font"
+    M.text_icons = require "base.icons.text"
+  end
+  local icon = M[icon_pack] and M[icon_pack][kind]
+  return icon and icon .. string.rep(" ", padding or 0) or ""
+end
+
+
 --- Get an empty table of mappings with a key for each map mode.
 ---@return table<string,table> # a table with entries for each map mode.
 function M.get_mappings_template()
@@ -101,20 +116,6 @@ function M.get_mappings_template()
     end
   end
   return maps
-end
-
---- Get an icon from `lspkind` if it is available and return it.
----@param kind string The kind of icon in `lspkind` to retrieve.
----@return string icon.
-function M.get_icon(kind, padding, no_fallback)
-  if not vim.g.icons_enabled and no_fallback then return "" end
-  local icon_pack = vim.g.icons_enabled and "icons" or "text_icons"
-  if not M[icon_pack] then
-    M.icons = require "base.icons.nerd_font"
-    M.text_icons = require "base.icons.text"
-  end
-  local icon = M[icon_pack] and M[icon_pack][kind]
-  return icon and icon .. string.rep(" ", padding or 0) or ""
 end
 
 --- Check if a plugin is defined in lazy. Useful with lazy loading

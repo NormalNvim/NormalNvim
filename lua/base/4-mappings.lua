@@ -646,7 +646,7 @@ if vim.fn.executable "lazygit" == 1 then -- if lazygit exists, show it
       if git_dir ~= "" then
         vim.cmd "TermExec cmd='lazygit && exit'"
       else
-        utils.notify("Not a git repository", 4)
+        utils.notify("Not a git repository", vim.log.levels.WARN)
       end
     end,
     desc = "ToggleTerm lazygit",
@@ -663,7 +663,7 @@ if vim.fn.executable "gitui" == 1 then -- if gitui exists, show it
           vim.cmd "TermExec cmd='gitui && exit'"
         end
       else
-        utils.notify("Not a git repository", 4)
+        utils.notify("Not a git repository", vim.log.levels.WARN)
       end
     end,
     desc = "ToggleTerm gitui",
@@ -1188,7 +1188,7 @@ if is_available "nvim-coverage" then
     function()
       utils.notify(
         "Attempting to find coverage/lcov.info in project root...",
-        3
+        vim.log.levels.INFO
       )
       require("coverage").load(false)
       require("coverage").summary()
