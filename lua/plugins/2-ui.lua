@@ -505,14 +505,7 @@ return {
     opts = {
       input = { default_prompt = "➤ "},
       select = { backend = { "telescope", "builtin" } },
-    },
-    config = function(_, opts)
-      require("dressing").setup(opts)
-      require("base.utils").load_plugin_with_func("dressing.nvim", vim.ui, {
-        "input",
-        "select"
-      })
-    end
+    }
   },
 
   --  Noice.nvim [better cmd/search line]

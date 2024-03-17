@@ -14,7 +14,6 @@
 --      -> get_icon              → Return an icon from the icons directory.
 --      -> is_available          → Return true if the plugin is available.
 --      -> is_big_file           → Return true if the file is too big.
---      -> load_plugin_with_func → Load a plugin before running a command.
 --      -> notify                → Send a notification asynchronously.
 --      -> os_path               → Convert the current path to the current OS.
 --      -> plugin_opts           → Return a plugin opts table.
@@ -174,24 +173,6 @@ function M.is_big_file(bufnr)
   local is_big_file = (filesize > vim.g.big_file.size)
     or (nlines > vim.g.big_file.lines)
   return is_big_file
-end
-
---- Helper function to require a module when running a function.
---- This function is just a way for us to save boilerplate on a couple cases.
----@param plugin string The plugin to call `require("lazy").load` with.
----@param module table The system module where the functions live (e.g. `vim.ui`).
----@param func_names string|string[] The functions to wrap in
----                                  the given module (e.g. `{ "ui", "select }`).
-function M.load_plugin_with_func(plugin, module, func_names)
-  if type(func_names) == "string" then func_names = { func_names } end
-  for _, func in ipairs(func_names) do
-    local old_func = module[func]
-    module[func] = function(...)
-      module[func] = old_func
-      require("lazy").load { plugins = { plugin } }
-      module[func](...)
-    end
-  end
 end
 
 --- Serve a notification with a title of Neovim.
