@@ -88,7 +88,7 @@ return {
   { "skywind3000/gutentags_plus", commit = "a0157ca0092a21f0947917945506fde3859c9cd2" },
   { "smoka7/hop.nvim", commit = "6d853addd6e11df8338b26e869a29b36f2c3e893" },
   { "stevearc/aerial.nvim", commit = "31fbd369bbbeb53080c4b1ead9e76be322725ef5" },
-  { "stevearc/dressing.nvim", commit = "6f212262061a2120e42da0d1e87326e8a41c0478" },
+  { "stevearc/dressing.nvim", commit = "18e5beb3845f085b6a33c24112b37988f3f93c06" },
   { "stevearc/overseer.nvim", commit = "4855aefcf335bbac71eea9c6a888958fb1ed1e1a" },
   { "stevearc/stickybuf.nvim", commit = "2160fcd536d81f5fa43f7167dba6634e814e3154" },
   { "tpope/vim-fugitive", commit = "41beedabc7e948c787ea5696e04c3544c3674e23" },
