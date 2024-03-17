@@ -163,7 +163,15 @@ return {
       "Git",
       "Gstatus",
     },
-    init = function() vim.g.fugitive_no_maps = 1 end,
+    opts = function()
+      -- vim opts
+      vim.g.fugitive_no_maps = 1
+
+      -- nvim opts
+      return {
+
+      }
+    end,
   },
 
   --  ANALYZER ----------------------------------------------------------------
@@ -839,7 +847,8 @@ return {
     "skywind3000/gutentags_plus",
     ft = { "c", "cpp" },
     dependencies = { "ludovicchabant/vim-gutentags" },
-    init = function()
+    opts = function()
+      -- vim opts
       vim.g.gutentags_plus_nomap = 1
       vim.g.gutentags_resolve_symlinks = 1
       vim.g.gutentags_cache_dir = vim.fn.stdpath "cache" .. "/tags"
@@ -852,6 +861,11 @@ return {
           end
         end,
       })
+
+      -- nvim opts
+      return {
+
+      }
     end,
   },
 

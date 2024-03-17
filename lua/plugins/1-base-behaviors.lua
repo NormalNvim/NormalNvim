@@ -321,8 +321,8 @@ return {
     "nvim-neo-tree/neo-tree.nvim",
     dependencies = "MunifTanjim/nui.nvim",
     cmd = "Neotree",
-    init = function() vim.g.neo_tree_remove_legacy_commands = true end,
     opts = function()
+      vim.g.neo_tree_remove_legacy_commands = true
       local utils = require "base.utils"
       local get_icon = utils.get_icon
       return {
