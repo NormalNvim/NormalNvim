@@ -381,7 +381,7 @@ return {
         -- A command is a function that we can assign to a mapping (below)
         commands = {
           system_open = function(state)
-            require("base.utils").system_open(state.tree:get_node():get_id())
+            require("base.utils").open_with_program(state.tree:get_node():get_id())
           end,
           parent_or_close = function(state)
             local node = state.tree:get_node()

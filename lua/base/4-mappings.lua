@@ -96,7 +96,7 @@ maps.n["<leader>W"] =
 { function() vim.cmd "SudaWrite" end, desc = "Save as sudo" }
 maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New file" }
 maps.n["gx"] =
-{ utils.system_open, desc = "Open the file under cursor with system app" }
+{ utils.open_with_program, desc = "Open the file under cursor with a program" }
 maps.n["<C-s>"] = { "<cmd>w!<cr>", desc = "Force write" }
 maps.n["|"] = { "<cmd>vsplit<cr>", desc = "Vertical Split" }
 maps.n["\\"] = { "<cmd>split<cr>", desc = "Horizontal Split" }
@@ -1338,12 +1338,12 @@ function M.lsp_mappings(client, bufnr)
   end
 
   if client.supports_method "textDocument/codeLens" then
-    utils.add_autocmds("lsp_codelens_refresh", bufnr, {
+    utils.add_autocmds_to_buffer("lsp_codelens_refresh", bufnr, {
       events = { "InsertLeave", "BufEnter" },
       desc = "Refresh codelens",
       callback = function(args)
         if not has_capability("textDocument/codeLens", { bufnr = bufnr }) then
-          utils.del_autocmds("lsp_codelens_refresh", bufnr)
+          utils.del_autocmds_from_buffer("lsp_codelens_refresh", bufnr)
           return
         end
         if vim.g.codelens_enabled then vim.lsp.codelens.refresh({ bufnr = args.buf }) end
@@ -1398,12 +1398,12 @@ function M.lsp_mappings(client, bufnr)
       and (vim.tbl_isempty(autoformat.allow_filetypes or {}) or vim.tbl_contains(autoformat.allow_filetypes, filetype))
       and (vim.tbl_isempty(autoformat.ignore_filetypes or {}) or not vim.tbl_contains(autoformat.ignore_filetypes, filetype))
     then
-      utils.add_autocmds("lsp_auto_format", bufnr, {
+      utils.add_autocmds_to_buffer("lsp_auto_format", bufnr, {
         events = "BufWritePre",
         desc = "Autoformat on save",
         callback = function()
           if not has_capability("textDocument/formatting", { bufnr = bufnr }) then
-            utils.del_autocmds("lsp_auto_format", bufnr)
+            utils.del_autocmds_from_buffer("lsp_auto_format", bufnr)
             return
           end
           local autoformat_enabled = vim.b.autoformat_enabled
@@ -1425,13 +1425,13 @@ function M.lsp_mappings(client, bufnr)
   end
 
   if client.supports_method "textDocument/documentHighlight" then
-    utils.add_autocmds("lsp_document_highlight", bufnr, {
+    utils.add_autocmds_to_buffer("lsp_document_highlight", bufnr, {
       {
         events = { "CursorHold", "CursorHoldI" },
         desc = "highlight references when cursor holds",
         callback = function()
           if not has_capability("textDocument/documentHighlight", { bufnr = bufnr }) then
-            utils.del_autocmds("lsp_document_highlight", bufnr)
+            utils.del_autocmds_from_buffer("lsp_document_highlight", bufnr)
             return
           end
           vim.lsp.buf.document_highlight()
