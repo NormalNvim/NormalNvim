@@ -8,7 +8,7 @@
 --      -> add_autocmds_to_buffer   → Add autocmds to a bufnr.
 --      -> del_autocmds_from_buffer → Delete autocmds from a bufnr.
 --      -> get_icon                 → Return an icon from the icons directory.
---      -> get_mappings_template    → Return a mappings table.
+--      -> get_mappings_template    → Return a default mappings table to extend.
 --      -> is_available             → Return true if the plugin exist.
 --      -> is_big_file              → Return true if the file is too big.
 --      -> notify                   → Send a notification with a default title.
