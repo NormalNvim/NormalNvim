@@ -17,7 +17,7 @@
 --      -> set_mappings             → Set a list of mappings in a clean way.
 --      -> set_url_effect           → Show an effect for urls.
 --      -> open_with_program        → Open the file or URL under the cursor.
---      -> trigger_event            → Manually execute a user event.
+--      -> trigger_event            → Manually execute a event.
 --      -> which_key_register       → When setting a mapping, add it to whichkey.
 
 
