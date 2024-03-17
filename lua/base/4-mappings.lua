@@ -637,7 +637,7 @@ if vim.fn.executable "lazygit" == 1 then -- if lazygit exists, show it
     function()
       local git_dir = vim.fn.finddir(".git", vim.fn.getcwd() .. ";")
       if git_dir ~= "" then
-        utils.toggle_term_cmd "lazygit"
+        vim.cmd "TermExec cmd='lazygit && exit'"
       else
         utils.notify("Not a git repository", 4)
       end
