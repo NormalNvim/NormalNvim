@@ -105,7 +105,14 @@ maps.n["0"] =
 { "^", desc = "Go to the fist character of the line (aliases 0 to ^)" }
 maps.n["<leader>q"] = { "<cmd>confirm q<cr>", desc = "Quit" }
 maps.n["<leader>q"] = {
-  function() require("base.utils").confirm_quit() end,
+  function()
+    -- Ask user for confirmation
+    local choice = vim.fn.confirm("Do you really want to exit nvim?", "&Yes\n&No", 2)
+    if choice == 1 then
+      -- If user confirms, but there are still files to be saved: Ask
+      vim.cmd('confirm quit')
+    end
+  end,
   desc = "Quit",
 }
 maps.n["<Tab>"] = {

@@ -5,11 +5,9 @@
 
 --    Functions:
 --      -> cmd                   → Run a shell command and return true/false
---      -> confirm_quit          → Ask for confirmation before exit.
 --      -> add_autocmds          → Add the specified autocmds to a bufnr.
 --      -> del_autocmds          → Delete the specified autocmds from a bufnr.
 --      -> get_mappings_template → Return a mappings table.
---      -> extend_tbl            → Add the content of a table to another table.
 --      -> get_icon              → Return an icon from the icons directory.
 --      -> is_available          → Return true if the plugin is available.
 --      -> is_big_file           → Return true if the file is too big.
@@ -40,15 +38,6 @@ function M.cmd(cmd, show_error)
     vim.api.nvim_err_writeln(("Error running command %s\nError message:\n%s"):format(table.concat(cmd, " "), result))
   end
   return success and result:gsub("[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]", "") or nil
-end
-
---- Always ask before exiting nvim, even if there is nothing to be saved.
-function M.confirm_quit()
-  local choice = vim.fn.confirm("Do you really want to exit nvim?", "&Yes\n&No", 2)
-  if choice == 1 then
-    -- If user confirms, but there are still files to be saved: Ask
-    vim.cmd('confirm quit')
-  end
 end
 
 --- Adds autocmds to a specific buffer if they don't already exist.
