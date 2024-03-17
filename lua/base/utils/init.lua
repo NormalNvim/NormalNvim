@@ -5,7 +5,6 @@
 
 --    Functions:
 --      -> cmd                   → Run a shell command and return true/false
---      -> conditional_func      → Run a function if conditions are met.
 --      -> confirm_quit          → Ask for confirmation before exit.
 --      -> add_autocmds          → Add the specified autocmds to a bufnr.
 --      -> del_autocmds          → Delete the specified autocmds from a bufnr.
@@ -16,11 +15,10 @@
 --      -> is_big_file           → Return true if the file is too big.
 --      -> notify                → Send a notification asynchronously.
 --      -> os_path               → Convert the current path to the current OS.
---      -> plugin_opts           → Return a plugin opts table.
+--      -> get_plugin_opts       → Return a plugin opts table.
 --      -> set_mappings          → We use it to create mappings in a clean way.
 --      -> set_url_effect        → Show an effect for urls.
 --      -> system_open           → Open the file or URL under the cursor.
---      -> toggle_term_cmd       → get/set a re-usable toggleterm session.
 --      -> trigger_event         → Manually execute a user event.
 --      -> which_key_register    → When setting a mapping, add it to whichkey.
 
@@ -182,10 +180,10 @@ function M.os_path(path)
   return string.gsub(path, '[/\\]', separator)
 end
 
---- Resolve the options table for a given plugin with lazy
----@param plugin string The plugin to search for
----@return table opts # The plugin options
-function M.plugin_opts(plugin)
+--- Get the options of a plugin managed by lazy.
+---@param plugin string The plugin to get options from
+---@return table opts # The plugin options, or empty table if no plugin.
+function M.get_plugin_opts(plugin)
   local lazy_config_avail, lazy_config = pcall(require, "lazy.core.config")
   local lazy_plugin_avail, lazy_plugin = pcall(require, "lazy.core.plugin")
   local opts = {}

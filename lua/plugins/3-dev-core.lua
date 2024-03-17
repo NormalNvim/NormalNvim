@@ -342,7 +342,7 @@ return {
         preselect = cmp.PreselectMode.None,
         formatting = {
           fields = { "kind", "abbr", "menu" },
-          format = lspkind.cmp_format(utils.plugin_opts("lspkind.nvim")),
+          format = lspkind.cmp_format(utils.get_plugin_opts("lspkind.nvim")),
         },
         snippet = {
           expand = function(args) luasnip.lsp_expand(args.body) end,
