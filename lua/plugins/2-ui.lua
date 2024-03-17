@@ -454,46 +454,16 @@ return {
       telescope.setup(opts)
       -- Here we define the Telescope extension for all plugins.
       -- If you delete a plugin, you can also delete its Telescope extension.
-      utils.conditional_func(
-        telescope.load_extension,
-        utils.is_available "nvim-notify",
-        "notify"
-      )
-      utils.conditional_func(
-        telescope.load_extension,
-        utils.is_available "telescope-fzf-native.nvim",
-        "fzf"
-      )
-      utils.conditional_func(
-        telescope.load_extension,
-        utils.is_available "telescope-undo.nvim",
-        "undo"
-      )
-      utils.conditional_func(
-        telescope.load_extension,
-        utils.is_available "nvim-neoclip.lua",
-        "neoclip"
-      )
-      utils.conditional_func(
-        telescope.load_extension,
-        utils.is_available "nvim-neoclip.lua",
-        "macroscope"
-      )
-      utils.conditional_func(
-        telescope.load_extension,
-        utils.is_available "project.nvim",
-        "projects"
-      )
-      utils.conditional_func(
-        telescope.load_extension,
-        utils.is_available "LuaSnip",
-        "luasnip"
-      )
-      utils.conditional_func(
-        telescope.load_extension,
-        utils.is_available "aerial.nvim",
-        "aerial"
-      )
+      if utils.is_available("nvim-notify") then telescope.load_extension("notify") end
+      if utils.is_available("telescope-fzf-native.nvim") then telescope.load_extension("fzf") end
+      if utils.is_available("telescope-undo.nvim") then telescope.load_extension("undo") end
+      if utils.is_available("project.nvim") then telescope.load_extension("projects") end
+      if utils.is_available("LuaSnip") then telescope.load_extension("luasnip") end
+      if utils.is_available("aerial.nvim") then telescope.load_extension("aerial") end
+      if utils.is_available("nvim-neoclip.lua") then
+        telescope.load_extension("neoclip")
+        telescope.load_extension("macroscope")
+      end
     end,
   },
 

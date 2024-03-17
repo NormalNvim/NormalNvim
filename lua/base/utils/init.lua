@@ -44,20 +44,6 @@ function M.cmd(cmd, show_error)
   return success and result:gsub("[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]", "") or nil
 end
 
---- Given a function passed as 1º parameter,
----
---- Call said function if:
----   * It is indeed a function.
----   * The condition passed on the second parameter is true.
----  Considering:
----   * Extra parameters will be passed to the function of the first parameter.
----@param func function The function to run.
----@param condition boolean # Whether to run the function or not.
----@return any|nil result # the result of the function running or nil.
-function M.conditional_func(func, condition, ...)
-  if condition and type(func) == "function" then return func(...) end
-end
-
 --- Always ask before exiting nvim, even if there is nothing to be saved.
 function M.confirm_quit()
   local choice = vim.fn.confirm("Do you really want to exit nvim?", "&Yes\n&No", 2)
@@ -175,7 +161,7 @@ function M.is_big_file(bufnr)
   return is_big_file
 end
 
---- Serve a notification with a title of Neovim.
+--- Serve a notification with Neovim as title.
 --- Same as using vim.notify, but it saves us typing the title every time.
 ---@param msg string The notification body.
 ---@param type number|nil The type of the notification (:help vim.log.levels).

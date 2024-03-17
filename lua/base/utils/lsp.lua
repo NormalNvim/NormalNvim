@@ -162,7 +162,7 @@ function M.apply_user_lsp_settings(server_name)
   local old_on_attach = server.on_attach
   opts.on_attach = function(client, bufnr)
     -- If the server on_attach function exist → server.on_attach(client, bufnr)
-    utils.conditional_func(old_on_attach, true, client, bufnr)
+    if type(old_on_attach) == "function" then old_on_attach(client, bufnr) end
     -- Also, apply mappings to the buffer.
     M.apply_user_lsp_mappings(client, bufnr)
   end
