@@ -17,7 +17,7 @@
 --      -> set_mappings             → Set a list of mappings in a clean way.
 --      -> set_url_effect           → Show an effect for urls.
 --      -> open_with_program        → Open the file or URL under the cursor.
---      -> trigger_event            → Manually execute a user event.
+--      -> trigger_event            → Manually trigger a event.
 --      -> which_key_register       → When setting a mapping, add it to whichkey.
 
 
@@ -157,7 +157,7 @@ end
 function M.os_path(path)
   if path == nil then return nil end
   -- Get the platform-specific path separator
-  local separator = package.config:sub(1,1)
+  local separator = string.sub(package.config, 1, 1)
   return string.gsub(path, '[/\\]', separator)
 end
 

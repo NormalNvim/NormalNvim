@@ -679,16 +679,6 @@ end
 -- neotree
 if is_available "neo-tree.nvim" then
   maps.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Neotree" }
-  maps.n["<leader>o"] = {
-    function()
-      if vim.bo.filetype == "neo-tree" then
-        vim.cmd.wincmd "p"
-      else
-        vim.cmd.Neotree "focus"
-      end
-    end,
-    desc = "Neotree Focus",
-  }
 end
 
 -- session manager ---------------------------------------------------------
@@ -784,9 +774,8 @@ end
 
 -- aerial.nvimm ------------------------------------------------------------
 if is_available "aerial.nvim" then
-  maps.n["<leader>l"] = icons.l
-  maps.n["<leader>lt"] =
-  { function() require("aerial").toggle() end, desc = "Symbols tree" }
+  maps.n["<leader>i"] =
+  { function() require("aerial").toggle() end, desc = "Aerial" }
 end
 
 -- telescope.nvim [find] ----------------------------------------------------
