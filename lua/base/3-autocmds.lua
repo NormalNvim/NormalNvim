@@ -59,7 +59,7 @@ autocmd({ "VimEnter" }, {
     else -- Wait some ms before triggering the event.
       vim.defer_fn(function()
         utils.trigger_event("User BaseDefered")
-      end, 100)
+      end, 70)
      end
   end,
 })
