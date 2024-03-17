@@ -12,7 +12,7 @@
 --      -> is_available             → Return true if the plugin exist.
 --      -> is_big_file              → Return true if the file is too big.
 --      -> notify                   → Send a notification with a default title.
---      -> os_path                  → Convert a path to the current OS.
+--      -> os_path                  → Converts a path to the current OS.
 --      -> get_plugin_opts          → Return a plugin opts table.
 --      -> set_mappings             → Set a list of mappings in a clean way.
 --      -> set_url_effect           → Show an effect for urls.
