@@ -53,10 +53,10 @@ M.apply_default_lsp_settings = function()
     virtual_text = true,
     signs = {
       text = {
-        [vim.diagnostic.severity.ERROR] = utils.get_icon "DiagnosticError",
-        [vim.diagnostic.severity.HINT] = utils.get_icon "DiagnosticHint",
-        [vim.diagnostic.severity.WARN] = utils.get_icon "DiagnosticWarn",
-        [vim.diagnostic.severity.INFO] = utils.get_icon "DiagnosticInfo",
+        [vim.diagnostic.severity.ERROR] = utils.get_icon("DiagnosticError"),
+        [vim.diagnostic.severity.HINT] = utils.get_icon("DiagnosticHint"),
+        [vim.diagnostic.severity.WARN] = utils.get_icon("DiagnosticWarn"),
+        [vim.diagnostic.severity.INFO] = utils.get_icon("DiagnosticInfo"),
       },
       active = signs,
     },

@@ -9,10 +9,10 @@
 --      -> del_autocmds          → Delete the specified autocmds from a bufnr.
 --      -> get_icon              → Return an icon from the icons directory.
 --      -> get_mappings_template → Return a mappings table.
---      -> is_available          → Return true if the plugin is available.
+--      -> is_available          → Return true if the plugin exist.
 --      -> is_big_file           → Return true if the file is too big.
---      -> notify                → Send a notification asynchronously.
---      -> os_path               → Convert the current path to the current OS.
+--      -> notify                → Send a notification with a default title.
+--      -> os_path               → Convert a path to the current OS.
 --      -> get_plugin_opts       → Return a plugin opts table.
 --      -> set_mappings          → We use it to create mappings in a clean way.
 --      -> set_url_effect        → Show an effect for urls.
@@ -140,7 +140,7 @@ function M.is_big_file(bufnr)
   return is_big_file
 end
 
---- Serve a notification with Neovim as title.
+--- Sends a notification with 'Neovim' as default title.
 --- Same as using vim.notify, but it saves us typing the title every time.
 ---@param msg string The notification body.
 ---@param type number|nil The type of the notification (:help vim.log.levels).
@@ -150,8 +150,8 @@ function M.notify(msg, type, opts)
     msg, type, vim.tbl_deep_extend("force", { title = "Neovim" }, opts)) end)
 end
 
----Given a string, convert 'slash' to 'inverted slash' if on windows, and vice versa on UNIX.
----Then return the resulting string.
+--- Convert a path to the path format of the current operative system.
+--- It converts 'slash' to 'inverted slash' if on windows, and vice versa on UNIX.
 ---@param path string A path string.
 ---@return string|nil,nil path A path string formatted for the current OS.
 function M.os_path(path)
