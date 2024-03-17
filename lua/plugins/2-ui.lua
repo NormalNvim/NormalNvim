@@ -192,8 +192,8 @@ return {
             " ",
             " ",
             " ",
-            "Loaded " .. stats.count .. " plugins  in " .. ms .. "ms",
-            "...............................",
+            "Loaded " .. stats.loaded .. " plugins  in " .. ms .. "ms",
+            ".............................",
           }
           opts.section.footer.opts.hl = "DashboardFooter"
           vim.cmd "highlight DashboardFooter guifg=#D29B68"
@@ -207,6 +207,7 @@ return {
   --  https://github.com/rcarriga/nvim-notify
   {
     "rcarriga/nvim-notify",
+    event = "User BaseDefered",
     init = function()
       require("base.utils").load_plugin_with_func("nvim-notify", vim, "notify")
     end,
@@ -294,7 +295,7 @@ return {
   {
     "rebelot/heirline.nvim",
     dependencies = { "zeioth/heirline-components.nvim" },
-    event = "BufEnter",
+    event = "User BaseDefered",
     opts = function()
       local lib = require "heirline-components.all"
       return {
@@ -502,17 +503,18 @@ return {
   --  https://github.com/stevearc/dressing.nvim
   {
     "stevearc/dressing.nvim",
-    init = function()
-      require("base.utils").load_plugin_with_func(
-        "dressing.nvim",
-        vim.ui,
-        { "input", "select" }
-      )
-    end,
+    event = "User BaseDefered",
     opts = {
       input = { default_prompt = "➤ "},
       select = { backend = { "telescope", "builtin" } },
     },
+    config = function(_, opts)
+      require("dressing").setup(opts)
+      require("base.utils").load_plugin_with_func("dressing.nvim", vim.ui, {
+        "input",
+        "select"
+      })
+    end
   },
 
   --  Noice.nvim [better cmd/search line]
@@ -526,7 +528,7 @@ return {
   --  * Search results: We use a heirline component for this.
   {
     "folke/noice.nvim",
-    event = "VeryLazy",
+    event = "User BaseDefered",
     opts = function()
       local enable_conceal = false          -- Hide command text if true
       return {
@@ -562,6 +564,7 @@ return {
   {
     "nvim-tree/nvim-web-devicons",
     enabled = vim.g.icons_enabled,
+    event = "User BaseDefered",
     opts = {
       override = {
         default_icon = {
@@ -693,7 +696,7 @@ return {
   --  But we also have a autocmd to flash on yank.
   {
     "tzachar/highlight-undo.nvim",
-    event = "VeryLazy",
+    event = "User BaseDefered",
     opts = {
       hlgroup = "CurSearch",
       duration = 150,
@@ -718,7 +721,7 @@ return {
   --  https://github.com/folke/which-key.nvim
   {
     "folke/which-key.nvim",
-    event = "VeryLazy",
+    event = "User BaseDefered",
     opts = {
       icons = { group = vim.g.icons_enabled and "" or "+", separator = "" },
       disable = { filetypes = { "TelescopePrompt" } },
