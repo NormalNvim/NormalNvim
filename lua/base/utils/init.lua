@@ -14,7 +14,7 @@
 --      -> notify                   → Send a notification with a default title.
 --      -> os_path                  → Convert a path to the current OS.
 --      -> get_plugin_opts          → Return a plugin opts table.
---      -> set_mappings             → We use it to create mappings in a clean way.
+--      -> set_mappings             → Set a list of mappings in a clean way.
 --      -> set_url_effect           → Show an effect for urls.
 --      -> open_with_program        → Open the file or URL under the cursor.
 --      -> trigger_event            → Manually execute a user event.
@@ -175,9 +175,9 @@ function M.get_plugin_opts(plugin)
   return opts
 end
 
---- Table based API for setting keybindings.
+--- Set a table of mappings.
 ---
---- This wrapper saver boilerplate code, and takes care of `whichkey.nvim`
+--- This wrapper prevents a  boilerplate code, and takes care of `whichkey.nvim`.
 ---@param map_table table A nested table where the first key is the vim mode,
 ---                       the second key is the key to map, and the value is
 ---                       the function to set the mapping to.
