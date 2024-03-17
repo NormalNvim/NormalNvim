@@ -26,15 +26,15 @@ M.apply_default_lsp_settings = function()
   -- Apply the icons defined in ../icons/nerd_font.lua
   local get_icon = utils.get_icon
   local signs = {
-    { name = "DiagnosticSignError",    text = get_icon "DiagnosticError",        texthl = "DiagnosticSignError" },
-    { name = "DiagnosticSignWarn",     text = get_icon "DiagnosticWarn",         texthl = "DiagnosticSignWarn" },
-    { name = "DiagnosticSignHint",     text = get_icon "DiagnosticHint",         texthl = "DiagnosticSignHint" },
-    { name = "DiagnosticSignInfo",     text = get_icon "DiagnosticInfo",         texthl = "DiagnosticSignInfo" },
-    { name = "DapStopped",             text = get_icon "DapStopped",             texthl = "DiagnosticWarn" },
-    { name = "DapBreakpoint",          text = get_icon "DapBreakpoint",          texthl = "DiagnosticInfo" },
-    { name = "DapBreakpointRejected",  text = get_icon "DapBreakpointRejected",  texthl = "DiagnosticError" },
-    { name = "DapBreakpointCondition", text = get_icon "DapBreakpointCondition", texthl = "DiagnosticInfo" },
-    { name = "DapLogPoint",            text = get_icon "DapLogPoint",            texthl = "DiagnosticInfo" },
+    { name = "DiagnosticSignError",    text = get_icon("DiagnosticError"),        texthl = "DiagnosticSignError" },
+    { name = "DiagnosticSignWarn",     text = get_icon("DiagnosticWarn"),         texthl = "DiagnosticSignWarn" },
+    { name = "DiagnosticSignHint",     text = get_icon("DiagnosticHint"),         texthl = "DiagnosticSignHint" },
+    { name = "DiagnosticSignInfo",     text = get_icon("DiagnosticInfo"),         texthl = "DiagnosticSignInfo" },
+    { name = "DapStopped",             text = get_icon("DapStopped"),             texthl = "DiagnosticWarn" },
+    { name = "DapBreakpoint",          text = get_icon("DapBreakpoint"),          texthl = "DiagnosticInfo" },
+    { name = "DapBreakpointRejected",  text = get_icon("DapBreakpointRejected"),  texthl = "DiagnosticError" },
+    { name = "DapBreakpointCondition", text = get_icon("DapBreakpointCondition"), texthl = "DiagnosticInfo" },
+    { name = "DapLogPoint",            text = get_icon("DapLogPoint"),            texthl = "DiagnosticInfo" }
   }
   for _, sign in ipairs(signs) do
     vim.fn.sign_define(sign.name, sign)
@@ -53,10 +53,10 @@ M.apply_default_lsp_settings = function()
     virtual_text = true,
     signs = {
       text = {
-        [vim.diagnostic.severity.ERROR] = utils.get_icon "DiagnosticError",
-        [vim.diagnostic.severity.HINT] = utils.get_icon "DiagnosticHint",
-        [vim.diagnostic.severity.WARN] = utils.get_icon "DiagnosticWarn",
-        [vim.diagnostic.severity.INFO] = utils.get_icon "DiagnosticInfo",
+        [vim.diagnostic.severity.ERROR] = utils.get_icon("DiagnosticError"),
+        [vim.diagnostic.severity.HINT] = utils.get_icon("DiagnosticHint"),
+        [vim.diagnostic.severity.WARN] = utils.get_icon("DiagnosticWarn"),
+        [vim.diagnostic.severity.INFO] = utils.get_icon("DiagnosticInfo"),
       },
       active = signs,
     },
@@ -77,14 +77,15 @@ M.apply_default_lsp_settings = function()
   -- Applies the option diagnostics_mode from ../1-options.lua
   M.diagnostics = {
     -- diagnostics off
-    [0] = utils.extend_tbl(
+    [0] = vim.tbl_deep_extend(
+      "force",
       default_diagnostics,
       { underline = false, virtual_text = false, signs = false, update_in_insert = false }
     ),
     -- status only
-    utils.extend_tbl(default_diagnostics, { virtual_text = false, signs = false }),
+    vim.tbl_deep_extend("force", default_diagnostics, { virtual_text = false, signs = false }),
     -- virtual text off, signs on
-    utils.extend_tbl(default_diagnostics, { virtual_text = false }),
+    vim.tbl_deep_extend("force", default_diagnostics, { virtual_text = false }),
     -- all diagnostics on
     default_diagnostics,
   }
@@ -140,7 +141,7 @@ function M.apply_user_lsp_settings(server_name)
   { properties = { "documentation", "detail", "additionalTextEdits" } }
   M.capabilities.textDocument.foldingRange = { dynamicRegistration = false, lineFoldingOnly = true }
   M.flags = {}
-  local opts = utils.extend_tbl(server, { capabilities = M.capabilities, flags = M.flags })
+  local opts = vim.tbl_deep_extend("force", server, { capabilities = M.capabilities, flags = M.flags })
 
   -- Define user server rules.
   if server_name == "jsonls" then -- Add schemastore schemas
@@ -162,7 +163,7 @@ function M.apply_user_lsp_settings(server_name)
   local old_on_attach = server.on_attach
   opts.on_attach = function(client, bufnr)
     -- If the server on_attach function exist → server.on_attach(client, bufnr)
-    utils.conditional_func(old_on_attach, true, client, bufnr)
+    if type(old_on_attach) == "function" then old_on_attach(client, bufnr) end
     -- Also, apply mappings to the buffer.
     M.apply_user_lsp_mappings(client, bufnr)
   end
