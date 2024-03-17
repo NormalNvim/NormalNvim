@@ -187,6 +187,7 @@ return {
         once = true,
         callback = function()
           local stats = require("lazy").stats()
+          stats.real_cputime = not is_windows
           local ms = math.floor(stats.startuptime * 100 + 0.5) / 100
           opts.section.footer.val = {
             " ",
