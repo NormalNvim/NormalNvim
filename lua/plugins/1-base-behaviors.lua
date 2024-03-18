@@ -41,7 +41,7 @@ return {
     event = "User BaseDefered",
     cmd = { "RnvimrToggle" },
     enabled = not is_windows,
-    config = function(_, opts)
+    config = function()
       -- vim.g.rnvimr_vanilla = 1            -- Often solves issues in your ranger config.
       vim.g.rnvimr_enable_picker = 1         -- Close rnvimr after choosing a file.
       vim.g.rnvimr_ranger_cmd = { "ranger" } -- By passing a script like TERM=foot ranger "$@" you can open terminals inside ranger.
@@ -55,7 +55,6 @@ return {
           style = "minimal",
         }
       end
-      require("project_nvim").setup(opts)
     end,
   },
 
