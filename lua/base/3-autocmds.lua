@@ -58,7 +58,7 @@ autocmd({ "VimEnter" }, {
 
       -- In order to avoid visual glitches.
       utils.trigger_event("User BaseDefered", true)
-      utils.trigger_event("BufEnter", true) -- also, initialize tabline_buffers
+      utils.trigger_event("BufEnter", true) -- also, initialize tabline_buffers.
 
     else -- Wait some ms before triggering the event.
       vim.defer_fn(function()
