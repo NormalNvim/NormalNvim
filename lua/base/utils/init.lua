@@ -268,21 +268,27 @@ end
 --- Convenient wapper to save code when we Trigger events.
 --- To listen for a event triggered by this function you can use `autocmd`.
 ---@param event string Name of the event.
+---@param is_urgent boolean|nil If true, trigger directly instead of scheduling. Useful for startup events.
 -- @usage To run a User event:   `trigger_event("User MyUserEvent")`
--- @usage To run a Neovim event: `trigger_event("BufEnter")`
-function M.trigger_event(event)
-  -- detect if event start with the substring "User "
-  local is_user_event = string.match(event, "^User ") ~= nil
-
-  vim.schedule(function()
+-- @usage To run a Neovim event: `trigger_event("BufEnter")
+function M.trigger_event(event, is_urgent)
+  -- define behavior
+  local function trigger()
+    local is_user_event = string.match(event, "^User ") ~= nil
     if is_user_event then
-      -- Substract the substring "User " from the beginning of the event.
       event = event:gsub("^User ", "")
       vim.api.nvim_exec_autocmds("User", { pattern = event, modeline = false })
     else
       vim.api.nvim_exec_autocmds(event, { modeline = false })
     end
-  end)
+  end
+
+  -- execute
+  if is_urgent then
+    trigger()
+  else
+    vim.schedule(trigger)
+  end
 end
 
 --- Register queued which-key mappings.
