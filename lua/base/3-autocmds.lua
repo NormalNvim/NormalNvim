@@ -55,7 +55,8 @@ autocmd({ "VimEnter" }, {
   callback = function()
     -- If nvim is opened passing a filename, trigger the event inmediatelly.
     if #vim.fn.argv() >= 1 then
-      utils.trigger_event("User BaseDefered")
+      utils.trigger_event("User BaseDefered", true)
+      utils.trigger_event("BufEnter", true)
     else -- Wait some ms before triggering the event.
       vim.defer_fn(function()
         utils.trigger_event("User BaseDefered")
