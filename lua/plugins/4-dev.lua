@@ -389,7 +389,7 @@ return {
     "mfussenegger/nvim-dap",
     enabled = vim.fn.has "win32" == 0,
     event = "User BaseFile",
-    config = function(_, opts)
+    config = function()
       local dap = require("dap")
 
       -- C#
@@ -695,17 +695,11 @@ return {
           }
         },
       }
-
     end, -- of dap config
     dependencies = {
-      {
-        "jay-babu/mason-nvim-dap.nvim",
-        "jbyuki/one-small-step-for-vimkind",
-        "nvim-java/nvim-java",
-        dependencies = { "nvim-dap" },
-        cmd = { "DapInstall", "DapUninstall" },
-        opts = { handlers = {} },
-      },
+      "jay-babu/mason-nvim-dap.nvim",
+      "jbyuki/one-small-step-for-vimkind",
+      "nvim-java/nvim-java",
       {
         "rcarriga/nvim-dap-ui",
         opts = { floating = { border = "rounded" } },
