@@ -608,8 +608,9 @@ return {
       local npairs = require "nvim-autopairs"
       npairs.setup(opts)
       if not vim.g.autopairs_enabled then npairs.disable() end
-      local status_ok, cmp = pcall(require, "cmp")
-      if status_ok then
+
+      local is_cmp_loaded, cmp = pcall(require, "cmp")
+      if is_cmp_loaded then
         cmp.event:on(
           "confirm_done",
           require("nvim-autopairs.completion.cmp").on_confirm_done {
