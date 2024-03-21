@@ -418,6 +418,7 @@ return {
       -- Java
       -- Note: The java debugger jdtls is automatically spawned and configured
       -- when a java file is opened by the plugin nvim-java.
+      -- Compatible with maven, gradle, and projects created by eclipse.
 
       -- Python
       dap.adapters.python = {

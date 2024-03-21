@@ -157,7 +157,7 @@ return {
 
   -- nvim-java [java support]
   -- https://github.com/nvim-java/nvim-java
-  -- Reliable jdtls support. Must go before mason-lspconfig nad lsp-config.
+  -- Reliable jdtls support. Must go before mason-lspconfig and lsp-config.
   {
     "nvim-java/nvim-java",
     ft = { "java" },
@@ -169,20 +169,13 @@ return {
       "MunifTanjim/nui.nvim",
       "neovim/nvim-lspconfig",
       "mfussenegger/nvim-dap",
-      {
-        "williamboman/mason.nvim",
-        opts = {
-          registries = {
-            "github:nvim-java/mason-registry",
-            "github:mason-org/mason-registry",
-          },
-        },
-      }
+      "williamboman/mason.nvim",
     },
-    config = function()
-      -- nvim-java DAP support.
-      require("java").setup()
-    end
+    opts = {
+	    notifications = {
+	      dap = false,
+	    },
+    },
   },
 
   --  nvim-lspconfig [lsp configs]
@@ -235,6 +228,10 @@ return {
       "MasonUpdateAll", -- this cmd is provided by mason-extra-cmds
     },
     opts = {
+      registries = {
+        "github:nvim-java/mason-registry",
+        "github:mason-org/mason-registry",
+      },
       ui = {
         icons = {
           package_installed = "✓",
