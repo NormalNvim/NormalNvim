@@ -451,7 +451,6 @@ maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "Diagnostics" }
 maps.n["<leader>uD"] = { ui.set_indent, desc = "Change indent setting" }
 maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Signcolumn" }
 maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Statusline" }
-maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "CodeLens" }
 maps.n["<leader>un"] = { ui.change_number, desc = "Change line numbering" }
 maps.n["<leader>uP"] = { ui.toggle_paste, desc = "Paste mode" }
 maps.n["<leader>us"] = { ui.toggle_spell, desc = "Spellcheck" }
@@ -1343,6 +1342,7 @@ function M.lsp_mappings(client, bufnr)
       function() vim.lsp.codelens.run() end,
       desc = "LSP CodeLens run",
     }
+    maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "CodeLens" }
   end
 
   lsp_mappings.n["<leader>lL"] = {
