@@ -147,7 +147,7 @@ end
 ---@param opts? table The nvim-notify options to use (:help notify-options).
 function M.notify(msg, type, opts)
   vim.schedule(function() vim.notify(
-    msg, type, vim.tbl_deep_extend("force", { title = "Neovim" }, opts)) end)
+    msg, type, vim.tbl_deep_extend("force", { title = "Neovim" }, opts or {})) end)
 end
 
 --- Convert a path to the path format of the current operative system.
