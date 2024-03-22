@@ -55,7 +55,7 @@ return {
   { "neovim/nvim-lspconfig", commit = "9ad7021267c6caeb01f839c91ad8f15fb608807e" },
   { "numToStr/Comment.nvim", commit = "0236521ea582747b58869cb72f70ccfa967d2e89" },
   { "nvim-java/lua-async-await", commit = "645ad2bc4432d455e84eae6ebdc7e5cbdf337b95" },
-  { "nvim-java/nvim-java", commit = "7c6bddace15ae3cfaf0cbacf54ca91987d38b244" },
+  { "nvim-java/nvim-java", commit = "9f9b785e9f8a452e7bd56d809578efc1c5908b6b" },
   { "nvim-java/nvim-java-core", commit = "0fc8f59160de8cd545bfb8629d97aae4a6531628" },
   { "nvim-java/nvim-java-dap", commit = "55c90c5d2414f6e66f843f38e111bee284d71e61" },
   { "nvim-java/nvim-java-test", commit = "a3fe70c48936e1c143ed366e127e9c3db4791716" },
