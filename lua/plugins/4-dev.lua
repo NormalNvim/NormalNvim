@@ -698,43 +698,54 @@ return {
       }
     end, -- of dap config
     dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "rcarriga/cmp-dap",
       "jay-babu/mason-nvim-dap.nvim",
       "jbyuki/one-small-step-for-vimkind",
       "nvim-java/nvim-java",
-      {
-        "rcarriga/nvim-dap-ui",
-        opts = { floating = { border = "rounded" } },
-        config = function(_, opts)
-          local dap, dapui = require "dap", require "dapui"
-          dap.listeners.after.event_initialized["dapui_config"] = function(
-          )
-            dapui.open()
-          end
-          dap.listeners.before.event_terminated["dapui_config"] = function(
-          )
-            dapui.close()
-          end
-          dap.listeners.before.event_exited["dapui_config"] = function()
-            dapui.close()
-          end
-          dapui.setup(opts)
-        end,
-      },
-      {
-        "rcarriga/cmp-dap",
-        dependencies = { "nvim-cmp" },
-        config = function()
-          require("cmp").setup.filetype(
-            { "dap-repl", "dapui_watches", "dapui_hover" },
-            {
-              sources = {
-                { name = "dap" },
-              },
-            }
-          )
-        end,
-      },
     },
+  },
+
+  -- nvim-dap-ui [dap ui]
+  -- https://github.com/mfussenegger/nvim-dap-ui
+  -- user interface for the debugger dap
+  {
+    "rcarriga/nvim-dap-ui",
+    dependencies = { "nvim-neotest/nvim-nio" },
+    opts = { floating = { border = "rounded" } },
+    config = function(_, opts)
+      local dap, dapui = require "dap", require "dapui"
+      dap.listeners.after.event_initialized["dapui_config"] = function(
+      )
+        dapui.open()
+      end
+      dap.listeners.before.event_terminated["dapui_config"] = function(
+      )
+        dapui.close()
+      end
+      dap.listeners.before.event_exited["dapui_config"] = function()
+        dapui.close()
+      end
+      dapui.setup(opts)
+    end,
+  },
+
+  -- cmp-dap [dap autocomplete]
+  -- https://github.com/mfussenegger/cmp-dap
+  -- Enables autocomplete for the debugger dap.
+  {
+    "rcarriga/cmp-dap",
+    dependencies = { "nvim-cmp" },
+    config = function()
+      require("cmp").setup.filetype(
+        { "dap-repl", "dapui_watches", "dapui_hover" },
+        {
+          sources = {
+            { name = "dap" },
+          },
+        }
+      )
+    end,
   },
 
   --  TESTING -----------------------------------------------------------------
