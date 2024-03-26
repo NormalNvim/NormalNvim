@@ -61,7 +61,7 @@ local get_icon = utils.get_icon
 local is_available = utils.is_available
 local ui = require "base.utils.ui"
 local maps = require("base.utils").get_mappings_template()
-local is_android = vim.fn.isdirectory('/system') == 1   -- true if on android
+local is_android = vim.fn.isdirectory('/data') == 1 -- true if on android
 
 -- -------------------------------------------------------------------------
 --
