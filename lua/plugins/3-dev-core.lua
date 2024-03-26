@@ -172,9 +172,9 @@ return {
       "williamboman/mason.nvim",
     },
     opts = {
-	    notifications = {
-	      dap = false,
-	    },
+      notifications = {
+        dap = false,
+      },
     },
   },
 
@@ -297,7 +297,7 @@ return {
       excluded_lsp_clients = {
         "null-ls", "jdtls"
       },
-      grace_period = (60*15),
+      grace_period = (60 * 15),
       wakeup_delay = 3000,
       notifications = false,
       retries = 3,
@@ -319,7 +319,7 @@ return {
     event = "InsertEnter",
     opts = function()
       -- ensure dependencies exist
-      local cmp = require "cmp"
+      local cmp = require("cmp")
       local luasnip = require("luasnip")
       local lspkind = require("lspkind")
 
@@ -339,8 +339,8 @@ return {
         enabled = function() -- disable in certain cases on dap.
           local is_prompt = vim.bo.buftype == "prompt"
           local is_dap_prompt = utils.is_available("cmp-dap")
-            and vim.tbl_contains(
-              { "dap-repl", "dapui_watches", "dapui_hover" }, vim.bo.filetype)
+              and vim.tbl_contains(
+                { "dap-repl", "dapui_watches", "dapui_hover" }, vim.bo.filetype)
           if is_prompt and not is_dap_prompt then
             return false
           else

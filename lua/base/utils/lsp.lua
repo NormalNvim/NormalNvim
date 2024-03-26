@@ -105,7 +105,6 @@ M.apply_default_lsp_settings = function()
     -- check if client is fully disabled or filtered by function
     return not (vim.tbl_contains(disabled, client.name) or (type(filter) == "function" and not filter(client)))
   end
-
 end
 
 --- This function has the sole purpose of passing the lsp keymappings to lsp.

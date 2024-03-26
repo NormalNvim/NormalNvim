@@ -45,7 +45,7 @@ return {
       -- vim.g.rnvimr_vanilla = 1            -- Often solves issues in your ranger config.
       vim.g.rnvimr_enable_picker = 1         -- Close rnvimr after choosing a file.
       vim.g.rnvimr_ranger_cmd = { "ranger" } -- By passing a script like TERM=foot ranger "$@" you can open terminals inside ranger.
-      if is_android then -- Open on full screenn
+      if is_android then                     -- Open on full screenn
         vim.g.rnvimr_layout = {
           relative = "editor",
           width = 200,
@@ -85,10 +85,10 @@ return {
       manual_mode = false,
 
       -- Don't auto-chdir for specific filetypes.
-      exclude_filetype_chdir = {"", "OverseerList", "alpha"},
+      exclude_filetype_chdir = { "", "OverseerList", "alpha" },
 
       -- Don't auto-chdir for specific buftypes.
-      exclude_buftype_chdir = {"nofile", "terminal"},
+      exclude_buftype_chdir = { "nofile", "terminal" },
 
       --ignore_lsp = { "lua_ls" },
     },
@@ -322,7 +322,7 @@ return {
     cmd = "Neotree",
     opts = function()
       vim.g.neo_tree_remove_legacy_commands = true
-      local utils = require "base.utils"
+      local utils = require("base.utils")
       local get_icon = utils.get_icon
       return {
         auto_clean_after_session_restore = true,
@@ -401,7 +401,7 @@ return {
             if node.type == "directory" or node:has_children() then
               if not node:is_expanded() then -- if unexpanded, expand
                 state.commands.toggle_node(state)
-              else -- if expanded and has children, seleect the next child
+              else                           -- if expanded and has children, seleect the next child
                 require("neo-tree.ui.renderer").focus_node(
                   state,
                   node:get_child_ids()[1]
@@ -522,20 +522,20 @@ return {
 
         -- only use indent until a file is opened
         return (filetype == "" or buftype == "nofile") and "indent"
-          or function(bufnr)
-            return require("ufo")
-                .getFolds(bufnr, "lsp")
-                :catch(
-                  function(err)
-                    return handleFallbackException(bufnr, err, "treesitter")
-                  end
-                )
-                :catch(
-                  function(err)
-                    return handleFallbackException(bufnr, err, "indent")
-                  end
-                )
-          end
+            or function(bufnr)
+              return require("ufo")
+                  .getFolds(bufnr, "lsp")
+                  :catch(
+                    function(err)
+                      return handleFallbackException(bufnr, err, "treesitter")
+                    end
+                  )
+                  :catch(
+                    function(err)
+                      return handleFallbackException(bufnr, err, "indent")
+                    end
+                  )
+            end
       end,
     },
   },
@@ -605,7 +605,7 @@ return {
       },
     },
     config = function(_, opts)
-      local npairs = require "nvim-autopairs"
+      local npairs = require("nvim-autopairs")
       npairs.setup(opts)
       if not vim.g.autopairs_enabled then npairs.disable() end
 
@@ -639,13 +639,14 @@ return {
         handler_opts = round_borders, -- Window style
 
         -- Hint mode
-        hint_enable = false,          -- Display it as hint.
+        hint_enable = false, -- Display it as hint.
         hint_prefix = "👈 ",
 
         -- Additionally, you can use <space>ui to toggle inlay hints.
         toggle_key_flip_floatwin_setting = is_enabled
-      } end,
-    config = function(_, opts) require'lsp_signature'.setup(opts) end
+      }
+    end,
+    config = function(_, opts) require('lsp_signature').setup(opts) end
   },
 
   -- distroupdate.nvim [distro update]
@@ -663,20 +664,20 @@ return {
       "DistroUpdateRevert"
     },
     opts = function()
-      local utils = require "base.utils"
+      local utils = require("base.utils")
       local config_dir = utils.os_path(vim.fn.stdpath "config" .. "/lua/base/")
       return {
-        channel = "stable",                                                  -- stable/nightly
+        channel = "stable", -- stable/nightly
         hot_reload_files = {
           config_dir .. "1-options.lua",
           config_dir .. "4-mappings.lua"
         },
         hot_reload_callback = function()
-          vim.cmd(":silent! colorscheme " .. base.default_colorscheme)       -- nvim     colorscheme reload command
-          vim.cmd(":silent! doautocmd ColorScheme")                          -- heirline colorscheme reload event
+          vim.cmd(":silent! colorscheme " .. base.default_colorscheme) -- nvim     colorscheme reload command
+          vim.cmd(":silent! doautocmd ColorScheme")                    -- heirline colorscheme reload event
         end
       }
     end
   },
 
-}  -- end of return
+} -- end of return

@@ -52,7 +52,7 @@ return {
     opts = function()
       -- improve performance, when possible
       local _, ts_context_commentstring =
-        pcall(require, "ts_context_commentstring.integrations.comment_nvim")
+          pcall(require, "ts_context_commentstring.integrations.comment_nvim")
       local pre_hook = ts_context_commentstring.create_pre_hook() or nil
 
       -- opts
@@ -395,8 +395,8 @@ return {
       -- C#
       dap.adapters.coreclr = {
         type = 'executable',
-        command = vim.fn.stdpath('data')..'/mason/bin/netcoredbg',
-        args = {'--interpreter=vscode'}
+        command = vim.fn.stdpath('data') .. '/mason/bin/netcoredbg',
+        args = { '--interpreter=vscode' }
       }
       dap.configurations.cs = {
         {
@@ -404,7 +404,7 @@ return {
           name = "launch - netcoredbg",
           request = "launch",
           program = function() -- Ask the user what executable wants to debug
-              return vim.fn.input('Path to dll: ', vim.fn.getcwd() .. '/bin/Program.exe', 'file')
+            return vim.fn.input('Path to dll: ', vim.fn.getcwd() .. '/bin/Program.exe', 'file')
           end,
         },
       }
@@ -422,9 +422,9 @@ return {
 
       -- Python
       dap.adapters.python = {
-          type = 'executable',
-          command = vim.fn.stdpath('data')..'/mason/packages/debugpy/venv/bin/python',
-          args = { '-m', 'debugpy.adapter' },
+        type = 'executable',
+        command = vim.fn.stdpath('data') .. '/mason/packages/debugpy/venv/bin/python',
+        args = { '-m', 'debugpy.adapter' },
       }
       dap.configurations.python = {
         {
@@ -444,7 +444,7 @@ return {
           type = 'nlua',
           request = 'attach',
           name = "Attach to running Neovim instance",
-          program = function() pcall(require"osv".launch({port = 8086})) end,
+          program = function() pcall(require "osv".launch({ port = 8086 })) end,
         }
       }
 
@@ -453,9 +453,9 @@ return {
         type = 'server',
         port = "${port}",
         executable = {
-          command = vim.fn.stdpath('data')..'/mason/bin/codelldb',
-          args = {"--port", "${port}"},
-           detached = function() if is_windows then return false else return true end end,
+          command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
+          args = { "--port", "${port}" },
+          detached = function() if is_windows then return false else return true end end,
         }
       }
       dap.configurations.c = {
@@ -517,8 +517,8 @@ return {
         type = 'server',
         port = '${port}',
         executable = {
-          command = vim.fn.stdpath('data')..'/mason/packages/delve/dlv',
-          args = {'dap', '-l', '127.0.0.1:${port}'},
+          command = vim.fn.stdpath('data') .. '/mason/packages/delve/dlv',
+          args = { 'dap', '-l', '127.0.0.1:${port}' },
         }
       }
       dap.configurations.go = {
@@ -540,13 +540,13 @@ return {
       -- Dart / Flutter
       dap.adapters.dart = {
         type = 'executable',
-        command = vim.fn.stdpath('data')..'/mason/bin/dart-debug-adapter',
-        args = {'dart'}
+        command = vim.fn.stdpath('data') .. '/mason/bin/dart-debug-adapter',
+        args = { 'dart' }
       }
       dap.adapters.flutter = {
         type = 'executable',
-        command = vim.fn.stdpath('data')..'/mason/bin/dart-debug-adapter',
-        args = {'flutter'}
+        command = vim.fn.stdpath('data') .. '/mason/bin/dart-debug-adapter',
+        args = { 'flutter' }
       }
       dap.configurations.dart = {
         {
@@ -573,33 +573,33 @@ return {
       -- Kotlin projects have very weak project structure conventions.
       -- You must manually specify what the project root and main class are.
       dap.adapters.kotlin = {
-        type = 'executable';
-        command = vim.fn.stdpath('data')..'/mason/bin/kotlin-debug-adapter',
+        type = 'executable',
+        command = vim.fn.stdpath('data') .. '/mason/bin/kotlin-debug-adapter',
       }
       dap.configurations.kotlin = {
-          {
-              type = 'kotlin';
-              request = 'launch';
-              name = 'Launch kotlin program';
-              projectRoot = "${workspaceFolder}/app"; -- ensure this is correct
-              mainClass = "AppKt";                    -- ensure this is correct
-          };
+        {
+          type = 'kotlin',
+          request = 'launch',
+          name = 'Launch kotlin program',
+          projectRoot = "${workspaceFolder}/app",     -- ensure this is correct
+          mainClass = "AppKt",                        -- ensure this is correct
+        },
       }
 
       -- Javascript / Typescript (firefox)
       dap.adapters.firefox = {
         type = 'executable',
-        command = vim.fn.stdpath('data')..'/mason/bin/firefox-debug-adapter',
+        command = vim.fn.stdpath('data') .. '/mason/bin/firefox-debug-adapter',
       }
       dap.configurations.typescript = {
         {
-        name = 'Debug with Firefox',
-        type = 'firefox',
-        request = 'launch',
-        reAttach = true,
-        url = 'http://localhost:4200', -- Write the actual URL of your project.
-        webRoot = '${workspaceFolder}',
-        firefoxExecutable = '/usr/bin/firefox'
+          name = 'Debug with Firefox',
+          type = 'firefox',
+          request = 'launch',
+          reAttach = true,
+          url = 'http://localhost:4200', -- Write the actual URL of your project.
+          webRoot = '${workspaceFolder}',
+          firefoxExecutable = '/usr/bin/firefox'
         }
       }
       dap.configurations.javascript = dap.configurations.typescript
@@ -649,36 +649,36 @@ return {
 
       -- Shell
       dap.adapters.bashdb = {
-        type = 'executable';
-        command = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/bash-debug-adapter';
-        name = 'bashdb';
+        type = 'executable',
+        command = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/bash-debug-adapter',
+        name = 'bashdb',
       }
       dap.configurations.sh = {
         {
-          type = 'bashdb';
-          request = 'launch';
-          name = "Launch file";
-          showDebugOutput = true;
-          pathBashdb = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb';
-          pathBashdbLib = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir';
-          trace = true;
-          file = "${file}";
-          program = "${file}";
-          cwd = '${workspaceFolder}';
-          pathCat = "cat";
-          pathBash = "/bin/bash";
-          pathMkfifo = "mkfifo";
-          pathPkill = "pkill";
-          args = {};
-          env = {};
-          terminalKind = "integrated";
+          type = 'bashdb',
+          request = 'launch',
+          name = "Launch file",
+          showDebugOutput = true,
+          pathBashdb = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir/bashdb',
+          pathBashdbLib = vim.fn.stdpath("data") .. '/mason/packages/bash-debug-adapter/extension/bashdb_dir',
+          trace = true,
+          file = "${file}",
+          program = "${file}",
+          cwd = '${workspaceFolder}',
+          pathCat = "cat",
+          pathBash = "/bin/bash",
+          pathMkfifo = "mkfifo",
+          pathPkill = "pkill",
+          args = {},
+          env = {},
+          terminalKind = "integrated",
         }
       }
 
       -- Elixir
       dap.adapters.mix_task = {
         type = 'executable',
-        command = vim.fn.stdpath("data") .. '/mason/bin/elixir-ls-debugger';
+        command = vim.fn.stdpath("data") .. '/mason/bin/elixir-ls-debugger',
         args = {}
       }
       dap.configurations.elixir = {
@@ -686,7 +686,7 @@ return {
           type = "mix_task",
           name = "mix test",
           task = 'test',
-          taskArgs = {"--trace"},
+          taskArgs = { "--trace" },
           request = "launch",
           startApps = true, -- for Phoenix projects
           projectDir = "${workspaceFolder}",
@@ -714,7 +714,7 @@ return {
     dependencies = { "nvim-neotest/nvim-nio" },
     opts = { floating = { border = "rounded" } },
     config = function(_, opts)
-      local dap, dapui = require "dap", require "dapui"
+      local dap, dapui = require("dap"), require("dapui")
       dap.listeners.after.event_initialized["dapui_config"] = function(
       )
         dapui.open()
@@ -786,16 +786,16 @@ return {
       return {
         -- your neotest config here
         adapters = {
-          require "neotest-dart",
-          require "neotest-dotnet",
-          require "neotest-elixir",
-          require "neotest-go",
-          require "neotest-java",
-          require "neotest-jest",
-          require "neotest-phpunit",
-          require "neotest-python",
-          require "neotest-rust",
-          require "neotest-zig",
+          require("neotest-dart"),
+          require("neotest-dotnet"),
+          require("neotest-elixir"),
+          require("neotest-go"),
+          require("neotest-java"),
+          require("neotest-jest"),
+          require("neotest-phpunit"),
+          require("neotest-python"),
+          require("neotest-rust"),
+          require("neotest-zig"),
         },
       }
     end,
@@ -857,13 +857,14 @@ return {
         desc = "Auto generate C/C++ tags",
         callback = function()
           local is_c = vim.bo.filetype == "c" or vim.bo.filetype == "cpp"
-          if is_c then vim.g.gutentags_enabled = 1
-          else vim.g.gutentags_enabled = 0
+          if is_c then
+            vim.g.gutentags_enabled = 1
+          else
+            vim.g.gutentags_enabled = 0
           end
         end,
       })
-
     end,
   },
 
-}  -- end of return
+} -- end of return
