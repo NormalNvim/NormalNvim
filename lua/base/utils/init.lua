@@ -95,13 +95,12 @@ function M.get_icon(kind, padding, no_fallback)
   if not vim.g.icons_enabled and no_fallback then return "" end
   local icon_pack = vim.g.icons_enabled and "icons" or "text_icons"
   if not M[icon_pack] then
-    M.icons = require "base.icons.nerd_font"
-    M.text_icons = require "base.icons.text"
+    M.icons = require("base.icons.nerd_font")
+    M.text_icons = require("base.icons.text")
   end
   local icon = M[icon_pack] and M[icon_pack][kind]
   return icon and icon .. string.rep(" ", padding or 0) or ""
 end
-
 
 --- Get an empty table of mappings with a key for each map mode.
 ---@return table<string,table> # a table with entries for each map mode.
@@ -136,7 +135,7 @@ function M.is_big_file(bufnr)
   local filesize = vim.fn.getfsize(vim.api.nvim_buf_get_name(bufnr))
   local nlines = vim.api.nvim_buf_line_count(bufnr)
   local is_big_file = (filesize > vim.g.big_file.size)
-    or (nlines > vim.g.big_file.lines)
+      or (nlines > vim.g.big_file.lines)
   return is_big_file
 end
 
@@ -146,8 +145,10 @@ end
 ---@param type number|nil The type of the notification (:help vim.log.levels).
 ---@param opts? table The nvim-notify options to use (:help notify-options).
 function M.notify(msg, type, opts)
-  vim.schedule(function() vim.notify(
-    msg, type, vim.tbl_deep_extend("force", { title = "Neovim" }, opts or {})) end)
+  vim.schedule(function()
+    vim.notify(
+      msg, type, vim.tbl_deep_extend("force", { title = "Neovim" }, opts or {}))
+  end)
 end
 
 --- Convert a path to the path format of the current operative system.
@@ -216,12 +217,12 @@ end
 function M.set_url_effect()
   --- regex used for matching a valid URL/URI string
   local url_matcher =
-    "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)" ..
-    "%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)" ..
-    "[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|" ..
-    "[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)" ..
-    "|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*" ..
-    "|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
+      "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)" ..
+      "%([&:#*@~%_\\-=?!+;/0-9a-z]+%(%([.;/?]|[.][.]+)" ..
+      "[&:#*@~%_\\-=?!+/0-9a-z]+|:\\d+|,%(%(%(h?ttps?|ftp|file|ssh|git)://|" ..
+      "[a-z]+[@][a-z]+[.][a-z]+:)@![0-9a-z]+))*|\\([&:#*@~%_\\-=?!+;/.0-9a-z]*\\)" ..
+      "|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*" ..
+      "|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
   M.delete_url_effect()
   if vim.g.url_effect_enabled then

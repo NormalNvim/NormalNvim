@@ -39,7 +39,7 @@ local function bool2str(bool) return bool and "on" or "off" end
 
 --- Change the number display modes
 function M.change_number()
-  local number = vim.wo.number -- local to window
+  local number = vim.wo.number                 -- local to window
   local relativenumber = vim.wo.relativenumber -- local to window
   if not number and not relativenumber then
     vim.wo.number = true
@@ -61,9 +61,9 @@ function M.set_indent()
     if not indent or indent == 0 then return end
     vim.bo.expandtab = (indent > 0) -- local to buffer
     indent = math.abs(indent)
-    vim.bo.tabstop = indent -- local to buffer
-    vim.bo.softtabstop = indent -- local to buffer
-    vim.bo.shiftwidth = indent -- local to buffer
+    vim.bo.tabstop = indent         -- local to buffer
+    vim.bo.softtabstop = indent     -- local to buffer
+    vim.bo.shiftwidth = indent      -- local to buffer
     utils.notify(string.format("indent=%d %s", indent, vim.bo.expandtab and "expandtab" or "noexpandtab"))
   end
 end
