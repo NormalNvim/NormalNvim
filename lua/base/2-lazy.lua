@@ -14,8 +14,8 @@
 -- lazy updater options
 -- Use the same values you have in the plugin `distroupdate.nvim`
 local updater = {
-  channel = "stable" ,               -- 'nightly', or 'stable'
-  snapshot_module = "lazy_snapshot"  -- snapshot file name without extension.
+  channel = "stable",               -- 'nightly', or 'stable'
+  snapshot_module = "lazy_snapshot" -- snapshot file name without extension.
 }
 
 -- lazyload extra behavior
@@ -56,7 +56,7 @@ vim.opt.rtp:prepend(lazypath)
 
 -- assign spec (if pin_plugins is true, load ./lua/lazy_snapshot.lua).
 local pin_plugins = updater.channel == "stable"
-local spec = pin_plugins and {{ import = updater.snapshot_module }} or {}
+local spec = pin_plugins and { { import = updater.snapshot_module } } or {}
 vim.list_extend(spec, { { import = "plugins" } })
 
 -- Require lazy and pass the spec.
