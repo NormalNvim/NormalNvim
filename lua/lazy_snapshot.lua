@@ -11,7 +11,7 @@ return {
   { "Zeioth/NormalSnippets", commit = "ef841ad4a0ccc6144d605cd2b4a874b04b295cb8" },
   { "Zeioth/compiler.nvim", version = "^4" },
   { "Zeioth/distroupdate.nvim", version = "^1" },
-  { "Zeioth/dooku.nvim", version = "^2" },
+  { "Zeioth/dooku.nvim", version = "^3" },
   { "Zeioth/markmap.nvim", version = "^3" },
   { "Zeioth/mason-extra-cmds", commit = "1188781b69a09814081f1524d3b46b437df348d8" },
   { "Zeioth/project.nvim", commit = "3d30a4ddaf0f0c30892fb2f36fa4669499d7e6db" },
