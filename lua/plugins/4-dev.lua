@@ -256,10 +256,6 @@ return {
     opts = {
       on_open = "panel", -- or popout
       map_resize_keys = false,
-      no_hls = true,  -- highlight calls
-      keymaps = {
-        close = "x",
-      },
     },
     config = function(_, opts)
       require('litee.calltree').setup(opts)
