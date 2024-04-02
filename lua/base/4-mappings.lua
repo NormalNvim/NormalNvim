@@ -27,6 +27,7 @@
 --       -> session manager
 --       -> smart-splits.nvim
 --       -> aerial.nvim
+--       -> litee-calltree.nvim
 --       -> telescope.nivm                     [find]
 --       -> toggleterm.nvim
 --       -> dap.nvim                           [debugger]
@@ -783,6 +784,42 @@ end
 if is_available "aerial.nvim" then
   maps.n["<leader>i"] =
   { function() require("aerial").toggle() end, desc = "Aerial" }
+end
+
+-- letee-calltree.nvimm ------------------------------------------------------------
+if is_available "litee-calltree.nvim" then
+  ---For every buffer, look for the one with filetype "calltree" and focus it.
+  local calltree_delay = 1500 -- first run? wait a bit longer.
+  local function focus_calltree()
+    -- Note: No go to the previous cursor position, press ctrl+i / ctrl+o
+    vim.defer_fn(function()
+      for _, win in ipairs(vim.api.nvim_list_wins()) do
+        local buf = vim.api.nvim_win_get_buf(win)
+        local ft = vim.api.nvim_buf_get_option(buf, 'filetype')
+
+        if ft == "calltree" then
+          vim.api.nvim_set_current_win(win)
+          return true
+        end
+      end
+    end, calltree_delay)
+    calltree_delay = 100
+  end
+  maps.n["gj"] = {
+    function()
+      vim.lsp.buf.incoming_calls()
+      focus_calltree()
+    end,
+    desc = "Call tree (incoming)"
+  }
+  maps.n["gJ"] =
+  {
+    function()
+      vim.lsp.buf.outgoing_calls()
+      focus_calltree()
+    end,
+    desc = "Call tree (outgoing)"
+  }
 end
 
 -- telescope.nvim [find] ----------------------------------------------------
