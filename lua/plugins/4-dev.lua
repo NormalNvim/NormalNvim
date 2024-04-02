@@ -266,7 +266,7 @@ return {
 
       -- Highlight only while on calltree
       vim.api.nvim_create_autocmd({ "WinEnter" }, {
-        desc = "Clear hls when leaving calltree",
+        desc = "Clear highlights when leaving calltree + UX improvements.",
         callback = function()
           vim.defer_fn(function()
             if vim.bo.filetype == "calltree" then
