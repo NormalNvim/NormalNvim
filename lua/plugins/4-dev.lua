@@ -258,6 +258,8 @@ return {
       map_resize_keys = false,
       keymaps = {
         expand = "<CR>",
+        collapse = "c",
+        collapse_all = "C",
         jump = "<C-CR>"
       },
     },
