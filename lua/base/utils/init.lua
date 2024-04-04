@@ -26,8 +26,7 @@ local M = {}
 --- Run a shell command and capture the output and if the command
 --- succeeded or failed.
 ---@param cmd string|string[] The terminal command to execute
----@param show_error? boolean Whether or not to show an unsuccessful command
----                           as an error to the user
+---@param show_error? boolean If true, print errors if the command fail.
 ---@return string|nil # The result of a successfully executed command or nil
 function M.run_cmd(cmd, show_error)
   if type(cmd) == "string" then cmd = vim.split(cmd, " ") end

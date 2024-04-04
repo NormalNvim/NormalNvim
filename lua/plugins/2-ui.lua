@@ -170,7 +170,7 @@ return {
         --  --button("LDR f '", "  Bookmarks  "),
       }
 
-      ---- Vertical margins
+      -- Vertical margins
       dashboard.config.layout[1].val =
           vim.fn.max { 2, vim.fn.floor(vim.fn.winheight(0) * 0.10) } -- Above header
       dashboard.config.layout[3].val =
@@ -275,7 +275,8 @@ return {
             "notify",
             "startify",
             "toggleterm",
-            "Trouble"
+            "Trouble",
+            "calltree"
           }
           if vim.tbl_contains(ignored_filetypes, vim.bo.filetype) then
             vim.b.miniindentscope_disable = true

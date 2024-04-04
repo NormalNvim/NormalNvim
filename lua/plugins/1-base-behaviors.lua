@@ -21,6 +21,7 @@
 --       -> hop.nvim               [go to word visually]
 --       -> nvim-autopairs         [auto close brackets]
 --       -> lsp_signature.nvim     [auto params help]
+--       -> nvim-lightbulb         [lightbulb for code actions]
 --       -> distroupdate.nvim      [distro update]
 
 local is_windows = vim.fn.has('win32') == 1         -- true if on windows
@@ -647,6 +648,33 @@ return {
       }
     end,
     config = function(_, opts) require('lsp_signature').setup(opts) end
+  },
+
+  -- nvim-lightbulb [lightbulb for code actions]
+  -- https://github.com/kosayoda/nvim-lightbulb
+  -- Show a lightbulb where a code action is available
+  {
+    'kosayoda/nvim-lightbulb',
+    enabled = vim.g.codeactions_enabled,
+    event = "VeryLazy",
+    opts = {
+      action_kinds = {  -- show only for relevant code actions.
+        "quickfix",
+      },
+      ignore = {
+        ft = { "lua" }, -- ignore filetypes with bad code actions.
+      },
+      autocmd = {
+        enabled = true,
+        updatetime = 100,
+      },
+      sign = { enabled = false },
+      virtual_text = {
+        enabled = true,
+        text = "💡"
+      }
+    },
+    config = function(_, opts) require("nvim-lightbulb").setup(opts) end
   },
 
   -- distroupdate.nvim [distro update]

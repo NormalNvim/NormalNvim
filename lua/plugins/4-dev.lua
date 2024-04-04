@@ -15,6 +15,7 @@
 
 --       ## ANALYZER
 --       -> aerial.nvim                    [symbols tree]
+--       -> litee-calltree.nvim            [calltree]
 
 --       ## CODE DOCUMENTATION
 --       -> dooku.nvim                     [html doc generator]
@@ -226,6 +227,62 @@ return {
             require("aerial").tree_set_collapse_level(0, 0)
           end
         end,
+      })
+    end
+  },
+
+  -- Litee calltree [calltree]
+  -- https://github.com/ldelossa/litee.nvim
+  -- https://github.com/ldelossa/litee-calltree.nvim
+  -- press ? inside the panel to show help.
+  {
+    'ldelossa/litee.nvim',
+    event = "User BaseFile",
+    opts = {
+      notify = { enabled = false },
+      panel = {
+          orientation = "bottom",
+          panel_size = 10,
+      },
+    },
+    config = function(_, opts)
+      require('litee.lib').setup(opts)
+    end
+  },
+  {
+    'ldelossa/litee-calltree.nvim',
+    dependencies = 'ldelossa/litee.nvim',
+    event = "User BaseFile",
+    opts = {
+      on_open = "panel", -- or popout
+      map_resize_keys = false,
+      keymaps = {
+        expand = "<CR>",
+        collapse = "c",
+        collapse_all = "C",
+        jump = "<C-CR>"
+      },
+    },
+    config = function(_, opts)
+      require('litee.calltree').setup(opts)
+
+      -- Highlight only while on calltree
+      vim.api.nvim_create_autocmd({ "WinEnter" }, {
+        desc = "Clear highlights when leaving calltree + UX improvements.",
+        callback = function()
+          vim.defer_fn(function()
+            if vim.bo.filetype == "calltree" then
+              vim.wo.colorcolumn = "0"
+              vim.wo.foldcolumn = "0"
+              vim.cmd("silent! PinBuffer") -- stickybuf.nvim
+              vim.cmd("silent! hi LTSymbolJump ctermfg=015 ctermbg=110 cterm=italic,bold,underline guifg=#464646 guibg=#87afd7 gui=italic,bold")
+              vim.cmd("silent! hi LTSymbolJumpRefs ctermfg=015 ctermbg=110 cterm=italic,bold,underline guifg=#464646 guibg=#87afd7 gui=italic,bold")
+            else
+              vim.cmd("silent! highlight clear LTSymbolJump")
+              vim.cmd("silent! highlight clear LTSymbolJumpRefs")
+            end
+          end, 100)
+        end
       })
     end
   },
