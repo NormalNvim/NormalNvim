@@ -1340,13 +1340,13 @@ end
 -- WARNING: Don't delete this section, or you won't have LSP keymappings
 
 -- A function we call from the script to start lsp.
---@return table lsp_mappings #
+-- @return table lsp_mappings #
 function M.lsp_mappings(client, bufnr)
-  --- Helper function to check if any active LSP clients
-  --- given a filter provide a specific capability.
-  ---@param capability string The server capability to check for (example: "documentFormattingProvider").
-  ---@param filter vim.lsp.get_active_clients.filter|nil A valid get_active_clients filter (see function docs).
-  ---@return boolean # `true` if any of the clients provide the capability.
+  -- Helper function to check if any active LSP clients
+  -- given a filter provide a specific capability.
+  -- @param capability string The server capability to check for (example: "documentFormattingProvider").
+  -- @param filter vim.lsp.get_active_clients.filter|nil A valid get_active_clients filter (see function docs).
+  -- @return boolean # `true` if any of the clients provide the capability.
   local function has_capability(capability, filter)
     for _, lsp_client in ipairs(vim.lsp.get_active_clients(filter)) do
       if lsp_client.supports_method(capability) then return true end
