@@ -788,7 +788,7 @@ end
 
 -- letee-calltree.nvimm ------------------------------------------------------------
 if is_available "litee-calltree.nvim" then
-  ---For every buffer, look for the one with filetype "calltree" and focus it.
+  -- For every buffer, look for the one with filetype "calltree" and focus it.
   local calltree_delay = 1500 -- first run? wait a bit longer.
   local function focus_calltree()
     -- Note: No go to the previous cursor position, press ctrl+i / ctrl+o
@@ -1340,7 +1340,7 @@ end
 -- WARNING: Don't delete this section, or you won't have LSP keymappings
 
 -- A function we call from the script to start lsp.
----@return table lsp_mappings #
+--@return table lsp_mappings #
 function M.lsp_mappings(client, bufnr)
   --- Helper function to check if any active LSP clients
   --- given a filter provide a specific capability.
