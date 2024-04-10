@@ -89,7 +89,7 @@ Please before opening an issue, check the [astrocommunity](https://github.com/As
 
     `:checkhealth base`
 
-* **Why can't I see the icons?** You must install the [nerdfont version of your font](https://www.nerdfonts.com/), and use it on your terminal. Alternatively you can edit `base/icons/nerd_fond.lua` to manually specify your own icons.
+* **Why can't I see the icons?** You must install the [nerdfont version of your font](https://www.nerdfonts.com/), and use it on your terminal. Alternatively you can edit `base/icons/nerd_font.lua` to manually specify your own icons.
 
 * **How can I install a new colorscheme?** Go to `plugins/2-ui.lua`, and add the theme you want. Re-open nvim and now you can set your new colorcheme on `base/1-options.lua`. You can also preview all your installed themes with `<space>+ft`.
 
