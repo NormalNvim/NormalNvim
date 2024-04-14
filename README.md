@@ -80,7 +80,7 @@ The next relevant commands are provided by [distroupdate.nvim](https://github.co
 |---------------------|-----------------------------------------|
 | **:DistroUpdate** | To update the distro from git origin. Local uncommited changes will be lost. |
 | **:DistroUpdateRevert** | To revert the last `:NvimDistroUpdate`. |
-| **:DistroFreezePluginVersions** | To save your current plugin versions into `lazy_versions.lua`. |
+| **:DistroFreezePluginVersions** | To save your current plugins versions into `lazy_versions.lua`. |
 
 ## FAQ
 Please before opening an issue, check the [astrocommunity](https://github.com/AstroNvim/astrocommunity) repo where you can find help about how to install and configure most plugins.
