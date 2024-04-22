@@ -4,7 +4,6 @@
 -- All mappings are defined here.
 
 --    Sections:
---
 --       ## Base bindings
 --       -> icons displayed on which-key.nvim
 --       -> standard operations

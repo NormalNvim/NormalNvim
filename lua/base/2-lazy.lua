@@ -4,7 +4,6 @@
 -- Use this file to configure the way you get updates.
 
 --    Sections:
---
 --      -> lazy updater options  → choose your lazy updates channel here.
 --      -> extra behaviors       → extra stuff we add to lazy for better UX.
 --      -> assign spec           → if channel==stable, uses lazy_snatshot.lua
