@@ -49,7 +49,6 @@ vim.opt.updatetime = 300 -- Length of time to wait before triggering the plugin.
 vim.opt.virtualedit = "block" -- Allow going past end of line in visual block mode.
 vim.opt.writebackup = false -- Disable making a backup before overwriting a file.
 vim.opt.shada = "!,'1000,<50,s10,h" -- Remember the last 1000 opened files
-vim.opt.undodir = vim.fn.stdpath "data" .. "/undodir" -- Chooses where to store the undodir.
 vim.opt.history = 1000 -- Number of commands to remember in a history table (per buffer).
 vim.opt.swapfile = false -- Ask what state to recover when opening a file that was not saved.
 vim.opt.wrap = true -- Disable wrapping of lines longer than the width of window.
