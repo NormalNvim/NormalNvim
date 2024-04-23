@@ -127,5 +127,4 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 * Once selene add [this](https://github.com/Kampfkarren/selene/issues/224) and [this](https://github.com/Kampfkarren/selene/issues/524) and [this](https://github.com/Kampfkarren/selene/pull/591), let's add the new rules.
 * ~~On aerial, let's keep an eye on [this](https://github.com/stevearc/aerial.nvim/issues/352) UX improvement.~~ → Thank you Steve.
 * Once nvim 0.10 is officially released, replace `get_active_clients` by `get_clients`.
-* Once nvim 0.10 is officially released, remove `unpack` in favor of `table.unpack`.
 * During 2024, create a landing page. Pretty much it's gonna be the same thing we have on the wiki, but with sparkles.
