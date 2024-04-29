@@ -1222,14 +1222,16 @@ end
 if is_available "nvim-coverage" then
   maps.n["<leader>Tc"] = {
     function()
-      utils.notify(
-        "Attempting to find coverage/lcov.info in project root...",
-        vim.log.levels.INFO
-      )
       require("coverage").load(false)
       require("coverage").summary()
     end,
     desc = "Coverage",
+  }
+  maps.n["<leader>TC"] = {
+    function()
+      ui.toggle_coverage_signs()
+    end,
+    desc = "Coverage signs (toggle)",
   }
 end
 
