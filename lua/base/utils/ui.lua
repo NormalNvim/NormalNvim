@@ -16,6 +16,7 @@
 --      -> toggle_buffer_semantic_tokens
 --      -> toggle_buffer_syntax
 --      -> toggle_codelens
+--      -> toggle_coverage_signs
 --      -> toggle_cmp
 --      -> toggle_conceal
 --      -> toggle_diagnostics
@@ -162,6 +163,23 @@ function M.toggle_codelens()
   vim.g.codelens_enabled = not vim.g.codelens_enabled
   if not vim.g.codelens_enabled then vim.lsp.codelens.clear() end
   utils.notify(string.format("CodeLens %s", bool2str(vim.g.codelens_enabled)))
+end
+
+--- Toggle coverage signs
+function M.toggle_coverage_signs(bufnr)
+  bufnr = bufnr or 0
+  vim.b[bufnr].coverage_signs_enabled = not vim.b[bufnr].coverage_signs_enabled
+  if vim.b[bufnr].coverage_signs_enabled then
+    utils.notify("Coverage signs on:" ..
+                 "\n\n- Git signs will be temporary disabled." ..
+                 "\n- Diagnostic signs won't be automatically disabled.")
+    vim.cmd("Gitsigns toggle_signs")
+    require("coverage").load(true)
+  else
+    utils.notify("Coverage signs off:\n\n- Git signs re-enabled.")
+    require("coverage").hide()
+    vim.cmd("Gitsigns toggle_signs")
+  end
 end
 
 --- Toggle cmp entrirely
