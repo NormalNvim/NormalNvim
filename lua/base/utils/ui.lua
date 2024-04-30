@@ -170,13 +170,13 @@ function M.toggle_coverage_signs(bufnr)
   bufnr = bufnr or 0
   vim.b[bufnr].coverage_signs_enabled = not vim.b[bufnr].coverage_signs_enabled
   if vim.b[bufnr].coverage_signs_enabled then
-    utils.notify("Coverage signs on." ..
+    utils.notify("Coverage signs on:" ..
                  "\n\n- Git signs will be temporary disabled." ..
                  "\n- Diagnostic signs won't be automatically disabled.")
     vim.cmd("Gitsigns toggle_signs")
     require("coverage").load(true)
   else
-    utils.notify("Coverage signs off.\n\n- Git signs re-enabled.")
+    utils.notify("Coverage signs off:\n\n- Git signs re-enabled.")
     require("coverage").hide()
     vim.cmd("Gitsigns toggle_signs")
   end
