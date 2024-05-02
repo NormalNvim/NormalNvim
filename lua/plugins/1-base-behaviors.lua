@@ -656,9 +656,9 @@ return {
   {
     'kosayoda/nvim-lightbulb',
     enabled = vim.g.codeactions_enabled,
-    event = "VeryLazy",
+    event = "User BaseFile",
     opts = {
-      action_kinds = {  -- show only for relevant code actions.
+      action_kinds = { -- show only for relevant code actions.
         "quickfix",
       },
       ignore = {
