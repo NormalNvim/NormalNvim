@@ -91,7 +91,7 @@ return {
   { "sidlatau/neotest-dart", commit = "33b9335cd8c2be4dcf9dd8f196b24325e7c2e8e7" },
   { "skywind3000/gutentags_plus", commit = "a0157ca0092a21f0947917945506fde3859c9cd2" },
   { "smoka7/hop.nvim", commit = "6d853addd6e11df8338b26e869a29b36f2c3e893" },
-  { "stevearc/aerial.nvim", commit = "31fbd369bbbeb53080c4b1ead9e76be322725ef5" },
+  { "stevearc/aerial.nvim", commit = "228fad11393322537d9662c0347f75549a3d6c0a" },
   { "stevearc/dressing.nvim", commit = "18e5beb3845f085b6a33c24112b37988f3f93c06" },
   { "stevearc/overseer.nvim", commit = "4855aefcf335bbac71eea9c6a888958fb1ed1e1a" },
   { "stevearc/stickybuf.nvim", commit = "2160fcd536d81f5fa43f7167dba6634e814e3154" },
