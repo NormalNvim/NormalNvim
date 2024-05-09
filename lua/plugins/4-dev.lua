@@ -222,7 +222,7 @@ return {
       require("aerial").setup(opts)
       -- HACK: The first time you open aerial on a session, close all folds.
       vim.api.nvim_create_autocmd({"FileType", "BufEnter"}, {
-        desc = "Aerial: The first time its open on a buffer, close all folds.",
+        desc = "Aerial: When aerial is opened, close all its folds.",
         callback = function()
           local is_aerial = vim.bo.filetype == "aerial"
           local is_ufo_available = require("base.utils").is_available("nvim-ufo")
