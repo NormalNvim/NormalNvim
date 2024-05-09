@@ -195,7 +195,11 @@ return {
       backends = { "lsp", "treesitter", "markdown", "man" },
       disable_max_lines = vim.g.big_file.lines,
       disable_max_size = vim.g.big_file.size,
-      layout = { min_width = 28 },
+      layout = {
+        min_width = 28,
+        default_direction = "right",
+        placement = "edge",
+      },
       show_guides = true,
       guides = {
         mid_item = "├ ",
@@ -216,14 +220,14 @@ return {
     },
     config = function(_, opts)
       require("aerial").setup(opts)
-      -- HACK: The first time you opened aerial on a session, close all folds.
-      vim.api.nvim_create_autocmd("FileType", {
-        desc = "Aerial: The first time its open on a session, close all folds.",
+      -- HACK: The first time you open aerial on a session, close all folds.
+      vim.api.nvim_create_autocmd({"FileType", "BufEnter"}, {
+        desc = "Aerial: The first time its open on a buffer, close all folds.",
         callback = function()
           local is_aerial = vim.bo.filetype == "aerial"
           local is_ufo_available = require("base.utils").is_available("nvim-ufo")
-          if is_ufo_available and is_aerial and vim.g.new_aerial_session == nil then
-            vim.g.new_aerial_session = false
+          if is_ufo_available and is_aerial and vim.b.new_aerial_session == nil then
+            vim.b.new_aerial_session = false
             require("aerial").tree_set_collapse_level(0, 0)
           end
         end,
