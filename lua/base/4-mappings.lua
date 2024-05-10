@@ -1425,7 +1425,10 @@ function M.lsp_mappings(client, bufnr)
   if client.supports_method "textDocument/formatting"
       and not vim.tbl_contains(formatting.disabled, client.name) then
     lsp_mappings.n["<leader>lf"] = {
-      function() vim.lsp.buf.format(M.format_opts) end,
+      function()
+        vim.lsp.buf.format(M.format_opts)
+        vim.cmd('checktime') -- update buffer to reflect changes.
+      end,
       desc = "Format buffer",
     }
     lsp_mappings.v["<leader>lf"] = lsp_mappings.n["<leader>lf"]
