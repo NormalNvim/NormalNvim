@@ -268,7 +268,10 @@ return {
   --  https://github.com/nvimtools/none-ls.nvim
   {
     "nvimtools/none-ls.nvim",
-    dependencies = { "jay-babu/mason-null-ls.nvim" },
+    dependencies = {
+      "jay-babu/mason-null-ls.nvim",
+      "nvimtools/none-ls-extras.nvim",
+    },
     event = "User BaseFile",
     opts = function()
       -- You can customize your formatters here.
@@ -278,8 +281,16 @@ return {
         args = { "-i", "2", "-filename", "$FILENAME" },
       })
 
+      -- You can register external builtins from none-ls-extras like this.
+      local gherkin_builtin = require("none-ls.formatting.reformat_gherkin")
+      local gherkin_cmd = gherkin_builtin._opts.command
+      if vim.fn.executable(gherkin_cmd) == 1 then
+        require("null-ls.sources").register(gherkin_builtin)
+      end
+
       -- Attach the user lsp mappings to every none-ls client.
-      return { on_attach = utils_lsp.apply_user_lsp_mappings }
+      return {
+        on_attach = utils_lsp.apply_user_lsp_mappings }
     end
   },
 
