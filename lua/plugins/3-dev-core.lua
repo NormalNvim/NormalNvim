@@ -274,23 +274,24 @@ return {
     },
     event = "User BaseFile",
     opts = function()
-      -- You can customize your formatters here.
-      local nls = require("null-ls")
-      nls.builtins.formatting.shfmt.with({
+      local builtins = require("null-ls").builtins
+      local sources = require("null-ls.sources")
+
+      -- You can customize your builtins here.
+      builtins.formatting.shfmt.with({
         command = "shfmt",
         args = { "-i", "2", "-filename", "$FILENAME" },
       })
 
-      -- You can register external builtins from none-ls-extras like this.
-      local gherkin_builtin = require("none-ls.formatting.reformat_gherkin")
-      local gherkin_cmd = gherkin_builtin._opts.command
+      -- You can register external sources from none-ls-extras here.
+      local gherkin_source = require("none-ls.formatting.reformat_gherkin")
+      local gherkin_cmd = gherkin_source._opts.command
       if vim.fn.executable(gherkin_cmd) == 1 then
-        require("null-ls.sources").register(gherkin_builtin)
+        sources.register(gherkin_source)
       end
 
       -- Attach the user lsp mappings to every none-ls client.
-      return {
-        on_attach = utils_lsp.apply_user_lsp_mappings }
+      return { on_attach = utils_lsp.apply_user_lsp_mappings }
     end
   },
 
