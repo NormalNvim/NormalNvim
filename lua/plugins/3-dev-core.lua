@@ -64,14 +64,20 @@ return {
       autotag = { enable = true },
       highlight = {
         enable = true,
-        disable = function(_, bufnr) return utils.is_big_file(bufnr) end,
+        disable = function(_, bufnr)
+          local excluded_filetypes = { "markdown" } -- disable for bugged parsers
+          local is_disabled = vim.tbl_contains(
+            excluded_filetypes, vim.bo.filetype) or utils.is_big_file(bufnr)
+          return is_disabled
+        end,
       },
       matchup = {
         enable = true,
         enable_quotes = true,
         disable = function(_, bufnr)
           local excluded_filetypes = { "c" } -- disable for slow parsers
-          local is_disabled = excluded_filetypes or utils.is_big_file(bufnr)
+          local is_disabled = vim.tbl_contains(
+            excluded_filetypes, vim.bo.filetype) or utils.is_big_file(bufnr)
           return is_disabled
         end,
       },
