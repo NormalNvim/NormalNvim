@@ -42,7 +42,7 @@ return {
   { "jay-babu/mason-nvim-dap.nvim", commit = "67210c0e775adec55de9826b038e8b62de554afc" },
   { "jbyuki/one-small-step-for-vimkind", commit = "aaee281bdaa3141d9d0cdb3dec468532da61124f" },
   { "jfpedroza/neotest-elixir", commit = "3117ca5442c02998847131c39551b76a6ceac9d7" },
-  { "kevinhwang91/nvim-ufo", commit = "239ae620d818ffa1319ca3056546df71906d4bfb" },
+  { "kevinhwang91/nvim-ufo", commit = "4b4077850d1b3af09f4957b67144943cf3da401a" },
   { "kevinhwang91/promise-async", commit = "93540c168c5ed2b030ec3e6c40ab8bbb85e36355" },
   { "kevinhwang91/rnvimr", commit = "3c41af742a61caf74a9f83fb82b9ed03ef13b880" },
   { "kosayoda/nvim-lightbulb", commit = "8f00b89dd1b1dbde16872bee5fbcee2e58c9b8e9" },
