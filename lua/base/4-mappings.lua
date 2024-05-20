@@ -1537,9 +1537,8 @@ function M.lsp_mappings(client, bufnr)
 
   if client.supports_method "textDocument/inlayHint" then
     if vim.b.inlay_hints_enabled == nil then vim.b.inlay_hints_enabled = vim.g.inlay_hints_enabled end
-    -- TODO: remove check after dropping support for Neovim v0.9
-    if vim.lsp.inlay_hint then
-      if vim.b.inlay_hints_enabled then vim.lsp.inlay_hint(bufnr, true) end
+    if vim.lsp.inlay_hint then -- TODO: remove this check after dropping support for Neovim v0.9
+      if vim.b.inlay_hints_enabled then vim.lsp.inlay_hint.enable(true, { bufnr = bufnr }) end
       lsp_mappings.n["<leader>uH"] = {
         function() require("base.utils.ui").toggle_buffer_inlay_hints(bufnr) end,
         desc = "LSP inlay hints (buffer)",
