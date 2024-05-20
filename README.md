@@ -122,15 +122,6 @@ Special thanks to LeoRed04 for designing the logo.
 ## Trivia
 Did you know NormalNvim was the first Neovim distro to ship a compiler that [support 22+ programming languages out of the box](https://www.youtube.com/watch?v=O42uCIBaCIQ)?
 
-## NEWS: Nvim 0.10 release!!
-Nvim 0.10 has finally been released on arch. I'm testing everything is working correctly, and during the next days I will release a couple versions with the bugfixes I find. So far I haven't find anything too serious, but here you can check the list:
-
-* **nvim-ufo**: Ocassional crash. Fixed by updating its version to latest. → Fixed in `NormalNvim v3.8.7`.
-* **distroupdate.nvim**: Running `:DistroFreezePluginVersions` fail with plugins without a URL. → Unrelated with `nvim v0.10`, but fixed [here](https://github.com/Zeioth/distroupdate.nvim/releases/tag/v1.0.1).
-* **distroupdate.nvim**: lazy updater now opens on startup every time (not only the first time). This is not the usual behavior, researching. Fixed in `NormalNvim v3.8.7`.
-
-Also as preemptive measurement, we are gonna be updating the versions of treesitter, and any plugin using using treesitter.
-
 ## Roadmap
 * We are currently in a stable state.
 * Once selene add [this](https://github.com/Kampfkarren/selene/issues/224) and [this](https://github.com/Kampfkarren/selene/issues/524) and [this](https://github.com/Kampfkarren/selene/pull/591), let's add the new rules.
