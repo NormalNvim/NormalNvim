@@ -126,7 +126,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 Nvim 0.10 has finally been released on arch. I'm testing everything is working correctly, and during the next days I will release a couple versions with the bugfixes I find. So far I haven't find anything too serious, but here you can check the list:
 
 * **nvim-ufo**: Ocassional crash. Fixed by updating its version to latest.
-* **distroupdate.nvim**: Running `:DistroFreezePluginVersions` now causes an error in table.sort(). Only one line of the code is failing. Researching.
+* **distroupdate.nvim**: ~~Running `:DistroFreezePluginVersions` now causes an error in table.sort(). Only one line of the code is failing. Researching.~~ → fixed.
 * **distroupdate.nvim**: lazy updater now opens on startup every time (not only the first time). This is not the usual behavior, researching.
 
 Also as preemptive measurement, we are gonna be updating the versions of treesitter, and any plugin using using treesitter.
