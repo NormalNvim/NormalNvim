@@ -256,45 +256,38 @@ return {
   --  https://github.com/b0o/SchemaStore.nvim
   "b0o/SchemaStore.nvim",
 
-  -- mason-null-ls.nivm
-  -- https://github.com/jay-babu/mason-null-ls.nvim
-  -- Allows none-ls to use clients installed by mason.
+  -- none-ls-autoload.nvim
+  -- https://github.com/zeioth/mason-none-ls.nvim
+  -- Autoload clients installed by mason using none-ls on demand.
+  -- By default it will use none-ls builtin sources.
+  -- But you can add external sources if a mason package has no builtin support.
   {
-    "jay-babu/mason-null-ls.nvim",
-    cmd = {
-      "NullLsInstall",
-      "NullLsUninstall",
-      "NoneLsInstall",
-      "NoneLsUninstall"
+    "zeioth/none-ls-autoload.nvim",
+    event = "User BaseFile",
+    dependencies = {
+      "williamboman/mason.nvim",
+      "nvimtools/none-ls-extras.nvim" -- To install external sources from a repo.
     },
-    opts = { handlers = {} },
+    opts = {
+      external_sources = { -- To indicate where to find a external source.
+        'none-ls.formatting.reformat_gherkin'
+      },
+    },
   },
 
   --  none-ls [lsp code formatting]
   --  https://github.com/nvimtools/none-ls.nvim
   {
     "nvimtools/none-ls.nvim",
-    dependencies = {
-      "jay-babu/mason-null-ls.nvim",
-      "nvimtools/none-ls-extras.nvim",
-    },
     event = "User BaseFile",
     opts = function()
-      local builtins = require("null-ls").builtins
-      local sources = require("null-ls.sources")
+      local builtin_sources = require("null-ls").builtins
 
-      -- You can customize your builtins here.
-      builtins.formatting.shfmt.with({
+      -- You can customize your 'builtin sources' and 'external sources' here.
+      builtin_sources.formatting.shfmt.with({
         command = "shfmt",
         args = { "-i", "2", "-filename", "$FILENAME" },
       })
-
-      -- You can register external sources from none-ls-extras here.
-      local gherkin_source = require("none-ls.formatting.reformat_gherkin")
-      local gherkin_cmd = gherkin_source._opts.command
-      if vim.fn.executable(gherkin_cmd) == 1 then
-        sources.register(gherkin_source)
-      end
 
       -- Attach the user lsp mappings to every none-ls client.
       return { on_attach = utils_lsp.apply_user_lsp_mappings }
