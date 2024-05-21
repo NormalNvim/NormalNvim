@@ -13,7 +13,8 @@
 --       -> mason-lspconfig                [auto start lsp]
 --       -> nvim-lspconfig                 [lsp configs]
 --       -> mason.nvim                     [lsp package manager]
---       -> SchemaStore.nvim               [lsp schema manager]
+--       -> none-ls-autoload.nvim          [mason package loader]
+--       -> SchemaStore.nvim               [mason extra schemas]
 --       -> none-ls                        [lsp code formatting]
 --       -> neodev                         [lsp for nvim lua api]
 --       -> garbage-day                    [lsp garbage collector]
@@ -224,10 +225,10 @@ return {
 
   --  mason [lsp package manager]
   --  https://github.com/williamboman/mason.nvim
-  --  https://github.com/Zeioth/mason-extra-cmds
+  --  https://github.com/zeioth/mason-extra-cmds
   {
     "williamboman/mason.nvim",
-    dependencies = { "Zeioth/mason-extra-cmds", opts = {} },
+    dependencies = { "zeioth/mason-extra-cmds", opts = {} },
     cmd = {
       "Mason",
       "MasonInstall",
@@ -252,11 +253,7 @@ return {
     }
   },
 
-  --  Schema Store [lsp schema manager]
-  --  https://github.com/b0o/SchemaStore.nvim
-  "b0o/SchemaStore.nvim",
-
-  -- none-ls-autoload.nvim
+  -- none-ls-autoload.nvim [mason package loader]
   -- https://github.com/zeioth/mason-none-ls.nvim
   -- Autoload clients installed by mason using none-ls on demand.
   -- By default it will use none-ls builtin sources.
@@ -274,6 +271,11 @@ return {
       },
     },
   },
+
+
+  --  Schema Store [mason extra schemas]
+  --  https://github.com/b0o/SchemaStore.nvim
+  "b0o/SchemaStore.nvim",
 
   --  none-ls [lsp code formatting]
   --  https://github.com/nvimtools/none-ls.nvim

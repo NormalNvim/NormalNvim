@@ -30,7 +30,7 @@ return {
   -- tokyonight [theme]
   -- https://github.com/folke/tokyonight.nvim
   {
-    "Zeioth/tokyonight.nvim",
+    "zeioth/tokyonight.nvim",
     event = "User LoadColorSchemes",
     opts = {
       dim_inactive = false,
@@ -288,7 +288,7 @@ return {
   },
 
   -- heirline-components.nvim [ui components]
-  -- https://github.com/Zeioth/heirline-components.nvim
+  -- https://github.com/zeioth/heirline-components.nvim
   -- Collection of components to use on your heirline config.
   {
     "zeioth/heirline-components.nvim",

@@ -76,7 +76,7 @@ return {
     build = not is_windows and "make install_jsregexp" or nil,
     dependencies = {
       "rafamadriz/friendly-snippets",
-      "Zeioth/NormalSnippets",
+      "zeioth/NormalSnippets",
       "benfowler/telescope-luasnip.nvim",
     },
     event = "User BaseFile",
@@ -293,9 +293,9 @@ return {
 
   --  CODE DOCUMENTATION ------------------------------------------------------
   --  dooku.nvim [html doc generator]
-  --  https://github.com/Zeioth/dooku.nvim
+  --  https://github.com/zeioth/dooku.nvim
   {
-    "Zeioth/dooku.nvim",
+    "zeioth/dooku.nvim",
     cmd = {
       "DookuGenerate",
       "DookuOpen",
@@ -319,10 +319,10 @@ return {
   },
 
   --  [markdown markmap]
-  --  https://github.com/Zeioth/markmap.nvim
+  --  https://github.com/zeioth/markmap.nvim
   --  Important: Make sure you have yarn in your PATH before running markmap.
   {
-    "Zeioth/markmap.nvim",
+    "zeioth/markmap.nvim",
     build = "yarn global add markmap-cli",
     cmd = { "MarkmapOpen", "MarkmapSave", "MarkmapWatch", "MarkmapWatchStop" },
     config = function(_, opts) require("markmap").setup(opts) end,
@@ -386,9 +386,9 @@ return {
 
   --  COMPILER ----------------------------------------------------------------
   --  compiler.nvim [compiler]
-  --  https://github.com/Zeioth/compiler.nvim
+  --  https://github.com/zeioth/compiler.nvim
   {
-    "Zeioth/compiler.nvim",
+    "zeioth/compiler.nvim",
     cmd = {
       "CompilerOpen",
       "CompilerToggleResults",
@@ -887,7 +887,7 @@ return {
   --  If you use other framework or language, refer to nvim-coverage docs:
   --  https://github.com/andythigpen/nvim-coverage/blob/main/doc/nvim-coverage.txt
   {
-    "andythigpen/nvim-coverage",
+    "zeioth/nvim-coverage", -- Our fork until all ourPRs are merged.
     cmd = {
       "Coverage",
       "CoverageLoad",
