@@ -887,7 +887,7 @@ return {
   --  If you use other framework or language, refer to nvim-coverage docs:
   --  https://github.com/andythigpen/nvim-coverage/blob/main/doc/nvim-coverage.txt
   {
-    "andythigpen/nvim-coverage",
+    "zeioth/nvim-coverage", -- Our fork until all our PRs are merged.
     cmd = {
       "Coverage",
       "CoverageLoad",
