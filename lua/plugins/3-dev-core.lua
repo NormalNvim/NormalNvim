@@ -225,10 +225,10 @@ return {
 
   --  mason [lsp package manager]
   --  https://github.com/williamboman/mason.nvim
-  --  https://github.com/Zeioth/mason-extra-cmds
+  --  https://github.com/zeioth/mason-extra-cmds
   {
     "williamboman/mason.nvim",
-    dependencies = { "Zeioth/mason-extra-cmds", opts = {} },
+    dependencies = { "zeioth/mason-extra-cmds", opts = {} },
     cmd = {
       "Mason",
       "MasonInstall",
