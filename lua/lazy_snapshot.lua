@@ -92,7 +92,7 @@ return {
   { "williamboman/mason-lspconfig.nvim", version = "^2" },
   { "williamboman/mason.nvim", version = "^1" },
   { "windwp/nvim-autopairs", commit = "c15de7e7981f1111642e7e53799e1211d4606cb9" },
-  { "windwp/nvim-ts-autotag", commit = "cb57b07803476ee902c89412aeff219a9a58be13" },
+  { "windwp/nvim-ts-autotag", commit = "62db4b3054ec6847e5cb189b4dea452ce0c7ad7f" },
   { "zeioth/NormalSnippets", commit = "ef841ad4a0ccc6144d605cd2b4a874b04b295cb8" },
   { "zeioth/compiler.nvim", version = "^4" },
   { "zeioth/distroupdate.nvim", version = "^1" },
