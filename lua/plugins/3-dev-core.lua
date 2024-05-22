@@ -364,7 +364,7 @@ return {
     opts = {
       aggressive_mode = false,
       excluded_lsp_clients = {
-        "null-ls", "jdtls"
+        "null-ls", "jdtls", "marksman"
       },
       grace_period = (60 * 15),
       wakeup_delay = 3000,
