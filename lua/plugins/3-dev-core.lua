@@ -66,7 +66,7 @@ return {
       highlight = {
         enable = true,
         disable = function(_, bufnr)
-          local excluded_filetypes = { "markdown" } -- disable for bugged parsers
+          local excluded_filetypes = {} -- disabled for bugged parsers
           local is_disabled = vim.tbl_contains(
             excluded_filetypes, vim.bo.filetype) or utils.is_big_file(bufnr)
           return is_disabled
@@ -76,7 +76,7 @@ return {
         enable = true,
         enable_quotes = true,
         disable = function(_, bufnr)
-          local excluded_filetypes = { "c" } -- disable for slow parsers
+          local excluded_filetypes = { "c" } -- disabled for slow parsers
           local is_disabled = vim.tbl_contains(
             excluded_filetypes, vim.bo.filetype) or utils.is_big_file(bufnr)
           return is_disabled
