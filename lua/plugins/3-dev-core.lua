@@ -160,8 +160,9 @@ return {
     event = "User BaseFile",
     init = function()
       if vim.fn.has "nvim-0.10" == 1 then
-        -- HACK: add workaround for native comments: https://github.com/JoosepAlviste/nvim-ts-context-commentstring/issues/109
-        --       You can remove this plugin entirely once nvim 0.11 is out.
+        -- HACK: Enalbe native comments when possible.
+        -- You can remove this plugin entirely once nvim 0.11 is out.
+        -- SEE: https://github.com/JoosepAlviste/nvim-ts-context-commentstring/issues/109
         vim.schedule(function()
           local get_option = vim.filetype.get_option
           local context_commentstring
