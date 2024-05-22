@@ -35,13 +35,11 @@ return {
   --  https://github.com/nvim-treesitter/nvim-treesitter
   --  https://github.com/windwp/nvim-ts-autotag
   --  https://github.com/windwp/nvim-treesitter-textobjects
-  --  https://github.com/JoosepAlviste/nvim-ts-context-commentstring
   {
     "nvim-treesitter/nvim-treesitter",
     dependencies = {
       "windwp/nvim-ts-autotag",
       "nvim-treesitter/nvim-treesitter-textobjects",
-      "JoosepAlviste/nvim-ts-context-commentstring"
     },
     event = "User BaseFile",
     cmd = {
@@ -148,6 +146,33 @@ return {
         { enable = true, enable_autocmd = false })      -- Enable commentstring
       vim.g.skip_ts_context_commentstring_module = true -- Increase performance
     end,
+  },
+
+  -- nvim-ts-context-commentstring [treesitter comments]
+  --  https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+  {
+    "JoosepAlviste/nvim-ts-context-commentstring",
+    event = "User BaseFile",
+    init = function()
+      if vim.fn.has "nvim-0.10" == 1 then
+        -- HACK: add workaround for native comments: https://github.com/JoosepAlviste/nvim-ts-context-commentstring/issues/109
+        --       You can remove this plugin entirely once nvim 0.11 is out.
+        vim.schedule(function()
+          local get_option = vim.filetype.get_option
+          local context_commentstring
+          vim.filetype.get_option = function(filetype, option)
+            if option ~= "commentstring" then return get_option(filetype, option) end
+            if context_commentstring == nil then
+              local ts_context_avail, ts_context = pcall(require, "ts_context_commentstring.internal")
+              context_commentstring = ts_context_avail and ts_context
+            end
+            return context_commentstring and context_commentstring.calculate_commentstring()
+                or get_option(filetype, option)
+          end
+        end)
+      end
+    end,
+    opts = { enable_autocmd = false },
   },
 
   --  [hex colors]
