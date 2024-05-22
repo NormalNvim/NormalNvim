@@ -41,7 +41,7 @@ return {
       "windwp/nvim-ts-autotag",
       "nvim-treesitter/nvim-treesitter-textobjects",
     },
-    event = "User BaseFile",
+    event = "User BaseDefered",
     cmd = {
       "TSBufDisable",
       "TSBufEnable",
