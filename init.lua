@@ -3,17 +3,15 @@
 -- This is the entry point of your config.
 -- ---------------------------------------
 
--- EVERY TIME NEOVIM OPENS:
--- Compile lua to bytecode if the nvim version supports it.
-if vim.loader and vim.fn.has "nvim-0.9.1" == 1 then vim.loader.enable() end
-
--- THEN:
--- Source config files by order.
+-- LOAD SOURCE FILES BY ORDER:
+vim.loader.enable()
 for _, source in ipairs {
   "base.1-options",
   "base.2-lazy",
   "base.3-autocmds",
-  "base.4-mappings",
+  "base.git-ignored.autocmds",
+  "base.git-ignored.mappings-colemak-dh",
+  --"base.4-mappings",
 } do
   local status_ok, fault = pcall(require, source)
   if not status_ok then vim.api.nvim_err_writeln("Failed to load " .. source .. "\n\n" .. fault) end
