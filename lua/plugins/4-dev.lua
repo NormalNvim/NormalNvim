@@ -50,17 +50,7 @@ return {
   {
     "numToStr/Comment.nvim",
     event = "User BaseFile",
-    opts = function()
-      -- improve performance, when possible
-      local _, ts_context_commentstring =
-          pcall(require, "ts_context_commentstring.integrations.comment_nvim")
-      local pre_hook = ts_context_commentstring.create_pre_hook() or nil
-
-      -- opts
-      return {
-        pre_hook = pre_hook
-      }
-    end,
+    opts = {},
     keys = {
       { "gc", mode = { "n", "v" }, desc = "Comment toggle linewise" },
       { "gb", mode = { "n", "v" }, desc = "Comment toggle blockwise" },

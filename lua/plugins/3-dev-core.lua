@@ -145,12 +145,6 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      require("nvim-treesitter.configs").setup(opts)
-      require('ts_context_commentstring').setup(
-        { enable = true, enable_autocmd = false })      -- Enable commentstring
-      vim.g.skip_ts_context_commentstring_module = true -- Increase performance
-    end,
   },
 
   -- ts-comments.nvim [treesitter comments]
@@ -187,6 +181,7 @@ return {
     ft = { "java" },
     dependencies = {
       "nvim-java/lua-async-await",
+      'nvim-java/nvim-java-refactor',
       "nvim-java/nvim-java-core",
       "nvim-java/nvim-java-test",
       "nvim-java/nvim-java-dap",
