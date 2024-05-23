@@ -2,9 +2,6 @@
 -- Things you actively use for coding.
 
 --    Sections:
---       ## COMMENTS
---       -> comment.nvim                   [comment with a key]
-
 --       ## SNIPPETS
 --       -> luasnip                        [snippet engine]
 --       -> friendly-snippets              [snippet templates]
@@ -44,19 +41,6 @@
 local is_windows = vim.fn.has('win32') == 1 -- true if on windows
 
 return {
-  --  COMMENTS ----------------------------------------------------------------
-  --  Advanced comment features [comment with a key]
-  --  https://github.com/numToStr/Comment.nvim
-  {
-    "numToStr/Comment.nvim",
-    event = "User BaseFile",
-    opts = {},
-    keys = {
-      { "gc", mode = { "n", "v" }, desc = "Comment toggle linewise" },
-      { "gb", mode = { "n", "v" }, desc = "Comment toggle blockwise" },
-    },
-  },
-
   --  SNIPPETS ----------------------------------------------------------------
   --  Vim Snippets engine  [snippet engine] + [snippet templates]
   --  https://github.com/L3MON4D3/LuaSnip
