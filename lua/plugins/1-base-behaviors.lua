@@ -85,11 +85,11 @@ return {
       silent_chdir = true,
       manual_mode = false,
 
-      -- Don't auto-chdir for specific filetypes.
-      exclude_filetype_chdir = { "", "OverseerList", "alpha" },
-
-      -- Don't auto-chdir for specific buftypes.
-      exclude_buftype_chdir = { "nofile", "terminal" },
+      -- Don't chdir for certain buffers
+      exclude_chdir = {
+        filetype = {"", "OverseerList", "alpha"},
+        buftype = {"nofile", "terminal"},
+      },
 
       --ignore_lsp = { "lua_ls" },
     },
