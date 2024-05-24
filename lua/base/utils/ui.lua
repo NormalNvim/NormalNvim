@@ -132,7 +132,7 @@ end
 function M.toggle_buffer_semantic_tokens(bufnr)
   bufnr = bufnr or 0
   vim.b[bufnr].semantic_tokens_enabled = not vim.b[bufnr].semantic_tokens_enabled
-  for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = bufnr })) do
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
     if client.server_capabilities.semanticTokensProvider then
       vim.lsp.semantic_tokens[vim.b[bufnr].semantic_tokens_enabled and "start" or "stop"](bufnr, client.id)
       utils.notify(string.format("Buffer lsp semantic highlighting %s", bool2str(vim.b[bufnr].semantic_tokens_enabled)))

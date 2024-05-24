@@ -46,7 +46,7 @@ end
 --- @param autocmds table|any  A table or a single autocmd definition containing the autocmds to add.
 function M.add_autocmds_to_buffer(augroup, bufnr, autocmds)
   -- Check if autocmds is a list, if not convert it to a list
-  if not vim.tbl_islist(autocmds) then autocmds = { autocmds } end
+  if not vim.islist(autocmds) then autocmds = { autocmds } end
 
   -- Attempt to retrieve existing autocmds associated with the specified augroup and bufnr
   local cmds_found, cmds = pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
