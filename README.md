@@ -9,19 +9,28 @@
 
 ---
 
+- [Screenshots](#screenshots)
+- [How to install](#how-to-install)
+- [Distro features](#distro-features)
+- [Philosophy and design decisions](#philosophy-and-design-decisions)
+- [Commands](#commands)
+- [Wiki](https://github.com/NormalNvim/NormalNvim/wiki)
+- [FAQ](#faq)
+
+## Screenshots
 
 Tokyo Night (Night) theme by default
-![screenshot_2023-11-11_05-07-36_209146790](https://github.com/NormalNvim/NormalNvim/assets/3357792/d487a27a-d314-4f20-b209-90f0d25c10d1)
+![screenshot_2024-03-17_17-12-10_712765529](https://github.com/NormalNvim/NormalNvim/assets/3357792/096b260b-6678-405c-88b4-376a358e47d5)
 
 The space key shows [all you can do](https://github.com/NormalNvim/NormalNvim/wiki/basic-mappings)
-![screenshot_2023-06-14_11-41-03_398515538](https://github.com/NormalNvim/NormalNvim/assets/3357792/af73f0b2-b56e-47d8-9bb8-f68b76e4b577)
+![screenshot_2024-03-12_22-48-45_446272370](https://github.com/NormalNvim/NormalNvim/assets/3357792/1fb4a576-e04f-481b-9692-67cdcc071d13)
 
 If you are new here don't forget to [check the wiki](https://github.com/NormalNvim/NormalNvim/wiki).
 
 ## How to install
 
 ### Installer (Linux/MacOS/WSL)
-You can preview it [here](https://raw.githubusercontent.com/NormalNvim/installer/main/installer.sh)
+You can preview it [here](https://github.com/NormalNvim/installer)
 ```sh
 wget -q https://raw.githubusercontent.com/NormalNvim/installer/main/installer.sh && chmod +x installer.sh && ./installer.sh
 ```
@@ -44,12 +53,12 @@ This is only necessary if you installed NormalNvim by cloning manually. [To unlo
 ## Distro features
 
 * ⚡ **Lazy:** Plugins are loaded lazily, providing super fast performance.
-* 😎 **Plugins are self-contained:** Allowing you to easily delete what you don't want.
 * 🔋 **Batteries included:** Most [plugins](https://github.com/NormalNvim/NormalNvim/wiki/plugins) you will ever need are included and debugged by default. Get the best user experience out of the box and forget about nasty bugs in your Neovim config.
+* 😎 **Plugins are self-contained:** Allowing you to easily delete what you need.
 * 🤖 **IDE tools:** We ship [Compiler.nvim](https://github.com/Zeioth/compiler.nvim) (compiler), [DAP](https://github.com/mfussenegger/nvim-dap) (debugger), [Neotest](https://github.com/nvim-neotest/neotest) (test runner), and [Dooku.nvim](https://github.com/Zeioth/dooku.nvim) (docs generator)
 * 🐞 **IDE parsers:** Linters, Formatters, LSP, Treesitter... preinstalled, preconfigured and ready to code for the top 12 most popular programming languages.
-* 🔒 **Plugin version lock:** You can choose "stable" or "nightly" update channels. Or if you prefer, use :NvimFreezePluginVersions to create your own stable versions!
-* 🔙 **Rollbacks:** You can easily recover from a nvim distro update using :NvimRollbackRestore
+* 🥶 **Plugin version freeze:** You can choose "stable" or "nightly" update channels. Or if you prefer, use :DistroFreezePluginVersions to create your own stable versions!
+* 🔙 **Rollbacks:** You can easily recover from a nvim distro update using :DistroUpdateRevert
 * 🔥 **Hot reload:** Every time you change something in your config, the changes are reflected on nvim on real time without need to restart.
 * 📱 **Phone friendly:** You can also install it on Android Termux. Did you ever have a compiler in your pocket? 😉
 * ⌨️ **Alternative mappings:** By default the distro uses qwerty, but colemak-dh can be found [here](https://github.com/NormalNvim/NormalNvim/wiki).
@@ -69,9 +78,9 @@ The next relevant commands are provided by [distroupdate.nvim](https://github.co
 
 |  Command            | Description                             |
 |---------------------|-----------------------------------------|
-| **:NvimUpdateConfig** | To update the distro from git origin. Local uncommited changes will be lost |
-| **:NvimRollbackRestore** | To revert the last :NvimUpdateConfig |
-| **:NvimFreezePluginVersions** | To save your current plugin versions into `lazy_versions.lua` |
+| **:DistroUpdate** | To update the distro from git origin. Local uncommited changes will be lost. |
+| **:DistroUpdateRevert** | To revert the last `:NvimDistroUpdate`. |
+| **:DistroFreezePluginVersions** | To save your current plugins versions into `lazy_versions.lua`. |
 
 ## FAQ
 Please before opening an issue, check the [astrocommunity](https://github.com/AstroNvim/astrocommunity) repo where you can find help about how to install and configure most plugins.
@@ -80,7 +89,7 @@ Please before opening an issue, check the [astrocommunity](https://github.com/As
 
     `:checkhealth base`
 
-* **Why can't I see the icons?** You must install the [nerdfont version of your font](https://www.nerdfonts.com/), and use it on your terminal. Alternatively you can edit `lua/base/icons/nerd_fond.lua` to manually specify your own icons.
+* **Why can't I see the icons?** You must install the [nerdfont version of your font](https://www.nerdfonts.com/), and use it on your terminal. Alternatively you can edit `base/icons/nerd_font.lua` to manually specify your own icons.
 
 * **How can I install a new colorscheme?** Go to `plugins/2-ui.lua`, and add the theme you want. Re-open nvim and now you can set your new colorcheme on `base/1-options.lua`. You can also preview all your installed themes with `<space>+ft`.
 
@@ -93,11 +102,6 @@ Please before opening an issue, check the [astrocommunity](https://github.com/As
 ```sh
 OPENAI_API_KEY="my_key_here"
 ```
-
-
-* **What scenarios are not covered by this distro?**
-  * **Kubernetes**: We do not provide a kubernetes plugin. But we recommend using friendly-snippets, to quickly write code, and [overseer.nvim](https://github.com/stevearc/overseer.nvim) to run kubernetes commands from inside nvim without having to wait for the server response.
-  * **e2e testing**: We do not provide an e2e plugin. But we do provide the :TestNodejsE2e command you can customize on [/lua/base/3-autocmds.lua](https://github.com/NormalNvim/NormalNvim/blob/main/lua/base/3-autocmds.lua) along with all the other testing commands. You can also rename the commands to anything you want in case you don't use nodejs.
 
 ## 🌟 Support the project
 If you want to help me, please star this repository to increase the visibility of the project.
@@ -119,7 +123,6 @@ Special thanks to LeoRed04 for designing the logo.
 Did you know NormalNvim was the first Neovim distro to ship a compiler that [support 22+ programming languages out of the box](https://www.youtube.com/watch?v=O42uCIBaCIQ)?
 
 ## Roadmap
-* No new features are planned for now: `v3.6.x` is gonna be focusing on simplifying the config, so expect a few more unusually big updates until `v3.7.x` is released.
-* Once we remove all complexity we possibly can from all configs, lets's start moving to Neovim 0.10, as it is likely to be officially released around april of this year.
-* During 2024, add a toolbar for [Compiler.nvim](https://github.com/Zeioth/compiler.nvim) so users have a button to compile and manage their build automation utilities and current build_type in a friendly way.
+* We are currently in a stable state.
+* Once selene add [this](https://github.com/Kampfkarren/selene/issues/224) and [this](https://github.com/Kampfkarren/selene/issues/524) and [this](https://github.com/Kampfkarren/selene/pull/591), let's add the new rules.
 * During 2024, create a landing page. Pretty much it's gonna be the same thing we have on the wiki, but with sparkles.
