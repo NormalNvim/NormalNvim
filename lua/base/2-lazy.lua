@@ -23,8 +23,7 @@ local updater = {
 --    (but not when updating them)
 --  * Then show notifications and stuff.
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
-local luv = vim.uv or vim.loop
-if not luv.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   local output = vim.fn.system {
     "git",
     "clone",

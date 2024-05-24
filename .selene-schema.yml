@@ -1,5 +1,5 @@
 ---
-base: lua51+lua52
+base: lua51
 name: .selene-schema
 globals:
   after_each:
