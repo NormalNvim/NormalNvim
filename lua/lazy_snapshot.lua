@@ -47,8 +47,8 @@ return {
   { "mrjones2014/smart-splits.nvim", version = "^1" },
   { "neovim/nvim-lspconfig", commit = "b972e7154bc94ab4ecdbb38c8edbccac36f83996" },
   { "nvim-java/lua-async-await", commit = "652d94df34e97abe2d4a689edbc4270e7ead1a98" },
-  { "nvim-java/nvim-java", commit = "0ac2e2f5d8a4dc72b2fd249424534cd94d2c7a78" },
-  { "nvim-java/nvim-java-core", commit = "0d4474c6f73ec75252b8fe1324e8abe830464de6" },
+  { "nvim-java/nvim-java", commit = "2b7cdc1aacc5972816b337ff5bbc308ff5ef7892" },
+  { "nvim-java/nvim-java-core", commit = "9053e60ce028c2f10d307049eb253b02159e15f1" },
   { "nvim-java/nvim-java-dap", commit = "55c90c5d2414f6e66f843f38e111bee284d71e61" },
   { "nvim-java/nvim-java-refactor", commit = "7b841d53ed0ba55857debd0e32ce069b2c17e745" },
   { "nvim-java/nvim-java-test", commit = "a3fe70c48936e1c143ed366e127e9c3db4791716" },
@@ -103,6 +103,6 @@ return {
   { "zeioth/none-ls-autoload.nvim", commit = "2ae6e61dfaaf64c1dd8907a4286c1f4e78da5150" },
   { "zeioth/none-ls-external-sources.nvim", commit = "e594ac3637a0daa6844b6e3669803fa730ec1728" },
   { "zeioth/nvim-coverage", commit = "cf4b5c61dfac977026a51a2bcad9173c272986ce" },
-  { "zeioth/project.nvim", commit = "f19455d2fad52d86ecea019de72ae2e4a5fc7711" },
+  { "zeioth/project.nvim", commit = "173b5c92a0cdff15bc8dd1876d7f74d12abf6981" },
   { "zeioth/tokyonight.nvim", version = "^2" },
 }
