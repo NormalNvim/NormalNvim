@@ -62,7 +62,7 @@ return {
   -- project.nvim [project search + auto cd]
   -- https://github.com/ahmedkhalf/project.nvim
   {
-    "Zeioth/project.nvim",
+    "zeioth/project.nvim",
     event = "User BaseDefered",
     cmd = "ProjectRoot",
     opts = {
@@ -678,9 +678,9 @@ return {
   },
 
   -- distroupdate.nvim [distro update]
-  -- https://github.com/Zeioth/distroupdate.nvim
+  -- https://github.com/zeioth/distroupdate.nvim
   {
-    "Zeioth/distroupdate.nvim",
+    "zeioth/distroupdate.nvim",
     dependencies = {
       "nvim-lua/plenary.nvim"
     },

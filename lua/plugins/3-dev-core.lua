@@ -13,8 +13,8 @@
 --       -> mason-lspconfig                [auto start lsp]
 --       -> nvim-lspconfig                 [lsp configs]
 --       -> mason.nvim                     [lsp package manager]
---       -> none-ls-autoload.nvim          [mason package loader]
 --       -> SchemaStore.nvim               [mason extra schemas]
+--       -> none-ls-autoload.nvim          [mason package loader]
 --       -> none-ls                        [lsp code formatting]
 --       -> neodev                         [lsp for nvim lua api]
 --       -> garbage-day                    [lsp garbage collector]
@@ -261,6 +261,10 @@ return {
     }
   },
 
+  --  Schema Store [mason extra schemas]
+  --  https://github.com/b0o/SchemaStore.nvim
+  "b0o/SchemaStore.nvim",
+
   -- none-ls-autoload.nvim [mason package loader]
   -- https://github.com/zeioth/mason-none-ls.nvim
   -- Autoload clients installed by mason using none-ls on demand.
@@ -302,12 +306,8 @@ return {
     },
   },
 
-  --  Schema Store [mason extra schemas]
-  --  https://github.com/b0o/SchemaStore.nvim
-  "b0o/SchemaStore.nvim",
-
-  --  none-ls [lsp code formatting]
-  --  https://github.com/nvimtools/none-ls.nvim
+  -- --  none-ls [lsp code formatting]
+  -- --  https://github.com/nvimtools/none-ls.nvim
   {
     "nvimtools/none-ls.nvim",
     event = "User BaseFile",
@@ -323,6 +323,30 @@ return {
       -- Attach the user lsp mappings to every none-ls client.
       return { on_attach = utils_lsp.apply_user_lsp_mappings }
     end
+  },
+
+  {
+    "frostplexx/mason-bridge.nvim",
+    dependencies = {"stevearc/conform.nvim", "mfussenegger/nvim-lint"},
+    event = { "BufWritePost", "BufNewFile", "BufEnter" },
+    opts = {},
+    config = function(_, opts)
+      require("mason-bridge").setup(opts)
+
+      -- Bridge mason with conform and lint.
+      require("conform").setup({
+        formatters_by_ft = require("mason-bridge").get_formatters(),
+      })
+      local lint = require("lint")
+      lint.linters_by_ft = require("mason-bridge").get_linters()
+      vim.api.nvim_create_autocmd({
+        "BufEnter", "BufWritePost", "InsertLeave" }, { callback = function()
+          lint.try_lint()
+        end,
+      })
+
+      -- TODO: mason-bridge doesn't suppor registering in real time yet.
+    end,
   },
 
   --  neodev.nvim [lsp for nvim lua api]
