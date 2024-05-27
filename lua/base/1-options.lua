@@ -26,8 +26,8 @@ vim.opt.foldcolumn = "1" -- Show foldcolumn in nvim 0.9+.
 vim.opt.ignorecase = true -- Case insensitive searching.
 vim.opt.infercase = true -- Infer cases in keyword completion.
 
-vim.opt.laststatus = 3 -- Globalstatus.
-vim.opt.linebreak = true -- Wrap lines at'breakat'.
+vim.opt.laststatus = 3 -- Global statusline.
+vim.opt.linebreak = true -- Wrap lines at 'breakat'.
 vim.opt.number = true -- Show numberline.
 vim.opt.preserveindent = true -- Preserve indent structure as much as possible.
 vim.opt.pumheight = 10 -- Height of the pop up menu.
