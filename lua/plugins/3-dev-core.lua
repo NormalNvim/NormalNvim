@@ -325,30 +325,6 @@ return {
     end
   },
 
-  {
-    "frostplexx/mason-bridge.nvim",
-    dependencies = {"stevearc/conform.nvim", "mfussenegger/nvim-lint"},
-    event = { "BufWritePost", "BufNewFile", "BufEnter" },
-    opts = {},
-    config = function(_, opts)
-      require("mason-bridge").setup(opts)
-
-      -- Bridge mason with conform and lint.
-      require("conform").setup({
-        formatters_by_ft = require("mason-bridge").get_formatters(),
-      })
-      local lint = require("lint")
-      lint.linters_by_ft = require("mason-bridge").get_linters()
-      vim.api.nvim_create_autocmd({
-        "BufEnter", "BufWritePost", "InsertLeave" }, { callback = function()
-          lint.try_lint()
-        end,
-      })
-
-      -- TODO: mason-bridge doesn't suppor registering in real time yet.
-    end,
-  },
-
   --  neodev.nvim [lsp for nvim lua api]
   --  https://github.com/folke/neodev.nvim
   {
