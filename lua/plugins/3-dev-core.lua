@@ -204,12 +204,6 @@ return {
     "neovim/nvim-lspconfig",
     event = "User BaseFile",
     dependencies = "nvim-java/nvim-java",
-    config = function()
-      -- nvim-java DAP support.
-      if utils.is_available("nvim-java") then
-        require("lspconfig").jdtls.setup({})
-      end
-    end
   },
 
   -- mason-lspconfig [auto start lsp]
