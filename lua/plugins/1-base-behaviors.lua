@@ -643,7 +643,7 @@ return {
         hint_enable = false, -- Display it as hint.
         hint_prefix = "👈 ",
 
-        -- Additionally, you can use <space>ui to toggle inlay hints.
+        -- Additionally, you can use <space>uH to toggle inlay hints.
         toggle_key_flip_floatwin_setting = is_enabled
       }
     end,
