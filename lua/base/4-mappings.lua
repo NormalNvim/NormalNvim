@@ -1338,7 +1338,7 @@ if is_available "hop.nvim" then
 end
 
 -- mason-lspconfig.nvim [lsp] -------------------------------------------------
--- WARNING: Don't delete this section, or you won't have LSP keymappings
+-- WARNING: Don't delete this section, or you won't have LSP keymappings.
 
 -- A function we call from the script to start lsp.
 -- @return table lsp_mappings #
@@ -1369,8 +1369,8 @@ function M.lsp_mappings(client, bufnr)
     if vim.fn.has('nvim-0.11') == 1 then vim.diagnostic.jump({ count = 1 })
     else vim.diagnostic.goto_next() end end, desc = "Next diagnostic" }
 
+  -- Diagnostics
   lsp_mappings.n["gl"] = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" }
-
   if is_available "telescope.nvim" then
     lsp_mappings.n["<leader>lD"] =
       { function() require("telescope.builtin").diagnostics() end, desc = "Diagnostics" }
