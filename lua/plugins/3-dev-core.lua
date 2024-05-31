@@ -314,8 +314,8 @@ return {
     },
   },
 
-  -- --  none-ls [lsp code formatting]
-  -- --  https://github.com/nvimtools/none-ls.nvim
+  -- none-ls [lsp code formatting]
+  -- https://github.com/nvimtools/none-ls.nvim
   {
     "nvimtools/none-ls.nvim",
     event = "User BaseFile",
