@@ -83,7 +83,6 @@ return {
   { "smoka7/hop.nvim", commit = "6d853addd6e11df8338b26e869a29b36f2c3e893" },
   { "stevearc/aerial.nvim", commit = "228fad11393322537d9662c0347f75549a3d6c0a" },
   { "stevearc/dressing.nvim", commit = "18e5beb3845f085b6a33c24112b37988f3f93c06" },
-  { "zeioth/overseer.nvim", commit = "2e230a5803d14d60a05162dd5039809023d16e34" },
   { "stevearc/stickybuf.nvim", commit = "2160fcd536d81f5fa43f7167dba6634e814e3154" },
   { "tpope/vim-fugitive", commit = "41beedabc7e948c787ea5696e04c3544c3674e23" },
   { "tpope/vim-rhubarb", commit = "ee69335de176d9325267b0fd2597a22901d927b1" },
@@ -103,6 +102,7 @@ return {
   { "zeioth/none-ls-autoload.nvim", commit = "2ae6e61dfaaf64c1dd8907a4286c1f4e78da5150" },
   { "zeioth/none-ls-external-sources.nvim", commit = "e594ac3637a0daa6844b6e3669803fa730ec1728" },
   { "zeioth/nvim-coverage", commit = "cf4b5c61dfac977026a51a2bcad9173c272986ce" },
+  { "zeioth/overseer.nvim", commit = "2e230a5803d14d60a05162dd5039809023d16e34" },
   { "zeioth/project.nvim", commit = "173b5c92a0cdff15bc8dd1876d7f74d12abf6981" },
   { "zeioth/tokyonight.nvim", version = "^2" },
 }
