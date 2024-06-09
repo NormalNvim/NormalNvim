@@ -20,7 +20,6 @@
 
 --       ## Plugin bindings
 --       -> alpha-nvim
---       -> comments.nvim
 --       -> git                                [git]
 --       -> file browsers
 --       -> session manager
@@ -95,6 +94,8 @@ maps.n["<leader>w"] = { "<cmd>w<cr>", desc = "Save" }
 maps.n["<leader>W"] =
 { function() vim.cmd "SudaWrite" end, desc = "Save as sudo" }
 maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New file" }
+maps.n["<Leader>/"] = { "gcc", remap = true, desc = "Toggle comment line" }
+maps.x["<Leader>/"] = { "gc", remap = true, desc = "Toggle comment" }
 maps.n["gx"] =
 { utils.open_with_program, desc = "Open the file under cursor with a program" }
 maps.n["<C-s>"] = { "<cmd>w!<cr>", desc = "Force write" }
@@ -571,22 +572,6 @@ if is_available "alpha-nvim" then
       vim.b.miniindentscope_disable = true
     end,
     desc = "Home screen",
-  }
-end
-
--- comment.nvim -------------------------------------------------------------
-if is_available "Comment.nvim" then
-  maps.n["<leader>/"] = {
-    function()
-      require("Comment.api").toggle.linewise.count(
-        vim.v.count > 0 and vim.v.count or 1
-      )
-    end,
-    desc = "Comment line",
-  }
-  maps.x["<leader>/"] = {
-    "<esc><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<cr>",
-    desc = "comment line",
   }
 end
 
