@@ -423,6 +423,7 @@ return {
         defaults = {
           prompt_prefix = get_icon("Selected", 1),
           selection_caret = get_icon("Selected", 1),
+          multi_icon = get_icon("selected", 1),
           path_display = { "truncate" },
           sorting_strategy = "ascending",
           layout_config = {
