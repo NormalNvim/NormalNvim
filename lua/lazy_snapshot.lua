@@ -40,7 +40,7 @@ return {
   { "lawrence-laz/neotest-zig", commit = "742f97f971a39d44b4832b432083608834a0e59c" },
   { "ldelossa/litee-calltree.nvim", commit = "3908f52f2e69438cdeca32771d449f8ef3ee3bcc" },
   { "ldelossa/litee.nvim", commit = "3c51764a615566e4c0223362f4be00acc23c430e" },
-  { "lewis6991/gitsigns.nvim", commit = "2c2463dbd82eddd7dbab881c3a62cfbfbe3c67ae" },
+  { "lewis6991/gitsigns.nvim", version = "^0.9" },
   { "ludovicchabant/vim-gutentags", commit = "aa47c5e29c37c52176c44e61c780032dfacef3dd" },
   { "max397574/better-escape.nvim", commit = "7e86edafb8c7e73699e0320f225464a298b96d12" },
   { "mfussenegger/nvim-dap", commit = "6f79b822997f2e8a789c6034e147d42bc6706770" },
