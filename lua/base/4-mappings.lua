@@ -906,10 +906,10 @@ if is_available "telescope.nvim" then
       pcall(vim.api.nvim_command, "doautocmd User LoadColorSchemes")
 
       -- Open telescope
-      pcall(
-        require("telescope.builtin").colorscheme,
-        { enable_preview = true }
-      )
+      pcall(require("telescope.builtin").colorscheme, {
+        enable_preview = true,
+        ignore_builtins = true
+      })
     end,
     desc = "Find themes",
   }
