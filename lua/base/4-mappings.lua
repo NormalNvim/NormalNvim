@@ -1396,7 +1396,10 @@ function M.lsp_mappings(client, bufnr)
     function() vim.lsp.codelens.run() end,
     desc = "LSP CodeLens run",
   }
-  maps.n["<leader>uL"] = { ui.toggle_codelens, desc = "CodeLens" }
+  lsp_mappings.n["<leader>uL"] = {
+    function() ui.toggle_codelens() end,
+    desc = "CodeLens",
+  }
 
   -- Formatting
   local formatting = require("base.utils.lsp").formatting
