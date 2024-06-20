@@ -159,9 +159,14 @@ function M.toggle_buffer_syntax(bufnr)
 end
 
 --- Toggle codelens
-function M.toggle_codelens()
+function M.toggle_codelens(bufnr)
+  bufnr = bufnr or 0
   vim.g.codelens_enabled = not vim.g.codelens_enabled
-  if not vim.g.codelens_enabled then vim.lsp.codelens.clear() end
+  if vim.g.codelens_enabled then
+    vim.lsp.codelens.refresh({ bufnr = bufnr })
+  else
+    vim.lsp.codelens.clear()
+  end
   utils.notify(string.format("CodeLens %s", bool2str(vim.g.codelens_enabled)))
 end
 
