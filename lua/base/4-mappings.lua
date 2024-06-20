@@ -1387,8 +1387,7 @@ function M.lsp_mappings(client, bufnr)
       end
     end,
   })
-  if client.supports_method "textDocument/codeLens" then
-    -- enable codelens on LspAttach
+  if client.supports_method "textDocument/codeLens" then -- on LspAttach
     if vim.g.codelens_enabled then vim.lsp.codelens.refresh({ bufnr = 0 }) end
   end
 
