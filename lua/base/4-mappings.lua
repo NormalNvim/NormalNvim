@@ -1325,8 +1325,8 @@ end
 -- mason-lspconfig.nvim [lsp] -------------------------------------------------
 -- WARNING: Don't delete this section, or you won't have LSP keymappings.
 
--- A function we call from the script to start lsp.
--- @return table lsp_mappings #
+--A function we call from the script to start lsp.
+--@return table lsp_mappings
 function M.lsp_mappings(client, bufnr)
   -- Helper function to check if any active LSP clients
   -- given a filter provide a specific capability.
