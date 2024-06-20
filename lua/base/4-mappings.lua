@@ -1325,8 +1325,8 @@ end
 -- mason-lspconfig.nvim [lsp] -------------------------------------------------
 -- WARNING: Don't delete this section, or you won't have LSP keymappings.
 
--- A function we call from the script to start lsp.
--- @return table lsp_mappings #
+--A function we call from the script to start lsp.
+--@return table lsp_mappings
 function M.lsp_mappings(client, bufnr)
   -- Helper function to check if any active LSP clients
   -- given a filter provide a specific capability.
@@ -1379,8 +1379,7 @@ function M.lsp_mappings(client, bufnr)
 
   -- Codelens
   utils.add_autocmds_to_buffer("lsp_codelens_refresh", bufnr, {
-    events = { "BufEnter", "BufEnter", "InsertLeave" },
-    once = true,
+    events = { "BufEnter", "InsertLeave" },
     desc = "Refresh codelens",
     callback = function(args)
       if client.supports_method "textDocument/codeLens" then
@@ -1428,7 +1427,6 @@ function M.lsp_mappings(client, bufnr)
   then
     utils.add_autocmds_to_buffer("lsp_auto_format", bufnr, {
       events = "BufWritePre",
-      once = true,
       desc = "Autoformat on save",
       callback = function()
         if not has_capability("textDocument/formatting", { bufnr = bufnr }) then
@@ -1456,7 +1454,6 @@ function M.lsp_mappings(client, bufnr)
   utils.add_autocmds_to_buffer("lsp_document_highlight", bufnr, {
     {
       events = { "CursorHold", "CursorHoldI" },
-      once = true,
       desc = "highlight references when cursor holds",
       callback = function()
         if has_capability("textDocument/documentHighlight", { bufnr = bufnr }) then
