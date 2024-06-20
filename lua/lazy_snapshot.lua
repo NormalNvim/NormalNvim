@@ -45,7 +45,7 @@ return {
   { "max397574/better-escape.nvim", commit = "7e86edafb8c7e73699e0320f225464a298b96d12" },
   { "mfussenegger/nvim-dap", commit = "6f79b822997f2e8a789c6034e147d42bc6706770" },
   { "mrjones2014/smart-splits.nvim", version = "^1" },
-  { "neovim/nvim-lspconfig", commit = "37f362ef42d1a604d332e8d3d7d47593852b4313" },
+  { "neovim/nvim-lspconfig", commit = "6806370929cf6a35be6e5e0e74588515a4356e4d" },
   { "nvim-java/lua-async-await", commit = "652d94df34e97abe2d4a689edbc4270e7ead1a98" },
   { "nvim-java/nvim-java", commit = "0539cccf4d96dc10fd8d312df38f31bf1c43d068" },
   { "nvim-java/nvim-java-core", commit = "9053e60ce028c2f10d307049eb253b02159e15f1" },
