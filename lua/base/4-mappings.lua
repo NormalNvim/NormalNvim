@@ -1392,7 +1392,10 @@ function M.lsp_mappings(client, bufnr)
   end
 
   lsp_mappings.n["<leader>ll"] = {
-    function() vim.lsp.codelens.run() end,
+    function()
+      vim.lsp.codelens.run()
+      vim.lsp.codelens.refresh({ bufnr = 0 })
+    end,
     desc = "LSP CodeLens run",
   }
   lsp_mappings.n["<leader>uL"] = {
