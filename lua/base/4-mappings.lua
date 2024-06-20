@@ -1379,7 +1379,8 @@ function M.lsp_mappings(client, bufnr)
 
   -- Codelens
   utils.add_autocmds_to_buffer("lsp_codelens_refresh", bufnr, {
-    events = { "InsertLeave", "BufEnter" },
+    events = { "BufEnter", "BufEnter", "InsertLeave" },
+    once = true,
     desc = "Refresh codelens",
     callback = function(args)
       if client.supports_method "textDocument/codeLens" then
@@ -1389,7 +1390,7 @@ function M.lsp_mappings(client, bufnr)
   })
   if client.supports_method "textDocument/codeLens" then
     -- enable codelens on LspAttach
-    if vim.g.codelens_enabled then vim.lsp.codelens.refresh() end
+    if vim.g.codelens_enabled then vim.lsp.codelens.refresh({ bufnr = 0 }) end
   end
 
   lsp_mappings.n["<leader>ll"] = {
@@ -1427,6 +1428,7 @@ function M.lsp_mappings(client, bufnr)
   then
     utils.add_autocmds_to_buffer("lsp_auto_format", bufnr, {
       events = "BufWritePre",
+      once = true,
       desc = "Autoformat on save",
       callback = function()
         if not has_capability("textDocument/formatting", { bufnr = bufnr }) then
@@ -1454,6 +1456,7 @@ function M.lsp_mappings(client, bufnr)
   utils.add_autocmds_to_buffer("lsp_document_highlight", bufnr, {
     {
       events = { "CursorHold", "CursorHoldI" },
+      once = true,
       desc = "highlight references when cursor holds",
       callback = function()
         if has_capability("textDocument/documentHighlight", { bufnr = bufnr }) then
