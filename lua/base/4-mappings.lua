@@ -1379,7 +1379,7 @@ function M.lsp_mappings(client, bufnr)
 
   -- Codelens
   utils.add_autocmds_to_buffer("lsp_codelens_refresh", bufnr, {
-    events = { "BufEnter", "InsertLeave" },
+    events = { "InsertLeave" },
     desc = "Refresh codelens",
     callback = function(args)
       if client.supports_method "textDocument/codeLens" then
