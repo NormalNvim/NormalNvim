@@ -17,7 +17,7 @@ return {
   { "echasnovski/mini.animate", commit = "82519630b2760ffc516ebc387bef632f9c07b9f5" },
   { "echasnovski/mini.bufremove", commit = "931a3bb514147d9e812767275c4beba6b779b1d3" },
   { "echasnovski/mini.indentscope", commit = "a8274b6ea2d868198d27bd91a31ed5ea3a6a5744" },
-  { "folke/lazy.nvim", commit = "0de782a6b0ffba599dbd332a4019d852564bf28c" },
+  { "folke/lazy.nvim", version = "^11" },
   { "folke/neodev.nvim", version = "^3" },
   { "folke/noice.nvim", commit = "1238c8509743ff000ccb527bfd8c1d99edb62518" },
   { "folke/ts-comments.nvim", commit = "c075b4ee00f6e111b44bf99a8cfd5a4cfce9258a" },
