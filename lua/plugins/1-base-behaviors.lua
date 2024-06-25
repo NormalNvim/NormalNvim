@@ -682,7 +682,7 @@ return {
   {
     "zeioth/distroupdate.nvim",
     dependencies = {
-      "nvim-lua/plenary.nvim"
+      { "nvim-lua/plenary.nvim", build = false }, -- Manually disabled luarocks.
     },
     cmd = {
       "DistroFreezePluginVersions",

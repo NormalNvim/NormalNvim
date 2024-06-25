@@ -404,6 +404,7 @@ return {
         build = "make",
       },
     },
+    build = false, -- Manually disabled luarocks.
     cmd = "Telescope",
     opts = function()
       local get_icon = require("base.utils").get_icon
