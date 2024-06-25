@@ -61,7 +61,6 @@ vim.list_extend(spec, { { import = "plugins" } })
 require("lazy").setup({
   spec = spec,
   defaults = { lazy = true },
-  rocks = { enabled = vim.fn.executable("luarocks") == 1 },
   performance = {
     rtp = { -- Use deflate to download faster from the plugin repos.
       disabled_plugins = {
