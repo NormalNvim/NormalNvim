@@ -205,12 +205,12 @@ function M.check()
       msg = "Used by compiler.nvim to interpretate perl (optional)",
     },
     {
-      cmd = { "swift" },
+      cmd = { "swiftc" },
       type = "warn",
       msg = "Used by compiler.nvim to compile swift (optional)",
     },
     {
-      cmd = { "swiftc" },
+      cmd = { "swift" },
       type = "warn",
       msg = "Used by compiler.nvim to compile swift (optional)",
     },
