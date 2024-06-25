@@ -871,9 +871,7 @@ return {
       "CoverageClear",
       "CoverageSummary",
     },
-    dependencies = {
-      { "nvim-lua/plenary.nvim", build = false }, -- Manually disabled luarocks.
-    },
+    dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
       summary = {
         min_coverage = 80.0, -- passes if higher than
