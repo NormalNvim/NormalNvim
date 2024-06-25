@@ -37,12 +37,17 @@ function M.check()
     {
       cmd = { "git" },
       type = "error",
-      msg = "Used for core functionality such as updater and plugin management",
+      msg = "Used for core functionality such as updater and plugin management.",
+    },
+    {
+      cmd = { "luarocks" },
+      type = "error",
+      msg = "Used for core functionality such as updater and plugin management.",
     },
     {
       cmd = { "node" },
       type = "error",
-      msg = "Used for core functionality such as updater and plugin management",
+      msg = "Used for core functionality such as updater and plugin management.",
     },
     {
       cmd = { "yarn" },
@@ -200,14 +205,24 @@ function M.check()
       msg = "Used by compiler.nvim to interpretate perl (optional)",
     },
     {
+      cmd = { "swiftc" },
+      type = "warn",
+      msg = "Used by compiler.nvim to compile swift (optional)",
+    },
+    {
       cmd = { "swift" },
       type = "warn",
       msg = "Used by compiler.nvim to compile swift (optional)",
     },
     {
-      cmd = { "swiftc" },
+      cmd = { "gfortran" },
       type = "warn",
-      msg = "Used by compiler.nvim to compile swift (optional)",
+      msg = "Used by compiler.nvim to compile fortran (optional)"
+    },
+    {
+      cmd = { "fpm" },
+      type = "warn",
+      msg = "Used by compiler.nvim to compile fortran (optional)"
     },
     {
       cmd = { "go" },
