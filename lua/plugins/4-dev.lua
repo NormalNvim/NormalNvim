@@ -375,6 +375,8 @@ return {
 
   --  overseer [task runner]
   --  https://github.com/stevearc/overseer.nvim
+  --  If you need to close a task immediately:
+  --  press ENTER in the output menu on the task you wanna close.
   {
     "stevearc/overseer.nvim",
     cmd = {
@@ -393,23 +395,21 @@ return {
       "OverseerClearCache"
     },
     opts = {
-      -- Tasks are disposed 5 minutes after running to free resources.
-      -- If you need to close a task immediately:
-      -- press ENTER in the output menu on the task you wanna close.
-     task_list = { -- this refers to the window that shows the result
+     task_list = { -- the window that shows the results.
         direction = "bottom",
         min_height = 25,
         max_height = 25,
         default_detail = 1,
       },
-      -- component_aliases = { -- uncomment this to disable notifications
-      --   -- Components included in default will apply to all tasks
+      -- component_aliases = {
       --   default = {
-      --     { "display_duration", detail_level = 2 },
-      --     "on_output_summarize",
-      --     "on_exit_set_status",
-      --     --"on_complete_notify",
-      --     "on_complete_dispose",
+      --     -- Behaviors that will apply to all tasks.
+      --     "on_exit_set_status",                   -- don't delete this one.
+      --     "on_output_summarize",                  -- show last line on the list.
+      --     "display_duration",                     -- display duration.
+      --     "on_complete_notify",                   -- notify on task start.
+      --     "open_output",                          -- focus last executed task.
+      --     { "on_complete_dispose", timeout=300 }, -- dispose old tasks.
       --   },
       -- },
     },
@@ -860,7 +860,7 @@ return {
   --  If you use other framework or language, refer to nvim-coverage docs:
   --  https://github.com/andythigpen/nvim-coverage/blob/main/doc/nvim-coverage.txt
   {
-    "zeioth/nvim-coverage", -- Our fork until all ourPRs are merged.
+    "zeioth/nvim-coverage", -- Our fork until all our PRs are merged.
     cmd = {
       "Coverage",
       "CoverageLoad",
@@ -871,7 +871,9 @@ return {
       "CoverageClear",
       "CoverageSummary",
     },
-    dependencies = { "nvim-lua/plenary.nvim" },
+    dependencies = {
+      { "nvim-lua/plenary.nvim", build = false }, -- Manually disabled luarocks.
+    },
     opts = {
       summary = {
         min_coverage = 80.0, -- passes if higher than
