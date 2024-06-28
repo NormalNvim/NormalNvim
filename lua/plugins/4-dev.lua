@@ -349,16 +349,7 @@ return {
   {
     "NMAC427/guess-indent.nvim",
     event = "User BaseFile",
-    opts = { auto_cmd = false }, -- we are settig our own custom autocmd.
-    config = function(_, opts)
-      require("guess-indent").setup(opts)
-      vim.api.nvim_create_autocmd({ "BufNewFile", "BufReadPost" }, {
-        desc = "Guess indentation when loading a file",
-        callback = function(args)
-          require("guess-indent").set_from_buffer(args.buf, true, true)
-        end,
-      })
-    end,
+    opts = {}
   },
 
   --  COMPILER ----------------------------------------------------------------
