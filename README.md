@@ -1,3 +1,5 @@
+**Important** : You need Neovim 0.10+
+
 <div align="center">
   <img src="https://github.com/NormalNvim/NormalNvim/assets/3357792/76197752-0947-4392-a6bd-a59d64319028"></img>
   <h1><a href="https://github.com/NormalNvim/NormalNvim">NormalNvim</a></h1>
