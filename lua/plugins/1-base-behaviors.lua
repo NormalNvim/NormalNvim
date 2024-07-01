@@ -561,7 +561,7 @@ return {
   --  suda.nvim [write as sudo]
   --  https://github.com/lambdalisue/suda.vim
   {
-    "lambdalisue/suda.vim",
+    "lambdalisue/vim-suda",
     cmd = { "SudaRead", "SudaWrite" },
   },
 
