@@ -30,7 +30,7 @@ return {
   -- tokyonight [theme]
   -- https://github.com/folke/tokyonight.nvim
   {
-    "zeioth/tokyonight.nvim",
+    "folke/tokyonight.nvim",
     event = "User LoadColorSchemes",
     opts = {
       dim_inactive = false,

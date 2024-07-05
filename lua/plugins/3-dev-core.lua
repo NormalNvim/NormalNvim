@@ -6,6 +6,7 @@
 --       -> nvim-treesitter                [syntax highlight]
 --       -> nvim-ts-autotag                [treesitter understand html tags]
 --       -> ts-comments.nvim               [treesitter comments]
+--       -> markview.nvim                  [markdown highlights]
 --       -> nvim-colorizer                 [hex colors]
 
 --       ## LSP
@@ -68,22 +69,10 @@ return {
       autotag = { enable = true },
       highlight = {
         enable = true,
-        disable = function(_, bufnr)
-          local excluded_filetypes = {} -- disabled for
-          local is_disabled = vim.tbl_contains(
-            excluded_filetypes, vim.bo.filetype) or utils.is_big_file(bufnr)
-          return is_disabled
-        end,
       },
       matchup = {
         enable = true,
         enable_quotes = true,
-        disable = function(_, bufnr)
-          local excluded_filetypes = {} -- disabled for
-          local is_disabled = vim.tbl_contains(
-            excluded_filetypes, vim.bo.filetype) or utils.is_big_file(bufnr)
-          return is_disabled
-        end,
       },
       incremental_selection = { enable = true },
       indent = { enable = true },
@@ -154,6 +143,19 @@ return {
    "folke/ts-comments.nvim",
     event = "User BaseFile",
     enabled = vim.fn.has("nvim-0.10.0") == 1,
+    opts = {},
+  },
+
+  --  markview.nvim [markdown highlights]
+  --  https://github.com/folke/todo-comments.nvim
+  --  While on normal mode, markdown files will display highlights.
+  {
+    "OXY2DEV/markview.nvim",
+    ft = { "markdown" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons"
+    },
     opts = {},
   },
 
