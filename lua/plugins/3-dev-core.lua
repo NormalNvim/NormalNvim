@@ -69,22 +69,10 @@ return {
       autotag = { enable = true },
       highlight = {
         enable = true,
-        disable = function(_, bufnr)
-          local excluded_filetypes = {} -- disabled for
-          local is_disabled = vim.tbl_contains(
-            excluded_filetypes, vim.bo.filetype) or utils.is_big_file(bufnr)
-          return is_disabled
-        end,
       },
       matchup = {
         enable = true,
         enable_quotes = true,
-        disable = function(_, bufnr)
-          local excluded_filetypes = {} -- disabled for
-          local is_disabled = vim.tbl_contains(
-            excluded_filetypes, vim.bo.filetype) or utils.is_big_file(bufnr)
-          return is_disabled
-        end,
       },
       incremental_selection = { enable = true },
       indent = { enable = true },
