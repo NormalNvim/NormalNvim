@@ -6,6 +6,7 @@
 --       -> nvim-treesitter                [syntax highlight]
 --       -> nvim-ts-autotag                [treesitter understand html tags]
 --       -> ts-comments.nvim               [treesitter comments]
+--       -> markview.nvim                  [markdown highlights]
 --       -> nvim-colorizer                 [hex colors]
 
 --       ## LSP
@@ -154,6 +155,19 @@ return {
    "folke/ts-comments.nvim",
     event = "User BaseFile",
     enabled = vim.fn.has("nvim-0.10.0") == 1,
+    opts = {},
+  },
+
+  --  markview.nvim [markdown highlights]
+  --  https://github.com/folke/todo-comments.nvim
+  --  While on normal mode, markdown files will display highlights.
+  {
+    "OXY2DEV/markview.nvim",
+    ft = { "markdown" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "nvim-tree/nvim-web-devicons"
+    },
     opts = {},
   },
 
