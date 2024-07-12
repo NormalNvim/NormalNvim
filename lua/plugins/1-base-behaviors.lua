@@ -468,7 +468,7 @@ return {
         window = {
           width = 30,
           mappings = {
-            ["<space>"] = false, -- disable space until we figure out which-key disabling
+            ["<space>"] = false,
             ["<S-CR>"] = "system_open",
             ["[b"] = "prev_source",
             ["]b"] = "next_source",
