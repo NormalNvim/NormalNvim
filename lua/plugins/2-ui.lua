@@ -697,6 +697,7 @@ return {
 
     opts_extend = { "disable.ft", "disable.bt" },
     opts = {
+      preset = "classic", -- "classic", "modern", or "helix"
       icons = {
         group = vim.g.icons_enabled ~= false and "" or "+",
         rules = false,
