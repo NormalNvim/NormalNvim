@@ -606,6 +606,7 @@ return {
         search = false,  -- hlslens integration (display search result)
       },
       excluded_filetypes = {
+        "markdown",
         "cmp_docs",
         "cmp_menu",
         "noice",
@@ -693,9 +694,14 @@ return {
   {
     "folke/which-key.nvim",
     event = "User BaseDefered",
+
+    opts_extend = { "disable.ft", "disable.bt" },
     opts = {
-      icons = { group = vim.g.icons_enabled and "" or "+", separator = "" },
-      disable = { filetypes = { "TelescopePrompt" } },
+      icons = {
+        group = vim.g.icons_enabled ~= false and "" or "+",
+        rules = false,
+        separator = "-",
+      },
     },
     config = function(_, opts)
       require("which-key").setup(opts)
