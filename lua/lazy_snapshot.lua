@@ -7,7 +7,7 @@ return {
   { "MunifTanjim/nui.nvim", commit = "61574ce6e60c815b0a0c4b5655b8486ba58089a1" },
   { "NMAC427/guess-indent.nvim", commit = "6c75506e71836f34fe5c5efa322dfce3e0494e7b" },
   { "NvChad/nvim-colorizer.lua", commit = "85855b38011114929f4058efc97af1059ab3e41d" },
-  { "OXY2DEV/markview.nvim", commit = "614587dd5ecc5edd14ccdf67a1576c8b750a6abd" },
+  { "OXY2DEV/markview.nvim", commit = "f8b03061f196c882efd7e9bfc431bff162f4abb6" },
   { "Shatur/neovim-session-manager", commit = "dd0f5ebb06431505a6de75fd1bc50cd62226adef" },
   { "akinsho/toggleterm.nvim", commit = "cd55bf6aab3f88c259fa29ea86bbdcb1a325687d" },
   { "andymass/vim-matchup", commit = "1535a769d5dca851fe7d41b0be95f7c7203a4bef" },
