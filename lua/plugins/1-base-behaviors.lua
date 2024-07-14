@@ -662,7 +662,7 @@ return {
         "quickfix",
       },
       ignore = {
-        ft = { "lua" }, -- ignore filetypes with bad code actions.
+        ft = { "lua", "markdown" }, -- ignore filetypes with bad code actions.
       },
       autocmd = {
         enabled = true,
