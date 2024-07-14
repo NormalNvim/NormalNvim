@@ -156,7 +156,163 @@ return {
       "nvim-treesitter/nvim-treesitter",
       "nvim-tree/nvim-web-devicons"
     },
-    opts = {},
+    opts = {
+      headings = {
+        shift_width = 0,
+        heading_1 = {
+          style = "label",
+          sign = "",
+          sign_hl = "MarkviewCol7Fg",
+          hl = "MarkviewCol7Fg"
+        },
+        heading_2 = {
+          style = "label",
+          sign = "▶",
+          sign_hl = "col_2_fg",
+        },
+        heading_3 = {
+          style = "label",
+          sign = "󰼑",
+          sign_hl = "col_1_fg",
+          hl = "MarkviewCol3",
+        },
+        heading_4 = {
+          style = "label",
+          sign = "󰎲",
+          sign_hl = "col_1_fg",
+          hl = "MarkviewCol4",
+        },
+        heading_5 = {
+          style = "label",
+          sign = "󰼓",
+          sign_hl = "col_1_fg",
+          hl = "MarkviewCol5",
+        },
+        heading_6 = {
+          style = "label",
+          sign = "󰎴",
+          sign_hl = "col_1_fg",
+          hl = "MarkviewCol6",
+        }
+      },
+      list_items = {
+        marker_minus = {
+          add_padding = true,
+          text = "",
+          hl = "markviewCol2Fg"
+        },
+        marker_plus = {
+          add_padding = true,
+          text = "",
+          hl = "markviewCol4Fg"
+        },
+        marker_star = {
+          add_padding = true,
+          text = "",
+          text_hl = "markviewCol6Fg"
+        },
+        marker_dot = {
+          add_padding = true
+        },
+      },
+      block_quotes = {
+        enable = true,
+        default = { border = "▋", border_hl = "MarkviewCol7Fg" },
+        callouts = {
+          {
+            match_string = "NOTE",
+            callout_preview = "󰋽 Note",
+            callout_preview_hl = "MarkviewCol4Fg",
+
+            custom_title = true,
+            custom_icon = "󰋽 ",
+
+            border = "▋",
+            border_hl = "MarkviewCol5Fg"
+          },
+          {
+            match_string = "DESCRIPTION",
+            callout_preview = "󰋽 DESCRIPTION",
+            callout_preview_hl = "MarkviewCol7Fg",
+
+            custom_title = true,
+            custom_icon = "",
+
+            border = "▋",
+            border_hl = "MarkviewCol7Fg"
+          },
+          {
+            match_string = "TODO",
+            callout_preview = "󰋽 ",
+            callout_preview_hl = "MarkviewCol4Fg",
+
+            custom_title = true,
+            custom_icon = "󰋽 ",
+
+            border = "▋",
+            border_hl = "MarkviewCol5Fg"
+          },
+          {
+            match_string = "BUG",
+            callout_preview = " Bug",
+            callout_preview_hl = "MarkviewCol1Fg",
+
+            custom_title = true,
+            custom_icon = "  ",
+
+            border = "▋",
+            border_hl = "MarkviewCol1Fg"
+          },
+          {
+            match_string = "EXAMPLE",
+            callout_preview = "󱖫 Example",
+            callout_preview_hl = "MarkviewCol6Fg",
+
+            custom_title = true,
+            custom_icon = "󱖫 ",
+
+            border = "▋",
+            border_hl = "MarkviewCol6Fg"
+          },
+          {
+            match_string = "IMPORTANT",
+            callout_preview = " Important",
+            callout_preview_hl = "MarkviewCol3Fg",
+
+            custom_title = true,
+            custom_icon = " ",
+
+            border = "▋",
+            border_hl = "MarkviewCol3Fg"
+          },
+          {
+            match_string = "WARNING",
+            callout_preview = " Warning",
+            callout_preview_hl = "MarkviewCol2Fg",
+
+            custom_title = true,
+            custom_icon = " ",
+
+            border = "▋",
+            border_hl = "MarkviewCol2Fg"
+          },
+        }
+      },
+      checkboxes = {
+        checked = { text = "⚫", hl = "markviewCol4Fg" },
+        pending = { text = "⭕", hl = "MarkviewCol2Fg" },
+        unchecked = { text = "🟢", hl = "markviewCol1Fg" }
+      },
+      horizontal_rules = {
+        parts = { {
+          type = "repeating",
+          text = "─",
+          repeat_amount = function()
+            return vim.o.colorcolumn - 1
+          end,
+        } },
+      },
+    }
   },
 
   --  [hex colors]
