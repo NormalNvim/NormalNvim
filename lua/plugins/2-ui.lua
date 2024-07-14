@@ -606,7 +606,6 @@ return {
         search = false,  -- hlslens integration (display search result)
       },
       excluded_filetypes = {
-        "markdown",
         "cmp_docs",
         "cmp_menu",
         "noice",

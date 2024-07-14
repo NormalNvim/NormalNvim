@@ -21,7 +21,7 @@ return {
   { "folke/lazy.nvim", version = "^11" },
   { "folke/neodev.nvim", version = "^3" },
   { "folke/noice.nvim", commit = "03c6a75661e68012e30b0ed81f050358b1e2233c" },
-  { "folke/tokyonight.nvim", commit = "c2dde8d093b4196a24e8c0fd69ca272f31ba05b9" },
+  { "folke/tokyonight.nvim", version = "^3" },
   { "folke/ts-comments.nvim", commit = "4f682e95b55cfeb767b20917889798005424034d" },
   { "folke/which-key.nvim", version = "^3" },
   { "folke/zen-mode.nvim", commit = "78557d972b4bfbb7488e17b5703d25164ae64e6a" },
