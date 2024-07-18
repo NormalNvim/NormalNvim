@@ -1,3 +1,5 @@
+**Important** : You need Neovim 0.10+
+
 <div align="center">
   <img src="https://github.com/NormalNvim/NormalNvim/assets/3357792/76197752-0947-4392-a6bd-a59d64319028"></img>
   <h1><a href="https://github.com/NormalNvim/NormalNvim">NormalNvim</a></h1>
@@ -103,9 +105,8 @@ Please before opening an issue, check the [astrocommunity](https://github.com/As
 OPENAI_API_KEY="my_key_here"
 ```
 
-## 🌟 Support the project
-If you want to help me, please star this repository to increase the visibility of the project.
-
+## 🌟 Get involved
+One of the biggest challenges NormalNvim face is marketing. So share the project and tell your friends!
 [![Stargazers over time](https://starchart.cc/NormalNvim/NormalNvim.svg)](https://starchart.cc/NormalNvim/NormalNvim)
 
 ## Fix a bug and send a PR to appear as contributor
