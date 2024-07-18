@@ -803,7 +803,7 @@ return {
       "sidlatau/neotest-dart",
       "Issafalcon/neotest-dotnet",
       "jfpedroza/neotest-elixir",
-      "nvim-neotest/neotest-golang",
+      "fredrikaverpil/neotest-golang",
       "rcasia/neotest-java",
       "nvim-neotest/neotest-jest",
       "olimorris/neotest-phpunit",
