@@ -147,10 +147,11 @@ return {
   },
 
   --  markview.nvim [markdown highlights]
-  --  https://github.com/folke/todo-comments.nvim
+  --  https://github.com/OXY2DEV/markview.nvim
   --  While on normal mode, markdown files will display highlights.
   {
     "OXY2DEV/markview.nvim",
+    enabled = true,
     ft = { "markdown" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
@@ -214,6 +215,11 @@ return {
         marker_dot = {
           add_padding = true
         },
+      },
+      checkboxes = {
+        enable = true,
+        checked = { text="󰱒", hl = "markviewCol4Fg" },
+        unchecked = { text="󰄱", hl="MarkviewCol2Fg" },
       },
       block_quotes = {
         enable = true,
@@ -297,11 +303,6 @@ return {
             border_hl = "MarkviewCol2Fg"
           },
         }
-      },
-      checkboxes = {
-        checked = { text = "⚫", hl = "markviewCol4Fg" },
-        pending = { text = "⭕", hl = "MarkviewCol2Fg" },
-        unchecked = { text = "🟢", hl = "markviewCol1Fg" }
       },
       horizontal_rules = {
         parts = { {
