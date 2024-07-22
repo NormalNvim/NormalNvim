@@ -147,7 +147,7 @@ return {
   },
 
   --  markview.nvim [markdown highlights]
-  --  https://github.com/folke/todo-comments.nvim
+  --  https://github.com/OXY2DEV/markview.nvim
   --  While on normal mode, markdown files will display highlights.
   {
     "OXY2DEV/markview.nvim",
