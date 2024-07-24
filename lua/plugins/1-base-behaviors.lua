@@ -145,7 +145,6 @@ return {
     "max397574/better-escape.nvim",
     event = "User BaseDefered",
     opts = {
-      mapping = {},
       timeout = 300,
     },
   },
