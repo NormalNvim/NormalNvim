@@ -143,7 +143,7 @@ return {
   -- https://github.com/max397574/better-escape.nvim
   {
     "max397574/better-escape.nvim",
-    event = "InsertCharPre",
+    event = "User BaseDefered",
     opts = {
       mapping = {},
       timeout = 300,
