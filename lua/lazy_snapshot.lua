@@ -45,7 +45,6 @@ return {
   { "ldelossa/litee.nvim", commit = "3c51764a615566e4c0223362f4be00acc23c430e" },
   { "lewis6991/gitsigns.nvim", version = "^0.9" },
   { "ludovicchabant/vim-gutentags", commit = "aa47c5e29c37c52176c44e61c780032dfacef3dd" },
-  { "max397574/better-escape.nvim", commit = "7e86edafb8c7e73699e0320f225464a298b96d12" },
   { "mfussenegger/nvim-dap", commit = "6f79b822997f2e8a789c6034e147d42bc6706770" },
   { "mrjones2014/smart-splits.nvim", version = "^1" },
   { "neovim/nvim-lspconfig", commit = "216deb2d1b5fbf24398919228208649bbf5cbadf" },
