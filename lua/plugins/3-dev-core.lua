@@ -66,7 +66,6 @@ return {
     end,
     opts = {
       auto_install = false, -- Currently bugged. Use [:TSInstall all] and [:TSUpdate all]
-      autotag = { enable = true },
       highlight = {
         enable = true,
       },
