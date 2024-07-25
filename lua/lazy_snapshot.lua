@@ -100,7 +100,7 @@ return {
   { "zeioth/distroupdate.nvim", version = "^1" },
   { "zeioth/dooku.nvim", version = "^3" },
   { "zeioth/garbage-day.nvim", version = "^2" },
-  { "zeioth/heirline-components.nvim", version = "^1.2.2" },
+  { "zeioth/heirline-components.nvim", version = "^1.2.3" },
   { "zeioth/markmap.nvim", version = "^3" },
   { "zeioth/mason-extra-cmds", commit = "1188781b69a09814081f1524d3b46b437df348d8" },
   { "zeioth/none-ls-autoload.nvim", version = "^1" },
