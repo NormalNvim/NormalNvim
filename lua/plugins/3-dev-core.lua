@@ -149,7 +149,7 @@ return {
   {
     'MeanderingProgrammer/markdown.nvim',
     ft = { "markdown" },
-    dependencies = { 'nvim-treesitter/nvim-treesitter', "3rd/image.nvim" },
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
     opts = {
       heading = {
         sign = false,
