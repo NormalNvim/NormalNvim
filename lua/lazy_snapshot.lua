@@ -1,5 +1,4 @@
 return {
-  { "3rd/image.nvim", commit = "61c76515cfc3cdac8123ece9e9761b20c3dc1315" },
   { "AckslD/nvim-neoclip.lua", commit = "709c97fabec9da7d04f7d2f5e207423af8c02871" },
   { "AstroNvim/astrotheme", version = "^4" },
   { "Issafalcon/neotest-dotnet", commit = "caeb52b602fa8a5855c5839c338fb65b50a40ab3" },
