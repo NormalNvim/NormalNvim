@@ -6,7 +6,7 @@
 --       -> nvim-treesitter                [syntax highlight]
 --       -> nvim-ts-autotag                [treesitter understand html tags]
 --       -> ts-comments.nvim               [treesitter comments]
---       -> markview.nvim                  [markdown highlights]
+--       -> markdown.nvim                  [markdown highlights]
 --       -> nvim-colorizer                 [hex colors]
 
 --       ## LSP
@@ -66,10 +66,7 @@ return {
     end,
     opts = {
       auto_install = false, -- Currently bugged. Use [:TSInstall all] and [:TSUpdate all]
-      autotag = { enable = true },
-      highlight = {
-        enable = true,
-      },
+      highlight = { enable = true },
       matchup = {
         enable = true,
         enable_quotes = true,
@@ -146,174 +143,31 @@ return {
     opts = {},
   },
 
-  --  markview.nvim [markdown highlights]
-  --  https://github.com/OXY2DEV/markview.nvim
+  --  markdown.nvim [markdown highlights]
+  --  https://github.com/MeanderingProgrammer/markdown.nvim
   --  While on normal mode, markdown files will display highlights.
   {
-    "OXY2DEV/markview.nvim",
-    enabled = true,
+    'MeanderingProgrammer/markdown.nvim',
     ft = { "markdown" },
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-      "nvim-tree/nvim-web-devicons"
-    },
+    dependencies = { 'nvim-treesitter/nvim-treesitter', "3rd/image.nvim" },
     opts = {
-      headings = {
-        shift_width = 0,
-        heading_1 = {
-          style = "label",
-          sign = "",
-          sign_hl = "MarkviewCol7Fg",
-          hl = "MarkviewCol7Fg"
-        },
-        heading_2 = {
-          style = "label",
-          sign = "▶",
-          sign_hl = "col_2_fg",
-        },
-        heading_3 = {
-          style = "label",
-          sign = "󰼑",
-          sign_hl = "col_1_fg",
-          hl = "MarkviewCol3",
-        },
-        heading_4 = {
-          style = "label",
-          sign = "󰎲",
-          sign_hl = "col_1_fg",
-          hl = "MarkviewCol4",
-        },
-        heading_5 = {
-          style = "label",
-          sign = "󰼓",
-          sign_hl = "col_1_fg",
-          hl = "MarkviewCol5",
-        },
-        heading_6 = {
-          style = "label",
-          sign = "󰎴",
-          sign_hl = "col_1_fg",
-          hl = "MarkviewCol6",
-        }
+      heading = {
+        sign = false,
+        icons = { ' ', ' ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
+        width = 79,
       },
-      list_items = {
-        marker_minus = {
-          add_padding = true,
-          text = "",
-          hl = "markviewCol2Fg"
-        },
-        marker_plus = {
-          add_padding = true,
-          text = "",
-          hl = "markviewCol4Fg"
-        },
-        marker_star = {
-          add_padding = true,
-          text = "",
-          text_hl = "markviewCol6Fg"
-        },
-        marker_dot = {
-          add_padding = true
-        },
+      code = {
+        sign = false,
+        width = 'block', -- use 'language' if colorcolumn is important for you.
+        right_pad = 1,
       },
-      checkboxes = {
-        enable = true,
-        checked = { text="󰱒", hl = "markviewCol4Fg" },
-        unchecked = { text="󰄱", hl="MarkviewCol2Fg" },
+      dash = {
+        width = 79
       },
-      block_quotes = {
-        enable = true,
-        default = { border = "▋", border_hl = "MarkviewCol7Fg" },
-        callouts = {
-          {
-            match_string = "NOTE",
-            callout_preview = "󰋽 Note",
-            callout_preview_hl = "MarkviewCol4Fg",
-
-            custom_title = true,
-            custom_icon = "󰋽 ",
-
-            border = "▋",
-            border_hl = "MarkviewCol5Fg"
-          },
-          {
-            match_string = "DESCRIPTION",
-            callout_preview = "󰋽 DESCRIPTION",
-            callout_preview_hl = "MarkviewCol7Fg",
-
-            custom_title = true,
-            custom_icon = "",
-
-            border = "▋",
-            border_hl = "MarkviewCol7Fg"
-          },
-          {
-            match_string = "TODO",
-            callout_preview = "󰋽 ",
-            callout_preview_hl = "MarkviewCol4Fg",
-
-            custom_title = true,
-            custom_icon = "󰋽 ",
-
-            border = "▋",
-            border_hl = "MarkviewCol5Fg"
-          },
-          {
-            match_string = "BUG",
-            callout_preview = " Bug",
-            callout_preview_hl = "MarkviewCol1Fg",
-
-            custom_title = true,
-            custom_icon = "  ",
-
-            border = "▋",
-            border_hl = "MarkviewCol1Fg"
-          },
-          {
-            match_string = "EXAMPLE",
-            callout_preview = "󱖫 Example",
-            callout_preview_hl = "MarkviewCol6Fg",
-
-            custom_title = true,
-            custom_icon = "󱖫 ",
-
-            border = "▋",
-            border_hl = "MarkviewCol6Fg"
-          },
-          {
-            match_string = "IMPORTANT",
-            callout_preview = " Important",
-            callout_preview_hl = "MarkviewCol3Fg",
-
-            custom_title = true,
-            custom_icon = " ",
-
-            border = "▋",
-            border_hl = "MarkviewCol3Fg"
-          },
-          {
-            match_string = "WARNING",
-            callout_preview = " Warning",
-            callout_preview_hl = "MarkviewCol2Fg",
-
-            custom_title = true,
-            custom_icon = " ",
-
-            border = "▋",
-            border_hl = "MarkviewCol2Fg"
-          },
-        }
+      pipe_table = {
+        style = 'full', -- use 'normal' if colorcolumn is important for you.
       },
-      horizontal_rules = {
-        parts = { {
-          type = "repeating",
-          text = "─",
-          repeat_amount = function()
-            return vim.o.colorcolumn - 1
-          end,
-        } },
-      },
-    }
+    },
   },
 
   --  [hex colors]
@@ -339,12 +193,6 @@ return {
     "nvim-java/nvim-java",
     ft = { "java" },
     dependencies = {
-      "nvim-java/lua-async-await",
-      'nvim-java/nvim-java-refactor',
-      "nvim-java/nvim-java-core",
-      "nvim-java/nvim-java-test",
-      "nvim-java/nvim-java-dap",
-      "JavaHello/spring-boot.nvim",
       "MunifTanjim/nui.nvim",
       "neovim/nvim-lspconfig",
       "mfussenegger/nvim-dap",
