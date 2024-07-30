@@ -387,7 +387,7 @@ return {
   --  https://github.com/hrsh7th/nvim-cmp
   {
     "hrsh7th/nvim-cmp",
-    dependencies =
+    dependencies = {
       "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
