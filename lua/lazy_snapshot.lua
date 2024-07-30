@@ -20,7 +20,6 @@ return {
   { "echasnovski/mini.bufremove", commit = "1ee294a97e091d3cf967974df622c0d887890dc2" },
   { "echasnovski/mini.indentscope", commit = "1222393d9c5e8d92b913ccab6701a7164b21781c" },
   { "folke/lazy.nvim", version = "^11" },
-  { "folke/neodev.nvim", version = "^3" },
   { "folke/noice.nvim", commit = "03c6a75661e68012e30b0ed81f050358b1e2233c" },
   { "folke/tokyonight.nvim", version = "^3" },
   { "folke/ts-comments.nvim", version = "^2" },

@@ -131,6 +131,10 @@ return {
         },
       },
     },
+    config = function(_, opts)
+      -- calling setup() here is necessary to enable conceal and some features.
+      require("nvim-treesitter.configs").setup(opts)
+    end,
   },
 
   -- ts-comments.nvim [treesitter comments]
@@ -344,9 +348,20 @@ return {
   --  neodev.nvim [lsp for nvim lua api]
   --  https://github.com/folke/neodev.nvim
   {
-    "folke/neodev.nvim",
-    ft = { "lua" },
-    opts = {}
+    "folke/lazydev.nvim",
+    ft = "lua",
+    cmd = "LazyDev",
+    opts = function(_, opts)
+      opts.library = {
+        { path = "luvit-meta/library", words = { "vim%.uv" } },
+        { path = "heirline-components", words = { "heirline-components" } },
+        { path = "astrotheme",         words = { "AstroTheme" } },
+        { path = "lazy.nvim",          words = { "Lazy" } },
+      }
+    end,
+    specs = {
+      { "Bilal2453/luvit-meta", lazy = true },
+    },
   },
 
   --  garbage-day.nvim [lsp garbage collector]
@@ -372,11 +387,11 @@ return {
   --  https://github.com/hrsh7th/nvim-cmp
   {
     "hrsh7th/nvim-cmp",
-    dependencies = {
+    dependencies =
       "saadparwaiz1/cmp_luasnip",
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
-      "hrsh7th/cmp-nvim-lsp"
+      "hrsh7th/cmp-nvim-lsp",
     },
     event = "InsertEnter",
     opts = function()
@@ -419,6 +434,7 @@ return {
         },
         duplicates = {
           nvim_lsp = 1,
+          lazydev = 1,
           luasnip = 1,
           cmp_tabnine = 1,
           buffer = 1,
@@ -507,6 +523,7 @@ return {
         },
         sources = cmp.config.sources {
           { name = "nvim_lsp", priority = 1000 },
+          { name = "lazydev",  priority = 850 },
           { name = "luasnip",  priority = 750 },
           { name = "buffer",   priority = 500 },
           { name = "path",     priority = 250 },
