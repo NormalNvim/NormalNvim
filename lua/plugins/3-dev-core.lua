@@ -471,7 +471,8 @@ return {
         { path = "vim-gutentags", mods = { "vim-gutentags" } }, -- has vimscript
 
         -- To make it work exactly like neodev, you can add all plugins
-        -- without conditions like:
+        -- without conditions instead like this but it will load slower
+        -- on startup and consume ~1 Gb RAM:
         -- vim.fn.stdpath "data" .. "/lazy",
 
         -- You can also add libs.
