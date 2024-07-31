@@ -416,7 +416,7 @@ return {
         { path = "nvim-ts-autotag", mods = { "nvim-ts-autotag" } },
         { path = "nvim-treesitter-textobjects", mods = { "nvim-treesitter", "nvim-treesitter-textobjects" } },
         { path = "ts-comments.nvim", mods = { "ts-comments" } },
-        { path = "markdown.nvim", mods = { "render-markdown" },
+        { path = "markdown.nvim", mods = { "render-markdown" } },
         { path = "nvim-highlight-colors", mods = { "nvim-highlight-colors" } },
         { path = "nvim-java", mods = { "java" } },
         { path = "nvim-lspconfig", mods = { "lspconfig" } },
@@ -469,7 +469,11 @@ return {
         { path = "nvim-coverage.nvim", mods = { "coverage" } },
         { path = "gutentags_plus", mods = { "gutentags_plus" } }, -- has vimscript
         { path = "vim-gutentags", mods = { "vim-gutentags" } }, -- has vimscript
-        },
+
+        -- To make it work exactly like neodev, you can add all plugins
+        -- without conditions like:
+        -- vim.fn.stdpath "data" .. "/lazy",
+
         -- You can also add libs.
         { path = "luvit-meta/library", mods = { "vim%.uv" } },
       }
