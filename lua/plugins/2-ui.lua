@@ -21,7 +21,7 @@
 --       -> highlight-undo              [highlights]
 --       -> which-key                   [on-screen keybinding]
 
-local utils = require "base.utils"
+local utils = require("base.utils")
 local is_windows = vim.fn.has('win32') == 1         -- true if on windows
 local is_android = vim.fn.isdirectory('/data') == 1 -- true if on android
 
@@ -314,7 +314,15 @@ return {
             local is_disabled = not require("heirline-components.buffer").is_valid(args.buf) or
                 lib.condition.buffer_matches({
                   buftype = { "terminal", "prompt", "nofile", "help", "quickfix" },
-                  filetype = { "NvimTree", "neo%-tree", "dashboard", "Outline", "aerial" },
+                  filetype = {
+                    "NvimTree",
+                    "neo%-tree",
+                    "dashboard",
+                    "Outline",
+                    "aerial",
+                    "rnvimr",
+                    "yazi"
+                  },
                 }, args.buf)
             return is_disabled
           end,
