@@ -358,8 +358,8 @@ return {
     }
   },
 
-  --  neodev.nvim [lua lsp for nvim plugins]
-  --  https://github.com/folke/neodev.nvim
+  --  lazy.nvim [lua lsp for nvim plugins]
+  --  https://github.com/folke/lazydev.nvim
   {
     "folke/lazydev.nvim",
     ft = "lua",
