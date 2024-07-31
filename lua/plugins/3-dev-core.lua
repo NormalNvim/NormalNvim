@@ -179,7 +179,8 @@ return {
   {
     "brenoprata10/nvim-highlight-colors",
     event = "User BaseFile",
-    cmd = { "HighlightColors" }
+    cmd = { "HighlightColors" }, -- followed by 'On' / 'Off' / 'Toggle'
+    opts = { enabled_named_colors = false },
   },
 
   --  LSP -------------------------------------------------------------------
