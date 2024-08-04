@@ -665,7 +665,7 @@ end
 -- file browsers ------------------------------------
 if is_available("yazi.nvim") then
   maps.n["<leader>r"] = {
-    function() vim.cmd("YaziToggle") end,
+    function() require("yazi").toggle() end,
     desc = "File browser",
   }
 end
