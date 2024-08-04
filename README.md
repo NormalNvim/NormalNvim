@@ -123,6 +123,11 @@ Special thanks to LeoRed04 for designing the logo.
 ## Trivia
 Did you know NormalNvim was the first Neovim distro to ship a compiler that [support 22+ programming languages out of the box](https://www.youtube.com/watch?v=O42uCIBaCIQ)?
 
+## Todos before v4.0
+* Better QA for `distroupdate.nvim`.
+* Update `yazi.nvim` after we add the changes we've been asked for.
+* Docusaurus proof of concept.
+
 ## Roadmap
 * We are currently in a stable state.
 * Once selene add [this](https://github.com/Kampfkarren/selene/issues/224) and [this](https://github.com/Kampfkarren/selene/issues/524) and [this](https://github.com/Kampfkarren/selene/pull/591), let's add the new rules.
