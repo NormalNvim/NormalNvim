@@ -480,10 +480,7 @@ return {
         { path = "luvit-meta/library", mods = { "vim%.uv" } },
       }
     end,
-    specs = {
-      { "Bilal2453/luvit-meta", lazy = true },
-      -- { "folke/neodev.nvim", lazy = true}
-    },
+    specs = { { "Bilal2453/luvit-meta", lazy = true } },
   },
 
   --  AUTO COMPLETION --------------------------------------------------------
