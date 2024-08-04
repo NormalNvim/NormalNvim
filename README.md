@@ -125,7 +125,6 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 
 ## Todos before v4.0
 * Better QA for `distroupdate.nvim`.
-* Update `yazi.nvim` after we add the changes we've been asked for.
 * Docusaurus proof of concept.
 * Prepare promos.
 
