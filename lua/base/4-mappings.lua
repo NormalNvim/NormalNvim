@@ -1012,7 +1012,7 @@ if is_available "telescope.nvim" then
   if is_available "compiler.nvim" and is_available "overseer.nvim" then
     maps.n["<leader>m"] = icons.c
     maps.n["<leader>mm"] = {
-      function() vim.cmdc"CompilerOpen") end,
+      function() vim.cmd("CompilerOpen") end,
       desc = "Open compiler",
     }
     maps.n["<leader>mr"] = {
