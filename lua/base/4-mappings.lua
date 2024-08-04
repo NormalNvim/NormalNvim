@@ -92,7 +92,7 @@ maps.n["k"] =
 { "v:count == 0 ? 'gk' : 'k'", expr = true, desc = "Move cursor up" }
 maps.n["<leader>w"] = { "<cmd>w<cr>", desc = "Save" }
 maps.n["<leader>W"] =
-{ function() vim.cmd "SudaWrite" end, desc = "Save as sudo" }
+{ function() vim.cmd("SudaWrite") end, desc = "Save as sudo" }
 maps.n["<leader>n"] = { "<cmd>enew<cr>", desc = "New file" }
 maps.n["<Leader>/"] = { "gcc", remap = true, desc = "Toggle comment line" }
 maps.x["<Leader>/"] = { "gc", remap = true, desc = "Toggle comment" }
@@ -194,8 +194,8 @@ maps.x["P"] = { "p", desc = "Yank what you are going to override, then paste" }
 --      to avoid triggering it by accident.
 maps.n["<ESC>"] = {
   function()
-    if vim.fn.hlexists "Search" then
-      vim.cmd "nohlsearch"
+    if vim.fn.hlexists("Search") then
+      vim.cmd("nohlsearch")
     else
       vim.api.nvim_feedkeys(
         vim.api.nvim_replace_termcodes("<ESC>", true, true, true),
@@ -219,7 +219,7 @@ maps.n["gg"] = {
     if vim.v.count > 0 then
       vim.cmd("normal! " .. vim.v.count .. "gg")
     else
-      vim.cmd "normal! gg0"
+      vim.cmd("normal! gg0")
     end
     vim.g.minianimate_disable = false
   end,
@@ -228,7 +228,7 @@ maps.n["gg"] = {
 maps.n["G"] = {
   function()
     vim.g.minianimate_disable = true
-    vim.cmd "normal! G$"
+    vim.cmd("normal! G$")
     vim.g.minianimate_disable = false
   end,
   desc = "G and go to the last position",
@@ -239,7 +239,7 @@ maps.x["gg"] = {
     if vim.v.count > 0 then
       vim.cmd("normal! " .. vim.v.count .. "gg")
     else
-      vim.cmd "normal! gg0"
+      vim.cmd("normal! gg0")
     end
     vim.g.minianimate_disable = false
   end,
@@ -248,7 +248,7 @@ maps.x["gg"] = {
 maps.x["G"] = {
   function()
     vim.g.minianimate_disable = true
-    vim.cmd "normal! G$"
+    vim.cmd("normal! G$")
     vim.g.minianimate_disable = false
   end,
   desc = "G and go to the last position (visual)",
@@ -256,7 +256,7 @@ maps.x["G"] = {
 maps.n["<C-a>"] = { -- to move to the previous position press ctrl + oo
   function()
     vim.g.minianimate_disable = true
-    vim.cmd "normal! gg0vG$"
+    vim.cmd("normal! gg0vG$")
     vim.g.minianimate_disable = false
   end,
   desc = "Visually select all",
@@ -302,7 +302,7 @@ maps.n["<leader>C"] = { -- Close buffer keeping the window.
 --   desc = "Force close buffer",
 --
 maps.n["<leader>ba"] = {
-  function() vim.cmd "wa" end,
+  function() vim.cmd("wa") end,
   desc = "Write all changed buffers",
 }
 maps.n["]b"] = {
@@ -486,7 +486,7 @@ maps.n["<S-PageDown>"] = {
     local target_line = current_line + 1 + math.floor(total_lines * 0.20)
     if target_line > total_lines then target_line = total_lines end
     vim.api.nvim_win_set_cursor(0, { target_line, 0 })
-    vim.cmd "normal! zz"
+    vim.cmd("normal! zz")
   end,
   desc = "Page down exactly a 20% of the total size of the buffer",
 }
@@ -496,7 +496,7 @@ maps.n["<S-PageUp>"] = {
     local target_line = current_line - 1 - math.floor(vim.fn.line "$" * 0.20)
     if target_line < 1 then target_line = 1 end
     vim.api.nvim_win_set_cursor(0, { target_line, 0 })
-    vim.cmd "normal! zz"
+    vim.cmd("normal! zz")
   end,
   desc = "Page up exactly 20% of the total size of the buffer",
 }
@@ -626,7 +626,7 @@ end
 -- git fugitive
 if is_available "vim-fugitive" then
   maps.n["<leader>gP"] = {
-    function() vim.cmd ":GBrowse" end,
+    function() vim.cmd(":GBrowse") end,
     desc = "Open in github ",
   }
 end
@@ -636,7 +636,7 @@ if vim.fn.executable "lazygit" == 1 then -- if lazygit exists, show it
     function()
       local git_dir = vim.fn.finddir(".git", vim.fn.getcwd() .. ";")
       if git_dir ~= "" then
-        vim.cmd "TermExec cmd='lazygit && exit'"
+        vim.cmd("TermExec cmd='lazygit && exit'")
       else
         utils.notify("Not a git repository", vim.log.levels.WARN)
       end
@@ -650,9 +650,9 @@ if vim.fn.executable "gitui" == 1 then -- if gitui exists, show it
       local git_dir = vim.fn.finddir(".git", vim.fn.getcwd() .. ";")
       if git_dir ~= "" then
         if vim.fn.executable "keychain" == 1 then
-          vim.cmd 'TermExec cmd="eval `keychain --eval ~/.ssh/github.key` && gitui && exit"'
+          vim.cmd('TermExec cmd="eval `keychain --eval ~/.ssh/github.key` && gitui && exit"')
         else
-          vim.cmd "TermExec cmd='gitui && exit'"
+          vim.cmd("TermExec cmd='gitui && exit'")
         end
       else
         utils.notify("Not a git repository", vim.log.levels.WARN)
@@ -663,9 +663,11 @@ if vim.fn.executable "gitui" == 1 then -- if gitui exists, show it
 end
 
 -- file browsers ------------------------------------
--- ranger
-if is_available "rnvimr" then
-  maps.n["<leader>r"] = { "<cmd>RnvimrToggle<cr>", desc = "Ranger" }
+if is_available("yazi.nvim") then
+  maps.n["<leader>r"] = {
+    function() vim.cmd("YaziToggle") end,
+    desc = "File browser",
+  }
 end
 
 -- neotree
@@ -960,7 +962,7 @@ if is_available "telescope.nvim" then
   -- extra - project.nvim
   if is_available "project.nvim" then
     maps.n["<leader>fp"] = {
-      function() vim.cmd "Telescope projects" end,
+      function() vim.cmd("Telescope projects") end,
       desc = "Find project",
     }
   end
@@ -1010,27 +1012,27 @@ if is_available "telescope.nvim" then
   if is_available "compiler.nvim" and is_available "overseer.nvim" then
     maps.n["<leader>m"] = icons.c
     maps.n["<leader>mm"] = {
-      function() vim.cmd "CompilerOpen" end,
+      function() vim.cmdc"CompilerOpen") end,
       desc = "Open compiler",
     }
     maps.n["<leader>mr"] = {
-      function() vim.cmd "CompilerRedo" end,
+      function() vim.cmd("CompilerRedo") end,
       desc = "Compiler redo",
     }
     maps.n["<leader>mt"] = {
-      function() vim.cmd "CompilerToggleResults" end,
+      function() vim.cmd("CompilerToggleResults") end,
       desc = "compiler results",
     }
     maps.n["<F6>"] = {
-      function() vim.cmd "CompilerOpen" end,
+      function() vim.cmd("CompilerOpen") end,
       desc = "Open compiler",
     }
     maps.n["<S-F6>"] = {
-      function() vim.cmd "CompilerRedo" end,
+      function() vim.cmd("CompilerRedo") end,
       desc = "Compiler redo",
     }
     maps.n["<S-F7>"] = {
-      function() vim.cmd "CompilerToggleResults" end,
+      function() vim.cmd("CompilerToggleResults") end,
       desc = "compiler resume",
     }
   end
@@ -1222,11 +1224,11 @@ end
 
 -- Extra - nodejs testing commands
 maps.n["<leader>Ta"] = {
-  function() vim.cmd "TestNodejs" end,
+  function() vim.cmd("TestNodejs") end,
   desc = "All",
 }
 maps.n["<leader>Te"] = {
-  function() vim.cmd "TestNodejsE2e" end,
+  function() vim.cmd("TestNodejsE2e") end,
   desc = "E2e",
 }
 
@@ -1266,7 +1268,7 @@ if is_available "markdown-preview.nivm" or is_available "markmap.nvim" or is_ava
   -- Markdown preview
   if is_available "markdown-preview.nvim" then
     maps.n["<leader>Dp"] = {
-      function() vim.cmd "MarkdownPreview" end,
+      function() vim.cmd("MarkdownPreview") end,
       desc = "Markdown preview",
     }
   end
@@ -1276,9 +1278,9 @@ if is_available "markdown-preview.nivm" or is_available "markmap.nvim" or is_ava
     maps.n["<leader>Dm"] = {
       function()
         if is_android then
-          vim.cmd "MarkmapWatch"
+          vim.cmd("MarkmapWatch")
         else
-          vim.cmd "MarkmapOpen"
+          vim.cmd("MarkmapOpen")
         end
       end,
       desc = "Markmap",
@@ -1287,7 +1289,7 @@ if is_available "markdown-preview.nivm" or is_available "markmap.nvim" or is_ava
 
   if is_available "dooku.nvim" then
     maps.n["<leader>Dd"] = {
-      function() vim.cmd ":DookuGenerate" end,
+      function() vim.cmd(":DookuGenerate") end,
       desc = "Open documentation",
     }
   end
