@@ -80,15 +80,9 @@ function M.check()
       msg = "Used for mappings to pull up git TUI (Optional)",
     },
     {
-      cmd = { "pynvim" },
+      cmd = { "yazi" },
       type = "warn",
-      msg =
-      "Used to enable ranger file browser (optional)\nNOTE: checkhealth won't detect this correctly, but you can ensure it is installed with 'pip list | grep pynvim'.",
-    },
-    {
-      cmd = { "ranger" },
-      type = "warn",
-      msg = "Used to enable ranger file browser (Optional)",
+      msg = "Used to enable yazi file browser (Optional)",
     },
     {
       cmd = { "delta" },

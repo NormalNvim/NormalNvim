@@ -150,15 +150,11 @@ return {
       dashboard.section.header.opts.hl = "DashboardHeader"
       vim.cmd "highlight DashboardHeader guifg=#F7778F"
 
-      -- If on windows, don't show the 'ranger' button
-      local ranger_button = dashboard.button("r", "🐍 Ranger  ", "<cmd>RnvimrToggle<CR>")
-      if is_windows then ranger_button = nil end
-
       -- Buttons
       dashboard.section.buttons.val = {
         dashboard.button("n", "📄 New     ", "<cmd>ene<CR>"),
         dashboard.button("e", "🌺 Recent  ", "<cmd>Telescope oldfiles<CR>"),
-        ranger_button,
+        dashboard.button("r", "🦆 Yazi  ", "<cmd>Yazi<CR>"),
         dashboard.button(
           "s",
           "🔎 Sessions",
@@ -566,7 +562,6 @@ return {
     },
     config = function(_, opts)
       require("nvim-web-devicons").setup(opts)
-      pcall(vim.api.nvim_del_user_command, "NvimWebDeviconsHiTest")
     end
   },
 
