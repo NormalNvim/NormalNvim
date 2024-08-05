@@ -6,7 +6,7 @@
 --       -> nvim-treesitter                [syntax highlight]
 --       -> nvim-ts-autotag                [treesitter understand html tags]
 --       -> ts-comments.nvim               [treesitter comments]
---       -> markdown.nvim                  [markdown highlights]
+--       -> render-markdown.nvim           [normal mode markdown]
 --       -> nvim-highlight-colors          [hex colors]
 
 --       ## LSP
@@ -147,11 +147,11 @@ return {
     opts = {},
   },
 
-  --  markdown.nvim [markdown highlights]
-  --  https://github.com/MeanderingProgrammer/markdown.nvim
+  --  render-markdown.nvim [normal mode markdown]
+  --  https://github.com/MeanderingProgrammer/render-markdown.nvim
   --  While on normal mode, markdown files will display highlights.
   {
-    'MeanderingProgrammer/markdown.nvim',
+    'MeanderingProgrammer/render-markdown.nvim',
     ft = { "markdown" },
     dependencies = { 'nvim-treesitter/nvim-treesitter' },
     opts = {
