@@ -60,6 +60,11 @@ function M.check()
       msg = "Used by nvim-spectre to install oxi. Also by dooku.nvim to generate rust html docs.",
     },
     {
+      cmd = { "yazi" },
+      type = "error",
+      msg = "Used to enable yazi file browser.",
+    },
+    {
       cmd = { "markmap" },
       type = "warn",
       msg = "Used by markmap.nvim. Make sure yarn is in your PATH. To learn how check markmap.nvim github page.",
@@ -78,11 +83,6 @@ function M.check()
       cmd = { "gitui" },
       type = "warn",
       msg = "Used for mappings to pull up git TUI (Optional)",
-    },
-    {
-      cmd = { "yazi" },
-      type = "warn",
-      msg = "Used to enable yazi file browser (Optional)",
     },
     {
       cmd = { "delta" },
@@ -179,7 +179,7 @@ function M.check()
       msg = "Used by compiler.nvim to interpretate python (Optional)",
     },
     {
-      cmd = { "nuitka3" },
+      cmd = { "nuitka" },
       type = "warn",
       msg = "Used by compiler.nvim to compile python to machine code (Optional)",
     },
