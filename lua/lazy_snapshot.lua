@@ -49,7 +49,7 @@ return {
   { "ludovicchabant/vim-gutentags", commit = "aa47c5e29c37c52176c44e61c780032dfacef3dd" },
   { "max397574/better-escape.nvim", commit = "92b3d7d06ac3405178def49853f81118a12ea051" },
   { "mfussenegger/nvim-dap", commit = "6f79b822997f2e8a789c6034e147d42bc6706770" },
-  { "mikavilpas/yazi.nvim", commit = "b2f8d4b43b8b60ea39169a3a7d9d03a6ead9f08d" },
+  { "mikavilpas/yazi.nvim", commit = "fcb7b9e9f8a1564837c3fb71867745e48df25e10" },
   { "mrjones2014/smart-splits.nvim", version = "^1" },
   { "neovim/nvim-lspconfig", commit = "e6528f4613c8db2e04be908eb2b5886d63f62a98" },
   { "nvim-cmp", commit = "a110e12d0b58eefcf5b771f533fc2cf3050680ac" },

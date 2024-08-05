@@ -154,7 +154,8 @@ return {
       dashboard.section.buttons.val = {
         dashboard.button("n", "📄 New     ", "<cmd>ene<CR>"),
         dashboard.button("e", "🌺 Recent  ", "<cmd>Telescope oldfiles<CR>"),
-        dashboard.button("r", "🦆 Yazi  ", "<cmd>lua require('yazi').yazi()<CR>"),
+        -- TODO: use 'Yazi toggle' instead once yazi v0.4.0 is released.
+        dashboard.button("r", "🦆 Yazi  ", "<cmd>Yazi<CR>"),
         dashboard.button(
           "s",
           "🔎 Sessions",

@@ -663,9 +663,11 @@ if vim.fn.executable "gitui" == 1 then -- if gitui exists, show it
 end
 
 -- file browsers ------------------------------------
+-- yazi
 if is_available "yazi.nvim" then
   maps.n["<leader>r"] = {
-    function() require('yazi').yazi() end,
+    -- TODO: use 'Yazi toggle' instead once yazi v0.4.0 is released.
+    "<cmd>Yazi<CR>",
     desc = "File browser",
   }
 end
