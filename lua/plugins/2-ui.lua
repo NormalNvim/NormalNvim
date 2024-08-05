@@ -154,7 +154,7 @@ return {
       dashboard.section.buttons.val = {
         dashboard.button("n", "📄 New     ", "<cmd>ene<CR>"),
         dashboard.button("e", "🌺 Recent  ", "<cmd>Telescope oldfiles<CR>"),
-        dashboard.button("r", "🦆 Yazi  ", "<cmd>Yazi<CR>"),
+        dashboard.button("r", "🦆 Yazi  ", "<cmd>lua require('yazi').yazi()<CR>"),
         dashboard.button(
           "s",
           "🔎 Sessions",
