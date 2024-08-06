@@ -1,5 +1,5 @@
 -- Dev
--- Things you actively use for coding.
+-- Plugins you actively use for coding.
 
 --    Sections:
 --       ## SNIPPETS

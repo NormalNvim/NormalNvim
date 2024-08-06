@@ -1,5 +1,5 @@
 -- Dev core
--- Things that are just there.
+-- Plugins that are just there.
 
 --    Sections:
 --       ## TREE SITTER
