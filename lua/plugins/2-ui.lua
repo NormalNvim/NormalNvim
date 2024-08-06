@@ -150,12 +150,16 @@ return {
       dashboard.section.header.opts.hl = "DashboardHeader"
       vim.cmd "highlight DashboardHeader guifg=#F7778F"
 
+      -- If yazi is not installed, don't show the button.
+      local is_yazi_installed = vim.fn.executable("ya") == 1
+      local yazi_button = dashboard.button("r", "🦆 Yazi  ", "<cmd>Yazi<CR>")
+      if not is_yazi_installed then yazi_button = nil end
+
       -- Buttons
       dashboard.section.buttons.val = {
         dashboard.button("n", "📄 New     ", "<cmd>ene<CR>"),
         dashboard.button("e", "🌺 Recent  ", "<cmd>Telescope oldfiles<CR>"),
-        -- TODO: use 'Yazi toggle' instead once yazi v0.4.0 is released.
-        dashboard.button("r", "🦆 Yazi  ", "<cmd>Yazi<CR>"),
+        yazi_button,
         dashboard.button(
           "s",
           "🔎 Sessions",
