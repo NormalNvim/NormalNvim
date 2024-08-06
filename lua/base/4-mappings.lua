@@ -664,7 +664,7 @@ end
 
 -- file browsers ------------------------------------
 -- yazi
-if is_available "yazi.nvim" and vim.fn.exists("yazi") == 1 then
+if is_available "yazi.nvim" and vim.fn.executable("yazi") == 1 then
   maps.n["<leader>r"] = {
     -- TODO: use 'Yazi toggle' instead once yazi v0.4.0 is released.
     "<cmd>Yazi<CR>",
