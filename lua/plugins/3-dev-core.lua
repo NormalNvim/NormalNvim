@@ -158,7 +158,7 @@ return {
       heading = {
         sign = false,
         icons = { ' ', ' ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
-        width = 79,
+        width = "block",
       },
       code = {
         sign = false,
