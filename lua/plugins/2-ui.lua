@@ -1,5 +1,5 @@
 -- User interface
--- Plugins that make the GUI better.
+-- Plugins that make the user interface better.
 
 --    Sections:
 --       -> tokyonight                  [theme]
