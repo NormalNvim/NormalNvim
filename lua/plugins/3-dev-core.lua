@@ -1,5 +1,5 @@
 -- Dev core
--- Things that are just there.
+-- Plugins that are just there.
 
 --    Sections:
 --       ## TREE SITTER
@@ -158,7 +158,7 @@ return {
       heading = {
         sign = false,
         icons = { ' ', ' ', '󰲥 ', '󰲧 ', '󰲩 ', '󰲫 ' },
-        width = 79,
+        width = "block",
       },
       code = {
         sign = false,

@@ -1,5 +1,5 @@
 -- Core behaviors
--- Things that add new behaviors.
+-- Plugins that add new behaviors.
 
 --    Sections:
 --       -> yazi file browser      [yazi]
