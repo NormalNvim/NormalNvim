@@ -39,15 +39,15 @@ if not vim.uv.fs_stat(lazypath) then
   vim.opt.cmdheight = 1
   vim.notify("Please wait while plugins are installed...")
   vim.api.nvim_create_autocmd("User", {
-    desc = "Load Mason and Treesitter after Lazy installs plugins",
-    once = true,
     pattern = "LazyInstall",
+    once = true,
     callback = function()
       vim.cmd.bw()
       vim.opt.cmdheight = oldcmdheight
       vim.tbl_map(function(module) pcall(require, module) end, { "nvim-treesitter", "mason" })
       -- Note: This event will also trigger a Mason update in distroupdate.nvim
     end,
+    desc = "Load Mason and Treesitter after Lazy installs plugins",
   })
 end
 vim.opt.rtp:prepend(lazypath)
