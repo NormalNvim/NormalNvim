@@ -130,6 +130,5 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 
 ## Roadmap
 * We are currently in a stable state.
-* Add github actions to all the plugins we maintain to automatically convert `README.md` to `.txt` docs.
 * Once selene add [this](https://github.com/Kampfkarren/selene/issues/224) and [this](https://github.com/Kampfkarren/selene/issues/524) and [this](https://github.com/Kampfkarren/selene/pull/591), let's add the new rules.
 * During 2024, create a landing page. Pretty much it's gonna be the same thing we have on the wiki, but with sparkles.
