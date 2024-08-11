@@ -1104,7 +1104,7 @@ if is_available "nvim-dap" then
   { function() require("dap").step_back() end, desc = "Debugger: Step Back" }
   maps.n["<F11>"] =
   { function() require("dap").step_into() end, desc = "Debugger: Step Into" }
-  maps.n["<S-11>"] =
+  maps.n["<S-F11>"] =
   { function() require("dap").step_out() end, desc = "Debugger: Step Out" }
 
   -- Space + d
