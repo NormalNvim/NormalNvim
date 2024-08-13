@@ -81,7 +81,7 @@ The next relevant commands are provided by [distroupdate.nvim](https://github.co
 |  Command            | Description                             |
 |---------------------|-----------------------------------------|
 | **:DistroUpdate** | To update the distro from git origin. Local uncommited changes will be lost. |
-| **:DistroUpdateRevert** | To revert the last `:NvimDistroUpdate`. |
+| **:DistroUpdateRevert** | To revert the last `:DistroUpdate`. |
 | **:DistroFreezePluginVersions** | To save your current plugins versions into `lazy_versions.lua`. |
 
 ## FAQ
