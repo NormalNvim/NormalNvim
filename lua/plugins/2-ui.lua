@@ -1,5 +1,5 @@
 -- User interface
--- Plugins that make the GUI better.
+-- Plugins that make the user interface better.
 
 --    Sections:
 --       -> tokyonight                  [theme]
@@ -677,12 +677,9 @@ return {
     "tzachar/highlight-undo.nvim",
     event = "User BaseDefered",
     opts = {
-      hlgroup = "CurSearch",
       duration = 150,
-      keymaps = {
-        { "n", "u",     "undo", {} }, -- If you remap undo/redo, change this
-        { "n", "<C-r>", "redo", {} },
-      },
+      undo = { hlgroup = 'IncSearch' },
+      redo = { hlgroup = 'IncSearch' },
     },
     config = function(_, opts)
       require("highlight-undo").setup(opts)
