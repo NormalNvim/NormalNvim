@@ -20,6 +20,7 @@
 --       -> vim-matchup            [Improved % motion]
 --       -> hop.nvim               [go to word visually]
 --       -> nvim-autopairs         [auto close brackets]
+--       -> nvim-ts-autotag        [auto close html tags]
 --       -> lsp_signature.nvim     [auto params help]
 --       -> nvim-lightbulb         [lightbulb for code actions]
 --       -> distroupdate.nvim      [distro update]
@@ -573,6 +574,7 @@ return {
   {
     "windwp/nvim-autopairs",
     event = "InsertEnter",
+    dependencies = "windwp/nvim-ts-autotag",
     opts = {
       check_ts = true,
       ts_config = { java = false },
@@ -602,6 +604,19 @@ return {
         )
       end
     end
+  },
+
+  -- nvim-ts-autotag [auto close html tags]
+  -- https://github.com/windwp/nvim-ts-autotag
+  -- Adds support for HTML tags to the plugin nvim-autopairs.
+  {
+    "windwp/nvim-ts-autotag",
+    event = "InsertEnter",
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+      "windwp/nvim-autopairs"
+    },
+    opts = {}
   },
 
   -- lsp_signature.nvim [auto params help]
