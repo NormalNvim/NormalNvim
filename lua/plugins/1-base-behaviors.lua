@@ -38,8 +38,6 @@ return {
     cmd = { "Yazi", "YaziCWD", "YaziToggle" },
     opts = {
         open_for_directories = true,
-        use_ya_for_events_reading = true,
-        use_yazi_client_id_flag = false, -- enable once yazi v0.4.0 is released
         floating_window_scaling_factor = (is_android and 1.0) or 0.71
     },
   },
