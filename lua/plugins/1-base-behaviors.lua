@@ -34,7 +34,7 @@ return {
   {
     "mikavilpas/yazi.nvim",
     event = "User BaseDefered",
-    cmd = { "Yazi", "YaziCWD", "YaziToggle" },
+    cmd = { "Yazi", "Yazi cwd", "Yazi toggle" },
     opts = {
         open_for_directories = true,
         use_ya_for_events_reading = true,
