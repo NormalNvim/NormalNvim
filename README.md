@@ -125,10 +125,9 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 
 ## Todos before v4.0
 * Better QA for `distroupdate.nvim`.
-* Docusaurus proof of concept.
+* ~~Docusaurus proof of concept.~~ → Screenshoots of all plugins will be added in the next 48h!
 * Prepare promos.
 
 ## Roadmap
 * We are currently in a stable state.
 * Once selene add [this](https://github.com/Kampfkarren/selene/issues/224) and [this](https://github.com/Kampfkarren/selene/issues/524) and [this](https://github.com/Kampfkarren/selene/pull/591), let's add the new rules.
-* During 2024, create a landing page. Pretty much it's gonna be the same thing we have on the wiki, but with sparkles.
