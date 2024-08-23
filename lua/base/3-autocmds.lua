@@ -192,7 +192,7 @@ autocmd("BufWritePre", {
 
     if buf_is_valid_and_listed then
       vim.fn.mkdir(vim.fn.fnamemodify(
-        vim.loop.fs_realpath(args.match) or args.match, ":p:h"), "p")
+        vim.uv.fs_realpath(args.match) or args.match, ":p:h"), "p")
     end
   end,
 })

@@ -87,7 +87,7 @@ return {
   --  https://github.com/lewis6991/gitsigns.nvim
   {
     "lewis6991/gitsigns.nvim",
-    enabled = vim.fn.executable "git" == 1,
+    enabled = vim.fn.executable("git") == 1,
     event = "User BaseGitFile",
     opts = function()
       local get_icon = require("base.utils").get_icon
@@ -120,7 +120,7 @@ return {
   --  	keepBackup = false
   {
     "tpope/vim-fugitive",
-    enabled = vim.fn.executable "git" == 1,
+    enabled = vim.fn.executable("git") == 1,
     dependencies = { "tpope/vim-rhubarb" },
     cmd = {
       "Gvdiffsplit",
@@ -139,7 +139,7 @@ return {
       "Gstatus",
     },
     config = function()
-      -- NOTE: On vimplugins we use config instead of opts.
+      -- NOTE: On vim plugins we use config instead of opts.
       vim.g.fugitive_no_maps = 1
     end,
   },

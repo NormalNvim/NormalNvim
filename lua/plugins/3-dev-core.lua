@@ -272,6 +272,7 @@ return {
 
   --  Schema Store [mason extra schemas]
   --  https://github.com/b0o/SchemaStore.nvim
+  --  We use this plugin in ../base/utils/lsp.lua
   "b0o/SchemaStore.nvim",
 
   -- none-ls-autoload.nvim [mason package loader]
