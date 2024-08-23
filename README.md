@@ -125,7 +125,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 
 ## Todos before v4.0
 * Better QA for `distroupdate.nvim`.
-* ~~Docusaurus proof of concept.~~ → Screenshoots of all plugins will be added in the next 48h!
+* ~~Docusaurus proof of concept.~~ → ~~Screenshoots of all plugins will be added in the next 48h!~~
 * Prepare promos.
 
 ## Roadmap
