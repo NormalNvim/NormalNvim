@@ -131,6 +131,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 * Prepare promos.
 
 ### Todos before v5.0 (2025)
+* Compiler.nvim: add support for justfiles and taskfiles.
 * Version v2 of the website should look considerably better.
 
 ### Blocked
