@@ -124,11 +124,12 @@ Special thanks to LeoRed04 for designing the logo.
 Did you know NormalNvim was the first Neovim distro to ship a compiler that [support 22+ programming languages out of the box](https://www.youtube.com/watch?v=O42uCIBaCIQ)?
 
 ## Todos before v4.0
-* Better QA for `distroupdate.nvim`.
 * ~~Docusaurus proof of concept.~~ → ~~Screenshoots of all plugins will be added in the next 48h!~~
+* Better QA for `distroupdate.nvim`.
 * Prepare promos.
 
-## Roadmap
+## Todos before v5.0 (2025)
 * Version v2 of the website should look considerably better.
-* We are currently in a stable state.
+
+## Backlog (eventually)
 * Once selene add [this](https://github.com/Kampfkarren/selene/issues/224) and [this](https://github.com/Kampfkarren/selene/issues/524) and [this](https://github.com/Kampfkarren/selene/pull/591), let's add the new rules.
