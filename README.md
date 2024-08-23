@@ -133,5 +133,5 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 ### Todos before v5.0 (2025)
 * Version v2 of the website should look considerably better.
 
-## Blocked
+### Blocked
 * Once selene add [this](https://github.com/Kampfkarren/selene/issues/224) and [this](https://github.com/Kampfkarren/selene/issues/524) and [this](https://github.com/Kampfkarren/selene/pull/591), let's add the new rules.
