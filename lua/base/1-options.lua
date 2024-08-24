@@ -70,7 +70,7 @@ if is_android then vim.opt.mouse = "v" else vim.opt.mouse = "a" end -- Enable sc
 -- Globals --------------------------------------------------------------------
 vim.g.mapleader = " " -- Set leader key.
 vim.g.maplocalleader = "," -- Set default local leader key.
-vim.g.big_file = { size = 1024 * 100, lines = 10000 } -- For files bigger than this, disable 'treesitter' (+100kb).
+vim.g.big_file = { size = 1024 * 5000, lines = 50000 } -- For files bigger than this, disable 'treesitter' (+5Mb).
 
 -- The next globals are toggleable with <space + l + u>
 vim.g.autoformat_enabled = false -- Enable auto formatting at start.
