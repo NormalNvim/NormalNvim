@@ -30,7 +30,7 @@ local M = {}
 ---@return string|nil # The result of a successfully executed command or nil
 function M.run_cmd(cmd, show_error)
   if type(cmd) == "string" then cmd = vim.split(cmd, " ") end
-  if vim.fn.has "win32" == 1 then cmd = vim.list_extend({ "cmd.exe", "/C" }, cmd) end
+  if vim.fn.has("win32") == 1 then cmd = vim.list_extend({ "cmd.exe", "/C" }, cmd) end
   local result = vim.fn.system(cmd)
   local success = vim.api.nvim_get_vvar "shell_error" == 0
   if not success and (show_error == nil or show_error) then
@@ -105,14 +105,9 @@ end
 ---@return table<string,table> # a table with entries for each map mode.
 function M.get_mappings_template()
   local maps = {}
-  for _, mode in ipairs { "", "n", "v", "x", "s", "o", "!", "i", "l", "c", "t" } do
-    maps[mode] = {}
-  end
-  if vim.fn.has "nvim-0.10.0" == 1 then
-    for _, abbr_mode in ipairs { "ia", "ca", "!a" } do
-      maps[abbr_mode] = {}
-    end
-  end
+  for _, mode in ipairs {
+    "", "n", "v", "x", "s", "o", "!", "i", "l", "c", "t", "ia", "ca", "!a"
+  } do maps[mode] = {} end
   return maps
 end
 
@@ -246,15 +241,15 @@ end
 function M.open_with_program(path)
   if vim.ui.open then return vim.ui.open(path) end
   local cmd
-  if vim.fn.has "mac" == 1 then
+  if vim.fn.has("mac") == 1 then
     cmd = { "open" }
-  elseif vim.fn.has "win32" == 1 then
+  elseif vim.fn.has("win32") == 1 then
     if vim.fn.executable "rundll32" then
       cmd = { "rundll32", "url.dll,FileProtocolHandler" }
     else
       cmd = { "cmd.exe", "/K", "explorer" }
     end
-  elseif vim.fn.has "unix" == 1 then
+  elseif vim.fn.has("unix") == 1 then
     if vim.fn.executable "explorer.exe" == 1 then -- available in WSL
       cmd = { "explorer.exe" }
     elseif vim.fn.executable "xdg-open" == 1 then
