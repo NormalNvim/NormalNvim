@@ -74,8 +74,8 @@ end
 
 --- Deletes autocmds associated with a specific buffer and autocmd group.
 ---
---- @param augroup string  The name of the autocmd group from which the autocmds should be removed.
---- @param bufnr number    The buffer number from which the autocmds should be removed.
+--- @param augroup string The name of the autocmd group from which the autocmds should be removed.
+--- @param bufnr number The buffer number from which the autocmds should be removed.
 function M.del_autocmds_from_buffer(augroup, bufnr)
   -- Attempt to retrieve existing autocmds associated with the specified augroup and bufnr
   local cmds_found, cmds = pcall(vim.api.nvim_get_autocmds, { group = augroup, buffer = bufnr })
@@ -171,15 +171,12 @@ function M.get_plugin_opts(plugin)
 end
 
 --- Set a table of mappings.
----
 --- This wrapper prevents a  boilerplate code, and takes care of `whichkey.nvim`.
 ---@param map_table table A nested table where the first key is the vim mode,
 ---                       the second key is the key to map, and the value is
 ---                       the function to set the mapping to.
 ---@param base? table A base set of options to set on every keybinding.
-
 function M.set_mappings(map_table, base)
-  local was_no_which_key_queue = not M.which_key_queue
   -- iterate over the first keys for each mode
   for mode, maps in pairs(map_table) do
     -- iterate over each keybinding set in the current mode
@@ -196,7 +193,6 @@ function M.set_mappings(map_table, base)
           keymap_opts[1] = nil
         end
         if not cmd then -- if which-key mapping, queue it
-          ---@cast keymap_opts wk.Spec
           keymap_opts[1], keymap_opts.mode = keymap, mode
           if not keymap_opts.group then keymap_opts.group = keymap_opts.desc end
           if not M.which_key_queue then M.which_key_queue = {} end
