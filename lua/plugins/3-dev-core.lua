@@ -61,10 +61,15 @@ return {
     end,
     opts = {
       auto_install = false, -- Currently bugged. Use [:TSInstall all] and [:TSUpdate all]
-      highlight = { enable = true },
+
+      highlight = {
+        enable = true,
+        disable = function(_, bufnr) return utils.is_big_file(bufnr) end,
+      },
       matchup = {
         enable = true,
         enable_quotes = true,
+        disable = function(_, bufnr) return utils.is_big_file(bufnr) end,
       },
       incremental_selection = { enable = true },
       indent = { enable = true },

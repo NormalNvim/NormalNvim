@@ -1,35 +1,27 @@
 -- Command to check if you have the required dependencies to use NormalNvim.
 --
 -- DESCRIPTION:
--- To use it run the command :healthcheck base
+-- To use it run the command :checkhealth base
 
 local M = {}
 
-local health = {
-  start = vim.health.start or vim.health.report_start,
-  ok = vim.health.ok or vim.health.report_ok,
-  warn = vim.health.warn or vim.health.report_warn,
-  error = vim.health.error or vim.health.report_error,
-  info = vim.health.info or vim.health.report_info,
-}
-
 function M.check()
-  health.start "NormalNvim"
+  vim.health.start("NormalNvim")
 
-  health.info(
+  vim.health.info(
     "NormalNvim Version: " .. require("distroupdate.utils.updater").version(true)
   )
-  health.info(
+  vim.health.info(
     "Neovim Version: v"
     .. vim.fn.matchstr(vim.fn.execute "version", "NVIM v\\zs[^\n]*")
   )
 
   if vim.version().prerelease then
-    health.warn "Neovim nightly is not officially supported and may have breaking changes"
-  elseif vim.fn.has "nvim-0.9" == 1 then
-    health.ok "Using stable Neovim >= 0.9.0"
+    vim.health.warn("Neovim nightly is not officially supported and may have breaking changes")
+  elseif vim.fn.has "nvim-0.10" == 1 then
+    vim.health.ok("Using stable Neovim >= 0.10.0")
   else
-    health.error "Neovim >= 0.9.0 is required"
+    vim.health.error("Neovim >= 0.10.0 is required")
   end
 
   -- Checks to perform.
@@ -250,15 +242,15 @@ function M.check()
     end
 
     if found then
-      health.ok(("`%s` is installed: %s"):format(name, program.msg))
+      vim.health.ok(("`%s` is installed: %s"):format(name, program.msg))
     else
-      health[program.type](
+      vim.health[program.type](
         ("`%s` is not installed: %s"):format(name, program.msg)
       )
     end
   end
-  health.info("")
-  health.info("Write `:bw` to close `:checkhealth` gracefully.")
+  vim.health.info("")
+  vim.health.info("Write `:bw` to close `:checkhealth` gracefully.")
 end
 
 return M
