@@ -39,7 +39,6 @@ return {
   { "jfpedroza/neotest-elixir", commit = "c5067bcc3ec6a0bba7b5694fa15aeb17f16aeb3c" },
   { "kevinhwang91/nvim-ufo", commit = "1b5f2838099f283857729e820cc05e2b19df7a2c" },
   { "kevinhwang91/promise-async", commit = "28c1d5a295eb5310afa2523d4ae9aa41ec5a9de2" },
-  { "kevinhwang91/rnvimr", commit = "3c41af742a61caf74a9f83fb82b9ed03ef13b880" },
   { "kosayoda/nvim-lightbulb", commit = "8f00b89dd1b1dbde16872bee5fbcee2e58c9b8e9" },
   { "lambdalisue/vim-suda", commit = "b97fab52f9cdeabe2bbb5eb98d82356899f30829" },
   { "lawrence-laz/neotest-zig", commit = "7cc48ba642a6acb96f377054cc4439c6a135fb5d" },
