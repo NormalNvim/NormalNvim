@@ -17,7 +17,7 @@
 --      -> set_mappings             → Set a list of mappings in a clean way.
 --      -> set_url_effect           → Show an effect for urls.
 --      -> open_with_program        → Open the file or URL under the cursor.
---      -> trigger_event            → Manually trigger a event.
+--      -> trigger_event            → Manually trigger an event.
 --      -> which_key_register       → When setting a mapping, add it to whichkey.
 
 
@@ -262,7 +262,7 @@ function M.open_with_program(path)
 end
 
 --- Convenient wapper to save code when we Trigger events.
---- To listen for a event triggered by this function you can use `autocmd`.
+--- To listen for an event triggered by this function you can use `autocmd`.
 ---@param event string Name of the event.
 ---@param is_urgent boolean|nil If true, trigger directly instead of scheduling. Useful for startup events.
 -- @usage To run a User event:   `trigger_event("User MyUserEvent")`
