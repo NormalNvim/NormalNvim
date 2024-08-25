@@ -409,7 +409,7 @@ return {
       },
       {
         "nvim-telescope/telescope-fzf-native.nvim",
-        enabled = vim.fn.executable "make" == 1,
+        enabled = vim.fn.executable("make") == 1,
         build = "make",
       },
     },
@@ -451,7 +451,7 @@ return {
           undo = {
             use_delta = true,
             side_by_side = true,
-            diff_context_lines = 0,
+            vim_diff_opts = { ctxlen = 0 },
             entry_format = "󰣜 #$ID, $STAT, $TIME",
             layout_strategy = "horizontal",
             layout_config = {
