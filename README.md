@@ -128,7 +128,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 ### Todos before v4.0
 * ~~Docusaurus proof of concept.~~ → ~~Screenshoots of all plugins will be added in the next 48h!~~
 * Better QA for `distroupdate.nvim`.
-* Migrate from tsserver to ts_ls (as the former has been deprecated in lspconfig). → We must wait for mason to ship it.
+* Migrate from tsserver to ts_ls (as the former has been deprecated in lspconfig). → [see mason-registry issue](https://github.com/mason-org/mason-registry/issues/7132)
 * Prepare promos.
 
 ### Todos before v5.0 (2025)
