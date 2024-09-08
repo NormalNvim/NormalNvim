@@ -127,8 +127,8 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 
 ### Todos before v4.0
 * ~~Docusaurus proof of concept.~~ → ~~Screenshoots of all plugins will be added in the next 48h!~~
-* Better QA for `distroupdate.nvim`.
 * ~~Before upgrading to lspconfig 0.2, migrate from `tsserver` to `ts_ls` (as the former has been renamed in lspconfig). → [see mason-registry issue](https://github.com/mason-org/mason-registry/issues/7132)~~
+* Better QA for `distroupdate.nvim`.
 * Keep an eye on the ruff 0.6.3 issue (and remember to credit Dimscord). → https://github.com/astral-sh/ruff/issues/13238
 * Prepare promos.
 
