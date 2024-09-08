@@ -50,7 +50,7 @@ return {
   { "mfussenegger/nvim-dap", commit = "6f79b822997f2e8a789c6034e147d42bc6706770" },
   { "mikavilpas/yazi.nvim", commit = "307a3eabb3b941b046d15da1cb9e6d3e611e5221" },
   { "mrjones2014/smart-splits.nvim", version = "^1" },
-  { "neovim/nvim-lspconfig", commit = "bdbc65aadc708ce528efb22bca5f82a7cca6b54d" },
+  { "neovim/nvim-lspconfig", version = "^0.2" },
   { "nvim-cmp", commit = "a110e12d0b58eefcf5b771f533fc2cf3050680ac" },
   { "nvim-java/lua-async-await", commit = "652d94df34e97abe2d4a689edbc4270e7ead1a98" },
   { "nvim-java/nvim-java", commit = "b3174e41ab51867123d8663eced53b33f1548522" },
