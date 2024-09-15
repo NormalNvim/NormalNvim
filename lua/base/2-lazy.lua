@@ -54,7 +54,8 @@ vim.opt.rtp:prepend(lazypath)
 
 -- assign spec (if pin_plugins is true, load ./lua/lazy_snapshot.lua).
 local pin_plugins = updater.channel == "stable"
-local spec = pin_plugins and { { import = updater.snapshot_module } } or {}
+local snapshot_file_exists = vim.uv.fs_stat(vim.fn.stdpath("config") .. "/lua/" .. updater.snapshot_module .. ".lua")
+local spec = (pin_plugins and snapshot_file_exists) and { { import = updater.snapshot_module } } or {}
 vim.list_extend(spec, { { import = "plugins" } })
 
 -- Require lazy and pass the spec.
