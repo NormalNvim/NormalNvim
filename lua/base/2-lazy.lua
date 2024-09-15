@@ -5,7 +5,7 @@
 
 --    Functions:
 --      -> git_clone_lazy                → download lazy from git if necessary.
---      -> after_instaling_plugins_load  → will instantly load the plugins passed.
+--      -> after_instaling_plugins_load  → instantly try to load the plugins passed.
 --      -> get_lazy_spec                 → load and get the plugins file.
 --      -> setup_lazy                    → pass the plugins file to lazy and run setup().
 
