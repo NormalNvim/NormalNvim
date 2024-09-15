@@ -66,9 +66,10 @@ local function get_lazy_spec()
     .. snapshot_filename
     .. ".lua"
   )
-  local spec = (pin_plugins and snapshot_file_exists)
-      and { { import = updates_config.snapshot_module } }
-      or {}
+  local spec = pin_plugins
+      and snapshot_file_exists
+      and { { import = snapshot_filename} }
+    or {}
   vim.list_extend(spec, { { import = "plugins" } })
 
   return spec
