@@ -13,7 +13,7 @@ function M.check()
   )
   vim.health.info(
     "Neovim Version: v"
-    .. vim.fn.matchstr(vim.fn.execute "version", "NVIM v\\zs[^\n]*")
+    .. vim.fn.matchstr(vim.fn.execute("version"), "NVIM v\\zs[^\n]*")
   )
 
   if vim.version().prerelease then

@@ -99,7 +99,7 @@ return {
   { "windwp/nvim-ts-autotag", commit = "0cb76eea80e9c73b88880f0ca78fbd04c5bdcac7" },
   { "zeioth/NormalSnippets", commit = "ef841ad4a0ccc6144d605cd2b4a874b04b295cb8" },
   { "zeioth/compiler.nvim", version = "^4" },
-  { "zeioth/distroupdate.nvim", version = "^1" },
+  { "zeioth/distroupdate.nvim", version = "^2" },
   { "zeioth/dooku.nvim", version = "^3" },
   { "zeioth/garbage-day.nvim", version = "^2" },
   { "zeioth/heirline-components.nvim", commit = "f849bbfe05f0d523449eb8d0713dffd4c3d7c295" },
