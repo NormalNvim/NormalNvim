@@ -678,6 +678,7 @@ return {
   {
     "zeioth/distroupdate.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
+    event = "User BaseFile",
     cmd = {
       "DistroFreezePluginVersions",
       "DistroReadChangelog",
