@@ -13,7 +13,7 @@
 -- Use the same values you have in the plugin `distroupdate.nvim`
 local updates_config = {
   channel = "stable",                  -- 'nightly', or 'stable'
-  snapshot_file = "lazy_snapshot.lua", -- plugins file created by running the neovim command ':DistroFreezePluginVersions'
+  snapshot_file = "lazy_snapshot.lua", -- plugins lockfile created by running the command ':DistroFreezePluginVersions' provided by `distroupdate.nvim`.
 }
 
 --- Download 'lazy' from its git repository if lazy_dir doesn't exists already.
@@ -104,7 +104,7 @@ end
 local lazy_dir = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local is_first_startup = not vim.uv.fs_stat(lazy_dir)
 
--- Call all the functions defined above to load lazy
+-- call the functions defined above.
 if is_first_startup then
   git_clone_lazy(lazy_dir)
   after_installing_plugins_load({ "nvim-treesitter", "mason" })
