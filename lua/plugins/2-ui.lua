@@ -11,7 +11,6 @@
 --       -> heirline                    [ui components]
 --       -> telescope                   [search]
 --       -> telescope-fzf-native.nvim   [search backend]
---       -> smart-splits                [window-dimming]
 --       -> dressing.nvim               [better ui elements]
 --       -> noice.nvim                  [better cmd/search line]
 --       -> nvim-web-devicons           [icons | ui]
