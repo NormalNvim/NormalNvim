@@ -11,7 +11,7 @@ for _, source in ipairs {
   "base.3-autocmds",
   "base.4-mappings",
 } do
-  local loaded_correctly = pcall(require, source)
+  local loaded_correctly, error = pcall(require, source)
   if not loaded_correctly then vim.api.nvim_err_writeln("Failed to load " .. source .. "\n\n" .. error) end
 end
 
