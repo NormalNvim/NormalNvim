@@ -17,10 +17,10 @@ end
 
 -- ONCE ALL SOURCE FILES HAVE LOADED:
 -- Load the color scheme defined in ./lua/1-options.lua
-if base.default_colorscheme then
-  if not pcall(vim.cmd.colorscheme, base.default_colorscheme) then
+if vim.g.default_colorscheme then
+  if not pcall(vim.cmd.colorscheme, vim.g.default_colorscheme) then
     require("base.utils").notify(
-      "Error setting up colorscheme: " .. base.default_colorscheme,
+      "Error setting up colorscheme: " .. vim.g.default_colorscheme,
       vim.log.levels.ERROR
     )
   end

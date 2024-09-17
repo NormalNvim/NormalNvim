@@ -81,7 +81,7 @@ The next relevant commands are provided by [distroupdate.nvim](https://github.co
 |  Command            | Description                             |
 |---------------------|-----------------------------------------|
 | **:DistroUpdate** | To update the distro from git origin. Local uncommited changes will be lost. |
-| **:DistroUpdateRevert** | To revert the last `:NvimDistroUpdate`. |
+| **:DistroUpdateRevert** | To revert the last `:DistroUpdate`. |
 | **:DistroFreezePluginVersions** | To save your current plugins versions into `lazy_versions.lua`. |
 
 ## FAQ
@@ -124,6 +124,17 @@ Special thanks to LeoRed04 for designing the logo.
 Did you know NormalNvim was the first Neovim distro to ship a compiler that [support 22+ programming languages out of the box](https://www.youtube.com/watch?v=O42uCIBaCIQ)?
 
 ## Roadmap
-* We are currently in a stable state.
+
+### Todos before v4.0
+* ~~Docusaurus proof of concept.~~ → ~~Screenshoots of all plugins will be added in the next 48h!~~
+* ~~Before upgrading to lspconfig 0.2, migrate from `tsserver` to `ts_ls` (as the former has been renamed in lspconfig). → [see mason-registry issue](https://github.com/mason-org/mason-registry/issues/7132)~~
+* ~~Better QA for `distroupdate.nvim`~~
+* Keep an eye on the ruff 0.6.3 issue (and remember to credit Dimscord). → https://github.com/astral-sh/ruff/issues/13238
+* Prepare promos.
+
+### Todos before v5.0 (2025)
+* Compiler.nvim: add support for justfiles and taskfiles.
+* Version v2 of the website should look considerably better.
+
+### Blocked
 * Once selene add [this](https://github.com/Kampfkarren/selene/issues/224) and [this](https://github.com/Kampfkarren/selene/issues/524) and [this](https://github.com/Kampfkarren/selene/pull/591), let's add the new rules.
-* During 2024, create a landing page. Pretty much it's gonna be the same thing we have on the wiki, but with sparkles.
