@@ -696,8 +696,8 @@ return {
           config_dir .. "4-mappings.lua"
         },
         hot_reload_callback = function()
-          vim.cmd(":silent! colorscheme " .. base.default_colorscheme) -- nvim     colorscheme reload command
-          vim.cmd(":silent! doautocmd ColorScheme")                    -- heirline colorscheme reload event
+          vim.cmd(":silent! colorscheme " .. vim.g.default_colorscheme) -- nvim     colorscheme reload command
+          vim.cmd(":silent! doautocmd ColorScheme")                     -- heirline colorscheme reload event
         end
       }
     end
