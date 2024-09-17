@@ -3,11 +3,8 @@
 -- Here you can define your nvim variables.
 -- ----------------------------------------
 
--- NormalNvin lua globals
-_G.base = {}
-
 -- Theme
-base.default_colorscheme = "tokyonight-night"
+vim.g.default_colorscheme = "tokyonight-night"
 
 -- Options --------------------------------------------------------------------
 vim.opt.breakindent = true -- Wrap indent to match  line start.
