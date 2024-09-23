@@ -130,7 +130,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 * ~~Before upgrading to lspconfig 0.2, migrate from `tsserver` to `ts_ls` (as the former has been renamed in lspconfig). → [see mason-registry issue](https://github.com/mason-org/mason-registry/issues/7132)~~
 * ~~Better QA for `distroupdate.nvim`~~
 * ~~Keep an eye on the ruff 0.6.3 issue (and remember to credit Dimscord). → https://github.com/astral-sh/ruff/issues/13238~~
-* separate the hot reload system from distroupdate.nvim and make it a new plugin.
+* ~~separate the hot reload system from distroupdate.nvim and make it a new plugin.~~
 * Prepare promos.
 
 ### Todos before v5.0 (2025)
