@@ -6,19 +6,32 @@
 local M = {}
 
 function M.check()
-  vim.health.start("NormalNvim")
+  -- Get normalnvim_version from the plugin distroupdate, if present.
+  local success, git_utils = pcall(require, "distroupdate.utils.git")
+  local distroupdate_config = vim.g.distroupdate_config or {}
+  local normalnvim_version = "unknown"
 
-  vim.health.info(
-    "NormalNvim Version: " .. require("distroupdate.utils.updater").version(true)
-  )
+  if success then normalnvim_version = git_utils.current_version(false) end
+  if distroupdate_config.branch == "nightly" then
+    normalnvim_version = ("nightly (%s)"):format(normalnvim_version)
+  end
+
+  -- Title
+  vim.health.start("NormalNvim health stats:")
+
+  -- Print NormalNvim version
+  vim.health.info("NormalNvim Version: " .. normalnvim_version)
   vim.health.info(
     "Neovim Version: v"
-    .. vim.fn.matchstr(vim.fn.execute("version"), "NVIM v\\zs[^\n]*")
+      .. vim.fn.matchstr(vim.fn.execute("version"), "NVIM v\\zs[^\n]*")
   )
 
+  -- Print Neovim version
   if vim.version().prerelease then
-    vim.health.warn("Neovim nightly is not officially supported and may have breaking changes")
-  elseif vim.fn.has "nvim-0.10" == 1 then
+    vim.health.warn(
+      "Neovim nightly is not officially supported and may have breaking changes"
+    )
+  elseif vim.fn.has("nvim-0.10") == 1 then
     vim.health.ok("Using stable Neovim >= 0.10.0")
   else
     vim.health.error("Neovim >= 0.10.0 is required")
@@ -104,14 +117,12 @@ function M.check()
     {
       cmd = { "cargo nextest" },
       type = "warn",
-      msg =
-      "Used to run rust tests (optional)\nNOTE: checkhealth won't detect this correctly, but you can confirm it works correctly with 'cargo nextest'.",
+      msg = "Used to run rust tests (optional)\nNOTE: checkhealth won't detect this correctly, but you can confirm it works correctly with 'cargo nextest'.",
     },
     {
       cmd = { "nunit" },
       type = "warn",
-      msg =
-      "Used to run C# tests (optional)\nNOTE: There is no way to install this system wide. To use it you must add it to your dotnet C# project: 'dotnet add package NUnit NUnit3TestAdapter'.",
+      msg = "Used to run C# tests (optional)\nNOTE: There is no way to install this system wide. To use it you must add it to your dotnet C# project: 'dotnet add package NUnit NUnit3TestAdapter'.",
     },
     {
       cmd = { "csc" },
@@ -126,8 +137,7 @@ function M.check()
     {
       cmd = { "dotnet" },
       type = "warn",
-      msg =
-      "Used by compiler.nvim and DAP to operate with dotnet projects (optional)\nNOTE: Make sure you also have the system package dotnet-sdk installed.",
+      msg = "Used by compiler.nvim and DAP to operate with dotnet projects (optional)\nNOTE: Make sure you also have the system package dotnet-sdk installed.",
     },
     {
       cmd = { "java" },
@@ -203,12 +213,12 @@ function M.check()
     {
       cmd = { "gfortran" },
       type = "warn",
-      msg = "Used by compiler.nvim to compile fortran (optional)"
+      msg = "Used by compiler.nvim to compile fortran (optional)",
     },
     {
       cmd = { "fpm" },
       type = "warn",
-      msg = "Used by compiler.nvim to compile fortran (optional)"
+      msg = "Used by compiler.nvim to compile fortran (optional)",
     },
     {
       cmd = { "go" },
@@ -218,8 +228,7 @@ function M.check()
     {
       cmd = { "godoc" },
       type = "warn",
-      msg =
-      "Used by dooku.nvim to generate go html docs\nNOTE: If you have it installed but you can't run it on the terminal, ensure you have added 'go' to your OS path (optional)",
+      msg = "Used by dooku.nvim to generate go html docs\nNOTE: If you have it installed but you can't run it on the terminal, ensure you have added 'go' to your OS path (optional)",
     },
     {
       cmd = { "doxygen" },
