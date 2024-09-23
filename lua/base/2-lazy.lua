@@ -17,6 +17,7 @@ local updates_config = {
 }
 
 --- Download 'lazy' from its git repository if lazy_dir doesn't exists already.
+--- Note: This function should ONLY run the first time you start nvim.
 --- @param lazy_dir string Path to clone lazy into. Recommended: `<nvim data dir>/lazy/lazy.nvim`
 local function git_clone_lazy(lazy_dir)
   local output = vim.fn.system({

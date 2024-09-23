@@ -23,6 +23,7 @@
 --       -> nvim-ts-autotag        [auto close html tags]
 --       -> lsp_signature.nvim     [auto params help]
 --       -> nvim-lightbulb         [lightbulb for code actions]
+--       -> hot-reload.nvim        [config reload]
 --       -> distroupdate.nvim      [distro update]
 
 local is_android = vim.fn.isdirectory('/data') == 1 -- true if on android
@@ -676,8 +677,30 @@ return {
   -- distroupdate.nvim [distro update]
   -- https://github.com/zeioth/distroupdate.nvim
   {
-    "zeioth/distroupdate.nvim",
+    "zeioth/hot-reload.nvim",
     dependencies = { "nvim-lua/plenary.nvim" },
+    event = "User BaseFile",
+    opts = function()
+      local utils = require("base.utils")
+      local config_dir = utils.os_path(vim.fn.stdpath "config" .. "/lua/base/")
+      return {
+        notify = true,
+        reload_files = {
+          config_dir .. "1-options.lua",
+          config_dir .. "4-mappings.lua"
+        },
+        reload_callback = function()
+          vim.cmd(":silent! colorscheme " .. vim.g.default_colorscheme) -- nvim     colorscheme reload command
+          vim.cmd(":silent! doautocmd ColorScheme")                     -- heirline colorscheme reload event
+        end
+      }
+    end
+  },
+
+  -- distroupdate.nvim [distro update]
+  -- https://github.com/zeioth/distroupdate.nvim
+  {
+    "zeioth/distroupdate.nvim",
     event = "User BaseFile",
     cmd = {
       "DistroFreezePluginVersions",
@@ -686,21 +709,10 @@ return {
       "DistroUpdate",
       "DistroUpdateRevert"
     },
-    opts = function()
-      local utils = require("base.utils")
-      local config_dir = utils.os_path(vim.fn.stdpath "config" .. "/lua/base/")
-      return {
-        channel = "stable", -- stable/nightly
-        hot_reload_files = {
-          config_dir .. "1-options.lua",
-          config_dir .. "4-mappings.lua"
-        },
-        hot_reload_callback = function()
-          vim.cmd(":silent! colorscheme " .. vim.g.default_colorscheme) -- nvim     colorscheme reload command
-          vim.cmd(":silent! doautocmd ColorScheme")                     -- heirline colorscheme reload event
-        end
-      }
-    end
+    opts = {
+        channel = "stable" -- stable/nightly
+    }
   },
+
 
 } -- end of return
