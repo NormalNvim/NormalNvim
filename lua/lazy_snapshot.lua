@@ -105,6 +105,7 @@ return {
   { "zeioth/dooku.nvim", version = "^3" },
   { "zeioth/garbage-day.nvim", version = "^2" },
   { "zeioth/heirline-components.nvim", commit = "f849bbfe05f0d523449eb8d0713dffd4c3d7c295" },
+  { "zeioth/hot-reload.nvim", version = "^1" },
   { "zeioth/markmap.nvim", version = "^3" },
   { "zeioth/mason-extra-cmds", commit = "1188781b69a09814081f1524d3b46b437df348d8" },
   { "zeioth/none-ls-autoload.nvim", version = "^1" },
