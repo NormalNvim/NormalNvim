@@ -131,9 +131,11 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 * ~~Better QA for `distroupdate.nvim`~~
 * ~~Keep an eye on the ruff 0.6.3 issue (and remember to credit Dimscord). → https://github.com/astral-sh/ruff/issues/13238~~
 * ~~separate the hot reload system from distroupdate.nvim and make it a new plugin.~~
+* Update blog for `v4.0.0` with the changes above.
 * Prepare promos.
 
 ### Todos before v5.0 (2025)
+* mason-extra-cmds: refactor the plugin so it's more maintainable. → Last plugin to refactor!
 * Compiler.nvim: add support for justfiles and taskfiles.
 * Version v2 of the website should look considerably better.
 
