@@ -36,7 +36,11 @@ function M.run_cmd(cmd, show_error)
   if not success and (show_error == nil or show_error) then
     vim.api.nvim_err_writeln(("Error running command %s\nError message:\n%s"):format(table.concat(cmd, " "), result))
   end
-  return success and result:gsub("[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]", "") or nil
+
+  -- strip out terminal escape sequences and control characters.
+  local stripped_result = result:gsub("[\27\155][][()#;?%d]*[A-PRZcf-ntqry=><~]", "")
+
+  return success and stripped_result or nil
 end
 
 --- Adds autocmds to a specific buffer if they don't already exist.
