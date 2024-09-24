@@ -23,8 +23,8 @@
 
 local M = {}
 
----Run a shell command and capture the output and whether the command
----succeeded or failed.
+--- Run a shell command and capture the output and whether the command
+--- succeeded or failed.
 --- @param cmd string|string[] The terminal command to execute.
 --- @param show_error? boolean If true, print errors if the command fails.
 --- @return string|nil # The result of a successfully executed command, or nil if it failed.
@@ -60,7 +60,7 @@ function M.run_cmd(cmd, show_error)
   return (success and cleaned_result) or nil
 end
 
----Adds autocmds to a specific buffer if they don't already exist.
+--- Adds autocmds to a specific buffer if they don't already exist.
 ---
 --- @param augroup string       The name of the autocmd group to which the autocmds belong.
 --- @param bufnr number         The buffer number to which the autocmds should be applied.
@@ -93,7 +93,7 @@ function M.add_autocmds_to_buffer(augroup, bufnr, autocmds)
   end
 end
 
----Deletes autocmds associated with a specific buffer and autocmd group.
+--- Deletes autocmds associated with a specific buffer and autocmd group.
 ---
 --- @param augroup string The name of the autocmd group from which the autocmds should be removed.
 --- @param bufnr number The buffer number from which the autocmds should be removed.
@@ -108,7 +108,7 @@ function M.del_autocmds_from_buffer(augroup, bufnr)
   end
 end
 
----Get an icon from `lspkind` if it is available and return it.
+--- Get an icon from `lspkind` if it is available and return it.
 --- @param kind string The kind of icon in `lspkind` to retrieve.
 --- @return string icon.
 function M.get_icon(kind, padding, no_fallback)
@@ -122,7 +122,7 @@ function M.get_icon(kind, padding, no_fallback)
   return icon and icon .. string.rep(" ", padding or 0) or ""
 end
 
----Get an empty table of mappings with a key for each map mode.
+--- Get an empty table of mappings with a key for each map mode.
 --- @return table<string,table> # a table with entries for each map mode.
 function M.get_mappings_template()
   local maps = {}
@@ -132,8 +132,8 @@ function M.get_mappings_template()
   return maps
 end
 
----Check if a plugin is defined in lazy. Useful with lazy loading
----when a plugin is not necessarily loaded yet.
+--- Check if a plugin is defined in lazy. Useful with lazy loading
+--- when a plugin is not necessarily loaded yet.
 --- @param plugin string The plugin to search for.
 --- @return boolean available # Whether the plugin is available.
 function M.is_available(plugin)
@@ -141,8 +141,8 @@ function M.is_available(plugin)
   return lazy_config_avail and lazy_config.spec.plugins[plugin] ~= nil
 end
 
----Returns true if the file is considered a big file,
----according to the criteria defined in `vim.g.big_file`.
+--- Returns true if the file is considered a big file,
+--- according to the criteria defined in `vim.g.big_file`.
 --- @param bufnr number|nil buffer number. 0 by default, which means current buf.
 --- @return boolean is_big_file true or false.
 function M.is_big_file(bufnr)
@@ -154,8 +154,8 @@ function M.is_big_file(bufnr)
   return is_big_file
 end
 
----Sends a notification with 'Neovim' as default title.
----Same as using vim.notify, but it saves us typing the title every time.
+--- Sends a notification with 'Neovim' as default title.
+--- Same as using vim.notify, but it saves us typing the title every time.
 --- @param msg string The notification body.
 --- @param type number|nil The type of the notification (:help vim.log.levels).
 --- @param opts? table The nvim-notify options to use (:help notify-options).
@@ -166,8 +166,8 @@ function M.notify(msg, type, opts)
   end)
 end
 
----Convert a path to the path format of the current operative system.
----It converts 'slash' to 'inverted slash' if on windows, and vice versa on UNIX.
+--- Convert a path to the path format of the current operative system.
+--- It converts 'slash' to 'inverted slash' if on windows, and vice versa on UNIX.
 --- @param path string A path string.
 --- @return string|nil,nil path A path string formatted for the current OS.
 function M.os_path(path)
@@ -177,7 +177,7 @@ function M.os_path(path)
   return string.gsub(path, '[/\\]', separator)
 end
 
----Get the options of a plugin managed by lazy.
+--- Get the options of a plugin managed by lazy.
 --- @param plugin string The plugin to get options from
 --- @return table opts # The plugin options, or empty table if no plugin.
 function M.get_plugin_opts(plugin)
@@ -191,8 +191,8 @@ function M.get_plugin_opts(plugin)
   return opts
 end
 
----Set a table of mappings.
----This wrapper prevents a  boilerplate code, and takes care of `whichkey.nvim`.
+--- Set a table of mappings.
+--- This wrapper prevents a  boilerplate code, and takes care of `whichkey.nvim`.
 --- @param map_table table A nested table where the first key is the vim mode,
 ---                        the second key is the key to map, and the value is
 ---                        the function to set the mapping to.
@@ -229,7 +229,7 @@ function M.set_mappings(map_table, base)
 end
 
 
----Add syntax matching rules for highlighting URLs/URIs.
+--- Add syntax matching rules for highlighting URLs/URIs.
 function M.set_url_effect()
   --- regex used for matching a valid URL/URI string
   local url_matcher =
@@ -246,14 +246,14 @@ function M.set_url_effect()
   end
 end
 
----Delete the syntax matching rules for URLs/URIs if set.
+--- Delete the syntax matching rules for URLs/URIs if set.
 function M.delete_url_effect()
   for _, match in ipairs(vim.fn.getmatches()) do
     if match.group == "HighlightURL" then vim.fn.matchdelete(match.id) end
   end
 end
 
----Open the file or url under the cursor.
+--- Open the file or url under the cursor.
 --- @param path string The path of the file to open with the system opener.
 function M.open_with_program(path)
   if vim.ui.open then return vim.ui.open(path) end
@@ -282,8 +282,8 @@ function M.open_with_program(path)
   vim.fn.jobstart(vim.list_extend(cmd, { path }), { detach = true })
 end
 
----Convenient wapper to save code when we Trigger events.
----To listen for an event triggered by this function you can use `autocmd`.
+--- Convenient wapper to save code when we Trigger events.
+--- To listen for an event triggered by this function you can use `autocmd`.
 --- @param event string Name of the event.
 --- @param is_urgent boolean|nil If true, trigger directly instead of scheduling. Useful for startup events.
 -- @usage To run a User event:   `trigger_event("User MyUserEvent")`
