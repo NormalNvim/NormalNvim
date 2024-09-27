@@ -1,5 +1,5 @@
 --- ### LSP utils.
---
+
 --  DESCRIPTION:
 --  Functions we use to configure the plugin `mason-lspconfig.nvim`.
 --  You can specify your own lsp settings inside `M.apply_user_lsp_settings()`.
@@ -20,7 +20,7 @@ local stored_handlers = {}
 
 --- Apply default settings for diagnostics, formatting, and lsp capabilities.
 --- It only need to be executed once, normally on mason-lspconfig.
----@return nil
+--- @return nil
 M.apply_default_lsp_settings = function()
   -- Icons
   -- Apply the icons defined in ../icons/nerd_font.lua
@@ -109,8 +109,8 @@ end
 
 --- This function has the sole purpose of passing the lsp keymappings to lsp.
 --- We have this function, because we use it on none-ls.
----@param client string The client where the lsp mappings will load.
----@param bufnr string The bufnr where the lsp mappings will load.
+--- @param client string The client where the lsp mappings will load.
+--- @param bufnr string The bufnr where the lsp mappings will load.
 function M.apply_user_lsp_mappings(client, bufnr)
   local lsp_mappings = require("base.4-mappings").lsp_mappings(client, bufnr)
   if not vim.tbl_isempty(lsp_mappings.v) then
@@ -121,8 +121,8 @@ end
 
 --- Here you can specify custom settings for the lsp servers you install.
 --- This is not normally necessary. But you can.
----@param server_name string The name of the server
----@return table # The table of LSP options used when setting up the given language server
+--- @param server_name string The name of the server
+--- @return table # The table of LSP options used when setting up the given language server
 function M.apply_user_lsp_settings(server_name)
   local server = require("lspconfig")[server_name]
 
@@ -169,8 +169,8 @@ end
 --- which is the responsible of configuring everything for us.
 ---
 --- You are meant to call this function from the plugin `mason-lspconfig.nvim`.
----@param server string A lsp server name.
----@return nil
+--- @param server string A lsp server name.
+--- @return nil
 M.setup = function(server)
   -- Get the user settings.
   local opts = M.apply_user_lsp_settings(server)
