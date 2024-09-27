@@ -1,5 +1,5 @@
 --- ### UI toggle functions.
---
+
 --  DESCRIPTION:
 --  While you could technically delete this file, we encourage you
 --  to keep it as it takes a lot of complexity out of `../4-mappings.lua`.

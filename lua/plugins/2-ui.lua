@@ -26,8 +26,8 @@ local is_android = vim.fn.isdirectory('/data') == 1 -- true if on android
 
 return {
 
-  -- tokyonight [theme]
-  -- https://github.com/folke/tokyonight.nvim
+  --  tokyonight [theme]
+  --  https://github.com/folke/tokyonight.nvim
   {
     "folke/tokyonight.nvim",
     event = "User LoadColorSchemes",

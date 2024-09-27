@@ -9,7 +9,7 @@
 --      -> get_lazy_spec                 → load and get the plugins file.
 --      -> setup_lazy                    → pass the plugins file to lazy and run setup().
 
--- lazy updater options
+-- Lazy updater options
 -- Use the same values you have in the plugin `distroupdate.nvim`
 local updates_config = {
   channel = "stable",                  -- 'nightly', or 'stable'
@@ -35,7 +35,7 @@ local function git_clone_lazy(lazy_dir)
   end
 end
 
---- This functions creates one time autocmd to load the plugins passed.
+--- This functions creates a one time autocmd to load the plugins passed.
 --- This is useful for plugins that will trigger their own update mechanism when loaded.
 ---
 --- Note: This function should ONLY run the first time you start nvim.

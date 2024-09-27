@@ -1,5 +1,5 @@
 -- Command to check if you have the required dependencies to use NormalNvim.
---
+
 -- DESCRIPTION:
 -- To use it run the command :checkhealth base
 

@@ -1,5 +1,5 @@
 --- ### LSP utils.
---
+
 --  DESCRIPTION:
 --  Functions we use to configure the plugin `mason-lspconfig.nvim`.
 --  You can specify your own lsp settings inside `M.apply_user_lsp_settings()`.
