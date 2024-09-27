@@ -32,6 +32,7 @@ return {
     "folke/tokyonight.nvim",
     event = "User LoadColorSchemes",
     opts = {
+      cache = true, -- disable this if your UI is rendered incorrectly.
       dim_inactive = false,
       styles = {
         comments = { italic = true },
