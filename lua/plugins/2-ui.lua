@@ -293,9 +293,21 @@ return {
   -- Collection of components to use on your heirline config.
   {
     "zeioth/heirline-components.nvim",
-    opts = {
-      icons = require("base.icons.nerd_font")
-    }
+    opts = function()
+      -- if vim.g.icons_enabled, use nerd font icons. else, use text based icons.
+      local function get_icons()
+        local success, lib = pcall(
+          require,
+          vim.g.icons_enabled and "base.icons.nerd_font" or "base.icons.text"
+        )
+        return success and lib or (pcall(require, "base.icons.text"))
+      end
+
+      -- opts
+      return {
+        icons = get_icons(),
+      }
+    end
   },
 
   --  heirline [ui components]
