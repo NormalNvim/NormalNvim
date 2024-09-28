@@ -54,13 +54,6 @@ return {
       "TSUpdateSync",
     },
     build = ":TSUpdate",
-    init = function(plugin)
-      -- perf: make treesitter queries available at startup.
-      vim.defer_fn(function()
-        require("lazy.core.loader").add_to_rtp(plugin)
-        require("nvim-treesitter.query_predicates")
-      end, 200)
-    end,
     opts = {
       auto_install = false, -- Currently bugged. Use [:TSInstall all] and [:TSUpdate all]
 
