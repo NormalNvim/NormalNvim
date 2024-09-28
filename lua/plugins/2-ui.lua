@@ -308,7 +308,7 @@ return {
     dependencies = { "zeioth/heirline-components.nvim" },
     event = "User BaseDefered",
     opts = function()
-      local lib = require "heirline-components.all"
+      local lib = require("heirline-components.all")
       return {
         opts = {
           disable_winbar_cb = function(args) -- We do this to avoid showing it on the greeter.
