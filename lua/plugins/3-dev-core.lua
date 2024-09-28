@@ -490,13 +490,14 @@ return {
       "hrsh7th/cmp-buffer",
       "hrsh7th/cmp-path",
       "hrsh7th/cmp-nvim-lsp",
+      "onsails/lspkind.nvim"
     },
     event = "InsertEnter",
     opts = function()
       -- ensure dependencies exist
       local cmp = require("cmp")
       local luasnip = require("luasnip")
-      local lspkind = require("lspkind")
+      local lspkind, _ = pcall(require, "lspkind")
 
       -- border opts
       local border_opts = {
@@ -525,7 +526,7 @@ return {
         preselect = cmp.PreselectMode.None,
         formatting = {
           fields = { "kind", "abbr", "menu" },
-          format = lspkind.cmp_format(utils.get_plugin_opts("lspkind.nvim")),
+          format = (lspkind and lspkind.cmp_format(utils.get_plugin_opts("lspkind.nvim"))) or nil,
         },
         snippet = {
           expand = function(args) luasnip.lsp_expand(args.body) end,
