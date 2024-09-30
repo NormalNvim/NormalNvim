@@ -139,6 +139,8 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 * Compiler.nvim: test windows support.
 * Compiler.nvim: add support for justfiles and taskfiles.
 * Compiler.nvim: test support for nim-lang.
+* Compiler.nvim: add support for new language `common LISP`.
+* Compiler.nvim: add support for new language `COBOL`.
 * Version v2 of the website should look considerably better.
 
 ### Blocked
