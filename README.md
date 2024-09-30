@@ -138,6 +138,8 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 ### Todos before v5.0 (2025)
 * Compiler.nvim: test windows support.
 * Compiler.nvim: add support for justfiles and taskfiles.
+* Makeit.nvim: Add support for justfiles and taskfiles.
+* Makeit.nvim: Remove orchestrators. This only make sense for compiler.nvim.
 * Compiler.nvim: test support for nim-lang.
 * Compiler.nvim: add support for new language `common LISP`.
 * Compiler.nvim: add support for new language `COBOL`.
