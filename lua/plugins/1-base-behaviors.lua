@@ -321,19 +321,19 @@ return {
           sources = {
             {
               source = "filesystem",
-              display_name = get_icon("FolderClosed", 1, true) .. "File",
+              display_name = get_icon("FolderClosed", true) .. " File",
             },
             {
               source = "buffers",
-              display_name = get_icon("DefaultFile", 1, true) .. "Bufs",
+              display_name = get_icon("DefaultFile", true) .. " Bufs",
             },
             {
               source = "git_status",
-              display_name = get_icon("Git", 1, true) .. "Git",
+              display_name = get_icon("Git", true) .. " Git",
             },
             {
               source = "diagnostics",
-              display_name = get_icon("Diagnostic", 1, true) .. "Diagnostic",
+              display_name = get_icon("Diagnostic", true) .. " Diagnostic",
             },
           },
         },
@@ -344,7 +344,7 @@ return {
             folder_open = get_icon("FolderOpen"),
             folder_empty = get_icon("FolderEmpty"),
             folder_empty_open = get_icon("FolderEmpty"),
-            default = get_icon "DefaultFile",
+            default = get_icon("DefaultFile"),
           },
           modified = { symbol = get_icon "FileModified" },
           git_status = {

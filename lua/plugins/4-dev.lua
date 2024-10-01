@@ -320,7 +320,7 @@ return {
           },
         },
         ui = {
-          prompt_icon = ">",
+          prompt_icon = require("base.utils").get_icon("PromptPrefix"),
         },
       }
     end,

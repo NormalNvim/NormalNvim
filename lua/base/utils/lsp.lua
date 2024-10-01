@@ -23,7 +23,7 @@ local stored_handlers = {}
 --- @return nil
 M.apply_default_lsp_settings = function()
   -- Icons
-  -- Apply the icons defined in ../icons/nerd_font.lua
+  -- Apply the icons defined in ../icons/icons.lua
   local get_icon = utils.get_icon
   local signs = {
     { name = "DiagnosticSignError",    text = get_icon("DiagnosticError"),        texthl = "DiagnosticSignError" },

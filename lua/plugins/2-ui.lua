@@ -294,13 +294,13 @@ return {
   {
     "zeioth/heirline-components.nvim",
     opts = function()
-      -- if vim.g.icons_enabled, use nerd font icons. else, use text based icons.
+      -- return different items depending of the value of `vim.g.fallback_icons`
       local function get_icons()
-        local success, lib = pcall(
-          require,
-          vim.g.icons_enabled and "base.icons.nerd_font" or "base.icons.text"
-        )
-        return success and lib or (pcall(require, "base.icons.text"))
+        if vim.g.fallback_icons then
+          return require("base.icons.fallback_icons")
+        else
+          return require("base.icons.icons")
+        end
       end
 
       -- opts
@@ -440,9 +440,9 @@ return {
       }
       return {
         defaults = {
-          prompt_prefix = get_icon("Selected", 1),
-          selection_caret = get_icon("Selected", 1),
-          multi_icon = get_icon("selected", 1),
+          prompt_prefix = get_icon("PromptPrefix") .. " ",
+          selection_caret = get_icon("PromptPrefix") .. " ",
+          multi_icon = get_icon("PromptPrefix") .. " ",
           path_display = { "truncate" },
           sorting_strategy = "ascending",
           layout_config = {
@@ -555,12 +555,12 @@ return {
   --  https://github.com/nvim-tree/nvim-web-devicons
   {
     "nvim-tree/nvim-web-devicons",
-    enabled = vim.g.icons_enabled,
+    enabled = not vim.g.fallback_icons,
     event = "User BaseDefered",
     opts = {
       override = {
         default_icon = {
-          icon = require("base.utils").get_icon("DefaultFile"),
+          icon = require("base.utils").get_icon("DefaultFile", true),
           name = "default"
         },
         deb = { icon = "", name = "Deb" },
@@ -608,7 +608,7 @@ return {
       },
       menu = {},
     },
-    enabled = vim.g.icons_enabled,
+    enabled = not vim.g.fallback_icons,
     config = function(_, opts)
       require("lspkind").init(opts)
     end,
@@ -715,7 +715,7 @@ return {
     opts = {
       preset = "classic", -- "classic", "modern", or "helix"
       icons = {
-        group = vim.g.icons_enabled ~= false and "" or "+",
+        group = (vim.g.fallback_icons == false and "") or "+",
         rules = false,
         separator = "-",
       },

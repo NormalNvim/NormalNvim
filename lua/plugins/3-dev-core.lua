@@ -497,7 +497,7 @@ return {
       -- ensure dependencies exist
       local cmp = require("cmp")
       local luasnip = require("luasnip")
-      local lspkind = require("lspkind")
+      local lspkind_loaded, lspkind = pcall(require, "lspkind")
 
       -- border opts
       local border_opts = {
@@ -526,7 +526,7 @@ return {
         preselect = cmp.PreselectMode.None,
         formatting = {
           fields = { "kind", "abbr", "menu" },
-          format = lspkind.cmp_format(utils.get_plugin_opts("lspkind.nvim")),
+          format = (lspkind_loaded and lspkind.cmp_format(utils.get_plugin_opts("lspkind.nvim"))) or nil
         },
         snippet = {
           expand = function(args) luasnip.lsp_expand(args.body) end,
