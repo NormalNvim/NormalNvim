@@ -108,18 +108,28 @@ function M.del_autocmds_from_buffer(augroup, bufnr)
   end
 end
 
---- Get an icon from `lspkind` if it is available and return it.
---- @param kind string The kind of icon in `lspkind` to retrieve.
+--- Get an icon from given its icon name.
+--- if vim.g.fallback_icons = true, it will return a fallback icon
+--- unless specified otherwise.
+--- @param icon_name string Name of the icon to retrieve.
+--- @param fallback_to_empty_string boolean|nil If this parameter is true, when `vim.g.fallback_icons = true` then `get_icon()` will return empty string.
 --- @return string icon.
-function M.get_icon(kind, padding, no_fallback)
-  if not vim.g.icons_enabled and no_fallback then return "" end
-  local icon_pack = vim.g.icons_enabled and "icons" or "text_icons"
+function M.get_icon(icon_name, fallback_to_empty_string)
+  -- guard clause
+  if fallback_to_empty_string and vim.g.fallback_icons then return "" end
+
+  -- get icon_pack
+  local icon_pack = (vim.g.fallback_icons and "fallback_icons") or "icons"
+
+  -- cache icon_pack into M
   if not M[icon_pack] then
-    M.icons = require("base.icons.nerd_font")
-    M.text_icons = require("base.icons.text")
+    M.icons = require("base.icons.icons")
+    M.fallback_icons = require("base.icons.fallback_icons")
   end
-  local icon = M[icon_pack] and M[icon_pack][kind]
-  return icon and icon .. string.rep(" ", padding or 0) or ""
+
+  -- return specified icon
+  local icon = M[icon_pack] and M[icon_pack][icon_name]
+  return icon
 end
 
 --- Get an empty table of mappings with a key for each map mode.
