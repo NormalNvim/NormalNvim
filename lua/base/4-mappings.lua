@@ -55,10 +55,10 @@
 --   -------------------------------------------------------------------
 
 local M = {}
-local utils = require "base.utils"
+local utils = require("base.utils")
 local get_icon = utils.get_icon
 local is_available = utils.is_available
-local ui = require "base.utils.ui"
+local ui = require("base.utils.ui")
 local maps = require("base.utils").get_mappings_template()
 local is_android = vim.fn.isdirectory('/data') == 1 -- true if on android
 
@@ -70,19 +70,19 @@ local is_android = vim.fn.isdirectory('/data') == 1 -- true if on android
 
 -- icons displayed on which-key.nvim ---------------------------------------
 local icons = {
-  f = { desc = get_icon("Search", 1, true) .. "Find" },
-  p = { desc = get_icon("Package", 1, true) .. "Packages" },
-  l = { desc = get_icon("ActiveLSP", 1, true) .. "LSP" },
-  u = { desc = get_icon("Window", 1, true) .. "UI" },
-  b = { desc = get_icon("Tab", 1, true) .. "Buffers" },
-  bs = { desc = get_icon("Sort", 1, true) .. "Sort Buffers" },
-  c = { desc = get_icon("Run", 1, true) .. "Compiler" },
-  d = { desc = get_icon("Debugger", 1, true) .. "Debugger" },
-  tt = { desc = get_icon("Test", 1, true) .. "Test" },
-  dc = { desc = get_icon("Docs", 1, true) .. "Docs" },
-  g = { desc = get_icon("Git", 1, true) .. "Git" },
-  S = { desc = get_icon("Session", 1, true) .. "Session" },
-  t = { desc = get_icon("Terminal", 1, true) .. "Terminal" },
+  f = { desc = get_icon("Find", true) .. " Find" },
+  p = { desc = get_icon("Packages", true) .. " Packages" },
+  l = { desc = get_icon("LSP", true) .. " LSP" },
+  u = { desc = get_icon("UI", true) .. " UI" },
+  b = { desc = get_icon("Buffer", true) .. " Buffers" },
+  bs = { desc = get_icon("Sort", true) .. " Sort Buffers" },
+  c = { desc = get_icon("Run", true) .. " Compiler" },
+  d = { desc = get_icon("Debugger", true) .. " Debugger" },
+  tt = { desc = get_icon("Test", true) .. " Test" },
+  dc = { desc = get_icon("Docs", true) .. " Docs" },
+  g = { desc = get_icon("Git", true) .. " Git" },
+  S = { desc = get_icon("Session", true) .. " Session" },
+  t = { desc = get_icon("Terminal", true) .. " Terminal" },
 }
 
 -- standard Operations -----------------------------------------------------

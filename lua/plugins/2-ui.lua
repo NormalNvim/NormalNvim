@@ -147,28 +147,35 @@ return {
         }
       end
 
+
+      local get_icon = require("base.utils").get_icon
+
       dashboard.section.header.opts.hl = "DashboardHeader"
       vim.cmd("highlight DashboardHeader guifg=#F7778F")
 
       -- If yazi is not installed, don't show the button.
       local is_yazi_installed = vim.fn.executable("ya") == 1
-      local yazi_button = dashboard.button("r", "🦆 Yazi  ", "<cmd>Yazi<CR>")
+      local yazi_button = dashboard.button("r", get_icon("GreeterYazi") .. " Yazi", "<cmd>Yazi<CR>")
       if not is_yazi_installed then yazi_button = nil end
 
       -- Buttons
       dashboard.section.buttons.val = {
-        dashboard.button("n", "📄 New     ", "<cmd>ene<CR>"),
-        dashboard.button("e", "🌺 Recent  ", "<cmd>Telescope oldfiles<CR>"),
+        dashboard.button("n",
+          get_icon("GreeterNew") .. " New",
+          "<cmd>ene<CR>"),
+        dashboard.button("e",
+          get_icon("GreeterRecent") .. " Recent  ",
+          "<cmd>Telescope oldfiles<CR>"),
         yazi_button,
-        dashboard.button(
-          "s",
-          "🔎 Sessions",
+        dashboard.button("s",
+          get_icon("GreeterSessions") .. " Sessions",
           "<cmd>SessionManager! load_session<CR>"
         ),
-        dashboard.button("p", "💼 Projects", "<cmd>Telescope projects<CR>"),
+        dashboard.button("p",
+          get_icon("GreeterProjects") .. " Projects",
+          "<cmd>Telescope projects<CR>"),
         dashboard.button("", ""),
         dashboard.button("q", "   Quit", "<cmd>exit<CR>"),
-        --  --button("LDR f '", "  Bookmarks  "),
       }
 
       -- Vertical margins
@@ -294,13 +301,13 @@ return {
   {
     "zeioth/heirline-components.nvim",
     opts = function()
-      -- if vim.g.icons_enabled, use nerd font icons. else, use text based icons.
+      -- return different items depending of the value of `vim.g.fallback_icons`
       local function get_icons()
-        local success, lib = pcall(
-          require,
-          vim.g.icons_enabled and "base.icons.nerd_font" or "base.icons.text"
-        )
-        return success and lib or (pcall(require, "base.icons.text"))
+        if vim.g.fallback_icons then
+          return require("base.icons.fallback_icons")
+        else
+          return require("base.icons.icons")
+        end
       end
 
       -- opts
@@ -440,9 +447,9 @@ return {
       }
       return {
         defaults = {
-          prompt_prefix = get_icon("Selected", 1),
-          selection_caret = get_icon("Selected", 1),
-          multi_icon = get_icon("selected", 1),
+          prompt_prefix = get_icon("PromptPrefix") .. " ",
+          selection_caret = get_icon("PromptPrefix") .. " ",
+          multi_icon = get_icon("PromptPrefix") .. " ",
           path_display = { "truncate" },
           sorting_strategy = "ascending",
           layout_config = {
@@ -555,7 +562,7 @@ return {
   --  https://github.com/nvim-tree/nvim-web-devicons
   {
     "nvim-tree/nvim-web-devicons",
-    enabled = vim.g.icons_enabled,
+    enabled = not vim.g.fallback_icons,
     event = "User BaseDefered",
     opts = {
       override = {
@@ -586,6 +593,7 @@ return {
   --  https://github.com/onsails/lspkind.nvim
   {
     "onsails/lspkind.nvim",
+    enabled = not vim.g.fallback_icons,
     opts = {
       mode = "symbol",
       symbol_map = {
@@ -608,7 +616,6 @@ return {
       },
       menu = {},
     },
-    enabled = vim.g.icons_enabled,
     config = function(_, opts)
       require("lspkind").init(opts)
     end,
@@ -715,7 +722,7 @@ return {
     opts = {
       preset = "classic", -- "classic", "modern", or "helix"
       icons = {
-        group = vim.g.icons_enabled ~= false and "" or "+",
+        group = (vim.g.fallback_icons and "+") or "",
         rules = false,
         separator = "-",
       },
