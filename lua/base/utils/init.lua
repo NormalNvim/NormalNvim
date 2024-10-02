@@ -122,9 +122,12 @@ function M.get_icon(icon_name, fallback_to_empty_string)
   local icon_pack = (vim.g.fallback_icons and "fallback_icons") or "icons"
 
   -- cache icon_pack into M
-  if not M[icon_pack] then
-    M.icons = require("base.icons.icons")
-    M.fallback_icons = require("base.icons.fallback_icons")
+  if not M[icon_pack] then -- only if not cached already.
+    if icon_pack == "icons" then
+      M.icons = require("base.icons.icons")
+    elseif icon_pack =="fallback_icons" then
+      M.fallback_icons = require("base.icons.fallback_icons")
+    end
   end
 
   -- return specified icon
