@@ -70,19 +70,19 @@ local is_android = vim.fn.isdirectory('/data') == 1 -- true if on android
 
 -- icons displayed on which-key.nvim ---------------------------------------
 local icons = {
-  f = { desc = get_icon("Search",  true) .. " Find" },
-  p = { desc = get_icon("Package",  true) .. " Packages" },
-  l = { desc = get_icon("ActiveLSP",  true) .. " LSP" },
-  u = { desc = get_icon("UI",  true) .. " UI" },
-  b = { desc = get_icon("Buffer",  true) .. " Buffers" },
-  bs = { desc = get_icon("Sort",  true) .. " Sort Buffers" },
-  c = { desc = get_icon("Run",  true) .. " Compiler" },
-  d = { desc = get_icon("Debugger",  true) .. " Debugger" },
-  tt = { desc = get_icon("Test",  true) .. " Test" },
-  dc = { desc = get_icon("Docs",  true) .. " Docs" },
-  g = { desc = get_icon("Git",  true) .. " Git" },
-  S = { desc = get_icon("Session",  true) .. " Session" },
-  t = { desc = get_icon("Terminal",  true) .. " Terminal" },
+  f = { desc = get_icon("Find", true) .. " Find" },
+  p = { desc = get_icon("Packages", true) .. " Packages" },
+  l = { desc = get_icon("LSP", true) .. " LSP" },
+  u = { desc = get_icon("UI", true) .. " UI" },
+  b = { desc = get_icon("Buffer", true) .. " Buffers" },
+  bs = { desc = get_icon("Sort", true) .. " Sort Buffers" },
+  c = { desc = get_icon("Run", true) .. " Compiler" },
+  d = { desc = get_icon("Debugger", true) .. " Debugger" },
+  tt = { desc = get_icon("Test", true) .. " Test" },
+  dc = { desc = get_icon("Docs", true) .. " Docs" },
+  g = { desc = get_icon("Git", true) .. " Git" },
+  S = { desc = get_icon("Session", true) .. " Session" },
+  t = { desc = get_icon("Terminal", true) .. " Terminal" },
 }
 
 -- standard Operations -----------------------------------------------------

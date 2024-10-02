@@ -147,28 +147,35 @@ return {
         }
       end
 
+
+      local get_icon = require("base.utils").get_icon
+
       dashboard.section.header.opts.hl = "DashboardHeader"
       vim.cmd("highlight DashboardHeader guifg=#F7778F")
 
       -- If yazi is not installed, don't show the button.
       local is_yazi_installed = vim.fn.executable("ya") == 1
-      local yazi_button = dashboard.button("r", "🦆 Yazi  ", "<cmd>Yazi<CR>")
+      local yazi_button = dashboard.button("r", get_icon("GreeterYazi") .. " Yazi", "<cmd>Yazi<CR>")
       if not is_yazi_installed then yazi_button = nil end
 
       -- Buttons
       dashboard.section.buttons.val = {
-        dashboard.button("n", "📄 New     ", "<cmd>ene<CR>"),
-        dashboard.button("e", "🌺 Recent  ", "<cmd>Telescope oldfiles<CR>"),
+        dashboard.button("n",
+          get_icon("GreeterNew") .. " New",
+          "<cmd>ene<CR>"),
+        dashboard.button("e",
+          get_icon("GreeterRecent") .. " Recent  ",
+          "<cmd>Telescope oldfiles<CR>"),
         yazi_button,
-        dashboard.button(
-          "s",
-          "🔎 Sessions",
+        dashboard.button("s",
+          get_icon("GreeterSessions") .. " Sessions",
           "<cmd>SessionManager! load_session<CR>"
         ),
-        dashboard.button("p", "💼 Projects", "<cmd>Telescope projects<CR>"),
+        dashboard.button("p",
+          get_icon("GreeterProjects") .. " Projects",
+          "<cmd>Telescope projects<CR>"),
         dashboard.button("", ""),
         dashboard.button("q", "   Quit", "<cmd>exit<CR>"),
-        --  --button("LDR f '", "  Bookmarks  "),
       }
 
       -- Vertical margins
@@ -560,7 +567,7 @@ return {
     opts = {
       override = {
         default_icon = {
-          icon = require("base.utils").get_icon("DefaultFile", true),
+          icon = require("base.utils").get_icon("DefaultFile"),
           name = "default"
         },
         deb = { icon = "", name = "Deb" },
@@ -586,6 +593,7 @@ return {
   --  https://github.com/onsails/lspkind.nvim
   {
     "onsails/lspkind.nvim",
+    enabled = not vim.g.fallback_icons,
     opts = {
       mode = "symbol",
       symbol_map = {
@@ -608,7 +616,6 @@ return {
       },
       menu = {},
     },
-    enabled = not vim.g.fallback_icons,
     config = function(_, opts)
       require("lspkind").init(opts)
     end,
@@ -715,7 +722,7 @@ return {
     opts = {
       preset = "classic", -- "classic", "modern", or "helix"
       icons = {
-        group = (vim.g.fallback_icons == false and "") or "+",
+        group = (vim.g.fallback_icons and "+") or "",
         rules = false,
         separator = "-",
       },

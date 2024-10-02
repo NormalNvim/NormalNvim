@@ -1,39 +1,45 @@
 -- ### Fallback icons
 
 -- DESCRIPTION:
--- Fallback icons that will be displayed
+-- Use this when it's not possible for you to install nerd fonts.
+--
+-- Fallback icons will be displayed
 -- if you set `vim.g.fallback_icons = true` on `../1-options.lua`.
--- Use it in cases when it's not possible for you to install nerd fonts.
+
+--    Sections:
+--      -> which-key
+--      -> heirline-components (tabline)
+--      -> heirline-components (winbar)
+--      -> heirline-components (statuscolumn)
+--      -> heirline-components (statusline)
+--      -> heirline-components (misc)
+--      -> Neotree
+--      -> Git
+--      -> DAP
+--      -> Telescope
+--      -> Nvim-lightbulb
+--      -> Alpha
+--      -> Mason
+--      -> Render-markdown
 
 return {
-  -- Which-key (we use which-key defaults)
-  -- Debugger = "+",
-  -- Run = "+",
-  -- Search = "+",
-  -- Session = "+",
-  -- Sort = "+",
-  -- Buffer = "+",
-  -- Terminal = "+",
-  -- UI = "+",
-  -- Test = "+",
-  -- Package = "+",
-  -- Docs = "+",
-  -- Git = "+",
+  -- Which-key
+  -- Auto managed
 
   -- Heirline-components - tabline components
-  TabClose = "X",
   BufferClose = "x",
-  ArrowLeft = "<",
-  ArrowRight = ">",
   FileModified = "*",
   FileReadOnly = "[lock]",
+  TabClose = "X",
+  ArrowLeft = "<",
+  ArrowRight = ">",
 
   -- Heirline components - Winbar components
   CompilerPlay = "[PLAY]",
   CompilerStop = "[STOP]",
   CompilerRedo = "[REDO]",
   NeoTree = "[TREE]",
-  Aerial = "[AERIAL]" ,
+  Aerial = "[AERIAL]",
   ZenMode = "[ZEN]",
   BufWrite = "[WRITE]",
   BufWriteAll = "[WRITE_ALL]",
@@ -45,7 +51,7 @@ return {
   FoldOpened = "-",
   FoldSeparator = " ",
 
-  -- Heirline-components - statusline components
+  -- Heirline-components - statusline
   ActiveLSP = "[LSP]",
   ActiveTS = " ",
   Environment = "Env:",
@@ -56,6 +62,7 @@ return {
   LSPLoading1 = "/",
   LSPLoading2 = "-",
   LSPLoading3 = "\\",
+  SearchCount = "FIND:",
   MacroRecording = "REC:",
   ToggleResults = "[RESULTS]",
 
@@ -70,16 +77,9 @@ return {
   Diagnostic = "[!]",
   DefaultFile = " ",
 
-  -- DAP
-  DapBreakpoint = "B",
-  DapBreakpointCondition = "C",
-  DapBreakpointRejected = "R",
-  DapLogPoint = "L",
-  DapStopped = ">",
-
   -- Git
-  GitAdd = "[+]",
   GitBranch = "[BRANCH]",
+  GitAdd = "[+]",
   GitChange = "[/]",
   GitConflict = "[!]",
   GitDelete = "[-]",
@@ -90,6 +90,32 @@ return {
   GitUnstaged = "[U]",
   GitUntracked = "[?]",
 
+  -- DAP
+  DapBreakpoint = "B",
+  DapBreakpointCondition = "C",
+  DapBreakpointRejected = "R",
+  DapLogPoint = "L",
+  DapStopped = ">",
+
   -- Telescope
   PromptPrefix = ">",
+
+  -- nvim-lightbulb
+  Lightbulb = "[ACTION]",
+
+  -- alpha
+  GreeterNew = "  ",
+  GreeterRecent = "  ",
+  GreeterYazi = "  ",
+  GreeterSessions = "  ",
+  GreeterProjects = "  ",
+  GreeterPlug = " ",
+
+  -- Mason
+  MasonInstalled = "[I]",
+  MasonUninstalled = "[U]",
+  MasonPending = "[P]",
+
+  -- Render-markdown
+  RenderMarkdown = { '# ', '## ', '### ', '#### ', '##### ', '###### ' }
 }

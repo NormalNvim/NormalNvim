@@ -668,7 +668,7 @@ return {
       sign = { enabled = false },
       virtual_text = {
         enabled = true,
-        text = "💡"
+        text = require("base.utils").get_icon("Lightbulb")
       }
     },
     config = function(_, opts) require("nvim-lightbulb").setup(opts) end
