@@ -133,8 +133,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 * ~~separate the hot reload system from distroupdate.nvim and make it a new plugin.~~
 * ~~mason-extra-cmds: refactor the plugin so it's more maintainable. → Last plugin to refactor!~~
 * ~~curate icon system~~
-* Update blog for `v4.0.0` with the changes above.
-* Prepare promos.
+* Prepare promo.
 
 ### Todos before v5.0 (2025)
 * Compiler.nvim: test windows support.
