@@ -1,7 +1,7 @@
 -- ### Icons
 
 -- DESCRIPTION:
--- Here you can edit the icons displayed in NormalNvim.
+-- Here you can change the icons displayed in NormalNvim.
 --
 -- If you can't see the default icons:
 -- Install nerd fonts and set it as your term font: https://www.nerdfonts.com/
