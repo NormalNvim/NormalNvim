@@ -504,6 +504,9 @@ return {
         border = "rounded",
         winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel,Search:None",
       }
+      local cmp_config_window = (
+        vim.g.lsp_round_borders_enabled and cmp.config.window.bordered(border_opts)
+      ) or cmp.config.window
 
       -- helper
       local function has_words_before()
@@ -544,8 +547,8 @@ return {
           select = false,
         },
         window = {
-          completion = cmp.config.window.bordered(border_opts),
-          documentation = cmp.config.window.bordered(border_opts),
+          completion = cmp_config_window,
+          documentation = cmp_config_window,
         },
         mapping = {
           ["<PageUp>"] = cmp.mapping.select_prev_item {
