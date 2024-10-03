@@ -4,7 +4,7 @@
 -- Use this when it's not possible for you to install nerd fonts.
 --
 -- Fallback icons will be displayed
--- if you set `vim.g.fallback_icons = true` on `../1-options.lua`.
+-- if you set `vim.g.fallback_icons_enabled = true` on `../1-options.lua`.
 
 --    Sections:
 --      -> which-key

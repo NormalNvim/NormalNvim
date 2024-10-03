@@ -301,10 +301,10 @@ return {
   {
     "zeioth/heirline-components.nvim",
     opts = function()
-      -- return different items depending of the value of `vim.g.fallback_icons`
+      -- return different items depending of the value of `vim.g.fallback_icons_enabled`
       local function get_icons()
-        if vim.g.fallback_icons then
-          return require("base.icons.fallback_icons")
+        if vim.g.fallback_icons_enabled then
+          return require("base.icons.fallback_icons_enabled")
         else
           return require("base.icons.icons")
         end
@@ -562,7 +562,7 @@ return {
   --  https://github.com/nvim-tree/nvim-web-devicons
   {
     "nvim-tree/nvim-web-devicons",
-    enabled = not vim.g.fallback_icons,
+    enabled = not vim.g.fallback_icons_enabled,
     event = "User BaseDefered",
     opts = {
       override = {
@@ -593,7 +593,7 @@ return {
   --  https://github.com/onsails/lspkind.nvim
   {
     "onsails/lspkind.nvim",
-    enabled = not vim.g.fallback_icons,
+    enabled = not vim.g.fallback_icons_enabled,
     opts = {
       mode = "symbol",
       symbol_map = {
@@ -722,7 +722,7 @@ return {
     opts = {
       preset = "classic", -- "classic", "modern", or "helix"
       icons = {
-        group = (vim.g.fallback_icons and "+") or "",
+        group = (vim.g.fallback_icons_enabled and "+") or "",
         rules = false,
         separator = "-",
       },
