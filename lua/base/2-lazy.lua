@@ -86,7 +86,7 @@ local function setup_lazy(lazy_dir)
     spec = spec,
     defaults = { lazy = true },
     performance = {
-      rtp = { -- Use deflate to download faster from the plugin repos.
+      rtp = { -- Disable unnecessary nvim features to speed up startup.
         disabled_plugins = {
           "tohtml",
           "gzip",
@@ -106,7 +106,7 @@ end
 local lazy_dir = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 local is_first_startup = not vim.uv.fs_stat(lazy_dir)
 
--- call the functions defined above.
+-- Call the functions defined above.
 if is_first_startup then
   git_clone_lazy(lazy_dir)
   after_installing_plugins_load({ "nvim-treesitter", "mason" })
