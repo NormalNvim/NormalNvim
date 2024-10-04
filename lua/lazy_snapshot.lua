@@ -22,7 +22,7 @@ return {
   { "echasnovski/mini.indentscope", commit = "da9af64649e114aa79480c238fd23f6524bc0903" },
   { "folke/lazy.nvim", version = "^11" },
   { "folke/lazydev.nvim", commit = "491452cf1ca6f029e90ad0d0368848fac717c6d2" },
-  { "folke/noice.nvim", commit = "448bb9c524a7601035449210838e374a30153172" },
+  { "folke/noice.nvim", version = "4.5" },
   { "folke/tokyonight.nvim", commit = "817bb6ffff1b9ce72cdd45d9fcfa8c9cd1ad3839" },
   { "folke/ts-comments.nvim", version = "^3" },
   { "folke/which-key.nvim", version = "^3" },
