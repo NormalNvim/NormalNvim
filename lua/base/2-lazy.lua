@@ -57,7 +57,7 @@ local function after_installing_plugins_load(plugins)
 end
 
 --- load `<config_dir>/lua/lazy_snapshot.lua` and return it as table).
---- @return spec table # A table you can pass to the `spec` option of lazy.
+--- @return table spec A table you can pass to the `spec` option of lazy.
 local function get_lazy_spec()
   local snapshot_filename = vim.fn.fnamemodify(updates_config.snapshot_file, ":t:r")
   local pin_plugins = updates_config.channel == "stable"
