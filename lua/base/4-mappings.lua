@@ -26,7 +26,7 @@
 --       -> smart-splits.nvim
 --       -> aerial.nvim
 --       -> litee-calltree.nvim
---       -> telescope.nivm                     [find]
+--       -> telescope.nvim                     [find]
 --       -> toggleterm.nvim
 --       -> dap.nvim                           [debugger]
 --       -> tests                              [tests]
@@ -271,13 +271,13 @@ maps.n["<leader>pU"] =
 { function() require("lazy").update() end, desc = "Lazy update" }
 
 -- mason
-if is_available "mason.nvim" then
+if is_available("mason.nvim") then
   maps.n["<leader>pm"] = { "<cmd>Mason<cr>", desc = "Mason open" }
   maps.n["<leader>pM"] = { "<cmd>MasonUpdateAll<cr>", desc = "Mason update" }
 end
 
 -- treesitter
-if is_available "nvim-treesitter" then
+if is_available("nvim-treesitter") then
   maps.n["<leader>pT"] = { "<cmd>TSUpdate<cr>", desc = "Treesitter update" }
   maps.n["<leader>pt"] = { "<cmd>TSInstallInfo<cr>", desc = "Treesitter open" }
 end
@@ -430,21 +430,21 @@ maps.n["]t"] = { function() vim.cmd.tabnext() end, desc = "Next tab" }
 maps.n["[t"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
 
 -- zen mode
-if is_available "zen-mode.nvim" then
+if is_available("zen-mode.nvim") then
   maps.n["<leader>uz"] =
   { function() ui.toggle_zen_mode() end, desc = "Zen mode" }
 end
 
 -- ui toggles [ui] ---------------------------------------------------------
 maps.n["<leader>u"] = icons.u
-if is_available "nvim-autopairs" then
+if is_available("nvim-autopairs") then
   maps.n["<leader>ua"] = { ui.toggle_autopairs, desc = "Autopairs" }
 end
 maps.n["<leader>ub"] = { ui.toggle_background, desc = "Background" }
-if is_available "nvim-cmp" then
+if is_available("nvim-cmp") then
   maps.n["<leader>uc"] = { ui.toggle_cmp, desc = "Autocompletion" }
 end
-if is_available "nvim-colorizer.lua" then
+if is_available("nvim-colorizer.lua") then
   maps.n["<leader>uC"] =
   { "<cmd>ColorizerToggle<cr>", desc = "color highlight" }
 end
@@ -463,10 +463,10 @@ maps.n["<leader>uy"] = { ui.toggle_buffer_syntax, desc = "Syntax highlight (buff
 maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Foldcolumn" }
 maps.n["<leader>uN"] =
 { ui.toggle_ui_notifications, desc = "UI notifications" }
-if is_available "lsp_signature.nvim" then
+if is_available("lsp_signature.nvim") then
   maps.n["<leader>up"] = { ui.toggle_lsp_signature, desc = "LSP signature" }
 end
-if is_available "mini.animate" then
+if is_available("mini.animate") then
   maps.n["<leader>uA"] = { ui.toggle_animations, desc = "Animations" }
 end
 
@@ -558,7 +558,7 @@ vim.api.nvim_create_autocmd("CmdwinEnter", {
 -- -------------------------------------------------------------------------
 
 -- alpha-nvim --------------------------------------------------------------
-if is_available "alpha-nvim" then
+if is_available("alpha-nvim") then
   maps.n["<leader>h"] = {
     function()
       local wins = vim.api.nvim_tabpage_list_wins(0)
@@ -578,7 +578,7 @@ end
 -- [git] -----------------------------------------------------------
 -- gitsigns.nvim
 maps.n["<leader>g"] = icons.g
-if is_available "gitsigns.nvim" then
+if is_available("gitsigns.nvim") then
   maps.n["<leader>g"] = icons.g
   maps.n["]g"] =
   { function() require("gitsigns").next_hunk() end, desc = "Next Git hunk" }
@@ -624,7 +624,7 @@ if is_available "gitsigns.nvim" then
   }
 end
 -- git fugitive
-if is_available "vim-fugitive" then
+if is_available("vim-fugitive") then
   maps.n["<leader>gP"] = {
     function() vim.cmd(":GBrowse") end,
     desc = "Open in github ",
@@ -664,7 +664,7 @@ end
 
 -- file browsers ------------------------------------
 -- yazi
-if is_available "yazi.nvim" and vim.fn.executable("yazi") == 1 then
+if is_available("yazi.nvim") and vim.fn.executable("yazi") == 1 then
   maps.n["<leader>r"] = {
     -- TODO: use 'Yazi toggle' instead once yazi v0.4.0 is released.
     "<cmd>Yazi<CR>",
@@ -673,12 +673,12 @@ if is_available "yazi.nvim" and vim.fn.executable("yazi") == 1 then
 end
 
 -- neotree
-if is_available "neo-tree.nvim" then
+if is_available("neo-tree.nvim") then
   maps.n["<leader>e"] = { "<cmd>Neotree toggle<cr>", desc = "Neotree" }
 end
 
 -- session manager ---------------------------------------------------------
-if is_available "neovim-session-manager" then
+if is_available("neovim-session-manager") then
   maps.n["<leader>S"] = icons.S
   maps.n["<leader>Sl"] = {
     "<cmd>SessionManager! load_last_session<cr>",
@@ -697,7 +697,7 @@ if is_available "neovim-session-manager" then
     desc = "Load current directory session",
   }
 end
-if is_available "resession.nvim" then
+if is_available("resession.nvim") then
   maps.n["<leader>S"] = icons.S
   maps.n["<leader>Sl"] = {
     function() require("resession").load "Last Session" end,
@@ -721,8 +721,8 @@ if is_available "resession.nvim" then
   }
 end
 
--- smart-splits.nivm
-if is_available "smart-splits.nvim" then
+-- smart-splits.nvim
+if is_available("smart-splits.nvim") then
   maps.n["<C-h>"] = {
     function() require("smart-splits").move_cursor_left() end,
     desc = "Move to left split",
@@ -769,13 +769,13 @@ else
 end
 
 -- aerial.nvimm ------------------------------------------------------------
-if is_available "aerial.nvim" then
+if is_available("aerial.nvim") then
   maps.n["<leader>i"] =
   { function() require("aerial").toggle() end, desc = "Aerial" }
 end
 
 -- letee-calltree.nvimm ------------------------------------------------------------
-if is_available "litee-calltree.nvim" then
+if is_available("litee-calltree.nvim") then
   -- For every buffer, look for the one with filetype "calltree" and focus it.
   local calltree_delay = 1500 -- first run? wait a bit longer.
   local function focus_calltree()
@@ -811,7 +811,7 @@ if is_available "litee-calltree.nvim" then
 end
 
 -- telescope.nvim [find] ----------------------------------------------------
-if is_available "telescope.nvim" then
+if is_available("telescope.nvim") then
   maps.n["<leader>f"] = icons.f
   maps.n["<leader>gb"] = {
     function() require("telescope.builtin").git_branches() end,
@@ -890,7 +890,7 @@ if is_available "telescope.nvim" then
     function() require("telescope.builtin").man_pages() end,
     desc = "Find man",
   }
-  if is_available "nvim-notify" then
+  if is_available("nvim-notify") then
     maps.n["<leader>fn"] = {
       function() require("telescope").extensions.notify.notify() end,
       desc = "Find notifications",
@@ -962,7 +962,7 @@ if is_available "telescope.nvim" then
   }
 
   -- extra - project.nvim
-  if is_available "project.nvim" then
+  if is_available("project.nvim") then
     maps.n["<leader>fp"] = {
       function() vim.cmd("Telescope projects") end,
       desc = "Find project",
@@ -970,7 +970,7 @@ if is_available "telescope.nvim" then
   end
 
   -- extra - spectre.nvim (search and replace in project)
-  if is_available "nvim-spectre" then
+  if is_available("nvim-spectre") then
     maps.n["<leader>fr"] = {
       function() require("spectre").toggle() end,
       desc = "Find and replace word in project",
@@ -982,7 +982,7 @@ if is_available "telescope.nvim" then
   end
 
   -- extra - luasnip
-  if is_available "LuaSnip" and is_available "telescope-luasnip.nvim" then
+  if is_available("LuaSnip") and is_available("telescope-luasnip.nvim") then
     maps.n["<leader>fs"] = {
       function() require("telescope").extensions.luasnip.luasnip {} end,
       desc = "Find snippets",
@@ -991,7 +991,7 @@ if is_available "telescope.nvim" then
 
   -- extra - nvim-neoclip (neovim internal clipboard)
   --         Specially useful if you disable the shared clipboard in options.
-  if is_available "nvim-neoclip.lua" then
+  if is_available("nvim-neoclip.lua") then
     maps.n["<leader>fy"] = {
       function() require("telescope").extensions.neoclip.default() end,
       desc = "Find yank history",
@@ -1003,7 +1003,7 @@ if is_available "telescope.nvim" then
   end
 
   -- extra - undotree
-  if is_available "telescope-undo.nvim" then
+  if is_available("telescope-undo.nvim") then
     maps.n["<leader>fu"] = {
       function() require("telescope").extensions.undo.undo() end,
       desc = "Find in undo tree",
@@ -1011,7 +1011,7 @@ if is_available "telescope.nvim" then
   end
 
   -- extra - compiler
-  if is_available "compiler.nvim" and is_available "overseer.nvim" then
+  if is_available("compiler.nvim") and is_available("overseer.nvim") then
     maps.n["<leader>m"] = icons.c
     maps.n["<leader>mm"] = {
       function() vim.cmd("CompilerOpen") end,
@@ -1041,7 +1041,7 @@ if is_available "telescope.nvim" then
 end
 
 -- toggleterm.nvim ----------------------------------------------------------
-if is_available "toggleterm.nvim" then
+if is_available("toggleterm.nvim") then
   maps.n["<leader>t"] = icons.t
   maps.n["<leader>tt"] =
   { "<cmd>ToggleTerm direction=float<cr>", desc = "ToggleTerm float" }
@@ -1073,7 +1073,7 @@ maps.t["<C-l>"] =
 -- Depending your terminal some F keys may not work. To fix it:
 -- modified function keys found with `showkey -a` in the terminal to get key code
 -- run `nvim -V3log +quit` and search through the "Terminal info" in the `log` file for the correct keyname
-if is_available "nvim-dap" then
+if is_available("nvim-dap") then
   maps.n["<leader>d"] = icons.d
   maps.x["<leader>d"] = icons.d
 
@@ -1149,7 +1149,7 @@ if is_available "nvim-dap" then
   maps.n["<leader>ds"] =
   { function() require("dap").run_to_cursor() end, desc = "Run To Cursor" }
 
-  if is_available "nvim-dap-ui" then
+  if is_available("nvim-dap-ui") then
     maps.n["<leader>dE"] = {
       function()
         vim.ui.input({ prompt = "Expression: " }, function(expr)
@@ -1173,7 +1173,7 @@ end
 -- neotest
 maps.n["<leader>T"] = icons.tt
 maps.x["<leader>T"] = icons.tt
-if is_available "neotest" then
+if is_available("neotest") then
   maps.n["<leader>Tu"] = {
     function() require("neotest").run.run() end,
     desc = "Unit",
@@ -1208,7 +1208,7 @@ end
 --
 --         If you use other framework or language, refer to nvim-coverage docs:
 --         https://github.com/andythigpen/nvim-coverage/blob/main/doc/nvim-coverage.txt
-if is_available "nvim-coverage" then
+if is_available("nvim-coverage") then
   maps.n["<leader>Tc"] = {
     function()
       require("coverage").load(false)
@@ -1235,7 +1235,7 @@ maps.n["<leader>Te"] = {
 }
 
 -- nvim-ufo [code folding] --------------------------------------------------
-if is_available "nvim-ufo" then
+if is_available("nvim-ufo") then
   maps.n["zR"] =
   { function() require("ufo").openAllFolds() end, desc = "Open all folds" }
   maps.n["zM"] =
@@ -1264,11 +1264,11 @@ end
 
 -- code docmentation [docs] -------------------------------------------------
 
-if is_available "markdown-preview.nivm" or is_available "markmap.nvim" or is_available "dooku.nvim" then
+if is_available("markdown-preview.nvim") or is_available("markmap.nvim") or is_available("dooku.nvim") then
   maps.n["<leader>D"] = icons.dc
 
   -- Markdown preview
-  if is_available "markdown-preview.nvim" then
+  if is_available("markdown-preview.nvim") then
     maps.n["<leader>Dp"] = {
       function() vim.cmd("MarkdownPreview") end,
       desc = "Markdown preview",
@@ -1276,7 +1276,7 @@ if is_available "markdown-preview.nivm" or is_available "markmap.nvim" or is_ava
   end
 
   -- Markdown Mindmap
-  if is_available "markmap.nvim" then
+  if is_available("markmap.nvim") then
     maps.n["<leader>Dm"] = {
       function()
         if is_android then
@@ -1289,7 +1289,7 @@ if is_available "markdown-preview.nivm" or is_available "markmap.nvim" or is_ava
     }
   end
 
-  if is_available "dooku.nvim" then
+  if is_available("dooku.nvim") then
     maps.n["<leader>Dd"] = {
       function() vim.cmd(":DookuGenerate") end,
       desc = "Open documentation",
@@ -1298,15 +1298,15 @@ if is_available "markdown-preview.nivm" or is_available "markmap.nvim" or is_ava
 end
 
 -- [neural] -----------------------------------------------------------------
-if is_available "neural" or is_available "copilot" then
+if is_available("neural") or is_available("copilot") then
   maps.n["<leader>a"] = {
     function() require("neural").prompt() end,
     desc = "Ask chatgpt",
   }
 end
 
--- hop.nivm ----------------------------------------------------------------
-if is_available "hop.nvim" then
+-- hop.nvim ----------------------------------------------------------------
+if is_available("hop.nvim") then
   -- Note that Even though we are using ENTER for hop, you can still select items
   -- from special menus like 'quickfix', 'q?' and 'q:' with <C+ENTER>.
 
@@ -1360,17 +1360,17 @@ function M.lsp_mappings(client, bufnr)
 
   -- Diagnostics
   lsp_mappings.n["gl"] = { function() vim.diagnostic.open_float() end, desc = "Hover diagnostics" }
-  if is_available "telescope.nvim" then
+  if is_available("telescope.nvim") then
     lsp_mappings.n["<leader>lD"] =
       { function() require("telescope.builtin").diagnostics() end, desc = "Diagnostics" }
   end
 
   -- LSP info
-  if is_available "mason-lspconfig.nvim" then
+  if is_available("mason-lspconfig.nvim") then
     lsp_mappings.n["<leader>li"] = { "<cmd>LspInfo<cr>", desc = "LSP information" }
   end
 
-  if is_available "none-ls.nvim" then
+  if is_available("none-ls.nvim") then
     lsp_mappings.n["<leader>lI"] = { "<cmd>NullLsInfo<cr>", desc = "Null-ls information" }
   end
 
@@ -1593,7 +1593,7 @@ if is_autoformat_enabled and is_filetype_allowed and is_filetype_ignored then
   lsp_mappings.n["gS"] = { function() vim.lsp.buf.workspace_symbol() end, desc = "Search symbol in workspace" }
 
   -- LSP telescope
-  if is_available "telescope.nvim" then -- setup telescope mappings if available
+  if is_available("telescope.nvim") then -- setup telescope mappings if available
     if lsp_mappings.n.gd then lsp_mappings.n.gd[1] = function() require("telescope.builtin").lsp_definitions() end end
     if lsp_mappings.n.gI then
       lsp_mappings.n.gI[1] = function() require("telescope.builtin").lsp_implementations() end
