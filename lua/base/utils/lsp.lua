@@ -153,6 +153,9 @@ function M.apply_user_lsp_settings(server_name)
     local is_schemastore_loaded, schemastore = pcall(require, "schemastore")
     if is_schemastore_loaded then opts.settings = { yaml = { schemas = schemastore.yaml.schemas() } } end
   end
+  if server_name == "bashls" then -- by default use mason shellcheck path
+    opts.settings = { bashIde = { shellcheckPath = vim.fn.stdpath "data" .. "/mason/bin/shellcheck" } }
+  end
 
   -- Apply them
   local old_on_attach = server.on_attach
