@@ -919,11 +919,12 @@ if is_available("telescope.nvim") then
   }
   maps.n["<leader>ff"] = {
     function()
-      require("telescope.builtin").live_grep {
+      require("telescope.builtin").live_grep({
         additional_args = function(args)
-          return vim.list_extend(args, { "--hidden", "--no-ignore" })
+          args.additional_args = { "--hidden", "--no-ignore" }
+          return args.additional_args
         end,
-      }
+      })
     end,
     desc = "Find words in project",
   }
@@ -933,7 +934,7 @@ if is_available("telescope.nvim") then
   }
   maps.n["<leader>f/"] = {
     function() require("telescope.builtin").current_buffer_fuzzy_find() end,
-    desc = "Find words in current buffer"
+    desc = "Find words in current buffer",
   }
 
   -- Some lsp keymappings are here because they depend on telescope
