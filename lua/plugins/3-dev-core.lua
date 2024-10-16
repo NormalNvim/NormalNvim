@@ -298,7 +298,6 @@ return {
         'none-ls-external-sources.diagnostics.flake8',
         'none-ls-external-sources.diagnostics.luacheck',
         'none-ls-external-sources.diagnostics.psalm',
-        'none-ls-external-sources.diagnostics.shellcheck',
         'none-ls-external-sources.diagnostics.yamllint',
 
         -- formatting
