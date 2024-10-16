@@ -133,6 +133,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 * ~~separate the hot reload system from distroupdate.nvim and make it a new plugin.~~
 * ~~mason-extra-cmds: refactor the plugin so it's more maintainable. → Last plugin to refactor!~~
 * ~~curate icon system~~
+* We should install shellcheck as system dependency, as it is the only way bashls don't duplicate lint entried (or alternatively ship the lsp fix again for it again and includ mason's shellcheck in the installer).
 * Prepare promo.
 
 ### Todos before v5.0 (2025)
