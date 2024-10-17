@@ -566,8 +566,7 @@ return {
     opts = {
       override = {
         default_icon = {
-          icon = require("base.utils").get_icon("DefaultFile"),
-          name = "default",
+          icon = require("base.utils").get_icon("DefaultFile")
         },
       },
     },
