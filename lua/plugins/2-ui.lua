@@ -303,7 +303,7 @@ return {
       -- return different items depending of the value of `vim.g.fallback_icons_enabled`
       local function get_icons()
         if vim.g.fallback_icons_enabled then
-          return require("base.icons.fallback_icons_enabled")
+          return require("base.icons.fallback_icons")
         else
           return require("base.icons.icons")
         end
@@ -570,9 +570,6 @@ return {
         },
       },
     },
-    config = function(_, opts)
-      require("nvim-web-devicons").setup(opts)
-    end
   },
 
   --  LSP icons [icons]

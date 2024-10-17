@@ -346,7 +346,7 @@ return {
             folder_empty_open = get_icon("FolderEmpty"),
             default = get_icon("DefaultFile"),
           },
-          modified = { symbol = get_icon "FileModified" },
+          modified = { symbol = get_icon("FileModified") },
           git_status = {
             symbols = {
               added = get_icon("GitAdd"),
@@ -713,6 +713,5 @@ return {
         channel = "stable" -- stable/nightly
     }
   },
-
 
 } -- end of return
