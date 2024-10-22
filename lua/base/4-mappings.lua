@@ -296,6 +296,12 @@ maps.n["<leader>C"] = { -- Close buffer keeping the window.
   function() require("heirline-components.buffer").close() end,
   desc = "Close buffer",
 }
+maps.n["<leader>bw"] = {     -- Closes the window
+  function()
+    vim.cmd("silent! close") -- Be aware you can't close the last window
+  end,
+  desc = "Close window",
+}
 -- Close buffer keeping the window → Without confirmation.
 -- maps.n["<leader>X"] = {
 --   function() require("heirline-components.buffer").close(0, true) end,
