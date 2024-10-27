@@ -162,6 +162,7 @@ return {
         -- "Struct",
       },
       open_automatic = false, -- Open if the buffer is compatible
+      nerd_font = (vim.g.fallback_icons_enabled and false) or true,
       autojump = true,
       link_folds_to_tree = false,
       link_tree_to_folds = false,
@@ -218,6 +219,9 @@ return {
     event = "User BaseFile",
     opts = {
       notify = { enabled = false },
+      tree = {
+          icon_set = "default" -- "nerd", "codicons", "default", "simple"
+      },
       panel = {
           orientation = "bottom",
           panel_size = 10,

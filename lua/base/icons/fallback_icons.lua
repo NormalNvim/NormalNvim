@@ -109,7 +109,7 @@ return {
   GreeterYazi = "  ",
   GreeterSessions = "  ",
   GreeterProjects = "  ",
-  GreeterPlug = ">",
+  GreeterPlug = "|",
 
   -- Mason
   MasonInstalled = "[I]",
