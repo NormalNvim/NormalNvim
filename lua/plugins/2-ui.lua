@@ -195,6 +195,7 @@ return {
         desc = "Add Alpha dashboard footer",
         once = true,
         callback = function()
+          local  footer_icon = require("base.utils").get_icon("GreeterPlug")
           local stats = require("lazy").stats()
           stats.real_cputime = not is_windows
           local ms = math.floor(stats.startuptime * 100 + 0.5) / 100
@@ -202,11 +203,11 @@ return {
             " ",
             " ",
             " ",
-            "Loaded " .. stats.loaded .. " plugins  in " .. ms .. "ms",
+            "Loaded " .. stats.loaded .. " plugins " .. footer_icon .. " in " .. ms .. "ms",
             ".............................",
           }
           opts.section.footer.opts.hl = "DashboardFooter"
-          vim.cmd "highlight DashboardFooter guifg=#D29B68"
+          vim.cmd("highlight DashboardFooter guifg=#D29B68")
           pcall(vim.cmd.AlphaRedraw)
         end,
       })
