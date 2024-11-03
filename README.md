@@ -125,16 +125,6 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 
 ## Roadmap
 
-### Todos before v4.0 (2024)
-* ~~Docusaurus proof of concept.~~ → ~~Screenshoots of all plugins will be added in the next 48h!~~
-* ~~Before upgrading to lspconfig 0.2, migrate from `tsserver` to `ts_ls` (as the former has been renamed in lspconfig). → [see mason-registry issue](https://github.com/mason-org/mason-registry/issues/7132)~~
-* ~~Better QA for `distroupdate.nvim`~~
-* ~~Keep an eye on the ruff 0.6.3 issue (and remember to credit Dimscord). → https://github.com/astral-sh/ruff/issues/13238~~
-* ~~separate the hot reload system from distroupdate.nvim and make it a new plugin.~~
-* ~~mason-extra-cmds: refactor the plugin so it's more maintainable. → Last plugin to refactor!~~
-* ~~curate icon system~~
-* Prepare promo.
-
 ### Todos before v5.0 (2025)
 * Compiler.nvim: test windows support.
 * Compiler.nvim: add support for justfiles and taskfiles.
