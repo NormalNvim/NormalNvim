@@ -884,7 +884,7 @@ return {
   -- This plugin is necessary for using <C-]> (go to ctag).
   {
     "skywind3000/gutentags_plus",
-    ft = { "c", "cpp" },
+    ft = { "c", "cpp", "lisp" },
     dependencies = { "ludovicchabant/vim-gutentags" },
     config = function()
       -- NOTE: On vimplugins we use config instead of opts.
