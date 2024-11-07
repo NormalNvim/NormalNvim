@@ -47,7 +47,7 @@ return {
   { "ludovicchabant/vim-gutentags", commit = "aa47c5e29c37c52176c44e61c780032dfacef3dd" },
   { "max397574/better-escape.nvim", version = "^3" },
   { "mfussenegger/nvim-dap", version = "^1" },
-  { "mikavilpas/yazi.nvim", version = "^6" },
+  { "mikavilpas/yazi.nvim", version = "^8" },
   { "mrjones2014/smart-splits.nvim", version = "^1" },
   { "neovim/nvim-lspconfig", version = "^0.2" },
   { "nvim-cmp", commit = "ae644feb7b67bf1ce4260c231d1d4300b19c6f30" },
