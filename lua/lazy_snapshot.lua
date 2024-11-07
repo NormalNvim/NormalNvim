@@ -5,7 +5,7 @@ return {
   { "Issafalcon/neotest-dotnet", commit = "03509791912eaeac9f993f7cf49e170eca06a8bc" },
   { "JavaHello/spring-boot.nvim", commit = "218c0c26c14d99feca778e4d13f5ec3e8b1b60f0" },
   { "L3MON4D3/LuaSnip", version = "^3" },
-  { "MeanderingProgrammer/render-markdown.nvim", version = "7" },
+  { "MeanderingProgrammer/render-markdown.nvim", version = "9" },
   { "MunifTanjim/nui.nvim", version = "^0.4" },
   { "NMAC427/guess-indent.nvim", version = "^1" },
   { "Shatur/neovim-session-manager", version = "^1" },
