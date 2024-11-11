@@ -691,7 +691,14 @@ return {
       vim.api.nvim_create_autocmd("TextYankPost", {
         desc = "Highlight yanked text",
         pattern = "*",
-        callback = function() vim.hl.on_yank() end,
+        callback = function()
+          -- TODO: vim.hl is only available starting nvim 0.11
+          if vim.fn.has("nvim-0.10") == 1 then
+            vim.highlight.on_yank()
+          else
+            vim.hl.on_yank()
+          end
+        end,
       })
     end,
   },
