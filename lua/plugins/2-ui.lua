@@ -681,7 +681,6 @@ return {
     event = "User BaseDefered",
     opts = {
       duration = 150,
-      undo = { hlgroup = 'IncSearch' },
       redo = { hlgroup = 'IncSearch' },
     },
     config = function(_, opts)
