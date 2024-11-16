@@ -692,12 +692,7 @@ return {
         desc = "Highlight yanked text",
         pattern = "*",
         callback = function()
-          -- TODO: Delete condition after nvim 0.11 is released.
-          if vim.fn.has("nvim-0.11") == 1 then
-            vim.hl.on_yank()
-          else
-            vim.highlight.on_yank()
-          end
+          (vim.hl or vim.highlight).on_yank()
         end,
       })
     end,
