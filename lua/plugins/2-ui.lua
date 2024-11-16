@@ -677,7 +677,7 @@ return {
   --  This plugin only flases on redo.
   --  But we also have a autocmd to flash on yank.
   {
-    "tzachar/highlight-undo.nvim",
+    "zeioth/highlight-undo.nvim",
     event = "User BaseDefered",
     opts = {
       duration = 150,
