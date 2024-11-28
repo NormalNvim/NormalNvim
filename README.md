@@ -126,6 +126,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 ## Roadmap
 
 ### Todos before v5.0 (2025)
+* Let's start doing some manual testing for the installer to ensure it install correctly on all OS.
 * Compiler.nvim: test windows support.
 * Compiler.nvim: add support for justfiles and taskfiles.
 * Makeit.nvim: Add support for justfiles and taskfiles. 
