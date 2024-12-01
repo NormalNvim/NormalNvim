@@ -40,9 +40,10 @@ M.apply_default_lsp_settings = function()
     vim.fn.sign_define(sign.name, sign)
   end
 
-  -- Borders
-  -- Apply the option lsp_round_borders_enabled from ../1-options.lua
-  if vim.g.lsp_round_borders_enabled then
+  -- Apply default lsp hover borders
+  -- Applies the option lsp_round_borders_enabled from ../1-options.lua
+  M.lsp_hover_config = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
+  if vim.fn.has("nvim-0.11") == 0 then -- TODO: Delete when dropping 0.10 support
     vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "rounded", silent = true })
     vim.lsp.handlers["textDocument/signatureHelp"] =
         vim.lsp.with(vim.lsp.handlers.signature_help, { border = "rounded", silent = true })
