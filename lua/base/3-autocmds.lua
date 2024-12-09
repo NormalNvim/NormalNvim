@@ -35,8 +35,8 @@ autocmd({ "BufReadPost", "BufNewFile", "BufWritePost" }, {
   callback = function(args)
     local empty_buffer = vim.fn.resolve(vim.fn.expand "%") == ""
     local greeter = vim.api.nvim_get_option_value("filetype", { buf = args.buf }) == "alpha"
-    local git_repo = utils.run_cmd(
-    { "git", "-C", vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand "%"), ":p:h"), "rev-parse" }, false)
+    local git_repo = vim.fn.executable("git") == 1 and utils.run_cmd(
+      { "git", "-C", vim.fn.fnamemodify(vim.fn.resolve(vim.fn.expand "%"), ":p:h"), "rev-parse" }, false)
 
     -- For any file exept empty buffer, or the greeter (alpha)
     if not (empty_buffer or greeter) then
