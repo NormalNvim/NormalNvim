@@ -8,11 +8,10 @@ local M = {}
 function M.check()
   -- Get normalnvim_version from the plugin distroupdate, if present.
   local success, git_utils = pcall(require, "distroupdate.utils.git")
+  success = success and vim.fn.executable("git") == 1
+  local normalnvim_version = success and git_utils.current_version(false) or "unknown"
   local distroupdate_config = vim.g.distroupdate_config or {}
-  local normalnvim_version = "unknown"
-  success = (success and vim.fn.executable("git") == 1)
 
-  if success then normalnvim_version = git_utils.current_version(false) end
   if distroupdate_config.branch == "nightly" then
     normalnvim_version = ("nightly (%s)"):format(normalnvim_version)
   end
