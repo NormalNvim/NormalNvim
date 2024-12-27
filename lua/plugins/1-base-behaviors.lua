@@ -30,6 +30,13 @@ local is_android = vim.fn.isdirectory("/data") == 1 -- true if on android
 
 return {
 
+    -- TODO and FIXME colouring
+    -- https://github.com/folke/todo-comments.nvim
+    {
+        "folke/todo-comments.nvim",
+        event = "VimEnter",
+        dependencies = { "nvim-lua/plenary.nvim" },
+        opts = { signs = false },
     },
 
     -- [yazi] file browser
