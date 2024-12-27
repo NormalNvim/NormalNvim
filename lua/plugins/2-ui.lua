@@ -51,6 +51,36 @@ return {
     },
   },
 
+  {
+    "maxmx03/solarized.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
+    config = function(_, opts)
+      vim.o.termguicolors = true
+      -- vim.o.background = "light"
+      require("solarized").setup(opts)
+      vim.cmd.colorscheme("solarized")
+    end,
+  },
+
+  { "NLKNguyen/papercolor-theme" },
+
+  -- { "blazkowolf/gruber-darker.nvim" },
+  { "Lucas-Bruschi/gruber-darker-darker.nvim" },
+  -- {
+  --     "thimc/gruber-darker.nvim",
+  --     config = function()
+  --         require("gruber-darker").setup({
+  --             -- OPTIONAL
+  --             -- transparent = true, -- removes the background
+  --             -- underline = false, -- disables underline fonts
+  --             -- bold = false, -- disables bold fonts
+  --         })
+  --         vim.cmd.colorscheme("gruber-darker")
+  --     end,
+  -- },
+
   --  alpha-nvim [greeter]
   --  https://github.com/goolord/alpha-nvim
   {
