@@ -45,11 +45,11 @@ function M.run_cmd(cmd, show_error)
 
   -- If the command failed and show_error is true or not provided, print error.
   if not success and (show_error == nil or show_error) then
-    vim.api.nvim_err_writeln(
+    vim.api.nvim_echo({{
       ("Error running command %s\nError message:\n%s"):format(
         table.concat(cmd, " "), -- Convert the cmd back to string.
         result                  -- Show the error result
-      )
+      )}}, true, { err = true }
     )
   end
 
