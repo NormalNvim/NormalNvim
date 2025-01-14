@@ -409,7 +409,7 @@ maps.n["<leader>b|"] = {
   desc = "Vertical split buffer from tabline",
 }
 
--- quick movement aliases
+-- quick buffer switching aliases
 maps.n["<C-k>"] = {
   function()
     require("heirline-components.buffer").nav(vim.v.count > 0 and vim.v.count or 1)
@@ -421,14 +421,6 @@ maps.n["<C-j>"] = {
     require("heirline-components.buffer").nav(-(vim.v.count > 0 and vim.v.count or 1))
   end,
   desc = "Previous buffer",
-}
-maps.n["<S-Down>"] = {
-  function() vim.api.nvim_feedkeys("5j", "n", true) end,
-  desc = "Fast move down",
-}
-maps.n["<S-Up>"] = {
-  function() vim.api.nvim_feedkeys("5k", "n", true) end,
-  desc = "Fast move up",
 }
 
 -- tabs
