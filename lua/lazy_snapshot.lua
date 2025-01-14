@@ -57,7 +57,7 @@ return {
   { "nvim-java/nvim-java-dap", commit = "55f239532f7a3789d21ea68d1e795abc77484974" },
   { "nvim-java/nvim-java-refactor", commit = "ea1420fed5463c9cc976c2b4175f434b3646f0f7" },
   { "nvim-java/nvim-java-test", commit = "7f0f40e9c5b7eab5096d8bec6ac04251c6e81468" },
-  { "nvim-lua/plenary.nvim", version = "^0.1" },
+  { "nvim-lua/plenary.nvim", commit = "3707cdb1e43f5cea73afb6037e6494e7ce847a66" },
   { "nvim-neo-tree/neo-tree.nvim", version = "^3" },
   { "nvim-neotest/neotest", version = "^6" },
   { "nvim-neotest/neotest-jest", commit = "514fd4eae7da15fd409133086bb8e029b65ac43f" },
