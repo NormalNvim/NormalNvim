@@ -127,7 +127,8 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 
 ### Todos before v5.0 (2025)
 * Let's start doing some manual testing for the installer to ensure it install correctly on all OS.
-* Let's keep an eye on the plugins that display deprecation warnings on nvim 0.11 [here](https://github.com/nvim-neo-tree/neo-tree.nvim/issues/1588) and [here](https://github.com/ray-x/lsp_signature.nvim/issues/346). Full list of deprecations [here](https://neovim.io/doc/user/deprecated.html#deprecated).
+* Let's consider [tiny-glimmer](https://github.com/rachartier/tiny-glimmer.nvim) over highlight-undo, so we don't have to maintain the plugin ourselves.
+* ~~Let's keep an eye on the plugins that display deprecation warnings on nvim 0.11 [here](https://github.com/nvim-neo-tree/neo-tree.nvim/issues/1588) and [here](https://github.com/ray-x/lsp_signature.nvim/issues/346)~~. Full list of deprecations [here](https://neovim.io/doc/user/deprecated.html#deprecated).
 * It would be a neat UX improvement to integrate [snacks.nvim UI toggles](https://github.com/folke/snacks.nvim/blob/main/docs/toggle.md). But let's ensure code remain decoupled.
 * Compiler.nvim: test windows support.
 * Compiler.nvim: add support for justfiles and taskfiles.

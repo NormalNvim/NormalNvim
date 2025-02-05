@@ -29,8 +29,9 @@ local function git_clone_lazy(lazy_dir)
     lazy_dir,
   })
   if vim.api.nvim_get_vvar("shell_error") ~= 0 then
-    vim.api.nvim_err_writeln(
-      "Error cloning lazy.nvim repository...\n\n" .. output
+    vim.api.nvim_echo(
+      {{"Error cloning lazy.nvim repository...\n\n" .. output}},
+      true, {err = true}
     )
   end
 end
