@@ -673,8 +673,8 @@ return {
   },
 
   --  highlight-undo
-  --  https://github.com/tzachar/highlight-undo.nvim
-  --  This plugin only flases on redo.
+  --  https://github.com/zeioth/highlight-undo.nvim
+  --  This plugin only flases on undo/redo.
   --  But we also have a autocmd to flash on yank.
   {
     "zeioth/highlight-undo.nvim",
