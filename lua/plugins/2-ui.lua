@@ -681,7 +681,8 @@ return {
     event = "User BaseDefered",
     opts = {
       duration = 150,
-      redo = { hlgroup = 'IncSearch' },
+      undo = { hlgroup = 'IncSearch' },
+      redo = { hlgroup = 'IncSearch' }
     },
     config = function(_, opts)
       require("highlight-undo").setup(opts)
