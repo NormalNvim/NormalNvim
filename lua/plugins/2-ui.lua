@@ -673,16 +673,15 @@ return {
   },
 
   --  highlight-undo
-  --  https://github.com/zeioth/highlight-undo.nvim
+  --  https://github.com/tzachar/highlight-undo.nvim
   --  This plugin only flases on undo/redo.
   --  But we also have a autocmd to flash on yank.
   {
-    "zeioth/highlight-undo.nvim",
+    "tzachar/highlight-undo.nvim",
     event = "User BaseDefered",
     opts = {
       duration = 150,
-      undo = { hlgroup = 'IncSearch' },
-      redo = { hlgroup = 'IncSearch' }
+      hlgroup = "IncSearch",
     },
     config = function(_, opts)
       require("highlight-undo").setup(opts)
