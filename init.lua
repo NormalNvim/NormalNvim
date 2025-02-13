@@ -27,8 +27,7 @@ local function load_sources_async(source_files)
   end
 end
 
-local function load_colorscheme_async(colorscheme)
-  vim.defer_fn(function()
+local function load_colorscheme(colorscheme)
     if vim.g.default_colorscheme then
       if not pcall(vim.cmd.colorscheme, colorscheme) then
         require("base.utils").notify(
@@ -37,7 +36,6 @@ local function load_colorscheme_async(colorscheme)
         )
       end
     end
-  end, 0)
 end
 
 -- Call the functions defined above.
@@ -46,5 +44,5 @@ load_sources({
   "base.2-lazy",
   "base.3-autocmds", -- critical stuff, don't change the execution order.
 })
-load_colorscheme_async(vim.g.default_colorscheme)
+load_colorscheme(vim.g.default_colorscheme)
 load_sources_async({ "base.4-mappings" })
