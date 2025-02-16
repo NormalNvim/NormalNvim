@@ -92,7 +92,7 @@ return {
   { "stevearc/stickybuf.nvim", commit = "61ec81b9de2a76bfcfaa579f16bf88395b58b814" },
   { "tpope/vim-fugitive", commit = "d74a7cff4cfcf84f83cc7eccfa365488f3bbabc2" },
   { "tpope/vim-rhubarb", commit = "386daa2e9d98e23e27ad089afcbe5c5a903e488d" },
-  { "tzachar/highlight-undo.nvim", commit = "4f6215b0a2b2e88d55a6eb658796ee7a546e73f7" },
+  { "tzachar/highlight-undo.nvim", commit = "a5e2e2d43f6d131bf526619baeeeec32397b0789" },
   { "williamboman/mason-lspconfig.nvim", version = "^1" },
   { "williamboman/mason.nvim", version = "^1" },
   { "windwp/nvim-autopairs", commit = "3d02855468f94bf435db41b661b58ec4f48a06b7" },
