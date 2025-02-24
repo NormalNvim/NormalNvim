@@ -26,6 +26,12 @@ local is_android = vim.fn.isdirectory("/data") == 1 -- true if on android
 
 return {
 
+  -- vim-lumen: change colorscheme background based on theme device.
+  -- https://github.com/vimpostor/vim-lumen
+  {
+    "vimpostor/vim-lumen",
+  },
+
   --  tokyonight [theme]
   --  https://github.com/folke/tokyonight.nvim
   {
@@ -51,6 +57,8 @@ return {
     },
   },
 
+  -- solarized [theme]
+  -- https://github.com/maxmx03/solarized.nvim
   {
     "maxmx03/solarized.nvim",
     lazy = false,
@@ -430,7 +438,7 @@ return {
         },
         statuscolumn = { -- UI left column
           init = function(self) self.bufnr = vim.api.nvim_get_current_buf() end,
-          lib.component.foldcolumn(),
+          -- lib.component.foldcolumn(),
           lib.component.numbercolumn(),
           lib.component.signcolumn(),
         } or nil,

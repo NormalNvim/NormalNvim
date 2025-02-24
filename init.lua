@@ -21,9 +21,7 @@ end
 
 local function load_sources_async(source_files)
   for _, source in ipairs(source_files) do
-    vim.defer_fn(function()
-      load_source(source)
-    end, 50)
+    vim.defer_fn(function() load_source(source) end, 50)
   end
 end
 
