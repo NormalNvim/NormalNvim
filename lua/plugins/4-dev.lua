@@ -287,13 +287,24 @@ return {
   --  Note: If you change the build command, wipe ~/.local/data/nvim/lazy
   {
     "iamcco/markdown-preview.nvim",
-    build = function() vim.fn["mkdp#util#install"]() end,
-    ft = { "markdown" },
-    cmd = {
-      "MarkdownPreview",
-      "MarkdownPreviewStop",
-      "MarkdownPreviewToggle",
-    },
+    build = function(plugin)
+      -- guard clauses
+      local yarn = (vim.fn.executable("yarn") and "yarn")
+                   or (vim.fn.executable("npx") and "npx -y yarn")
+                   or nil
+      if not yarn then error("Missing `yarn` or `npx` in the PATH") end
+
+      -- run cmd
+      local cd_cmd = "!cd " .. plugin.dir .. " && cd app"
+      local yarn_install_cmd = "COREPACK_ENABLE_AUTO_PIN=0 " .. yarn .. " install --frozen-lockfile"
+      vim.cmd(cd_cmd .. " && " .. yarn_install_cmd)
+    end,
+    init = function()
+      local plugin = require("lazy.core.config").spec.plugins["markdown-preview.nvim"]
+      vim.g.mkdp_filetypes = require("lazy.core.plugin").values(plugin, "ft", true)
+    end,
+    ft = { "markdown", "markdown.mdx" },
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
   },
 
   --  [markdown markmap]
