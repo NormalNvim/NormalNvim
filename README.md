@@ -44,9 +44,16 @@ git clone https://github.com/NormalNvim/NormalNvim.git ~/.config/nvim
 ```
 
 ### Clone manually (Windows)
+#### Command Prompt
 ```sh
 # Strongly recommended: Fork the repo and clone YOUR fork.
 git clone https://github.com/NormalNvim/NormalNvim.git %USERPROFILE%\AppData\Local\nvim && nvim
+```
+
+#### Powershell
+```sh
+# Strongly recommended: Fork the repo and clone YOUR fork.
+git clone https://github.com/NormalNvim/NormalNvim.git $env:LOCALAPPDATA\nvim && nvim
 ```
 
 ### Optional dependencies
