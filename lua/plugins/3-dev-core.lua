@@ -132,16 +132,6 @@ return {
     end,
   },
 
-  -- ts-comments.nvim [treesitter comments]
-  -- https://github.com/folke/ts-comments.nvim
-  -- This plugin can be safely removed after nvim 0.11 is released.
-  {
-   "folke/ts-comments.nvim",
-    event = "User BaseFile",
-    enabled = vim.fn.has("nvim-0.10.0") == 1,
-    opts = {},
-  },
-
   --  render-markdown.nvim [normal mode markdown]
   --  https://github.com/MeanderingProgrammer/render-markdown.nvim
   --  While on normal mode, markdown files will display highlights.
