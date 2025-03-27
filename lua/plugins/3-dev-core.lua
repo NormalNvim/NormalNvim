@@ -4,7 +4,6 @@
 --    Sections:
 --       ## TREE SITTER
 --       -> nvim-treesitter                [syntax highlight]
---       -> ts-comments.nvim               [treesitter comments]
 --       -> render-markdown.nvim           [normal mode markdown]
 --       -> nvim-highlight-colors          [hex colors]
 
@@ -31,7 +30,7 @@ local utils_lsp = require("base.utils.lsp")
 
 return {
   --  TREE SITTER ---------------------------------------------------------
-  --  [syntax highlight] + [treesitter understand html tags] + [comments]
+  --  [syntax highlight]
   --  https://github.com/nvim-treesitter/nvim-treesitter
   --  https://github.com/windwp/nvim-treesitter-textobjects
   {
@@ -130,16 +129,6 @@ return {
       -- calling setup() here is necessary to enable conceal and some features.
       require("nvim-treesitter.configs").setup(opts)
     end,
-  },
-
-  -- ts-comments.nvim [treesitter comments]
-  -- https://github.com/folke/ts-comments.nvim
-  -- This plugin can be safely removed after nvim 0.11 is released.
-  {
-   "folke/ts-comments.nvim",
-    event = "User BaseFile",
-    enabled = vim.fn.has("nvim-0.10.0") == 1,
-    opts = {},
   },
 
   --  render-markdown.nvim [normal mode markdown]
