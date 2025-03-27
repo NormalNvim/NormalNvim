@@ -4,7 +4,6 @@
 --    Sections:
 --       ## TREE SITTER
 --       -> nvim-treesitter                [syntax highlight]
---       -> ts-comments.nvim               [treesitter comments]
 --       -> render-markdown.nvim           [normal mode markdown]
 --       -> nvim-highlight-colors          [hex colors]
 
@@ -31,7 +30,7 @@ local utils_lsp = require("base.utils.lsp")
 
 return {
   --  TREE SITTER ---------------------------------------------------------
-  --  [syntax highlight] + [treesitter understand html tags] + [comments]
+  --  [syntax highlight]
   --  https://github.com/nvim-treesitter/nvim-treesitter
   --  https://github.com/windwp/nvim-treesitter-textobjects
   {
