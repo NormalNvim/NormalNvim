@@ -94,7 +94,6 @@ function M.add_autocmds_to_buffer(augroup, bufnr, autocmds)
 end
 
 --- Deletes autocmds associated with a specific buffer and autocmd group.
----
 --- @param augroup string The name of the autocmd group from which the autocmds should be removed.
 --- @param bufnr number The buffer number from which the autocmds should be removed.
 function M.del_autocmds_from_buffer(augroup, bufnr)
@@ -205,7 +204,7 @@ function M.get_plugin_opts(plugin)
 end
 
 --- Set a table of mappings.
---- This wrapper prevents a  boilerplate code, and takes care of `whichkey.nvim`.
+--- This wrapper prevents boilerplate code, and takes care of `whichkey.nvim`.
 --- @param map_table table A nested table where the first key is the vim mode,
 ---                        the second key is the key to map, and the value is
 ---                        the function to set the mapping to.
