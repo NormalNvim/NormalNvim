@@ -441,7 +441,7 @@ return {
         { path = "nvim-dap-ui", mods = { "dapui" } },
         { path = "cmp-dap", mods = { "cmp_dap" } },
         { path = "mason-nvim-dap.nvim", mods = { "mason-nvim-dap" } },
-        { path = "mason.nvim", mods = { "mason", "mason-core", "mason-registry", "mason-test", "mason-vendor" } },
+
         { path = "one-small-step-for-vimkind", mods = { "osv" } },
         { path = "neotest-dart", mods = { "neotest-dart" } },
         { path = "neotest-dotnet", mods = { "neotest-dotnet" } },
