@@ -558,7 +558,7 @@ return {
     end
   },
 
-  --  UI icons [icons]
+  --  UI icons [icons - ui]
   --  https://github.com/nvim-tree/nvim-web-devicons
   {
     "nvim-tree/nvim-web-devicons",
@@ -573,7 +573,7 @@ return {
     },
   },
 
-  --  LSP icons [icons]
+  --  LSP icons [icons | lsp]
   --  https://github.com/onsails/lspkind.nvim
   {
     "onsails/lspkind.nvim",
@@ -585,6 +585,7 @@ return {
         Boolean = "⊨",
         Class = "󰌗",
         Constructor = "",
+        Copilot = "",
         Key = "󰌆",
         Namespace = "󰅪",
         Null = "NULL",
