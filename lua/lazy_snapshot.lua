@@ -11,6 +11,7 @@ return {
   { "Shatur/neovim-session-manager", version = "^1" },
   { "akinsho/toggleterm.nvim", version = "^3" },
   { "andymass/vim-matchup", commit = "c478d4a72bbf397eff42743198f1939f6a264736" },
+  { "andythigpen/nvim-coverage", commit = "cdc2a51f681d0f392b5face7385ebca2df6452c1" },
   { "b0o/SchemaStore.nvim", commit = "45fd6c22f30487586c771072dc8c5230931e4c7b" },
   { "benfowler/telescope-luasnip.nvim", version = "^1" },
   { "brenoprata10/nvim-highlight-colors", version = "^1" },
@@ -107,6 +108,5 @@ return {
   { "zeioth/mason-extra-cmds", version = "^2" },
   { "zeioth/none-ls-autoload.nvim", version = "^1" },
   { "zeioth/none-ls-external-sources.nvim", version = "^1" },
-  { "zeioth/nvim-coverage", commit = "cdc2a51f681d0f392b5face7385ebca2df6452c1" },
   { "zeioth/project.nvim", commit = "9cc719f455295e7a2fc7340d4fd87327f3fe15ca" },
 }
