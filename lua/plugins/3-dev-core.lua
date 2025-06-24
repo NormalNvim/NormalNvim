@@ -477,12 +477,12 @@ return {
   {
     "hrsh7th/nvim-cmp",
     dependencies = {
-      "saadparwaiz1/cmp_luasnip",
-      "hrsh7th/cmp-buffer",
-      "hrsh7th/cmp-path",
-      "hrsh7th/cmp-nvim-lsp",
-      "zbirenbaum/copilot-cmp",
-      "onsails/lspkind.nvim"
+      { "hrsh7th/cmp-nvim-lsp" },
+      { "saadparwaiz1/cmp_luasnip"},
+      { "zbirenbaum/copilot-cmp", opts = {} } ,
+      { "hrsh7th/cmp-buffer"} ,
+      { "hrsh7th/cmp-path" },
+      { "onsails/lspkind.nvim" },
     },
     event = "InsertEnter",
     opts = function()
