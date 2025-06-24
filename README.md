@@ -5,8 +5,8 @@
   <h1><a href="https://github.com/NormalNvim/NormalNvim">NormalNvim</a></h1>
   <h3>*✨ ~ ⭐ - A normal Neovim distribution - ⭐ ~ ✨*</h3>
   <a href="https://discord.gg/ymcMaSnq7d" rel="nofollow">
-      <img src="https://img.shields.io/discord/1121138836525813760?color=azure&labelColor=6DC2A4&logo=discord&logoColor=black&label=Join the discord server&style=for-the-badge" data-canonical-src="https://img.shields.io/discord/1121138836525813760">
-    </a>
+    <img src="https://img.shields.io/discord/1121138836525813760?color=azure&labelColor=6DC2A4&logo=discord&logoColor=black&label=Join%20the%20discord%20server&style=for-the-badge" alt="Discord">
+  </a>
 </div>
 
 ---
