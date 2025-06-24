@@ -350,12 +350,6 @@ return {
     event = "User BaseFile",
     opts = {},
   },
-  -- copilot-cmp
-  -- https://github.com/zbirenbaum/copilot-cmp
-  {
-    "zbirenbaum/copilot-cmp",
-     opts = {}
-  },
 
   -- [guess-indent]
   -- https://github.com/NMAC427/guess-indent.nvim
