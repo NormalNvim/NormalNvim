@@ -239,7 +239,7 @@ return {
     event = "User BaseDefered",
     opts = function()
       local fps
-      if is_android then fps = 30 else fps = 160 end
+      if is_android then fps = 30 else fps = 244 end
 
       return {
         timeout = 2500,
