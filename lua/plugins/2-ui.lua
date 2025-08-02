@@ -4,6 +4,8 @@
 --    Sections:
 --       -> tokyonight                  [theme]
 --       -> astrotheme                  [theme]
+--       -> morta                       [theme]
+--       -> eldritch                    [theme]
 --       -> alpha-nvim                  [greeter]
 --       -> nvim-notify                 [notifications]
 --       -> mini.indentscope            [guides]
@@ -50,6 +52,22 @@ return {
       plugins = { ["dashboard-nvim"] = true },
     },
   },
+
+  --  morta [theme]
+  --  https://github.com/ssstba/morta.nvim
+   {
+     "philosofonusus/morta.nvim",
+     event = "User LoadColorSchemes",
+     opts = {}
+   },
+
+  --  eldritch [theme]
+  --  https://github.com/eldritch-theme/eldritch.nvim
+   {
+     "eldritch-theme/eldritch.nvim",
+     event = "User LoadColorSchemes",
+     opts = {}
+   },
 
   --  alpha-nvim [greeter]
   --  https://github.com/goolord/alpha-nvim
