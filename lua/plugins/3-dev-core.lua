@@ -171,9 +171,7 @@ return {
 
   -- nvim-java [java support]
   -- https://github.com/nvim-java/nvim-java
-  -- Reliable jdtls support. Must go before mason-lspconfig and lsp-config.
-  -- NOTE: Let's use our fork until they merge pull request
-  --       https://github.com/nvim-java/nvim-java/pull/376
+  -- Reliable jdtls support. Must go before lsp-config and mason-lspconfig.
   {
     "nvim-java/nvim-java",
     ft = { "java" },
