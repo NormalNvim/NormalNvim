@@ -172,36 +172,47 @@ return {
   -- nvim-java [java support]
   -- https://github.com/nvim-java/nvim-java
   -- Reliable jdtls support. Must go before mason-lspconfig and lsp-config.
-  -- NOTE: Temporarely disabled until its main dev becomes active again.
-  --       It currently fails with Mason v2.
-  -- {
-  --   "zeioth/nvim-java",
-  --   ft = { "java" },
-  --   dependencies = {
-  --     "MunifTanjim/nui.nvim",
-  --     "neovim/nvim-lspconfig",
-  --     "mfussenegger/nvim-dap",
-  --     "mason-org/mason.nvim",
-  --   },
-  --   opts = {
-  --     notifications = {
-  --       dap = false,
-  --     },
-  --     -- NOTE: One of these files must be in your project root directory.
-  --     --       Otherwise the debugger will end in the wrong directory and fail.
-  --     root_markers = {
-  --       'settings.gradle',
-  --       'settings.gradle.kts',
-  --       'pom.xml',
-  --       'build.gradle',
-  --       'mvnw',
-  --       'gradlew',
-  --       'build.gradle',
-  --       'build.gradle.kts',
-  --       '.git',
-  --     },
-  --   },
-  -- },
+  -- NOTE: Let's use our fork until they merge pull request
+  --       https://github.com/nvim-java/nvim-java/pull/376
+  {
+    "nvim-java/nvim-java",
+    ft = { "java" },
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "neovim/nvim-lspconfig",
+      "mfussenegger/nvim-dap",
+      "mason-org/mason.nvim",
+    },
+    opts = {
+      notifications = {
+        dap = false,
+      },
+      -- NOTE: One of these files must be in your project root directory.
+      --       Otherwise the debugger will end in the wrong directory and fail.
+      root_markers = {
+        'settings.gradle',
+        'settings.gradle.kts',
+        'pom.xml',
+        'build.gradle',
+        'mvnw',
+        'gradlew',
+        'build.gradle',
+        'build.gradle.kts',
+        '.git',
+      },
+    },
+    config = function(_, opts)
+      require("java").setup(opts)               -- Setup.
+      vim.api.nvim_create_autocmd("FileType", { -- Enable for java files.
+        desc = "Load this plugin for java files.",
+        callback = function()
+          local lspconf = utils.get_plugin_opts("nvim-lspconfig")
+          local is_java = vim.bo.filetype == "java"
+          if lspconf and is_java then require("lspconfig").jdtls.setup({}) end
+        end,
+      })
+    end
+  },
 
   --  nvim-lspconfig [lsp configs]
   --  https://github.com/neovim/nvim-lspconfig
@@ -209,7 +220,7 @@ return {
   {
     "neovim/nvim-lspconfig",
     event = "User BaseFile",
-    -- dependencies = "zeioth/nvim-java",
+    dependencies = "nvim-java/nvim-java",
   },
 
   -- mason-lspconfig [auto start lsp]
@@ -248,7 +259,7 @@ return {
     },
     opts = {
       registries = {
-        -- "github:nvim-java/mason-registry",
+        "github:nvim-java/mason-registry",
         "github:mason-org/mason-registry",
       },
       ui = {
@@ -404,7 +415,7 @@ return {
         { path = "nvim-treesitter-textobjects", mods = { "nvim-treesitter", "nvim-treesitter-textobjects" } },
         { path = "markdown.nvim", mods = { "render-markdown" } },
         { path = "nvim-highlight-colors", mods = { "nvim-highlight-colors" } },
-        -- { path = "nvim-java", mods = { "java" } },
+        { path = "nvim-java", mods = { "java" } },
         { path = "nvim-lspconfig", mods = { "lspconfig" } },
         { path = "mason-lspconfig.nvim", mods = { "mason-lspconfig" } },
         { path = "mason.nvim", mods = { "mason", "mason-core", "mason-registry", "mason-vendor" } },
@@ -629,4 +640,3 @@ return {
   },
 
 }
-
