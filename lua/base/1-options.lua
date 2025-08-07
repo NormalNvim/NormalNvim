@@ -4,7 +4,7 @@
 -- ----------------------------------------
 
 -- Theme
-vim.g.default_colorscheme = "eldritch"
+vim.g.default_colorscheme = "tokyonight-night"
 
 -- Options --------------------------------------------------------------------
 vim.opt.breakindent = true -- Wrap indent to match  line start.
