@@ -126,7 +126,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 ## Roadmap
 
 ### High prio
-* On Rust, out of the box, the items under `<lead> l` don't display unless rustfmt is installed. → Which is marked as deprecated.
+* On Rust, out of the box, the items under `<lead> l` don't display unless rustfmt is installed. → Which is marked as deprecated. → Update: Probably due to the fact mason-lspconfig [has removed the concept of handlers](https://github.com/mason-org/mason-lspconfig.nvim/blob/7f0bf635082bb9b7d2b37766054526a6ccafdb85/CHANGELOG.md?plain=1#L46) [we rely on](https://github.com/NormalNvim/NormalNvim/blob/f55dbc161fbdff16fb3146a170b3e8b6aa288192/lua/plugins/3-dev-core.lua#L233) to inject [our lspconfig](https://github.com/NormalNvim/NormalNvim/blob/main/lua/base/utils/lsp.lua). → Migrating...
 
 ### Todos before v5.0 (2025)
 * It would be a neat UX improvement to integrate [snacks.nvim UI toggles](https://github.com/folke/snacks.nvim/blob/main/docs/toggle.md). But let's ensure code remain decoupled.
@@ -137,10 +137,10 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 * Makeit.nvim: Allow all possible conventions for `Makefile`, such as `makefile`, `Makefile.linux`, etc.
 * Compiler.nvim: Allow all possible conventions for `Makefile`, such as `makefile`, `Makefile.linux`, etc.
 * Compiler.nvim: test support for nim-lang.
-* Compiler.nvim: add support for new language `common LISP`.
-* Compiler.nvim: add support for new language `COBOL`.
 * Let's start doing some manual testing for the installer to ensure it install correctly on all OS.
 * Version v2 of the website should look considerably better.
+* ~~Compiler.nvim: add support for new language `common LISP`.~~ → Not planned.
+* ~~Compiler.nvim: add support for new language `COBOL`.~~  → Not planned.
 * ~~Let's consider [tiny-glimmer](https://github.com/rachartier/tiny-glimmer.nvim) over highlight-undo, so we don't have to maintain the plugin ourselves.~~ → Let's keep using highlighg-undo, as it's been fixed upstream.
 * ~~Let's keep an eye on the plugins that display deprecation warnings on nvim 0.11 [here](https://github.com/nvim-neo-tree/neo-tree.nvim/issues/1588) and [here](https://github.com/ray-x/lsp_signature.nvim/issues/346)~~. Full list of deprecations [here](https://neovim.io/doc/user/deprecated.html#deprecated).
 
