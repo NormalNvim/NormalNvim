@@ -128,6 +128,9 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 ### High prio
 * On Rust, out of the box, the items under `<lead> l` don't display unless rustfmt is installed. → Which is marked as deprecated. → Update: Probably due to the fact mason-lspconfig [has removed the concept of handlers](https://github.com/mason-org/mason-lspconfig.nvim/blob/7f0bf635082bb9b7d2b37766054526a6ccafdb85/CHANGELOG.md?plain=1#L46) [we rely on](https://github.com/NormalNvim/NormalNvim/blob/f55dbc161fbdff16fb3146a170b3e8b6aa288192/lua/plugins/3-dev-core.lua#L233) to inject [our lspconfig](https://github.com/NormalNvim/NormalNvim/blob/main/lua/base/utils/lsp.lua). → Migrating...
 
+### Cool ideas 
+* Given all modern GPUs for consumers are now AI capable, let's re-study the possibility of making easier for users running local AI models. Considering Cloud services will still be necessary for android devices.
+
 ### Todos before v5.0 (2025)
 * It would be a neat UX improvement to integrate [snacks.nvim UI toggles](https://github.com/folke/snacks.nvim/blob/main/docs/toggle.md). But let's ensure code remain decoupled.
 * Compiler.nvim: test windows support.
