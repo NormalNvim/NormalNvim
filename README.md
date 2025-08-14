@@ -125,6 +125,9 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 
 ## Roadmap
 
+### High prio
+* On Rust, out of the box, the items under `<lead> l` don't display unless rustfmt is installed. → Which is marked as deprecated.
+
 ### Todos before v5.0 (2025)
 * It would be a neat UX improvement to integrate [snacks.nvim UI toggles](https://github.com/folke/snacks.nvim/blob/main/docs/toggle.md). But let's ensure code remain decoupled.
 * Compiler.nvim: test windows support.
