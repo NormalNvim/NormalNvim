@@ -130,6 +130,8 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 
 ### Cool ideas 
 * Given all modern GPUs for consumers are now AI capable, let's re-study the possibility of making easier for users running local AI models. Considering Cloud services will still be necessary for android devices.
+* Let's ensure nvim 0.12 don't have any incompatibility, so it's easy to migrate when it's released next year.
+* Let's start preparing NormalNvim v5.0
 
 ### Todos before v5.0 (2025)
 * It would be a neat UX improvement to integrate [snacks.nvim UI toggles](https://github.com/folke/snacks.nvim/blob/main/docs/toggle.md). But let's ensure code remain decoupled.
