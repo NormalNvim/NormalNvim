@@ -4,21 +4,23 @@
 --  General utility functions to use within Nvim.
 
 --    Functions:
---      -> run_cmd                  → Run a shell command and return true/false.
---      -> add_autocmds_to_buffer   → Add autocmds to a bufnr.
---      -> del_autocmds_from_buffer → Delete autocmds from a bufnr.
---      -> get_icon                 → Return an icon from the icons directory.
---      -> get_mappings_template    → Return a empty mappings table.
---      -> is_available             → Return true if the plugin exist.
---      -> is_big_file              → Return true if the file is too big.
---      -> notify                   → Send a notification with a default title.
---      -> os_path                  → Converts a path to the current OS.
---      -> get_plugin_opts          → Return a plugin opts table.
---      -> set_mappings             → Set a list of mappings in a clean way.
---      -> set_url_effect           → Show an effect for urls.
---      -> open_with_program        → Open the file or URL under the cursor.
---      -> trigger_event            → Manually trigger an event.
---      -> which_key_register       → When setting a mapping, add it to whichkey.
+--      -> run_cmd                    → Run a shell command and return true/false.
+--      -> add_autocmds_to_buffer     → Add autocmds to a bufnr.
+--      -> apply_default_lsp_settings → Apply Default LSP settings.
+--      -> apply_user_lsp_mappings    → Apply user lsp mappings to a lsp client.
+--      -> del_autocmds_from_buffer   → Delete autocmds from a bufnr.
+--      -> get_icon                   → Return an icon from the icons directory.
+--      -> get_mappings_template      → Return a empty mappings table.
+--      -> is_available               → Return true if the plugin exist.
+--      -> is_big_file                → Return true if the file is too big.
+--      -> notify                     → Send a notification with a default title.
+--      -> os_path                    → Converts a path to the current OS.
+--      -> get_plugin_opts            → Return a plugin opts table.
+--      -> set_mappings               → Set a list of mappings in a clean way.
+--      -> set_url_effect             → Show an effect for urls.
+--      -> open_with_program          → Open the file or URL under the cursor.
+--      -> trigger_event              → Manually trigger an event.
+--      -> which_key_register         → When setting a mapping, add it to whichkey.
 
 
 local M = {}
@@ -91,6 +93,103 @@ function M.add_autocmds_to_buffer(augroup, bufnr, autocmds)
       vim.api.nvim_create_autocmd(events, autocmd)
     end
   end
+end
+
+--- Apply default settings for diagnostics, formatting, and lsp capabilities.
+--- It only need to be executed once, normally on mason-lspconfig.
+--- @return nil
+M.apply_default_lsp_settings = function()
+  -- Icons
+  -- Apply the icons defined in ../icons/icons.lua
+  local signs = {
+    { name = "DiagnosticSignError",    text = M.get_icon("DiagnosticError"),        texthl = "DiagnosticSignError" },
+    { name = "DiagnosticSignWarn",     text = M.get_icon("DiagnosticWarn"),         texthl = "DiagnosticSignWarn" },
+    { name = "DiagnosticSignHint",     text = M.get_icon("DiagnosticHint"),         texthl = "DiagnosticSignHint" },
+    { name = "DiagnosticSignInfo",     text = M.get_icon("DiagnosticInfo"),         texthl = "DiagnosticSignInfo" },
+    { name = "DapStopped",             text = M.get_icon("DapStopped"),             texthl = "DiagnosticWarn" },
+    { name = "DapBreakpoint",          text = M.get_icon("DapBreakpoint"),          texthl = "DiagnosticInfo" },
+    { name = "DapBreakpointRejected",  text = M.get_icon("DapBreakpointRejected"),  texthl = "DiagnosticError" },
+    { name = "DapBreakpointCondition", text = M.get_icon("DapBreakpointCondition"), texthl = "DiagnosticInfo" },
+    { name = "DapLogPoint",            text = M.get_icon("DapLogPoint"),            texthl = "DiagnosticInfo" }
+  }
+  for _, sign in ipairs(signs) do
+    vim.fn.sign_define(sign.name, sign)
+  end
+
+  -- Apply default lsp hover borders
+  -- Applies the option lsp_round_borders_enabled from ../1-options.lua
+  M.lsp_hover_config = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
+
+  -- Set default diagnostics
+  local default_diagnostics = {
+    virtual_text = true,
+    signs = {
+      text = {
+        [vim.diagnostic.severity.ERROR] = M.get_icon("DiagnosticError"),
+        [vim.diagnostic.severity.HINT] = M.get_icon("DiagnosticHint"),
+        [vim.diagnostic.severity.WARN] = M.get_icon("DiagnosticWarn"),
+        [vim.diagnostic.severity.INFO] = M.get_icon("DiagnosticInfo"),
+      },
+      active = signs,
+    },
+    update_in_insert = true,
+    underline = true,
+    severity_sort = true,
+    float = {
+      focused = false,
+      style = "minimal",
+      border = "rounded",
+      source = "always",
+      header = "",
+      prefix = "",
+    },
+  }
+
+  -- Apply default diagnostics
+  -- Applies the option diagnostics_mode from ../1-options.lua
+  M.diagnostics = {
+    -- diagnostics off
+    [0] = vim.tbl_deep_extend(
+      "force",
+      default_diagnostics,
+      { underline = false, virtual_text = false, signs = false, update_in_insert = false }
+    ),
+    -- status only
+    vim.tbl_deep_extend("force", default_diagnostics, { virtual_text = false, signs = false }),
+    -- virtual text off, signs on
+    vim.tbl_deep_extend("force", default_diagnostics, { virtual_text = false }),
+    -- all diagnostics on
+    default_diagnostics,
+  }
+  vim.diagnostic.config(M.diagnostics[vim.g.diagnostics_mode])
+
+  -- Apply formatting settings
+  M.formatting = { format_on_save = { enabled = true }, disabled = {} }
+  if type(M.formatting.format_on_save) == "boolean" then
+    M.formatting.format_on_save = { enabled = M.formatting.format_on_save }
+  end
+  M.format_opts = vim.deepcopy(M.formatting)
+  M.format_opts.disabled = nil
+  M.format_opts.format_on_save = nil
+  M.format_opts.filter = function(client)
+    local filter = M.formatting.filter
+    local disabled = M.formatting.disabled or {}
+    -- check if client is fully disabled or filtered by function
+    return not (vim.tbl_contains(disabled, client.name) or (type(filter) == "function" and not filter(client)))
+  end
+end
+
+--- Applies the user lsp mappings to the lsp client.
+--- This function must be called every time a lsp client is attached.
+--- (currently on the config of the plugins `lspconfig` and none-ls)
+--- @param client string The client where the lsp mappings will load.
+--- @param bufnr number The bufnr where the lsp mappings will load.
+function M.apply_user_lsp_mappings(client, bufnr)
+  local lsp_mappings = require("base.4-mappings").lsp_mappings(client, bufnr)
+  if not vim.tbl_isempty(lsp_mappings.v) then
+    lsp_mappings.v["<leader>l"] = { desc = M.get_icon("ActiveLSP", true) .. "LSP" }
+  end
+  M.set_mappings(lsp_mappings, { buffer = bufnr })
 end
 
 --- Deletes autocmds associated with a specific buffer and autocmd group.

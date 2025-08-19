@@ -26,7 +26,6 @@
 --       -> cmp-luasnip                    [auto completion snippets]
 
 local utils = require("base.utils")
-local utils_lsp = require("base.utils.lsp")
 
 return {
   --  TREE SITTER ---------------------------------------------------------
@@ -229,14 +228,22 @@ return {
     "mason-org/mason-lspconfig.nvim",
     dependencies = { "neovim/nvim-lspconfig" },
     event = "User BaseFile",
-    opts = function(_, opts)
-      if not opts.handlers then opts.handlers = {} end
-      opts.handlers[1] = function(server) utils_lsp.setup(server) end
-    end,
+    opts = {},
     config = function(_, opts)
       require("mason-lspconfig").setup(opts)
-      utils_lsp.apply_default_lsp_settings() -- Apply our default lsp settings.
-      utils.trigger_event("FileType")        -- This line starts this plugin.
+      utils.apply_default_lsp_settings() -- Apply our default lsp settings.
+
+      -- Apply lsp mappings to lsp clients.
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+        callback = function(args)
+          local client = vim.lsp.get_client_by_id(args.data.client_id)
+          local bufnr = args.buf
+          if client and client.name then
+            utils.apply_user_lsp_mappings(client.name, bufnr)
+          end
+        end,
+      })
     end,
   },
 
@@ -330,8 +337,8 @@ return {
         args = { "-i", "2", "-filename", "$FILENAME" },
       })
 
-      -- Attach the user lsp mappings to every none-ls client.
-      return { on_attach = utils_lsp.apply_user_lsp_mappings }
+      -- Apply lsp mappings to none-ls clients.
+      return { on_attach = utils.apply_user_lsp_mappings }
     end
   },
 
