@@ -1331,13 +1331,22 @@ end
 --A function we call from the script to start lsp.
 --@return table lsp_mappings
 function M.lsp_mappings(client, bufnr)
-  -- Helper function to check if any active LSP clients
-  -- given a filter provide a specific capability.
+  -- Helper function to check if a lsp client implements a certain method.
+  --
+  -- Wrapper for `client.supports_method()` to avoid code repetition.
   -- @param capability string The server capability to check for (example: "documentFormattingProvider").
-  -- @param filter vim.lsp.get_clients.filter|nil A valid get_clients filter (see function docs).
+  -- @param filter? vim.lsp.get_clients.filter|nil A valid get_clients filter (see function docs).
   -- @return boolean # `true` if any of the clients provide the capability.
-  local function has_capability(capability, filter)
+  local function supports_method(capability, filter)
+    -- default filter: current buffer.
+    if not filter then filter = { bufnr = bufnr } end
+
     for _, lsp_client in ipairs(vim.lsp.get_clients(filter)) do
+      -- If the client doesn't implement supports_method(), return true.
+      -- (Intentional: We don't want to block clients under development)
+      if not client.supports_method then return true end
+
+      -- if the client implement supports_method, respect its value.
       if lsp_client.supports_method(capability) then return true end
     end
     return false
@@ -1385,12 +1394,12 @@ function M.lsp_mappings(client, bufnr)
     events = { "InsertLeave" },
     desc = "Refresh codelens",
     callback = function(args)
-      if client.supports_method "textDocument/codeLens" then
+      if supports_method("textDocument/codeLens") then
         if vim.g.codelens_enabled then vim.lsp.codelens.refresh({ bufnr = args.buf }) end
       end
     end,
   })
-  if client.supports_method "textDocument/codeLens" then -- on LspAttach
+  if supports_method("textDocument/codeLens") then -- on LspAttach
     if vim.g.codelens_enabled then vim.lsp.codelens.refresh({ bufnr = 0 }) end
   end
 
@@ -1443,9 +1452,9 @@ if is_autoformat_enabled and is_filetype_allowed and is_filetype_ignored then
       events = "BufWritePre", -- Trigger before save
       desc = "Autoformat on save",
       callback = function()
-        -- guard clause: has_capability
+        -- guard clause: supports_method
         if
-            not has_capability("textDocument/formatting", { bufnr = bufnr })
+            not supports_method("textDocument/formatting", { bufnr = bufnr })
         then
           utils.del_autocmds_from_buffer("lsp_auto_format", bufnr)
           return
@@ -1483,7 +1492,7 @@ if is_autoformat_enabled and is_filetype_allowed and is_filetype_ignored then
       events = { "CursorHold", "CursorHoldI" },
       desc = "highlight references when cursor holds",
       callback = function()
-        if has_capability("textDocument/documentHighlight", { bufnr = bufnr }) then
+        if supports_method("textDocument/documentHighlight") then
           vim.lsp.buf.document_highlight()
         end
       end,
