@@ -118,7 +118,7 @@ M.apply_default_lsp_settings = function()
 
   -- Apply default lsp hover borders
   -- Applies the option lsp_round_borders_enabled from ../1-options.lua
-  M.lsp_hover_config = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
+  M.lsp_hover_opts = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
 
   -- Set default diagnostics
   local default_diagnostics = {
@@ -165,7 +165,7 @@ M.apply_default_lsp_settings = function()
 
   -- Apply formatting settings
   M.lsp_formatting = { format_on_save = { enabled = true }, disabled = {} }
-  if type(M.formatting.format_on_save) == "boolean" then
+  if type(M.lsp_formatting.format_on_save) == "boolean" then
     M.lsp_formatting.format_on_save = { enabled = M.lsp_formatting.format_on_save }
   end
   M.lsp_format_opts = vim.deepcopy(M.lsp_formatting)
