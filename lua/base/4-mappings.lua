@@ -1337,7 +1337,7 @@ function M.lsp_mappings(client, bufnr)
   -- @param capability string The server capability to check for (example: "documentFormattingProvider").
   -- @param filter? vim.lsp.get_clients.filter|nil A valid get_clients filter (see function docs).
   -- @return boolean # `true` if any of the clients provide the capability.
-  local function supports_method(capability, filter)
+  local function supports_method(method, filter)
     -- default filter: current buffer.
     if not filter then filter = { bufnr = bufnr } end
 
@@ -1347,13 +1347,12 @@ function M.lsp_mappings(client, bufnr)
       if not client.supports_method then return true end
 
       -- if the client implement supports_method, respect its value.
-      if lsp_client.supports_method(capability) then return true end
+      if lsp_client.supports_method(method) then return true end
     end
     return false
   end
 
   local lsp_mappings = require("base.utils").get_mappings_template()
-  local lsp_default_opts = require("base.utils").apply_default_lsp_settings()
 
   -- Diagnostics
   lsp_mappings.n["<leader>ld"] =
@@ -1417,8 +1416,8 @@ function M.lsp_mappings(client, bufnr)
   }
 
   -- Formatting (keymapping)
-  local formatting = lsp_default_opts.formatting
-  local format_opts = lsp_default_opts.format_opts
+  local format_opts = require('base.utils').get_lsp_formatting_defaults()
+
   lsp_mappings.n["<leader>lf"] = {
     function()
       vim.lsp.buf.format(format_opts)
@@ -1437,7 +1436,7 @@ function M.lsp_mappings(client, bufnr)
   )
 
   -- Autoformatting (autocmd)
-  local autoformat = formatting.format_on_save
+  local autoformat = format_opts
   local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
 
   -- guard clauses
@@ -1544,7 +1543,7 @@ if is_autoformat_enabled and is_filetype_allowed and is_filetype_ignored then
   }
 
   -- Goto help
-  local lsp_hover_opts = lsp_default_opts.hover_opts
+  local lsp_hover_opts = require("base.utils").apply_lsp_diagnostic_defaults()
   lsp_mappings.n["gh"] = {
     function()
       vim.lsp.buf.hover(lsp_hover_opts)

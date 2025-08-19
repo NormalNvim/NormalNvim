@@ -95,12 +95,12 @@ function M.add_autocmds_to_buffer(augroup, bufnr, autocmds)
   end
 end
 
---- Apply default settings for diagnostics, formatting, and lsp capabilities.
---- It only need to be executed once, normally on mason-lspconfig.
---- @return nil
-M.apply_default_lsp_settings = function()
-  -- Icons
-  -- Apply the icons defined in ../icons/icons.lua
+--- This function define and apply the default NormalNvim diagnostic settings.
+---
+--- Feel free to edit this function (but you shouldn't need to).
+--- @return table # A table with hover_opts, or empty table {}.
+M.apply_lsp_diagnostic_defaults = function()
+  -- Apply the icons defined in ../icons/icons.lu
   local signs = {
     { name = "DiagnosticSignError",    text = M.get_icon("DiagnosticError"),        texthl = "DiagnosticSignError" },
     { name = "DiagnosticSignWarn",     text = M.get_icon("DiagnosticWarn"),         texthl = "DiagnosticSignWarn" },
@@ -116,9 +116,6 @@ M.apply_default_lsp_settings = function()
     vim.fn.sign_define(sign.name, sign)
   end
 
-  -- Apply default lsp hover borders
-  -- Applies the option lsp_round_borders_enabled from ../1-options.lua
-  local lsp_hover_opts = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
 
   -- Set default diagnostics
   local default_diagnostics = {
@@ -145,9 +142,7 @@ M.apply_default_lsp_settings = function()
     },
   }
 
-  -- TODO: This is the only point where we are actually 'applying something' → Let's move it away.
-  -- Apply default diagnostics
-  -- Applies the option diagnostics_mode from ../1-options.lua
+  -- Table of available options to be used in ../1-options.lua > vim.g.diagnostics_mode
   local diagnostics = {
     -- diagnostics off
     [0] = vim.tbl_deep_extend(
@@ -164,27 +159,29 @@ M.apply_default_lsp_settings = function()
   }
   vim.diagnostic.config(diagnostics[vim.g.diagnostics_mode])
 
-  -- Apply formatting settings
-  local lsp_formatting = { format_on_save = { enabled = true }, disabled = {} }
-  if type(lsp_formatting.format_on_save) == "boolean" then
-    lsp_formatting.format_on_save = { enabled = lsp_formatting.format_on_save }
-  end
-  local lsp_format_opts = vim.deepcopy(lsp_formatting)
-  lsp_format_opts.disabled = nil
-  lsp_format_opts.format_on_save = nil
+  -- Get the option lsp_round_borders_enabled from ../1-options.lua
+  local lsp_hover_opts = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
+
+  return lsp_hover_opts
+end
+
+--- This function define the default NormalNvim formatting settings.
+--- It's suppossed to be called on the mappings file.
+---
+--- Feel free to edit this function (but you should't need to).
+--- @return table # A table with hover_opts, or empty table {}.
+M.get_lsp_formatting_defaults = function()
+  -- Set formatting setting
+  local lsp_format_opts = { format_on_save = { enabled = vim.g.autoformat_enabled or false }, disabled = {} }
+
+  -- Check if client is fully disabled or filtered by function
   lsp_format_opts.filter = function(client)
-    local filter = lsp_formatting.filter
-    local disabled = lsp_formatting.disabled or {}
-    -- check if client is fully disabled or filtered by function
+    local filter = lsp_format_opts.filter
+    local disabled = lsp_format_opts.disabled
     return not (vim.tbl_contains(disabled, client.name) or (type(filter) == "function" and not filter(client)))
   end
 
-  local lsp_default_opts = {}
-  lsp_default_opts.formatting = lsp_formatting
-  lsp_default_opts.format_opts = lsp_format_opts
-  lsp_default_opts.hover_opts = lsp_hover_opts
-
-  return lsp_default_opts
+  return lsp_format_opts
 end
 
 --- Applies the user lsp mappings to the lsp client.
