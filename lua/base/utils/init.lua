@@ -165,7 +165,7 @@ M.apply_default_lsp_settings = function()
 
   -- Apply formatting settings
   M.lsp_formatting = { format_on_save = { enabled = true }, disabled = {} }
-  if type(M.formatting.format_on_save) == "boolean" then
+  if type(M.lsp_formatting.format_on_save) == "boolean" then
     M.lsp_formatting.format_on_save = { enabled = M.lsp_formatting.format_on_save }
   end
   M.lsp_format_opts = vim.deepcopy(M.lsp_formatting)
