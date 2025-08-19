@@ -12,7 +12,6 @@
 --       -> mason-lspconfig                [auto start lsp]
 --       -> nvim-lspconfig                 [lsp configs]
 --       -> mason.nvim                     [lsp package manager]
---       -> SchemaStore.nvim               [mason extra schemas]
 --       -> none-ls-autoload.nvim          [mason package loader]
 --       -> none-ls                        [lsp code formatting]
 --       -> garbage-day                    [lsp garbage collector]
@@ -276,11 +275,6 @@ return {
       },
     }
   },
-
-  --  Schema Store [mason extra schemas]
-  --  https://github.com/b0o/SchemaStore.nvim
-  --  We use this plugin in ../base/utils/lsp.lua
-  "b0o/SchemaStore.nvim",
 
   -- none-ls-autoload.nvim [mason package loader]
   -- https://github.com/zeioth/mason-none-ls.nvim

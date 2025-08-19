@@ -164,16 +164,16 @@ M.apply_default_lsp_settings = function()
   vim.diagnostic.config(M.diagnostics[vim.g.diagnostics_mode])
 
   -- Apply formatting settings
-  M.formatting = { format_on_save = { enabled = true }, disabled = {} }
+  M.lsp_formatting = { format_on_save = { enabled = true }, disabled = {} }
   if type(M.formatting.format_on_save) == "boolean" then
-    M.formatting.format_on_save = { enabled = M.formatting.format_on_save }
+    M.lsp_formatting.format_on_save = { enabled = M.lsp_formatting.format_on_save }
   end
-  M.format_opts = vim.deepcopy(M.formatting)
-  M.format_opts.disabled = nil
-  M.format_opts.format_on_save = nil
-  M.format_opts.filter = function(client)
-    local filter = M.formatting.filter
-    local disabled = M.formatting.disabled or {}
+  M.lsp_format_opts = vim.deepcopy(M.lsp_formatting)
+  M.lsp_format_opts.disabled = nil
+  M.lsp_format_opts.format_on_save = nil
+  M.lsp_format_opts.filter = function(client)
+    local filter = M.lsp_formatting.filter
+    local disabled = M.lsp_formatting.disabled or {}
     -- check if client is fully disabled or filtered by function
     return not (vim.tbl_contains(disabled, client.name) or (type(filter) == "function" and not filter(client)))
   end
