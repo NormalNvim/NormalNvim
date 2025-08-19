@@ -118,7 +118,7 @@ M.apply_default_lsp_settings = function()
 
   -- Apply default lsp hover borders
   -- Applies the option lsp_round_borders_enabled from ../1-options.lua
-  M.lsp_hover_config = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
+  M.lsp_hover_opts = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
 
   -- Set default diagnostics
   local default_diagnostics = {
