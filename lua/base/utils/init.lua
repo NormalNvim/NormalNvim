@@ -118,7 +118,7 @@ M.apply_default_lsp_settings = function()
 
   -- Apply default lsp hover borders
   -- Applies the option lsp_round_borders_enabled from ../1-options.lua
-  M.lsp_hover_opts = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
+  local lsp_hover_opts = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
 
   -- Set default diagnostics
   local default_diagnostics = {
@@ -145,9 +145,10 @@ M.apply_default_lsp_settings = function()
     },
   }
 
+  -- TODO: This is the only point where we are actually 'applying something' → Let's move it away.
   -- Apply default diagnostics
   -- Applies the option diagnostics_mode from ../1-options.lua
-  M.diagnostics = {
+  local diagnostics = {
     -- diagnostics off
     [0] = vim.tbl_deep_extend(
       "force",
@@ -161,22 +162,29 @@ M.apply_default_lsp_settings = function()
     -- all diagnostics on
     default_diagnostics,
   }
-  vim.diagnostic.config(M.diagnostics[vim.g.diagnostics_mode])
+  vim.diagnostic.config(diagnostics[vim.g.diagnostics_mode])
 
   -- Apply formatting settings
-  M.lsp_formatting = { format_on_save = { enabled = true }, disabled = {} }
-  if type(M.lsp_formatting.format_on_save) == "boolean" then
-    M.lsp_formatting.format_on_save = { enabled = M.lsp_formatting.format_on_save }
+  local lsp_formatting = { format_on_save = { enabled = true }, disabled = {} }
+  if type(lsp_formatting.format_on_save) == "boolean" then
+    lsp_formatting.format_on_save = { enabled = lsp_formatting.format_on_save }
   end
-  M.lsp_format_opts = vim.deepcopy(M.lsp_formatting)
-  M.lsp_format_opts.disabled = nil
-  M.lsp_format_opts.format_on_save = nil
-  M.lsp_format_opts.filter = function(client)
-    local filter = M.lsp_formatting.filter
-    local disabled = M.lsp_formatting.disabled or {}
+  local lsp_format_opts = vim.deepcopy(lsp_formatting)
+  lsp_format_opts.disabled = nil
+  lsp_format_opts.format_on_save = nil
+  lsp_format_opts.filter = function(client)
+    local filter = lsp_formatting.filter
+    local disabled = lsp_formatting.disabled or {}
     -- check if client is fully disabled or filtered by function
     return not (vim.tbl_contains(disabled, client.name) or (type(filter) == "function" and not filter(client)))
   end
+
+  local lsp_default_opts = {}
+  lsp_default_opts.formatting = lsp_formatting
+  lsp_default_opts.format_opts = lsp_format_opts
+  lsp_default_opts.hover_opts = lsp_hover_opts
+
+  return lsp_default_opts
 end
 
 --- Applies the user lsp mappings to the lsp client.

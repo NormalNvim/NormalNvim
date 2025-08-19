@@ -1353,6 +1353,7 @@ function M.lsp_mappings(client, bufnr)
   end
 
   local lsp_mappings = require("base.utils").get_mappings_template()
+  local lsp_default_opts = require("base.utils").apply_default_lsp_settings()
 
   -- Diagnostics
   lsp_mappings.n["<leader>ld"] =
@@ -1416,8 +1417,8 @@ function M.lsp_mappings(client, bufnr)
   }
 
   -- Formatting (keymapping)
-  local formatting = require("base.utils").lsp_formatting
-  local format_opts = require("base.utils").lsp_format_opts
+  local formatting = lsp_default_opts.formatting
+  local format_opts = lsp_default_opts.format_opts
   lsp_mappings.n["<leader>lf"] = {
     function()
       vim.lsp.buf.format(format_opts)
@@ -1543,7 +1544,7 @@ if is_autoformat_enabled and is_filetype_allowed and is_filetype_ignored then
   }
 
   -- Goto help
-  local lsp_hover_opts = require("base.utils").lsp_hover_opts
+  local lsp_hover_opts = lsp_default_opts.hover_opts
   lsp_mappings.n["gh"] = {
     function()
       vim.lsp.buf.hover(lsp_hover_opts)
