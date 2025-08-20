@@ -330,9 +330,6 @@ return {
         command = "shfmt",
         args = { "-i", "2", "-filename", "$FILENAME" },
       })
-
-      -- Apply lsp mappings to none-ls clients.
-      return { on_attach = utils.apply_user_lsp_mappings }
     end
   },
 
