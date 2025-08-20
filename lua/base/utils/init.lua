@@ -165,25 +165,6 @@ M.apply_lsp_diagnostic_defaults = function()
   return lsp_hover_opts
 end
 
---- This function define the default NormalNvim formatting settings.
---- It's suppossed to be called on the mappings file.
----
---- Feel free to edit this function (but you should't need to).
---- @return table # A table with hover_opts, or empty table {}.
-M.get_lsp_formatting_defaults = function()
-  -- Set formatting setting
-  local lsp_format_opts = { format_on_save = { enabled = vim.g.autoformat_enabled or false }, disabled = {} }
-
-  -- Check if client is fully disabled or filtered by function
-  lsp_format_opts.filter = function(client)
-    local filter = lsp_format_opts.filter
-    local disabled = lsp_format_opts.disabled
-    return not (vim.tbl_contains(disabled, client.name) or (type(filter) == "function" and not filter(client)))
-  end
-
-  return lsp_format_opts
-end
-
 --- Applies the user lsp mappings to the lsp client.
 --- This function must be called every time a lsp client is attached.
 --- (currently on the config of the plugins `lspconfig` and none-ls)

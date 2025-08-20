@@ -1416,7 +1416,9 @@ function M.lsp_mappings(client, bufnr)
   }
 
   -- Formatting (keymapping)
-  local format_opts = require('base.utils').get_lsp_formatting_defaults()
+  local format_opts = {
+    format_on_save = { enabled = vim.g.autoformat_enabled or false },
+  }
 
   lsp_mappings.n["<leader>lf"] = {
     function()
@@ -1463,11 +1465,9 @@ if is_autoformat_enabled and is_filetype_allowed and is_filetype_ignored then
         -- Get autoformat setting (buffer or global)
         local autoformat_enabled = vim.b.autoformat_enabled
             or vim.g.autoformat_enabled
-        local has_no_filter = not autoformat.filter
-        local passes_filter = autoformat.filter and autoformat.filter(bufnr)
 
         -- Use these variables in the if condition
-        if autoformat_enabled and (has_no_filter or passes_filter) then
+        if autoformat_enabled then
           vim.lsp.buf.format(
             vim.tbl_deep_extend("force", format_opts, { bufnr = bufnr })
           )
