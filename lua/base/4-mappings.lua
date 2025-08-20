@@ -1342,11 +1342,6 @@ function M.lsp_mappings(client, bufnr)
     if not filter then filter = { bufnr = bufnr } end
 
     for _, lsp_client in ipairs(vim.lsp.get_clients(filter)) do
-      -- If the client doesn't implement supports_method(), return true.
-      -- (Intentional: We don't want to block clients under development)
-      if not client.supports_method then return true end
-
-      -- if the client implement supports_method, respect its value.
       if lsp_client.supports_method(method) then return true end
     end
     return false
@@ -1543,7 +1538,7 @@ if is_autoformat_enabled and is_filetype_allowed and is_filetype_ignored then
   }
 
   -- Goto help
-  local lsp_hover_opts = require("base.utils").apply_lsp_diagnostic_defaults()
+  local lsp_hover_opts = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
   lsp_mappings.n["gh"] = {
     function()
       vim.lsp.buf.hover(lsp_hover_opts)

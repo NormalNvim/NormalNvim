@@ -95,12 +95,10 @@ function M.add_autocmds_to_buffer(augroup, bufnr, autocmds)
   end
 end
 
---- This function define and apply the default NormalNvim diagnostic settings.
----
---- Feel free to edit this function (but you shouldn't need to).
---- @return table # A table with hover_opts, or empty table {}.
+--- This function define how LSP diagnostics will look.
 M.apply_lsp_diagnostic_defaults = function()
-  -- Apply the icons defined in ../icons/icons.lu
+
+  -- Define LSP diagnostics icons defined in ../icons/icons.lua
   local signs = {
     { name = "DiagnosticSignError",    text = M.get_icon("DiagnosticError"),        texthl = "DiagnosticSignError" },
     { name = "DiagnosticSignWarn",     text = M.get_icon("DiagnosticWarn"),         texthl = "DiagnosticSignWarn" },
@@ -116,9 +114,8 @@ M.apply_lsp_diagnostic_defaults = function()
     vim.fn.sign_define(sign.name, sign)
   end
 
-
-  -- Set default diagnostics
-  local default_diagnostics = {
+  -- Define diagnostic opts
+  local diagnostics_opts = {
     virtual_text = true,
     signs = {
       text = {
@@ -142,27 +139,25 @@ M.apply_lsp_diagnostic_defaults = function()
     },
   }
 
-  -- Table of available options to be used in ../1-options.lua > vim.g.diagnostics_mode
+  -- Define the table of options used by vim.g.diagnostics_mode
+  -- in ../1-options.lua
   local diagnostics = {
     -- diagnostics off
     [0] = vim.tbl_deep_extend(
       "force",
-      default_diagnostics,
+      diagnostics_opts,
       { underline = false, virtual_text = false, signs = false, update_in_insert = false }
     ),
     -- status only
-    vim.tbl_deep_extend("force", default_diagnostics, { virtual_text = false, signs = false }),
+    vim.tbl_deep_extend("force", diagnostics_opts, { virtual_text = false, signs = false }),
     -- virtual text off, signs on
-    vim.tbl_deep_extend("force", default_diagnostics, { virtual_text = false }),
+    vim.tbl_deep_extend("force", diagnostics_opts, { virtual_text = false }),
     -- all diagnostics on
-    default_diagnostics,
+    diagnostics_opts,
   }
+
+  -- Apply the settings defined in this function
   vim.diagnostic.config(diagnostics[vim.g.diagnostics_mode])
-
-  -- Get the option lsp_round_borders_enabled from ../1-options.lua
-  local lsp_hover_opts = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
-
-  return lsp_hover_opts
 end
 
 --- Applies the user lsp mappings to the lsp client.
