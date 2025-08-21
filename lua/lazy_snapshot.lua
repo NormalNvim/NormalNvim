@@ -97,7 +97,7 @@ return {
   { "windwp/nvim-autopairs", commit = "23320e75953ac82e559c610bec5a90d9c6dfa743" },
   { "windwp/nvim-ts-autotag", commit = "a1d526af391f6aebb25a8795cbc05351ed3620b5" },
   { "zbirenbaum/copilot-cmp", commit = "15fc12af3d0109fa76b60b5cffa1373697e261d1" },
-  { "zbirenbaum/copilot.lua", commit = "0f2fd3829dd27d682e46c244cf48d9715726f612" },
+  { "zbirenbaum/copilot.lua", commit = "f7bacd90f571c2aef2be4d136a0d811b2d7930cf" },
   { "zeioth/NormalSnippets", commit = "ef841ad4a0ccc6144d605cd2b4a874b04b295cb8" },
   { "zeioth/compiler.nvim", version = "^4" },
   { "zeioth/distroupdate.nvim", version = "^2" },
