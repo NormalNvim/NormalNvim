@@ -95,12 +95,10 @@ function M.add_autocmds_to_buffer(augroup, bufnr, autocmds)
   end
 end
 
---- Apply default settings for diagnostics, formatting, and lsp capabilities.
---- It only need to be executed once, normally on mason-lspconfig.
---- @return nil
-M.apply_default_lsp_settings = function()
-  -- Icons
-  -- Apply the icons defined in ../icons/icons.lua
+--- This function define how LSP diagnostics will look.
+M.apply_lsp_diagnostic_defaults = function()
+
+  -- Define LSP diagnostics icons defined in ../icons/icons.lua
   local signs = {
     { name = "DiagnosticSignError",    text = M.get_icon("DiagnosticError"),        texthl = "DiagnosticSignError" },
     { name = "DiagnosticSignWarn",     text = M.get_icon("DiagnosticWarn"),         texthl = "DiagnosticSignWarn" },
@@ -116,12 +114,8 @@ M.apply_default_lsp_settings = function()
     vim.fn.sign_define(sign.name, sign)
   end
 
-  -- Apply default lsp hover borders
-  -- Applies the option lsp_round_borders_enabled from ../1-options.lua
-  M.lsp_hover_opts = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
-
-  -- Set default diagnostics
-  local default_diagnostics = {
+  -- Define diagnostic opts
+  local diagnostics_opts = {
     virtual_text = true,
     signs = {
       text = {
@@ -145,38 +139,25 @@ M.apply_default_lsp_settings = function()
     },
   }
 
-  -- Apply default diagnostics
-  -- Applies the option diagnostics_mode from ../1-options.lua
-  M.diagnostics = {
+  -- Define the table of options used by vim.g.diagnostics_mode
+  -- in ../1-options.lua
+  local diagnostics = {
     -- diagnostics off
     [0] = vim.tbl_deep_extend(
       "force",
-      default_diagnostics,
+      diagnostics_opts,
       { underline = false, virtual_text = false, signs = false, update_in_insert = false }
     ),
     -- status only
-    vim.tbl_deep_extend("force", default_diagnostics, { virtual_text = false, signs = false }),
+    vim.tbl_deep_extend("force", diagnostics_opts, { virtual_text = false, signs = false }),
     -- virtual text off, signs on
-    vim.tbl_deep_extend("force", default_diagnostics, { virtual_text = false }),
+    vim.tbl_deep_extend("force", diagnostics_opts, { virtual_text = false }),
     -- all diagnostics on
-    default_diagnostics,
+    diagnostics_opts,
   }
-  vim.diagnostic.config(M.diagnostics[vim.g.diagnostics_mode])
 
-  -- Apply formatting settings
-  M.lsp_formatting = { format_on_save = { enabled = true }, disabled = {} }
-  if type(M.lsp_formatting.format_on_save) == "boolean" then
-    M.lsp_formatting.format_on_save = { enabled = M.lsp_formatting.format_on_save }
-  end
-  M.lsp_format_opts = vim.deepcopy(M.lsp_formatting)
-  M.lsp_format_opts.disabled = nil
-  M.lsp_format_opts.format_on_save = nil
-  M.lsp_format_opts.filter = function(client)
-    local filter = M.lsp_formatting.filter
-    local disabled = M.lsp_formatting.disabled or {}
-    -- check if client is fully disabled or filtered by function
-    return not (vim.tbl_contains(disabled, client.name) or (type(filter) == "function" and not filter(client)))
-  end
+  -- Apply the settings defined in this function
+  vim.diagnostic.config(diagnostics[vim.g.diagnostics_mode])
 end
 
 --- Applies the user lsp mappings to the lsp client.
