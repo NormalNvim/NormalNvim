@@ -1374,7 +1374,7 @@ function M.lsp_mappings(client, bufnr)
   end
 
   if is_available("none-ls.nvim") then
-    lsp_mappings.n["<leader>lI"] = { "<cmd>NullLsInfo<cr>", desc = "Null-ls information" }
+    lsp_mappings.n["<leader>lI"] = { "<cmd>NullLsInfo<cr>", desc = "None-ls information" }
   end
 
   -- Code actions
