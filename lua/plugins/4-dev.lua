@@ -350,7 +350,7 @@ return {
   --        and login using your GitHub account.
   {
     "zbirenbaum/copilot.lua",
-    event = "User BaseDefered",
+    event = "User BaseDefered", -- Ensure it loads before mason-lspconfig.
     opts = {},
   },
 
