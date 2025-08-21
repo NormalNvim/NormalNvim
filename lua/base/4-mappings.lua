@@ -444,7 +444,7 @@ if is_available("nvim-cmp") then
 end
 if is_available("nvim-highlight-colors") then
   maps.n["<leader>uC"] =
-  { "<cmd>HighlightColors toggle<cr>", desc = "color highlight" }
+  { "<cmd>HighlightColors toggle<cr>", desc = "Color highlight" }
 end
 maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "Diagnostics" }
 maps.n["<leader>uD"] = { ui.set_indent, desc = "Change indent setting" }
