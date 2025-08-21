@@ -1415,7 +1415,6 @@ function M.lsp_mappings(client, bufnr)
     format_on_save = { enabled = vim.g.autoformat_enabled or false },
     disabled = {} -- You can disable formatting for desired lsp clients.
   }
-
   lsp_mappings.n["<leader>lf"] = {
     function()
       vim.lsp.buf.format(format_opts)
@@ -1449,9 +1448,11 @@ function M.lsp_mappings(client, bufnr)
       -- Get autoformat setting (buffer or global)
       local autoformat_enabled = vim.b.autoformat_enabled
           or vim.g.autoformat_enabled
+      local has_no_filter = not format_opts.filter
+      local passes_filter = format_opts.filter and format_opts.filter(bufnr)
 
       -- Use these variables in the if condition
-      if autoformat_enabled then
+      if autoformat_enabled and (has_no_filter or passes_filter) then
         vim.lsp.buf.format(
           vim.tbl_deep_extend("force", format_opts, { bufnr = bufnr })
         )
@@ -1526,24 +1527,24 @@ function M.lsp_mappings(client, bufnr)
   }
 
   -- Goto help
-  local lsp_hover_opts = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
+  local hover_opts = vim.g.lsp_round_borders_enabled and { border = "rounded", silent = true } or {}
   lsp_mappings.n["gh"] = {
     function()
-      vim.lsp.buf.hover(lsp_hover_opts)
+      vim.lsp.buf.hover(hover_opts)
     end,
     desc = "Hover help",
   }
   lsp_mappings.n["gH"] = {
-    function() vim.lsp.buf.signature_help(lsp_hover_opts) end,
+    function() vim.lsp.buf.signature_help(hover_opts) end,
     desc = "Signature help",
   }
 
   lsp_mappings.n["<leader>lh"] = {
-    function() vim.lsp.buf.hover(lsp_hover_opts) end,
+    function() vim.lsp.buf.hover(hover_opts) end,
     desc = "Hover help",
   }
   lsp_mappings.n["<leader>lH"] = {
-    function() vim.lsp.buf.signature_help(lsp_hover_opts) end,
+    function() vim.lsp.buf.signature_help(hover_opts) end,
     desc = "Signature help",
   }
 
