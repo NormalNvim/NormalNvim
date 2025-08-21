@@ -277,10 +277,7 @@ return {
 
   -- none-ls-autoload.nvim [mason package loader]
   -- https://github.com/zeioth/mason-none-ls.nvim
-  -- This plugin auto starts the packages installed by Mason
-  -- every time Neovim trigger the event FileType ().
-  -- By default it will use none-ls builtin sources.
-  -- But you can add external sources if a mason package has no builtin support.
+  -- This plugin auto starts the none-ls clients installed by Mason.
   {
     "zeioth/none-ls-autoload.nvim",
     event = "User BaseFile",
