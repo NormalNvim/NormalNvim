@@ -126,12 +126,10 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 ## Roadmap
 
 ### High prio
-* ~~On Rust, out of the box, the items under `<lead> l` don't display unless rustfmt is installed.~~ → Fixed, preparing next release...
 * Let's contribute to eldritch.nvim so markdown support is as good as the one we had on tokyonight.
 
 ### Cool ideas 
 * Given all modern GPUs for consumers are now AI capable, let's re-study the possibility of making easier for users running local AI models. Considering Cloud services will still be necessary for android devices.
-* Let's ensure nvim 0.12 don't have any incompatibility, so it's easy to migrate when it's released next year.
 * Let's start preparing NormalNvim v5.0
 
 ### Todos before v5.0 (2025)
@@ -145,6 +143,8 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 * Compiler.nvim: test support for nim-lang.
 * Let's start doing some manual testing for the installer to ensure it install correctly on all OS.
 * Version v2 of the website should look considerably better.
+* ~~Let's ensure nvim 0.12 don't have any incompatibility, so it's easy to migrate when it's released next year.~~
+* ~~On Rust, out of the box, the items under `<lead> l` don't display unless rustfmt is installed.~~
 * ~~Compiler.nvim: add support for new language `common LISP`.~~ → Not planned.
 * ~~Compiler.nvim: add support for new language `COBOL`.~~  → Not planned.
 * ~~Let's consider [tiny-glimmer](https://github.com/rachartier/tiny-glimmer.nvim) over highlight-undo, so we don't have to maintain the plugin ourselves.~~ → Let's keep using highlighg-undo, as it's been fixed upstream.
