@@ -126,6 +126,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 ## Roadmap
 
 ### High prio
+* Let's try to improve the user experience of the toggle keys under `<space>u` where possible.
 * Let's contribute to eldritch.nvim so markdown support is as good as the one we had on tokyonight.
 
 ### Cool ideas 
