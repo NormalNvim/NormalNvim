@@ -321,8 +321,8 @@ return {
   --  neural [chatgpt code generator]
   --  https://github.com/dense-analysis/neural
   --
-  --  NOTE: In order for this plugin to work, you will have to set
-  --        the next env var in your OS:
+  --  NOTE: This plugin is disabled by default.
+  --        To enable it set the next env var in your OS:
   --        OPENAI_API_KEY="my_key_here"
   {
     "dense-analysis/neural",
@@ -343,11 +343,14 @@ return {
 
   --  copilot [github code suggestions]
   --  https://github.com/zbirenbaum/copilot.lua
-  --  As alternative to chatgpt, you can use copilot uncommenting this.
-  --  Then you must run :Copilot auth
+  --  Write to get AI suggestion for your code on the fly.
+  --
+  --  NOTE: This plugin is disabled by default.
+  --        To enable it run :Copilot auth
+  --        and login using your GitHub account.
   {
     "zbirenbaum/copilot.lua",
-    event = "User BaseFile",
+    event = "User BaseDefered",
     opts = {},
   },
 
