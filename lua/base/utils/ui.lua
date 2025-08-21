@@ -207,7 +207,7 @@ end
 --- Toggle diagnostics
 function M.toggle_diagnostics()
   vim.g.diagnostics_mode = (vim.g.diagnostics_mode - 1) % 4
-  vim.diagnostic.config(require("base.utils.lsp").diagnostics[vim.g.diagnostics_mode])
+  vim.diagnostic.config(require("base.utils").diagnostics_enum[vim.g.diagnostics_mode])
   if vim.g.diagnostics_mode == 0 then
     utils.notify "diagnostics off"
   elseif vim.g.diagnostics_mode == 1 then

@@ -140,7 +140,7 @@ M.apply_lsp_diagnostic_defaults = function()
   }
 
   -- Define the table of options used by vim.g.diagnostics_mode in ../1-options.lua
-  local diagnostics = {
+  M.diagnostics_enum = {
     -- diagnostics off
     [0] = vim.tbl_deep_extend(
       "force",
@@ -156,7 +156,7 @@ M.apply_lsp_diagnostic_defaults = function()
   }
 
   -- Apply the settings defined in this function
-  vim.diagnostic.config(diagnostics[vim.g.diagnostics_mode])
+  vim.diagnostic.config(M.diagnostics_enum[vim.g.diagnostics_mode])
 end
 
 --- Applies the user lsp mappings to a lsp client.
