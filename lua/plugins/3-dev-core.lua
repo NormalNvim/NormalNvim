@@ -23,6 +23,7 @@
 --       -> cmp-nvim-path                  [auto completion path]
 --       -> cmp-nvim-lsp                   [auto completion lsp]
 --       -> cmp-luasnip                    [auto completion snippets]
+--       -> cmp-copilot                    [auto completion copilot]
 
 local utils = require("base.utils")
 
