@@ -139,8 +139,7 @@ M.apply_lsp_diagnostic_defaults = function()
     },
   }
 
-  -- Define the table of options used by vim.g.diagnostics_mode
-  -- in ../1-options.lua
+  -- Define the table of options used by vim.g.diagnostics_mode in ../1-options.lua
   local diagnostics = {
     -- diagnostics off
     [0] = vim.tbl_deep_extend(
@@ -160,11 +159,11 @@ M.apply_lsp_diagnostic_defaults = function()
   vim.diagnostic.config(diagnostics[vim.g.diagnostics_mode])
 end
 
---- Applies the user lsp mappings to the lsp client.
+--- Applies the user lsp mappings to a lsp client.
 --- This function must be called every time a lsp client is attached.
---- (currently on the config of the plugins `lspconfig` and none-ls)
---- @param client string The client where the lsp mappings will load.
---- @param bufnr number The bufnr where the lsp mappings will load.
+--- (currently on the config of the plugin `lspconfig`)
+--- @param client string The lsp client to attach the lsp mappings to.
+--- @param bufnr number The bufnr to attach the lsp mappings to.
 function M.apply_user_lsp_mappings(client, bufnr)
   local lsp_mappings = require("base.4-mappings").lsp_mappings(client, bufnr)
   if not vim.tbl_isempty(lsp_mappings.v) then
