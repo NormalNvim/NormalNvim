@@ -229,7 +229,7 @@ return {
     opts = {},
     config = function(_, opts)
       require("mason-lspconfig").setup(opts)
-      utils.apply_lsp_diagnostic_defaults() -- We only need to call it once.
+      utils.apply_lsp_diagnostic_defaults() -- Only needs to be called once.
 
       -- Apply lsp mappings to lsp clients.
       vim.api.nvim_create_autocmd('LspAttach', {
