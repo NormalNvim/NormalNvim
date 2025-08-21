@@ -9,11 +9,11 @@
 
 --       ## LSP
 --       -> nvim-java                      [java support]
---       -> mason-lspconfig                [auto start lsp]
---       -> nvim-lspconfig                 [lsp configs]
+--       -> nvim-lspconfig                 [lsp default configs]
+--       -> mason-lspconfig                [auto start lsp clients]
 --       -> mason.nvim                     [lsp package manager]
---       -> none-ls-autoload.nvim          [mason package loader]
---       -> none-ls                        [lsp code formatting]
+--       -> none-ls                        [lsp server for formatters/linters]
+--       -> none-ls-autoload.nvim          [auto start none-ls clients]
 --       -> garbage-day                    [lsp garbage collector]
 --       -> lazydev                        [lua lsp for nvim plugins]
 
@@ -211,16 +211,17 @@ return {
     end
   },
 
-  --  nvim-lspconfig [lsp configs]
+  --  nvim-lspconfig [lsp default configs]
   --  https://github.com/neovim/nvim-lspconfig
-  --  This plugin provide default configs for the lsp servers available on mason.
+  --  This plugin is just a dependency for other plugins.
+  --  It provides default configs for the lsp servers available on mason.
   {
     "neovim/nvim-lspconfig",
     event = "User BaseFile",
     dependencies = "nvim-java/nvim-java",
   },
 
-  -- mason-lspconfig [auto start lsp]
+  -- mason-lspconfig [auto start lsp clients]
   -- https://github.com/mason-org/mason-lspconfig.nvim
   -- This plugin auto start the lsp clients installed by Mason.
   {
@@ -275,7 +276,7 @@ return {
     }
   },
 
-  -- none-ls-autoload.nvim [mason package loader]
+  -- none-ls-autoload.nvim [auto start none-ls clients]
   -- https://github.com/zeioth/mason-none-ls.nvim
   -- This plugin auto start the none-ls clients installed by Mason.
   {
@@ -313,8 +314,9 @@ return {
     },
   },
 
-  -- none-ls [lsp code formatting]
+  -- none-ls [lsp server for formatters/linters]
   -- https://github.com/nvimtools/none-ls.nvim
+  -- None-ls is a special lsp server capable of running formatters, and linters.
   {
     "nvimtools/none-ls.nvim",
     event = "User BaseFile",
