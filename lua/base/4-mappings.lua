@@ -442,9 +442,9 @@ maps.n["<leader>ub"] = { ui.toggle_background, desc = "Background" }
 if is_available("nvim-cmp") then
   maps.n["<leader>uc"] = { ui.toggle_cmp, desc = "Autocompletion" }
 end
-if is_available("nvim-colorizer.lua") then
+if is_available("nvim-highlight-colors") then
   maps.n["<leader>uC"] =
-  { "<cmd>ColorizerToggle<cr>", desc = "color highlight" }
+  { "<cmd>HighlightColors toggle<cr>", desc = "color highlight" }
 end
 maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "Diagnostics" }
 maps.n["<leader>uD"] = { ui.set_indent, desc = "Change indent setting" }
