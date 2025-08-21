@@ -1453,9 +1453,8 @@ function M.lsp_mappings(client, bufnr)
 
       -- Use these variables in the if condition
       if autoformat_enabled and (has_no_filter or passes_filter) then
-        vim.lsp.buf.format(
-          vim.tbl_deep_extend("force", format_opts, { bufnr = bufnr })
-        )
+        local affected_bufnr = vim.tbl_deep_extend("force", format_opts, { bufnr = bufnr })
+        vim.lsp.buf.format(affected_bufnr)
       end
     end,
   })
