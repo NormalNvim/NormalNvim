@@ -443,8 +443,9 @@ if is_available("nvim-cmp") then
   maps.n["<leader>uc"] = { ui.toggle_cmp, desc = "Autocompletion" }
 end
 if is_available("nvim-highlight-colors") then
+  -- TODO: Create an actual toggle for this in ./utils/ui.lua
   maps.n["<leader>uC"] =
-  { "<cmd>HighlightColors toggle<cr>", desc = "Color highlight" }
+  { "<cmd>HighlightColors toggle<cr>", desc = "Hex #colors" }
 end
 maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "Diagnostics" }
 maps.n["<leader>uD"] = { ui.set_indent, desc = "Change indent setting" }
