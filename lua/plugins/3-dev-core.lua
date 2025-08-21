@@ -222,7 +222,7 @@ return {
 
   -- mason-lspconfig [auto start lsp]
   -- https://github.com/mason-org/mason-lspconfig.nvim
-  -- This plugin auto starts the lsp servers installed by Mason.
+  -- This plugin auto start the lsp clients installed by Mason.
   {
     "mason-org/mason-lspconfig.nvim",
     dependencies = { "neovim/nvim-lspconfig" },
@@ -232,7 +232,7 @@ return {
       require("mason-lspconfig").setup(opts)
       utils.apply_lsp_diagnostic_defaults() -- Only needs to be called once.
 
-      -- Apply lsp mappings to lsp clients.
+      -- Apply the lsp mappings to each client in each buffer.
       vim.api.nvim_create_autocmd('LspAttach', {
         callback = function(args)
           local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -277,7 +277,7 @@ return {
 
   -- none-ls-autoload.nvim [mason package loader]
   -- https://github.com/zeioth/mason-none-ls.nvim
-  -- This plugin auto starts the none-ls clients installed by Mason.
+  -- This plugin auto start the none-ls clients installed by Mason.
   {
     "zeioth/none-ls-autoload.nvim",
     event = "User BaseFile",
