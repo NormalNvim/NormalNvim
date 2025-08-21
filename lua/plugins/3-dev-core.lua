@@ -415,7 +415,6 @@ return {
         { path = "mason-lspconfig.nvim", mods = { "mason-lspconfig" } },
         { path = "mason.nvim", mods = { "mason", "mason-core", "mason-registry", "mason-vendor" } },
         { path = "mason-extra-cmds", mods = { "masonextracmds" } },
-        { path = "SchemaStore.nvim", mods = { "schemastore" } },
         { path = "none-ls-autoload.nvim", mods = { "none-ls-autoload" } },
         { path = "none-ls.nvim", mods = { "null-ls" } },
         { path = "lazydev.nvim", mods = { "" } },
