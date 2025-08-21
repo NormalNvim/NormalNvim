@@ -1333,7 +1333,7 @@ end
 function M.lsp_mappings(client, bufnr)
   -- Helper function to check if a lsp client implements a certain method.
   --
-  -- Wrapper for `client.supports_method()` to avoid code repetition.
+  -- Wrapper for `client:supports_method()` to avoid code repetition.
   -- @param capability string The server capability to check for (example: "documentFormattingProvider").
   -- @param filter? vim.lsp.get_clients.filter|nil A valid get_clients filter (see function docs).
   -- @return boolean # `true` if any of the clients provide the capability.
@@ -1342,7 +1342,7 @@ function M.lsp_mappings(client, bufnr)
     if not filter then filter = { bufnr = bufnr } end
 
     for _, lsp_client in ipairs(vim.lsp.get_clients(filter)) do
-      if lsp_client.supports_method(method) then return true end
+      if lsp_client:supports_method(method) then return true end
     end
     return false
   end
