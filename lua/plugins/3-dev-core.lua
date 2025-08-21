@@ -221,8 +221,7 @@ return {
 
   -- mason-lspconfig [auto start lsp]
   -- https://github.com/mason-org/mason-lspconfig.nvim
-  -- This plugin auto starts the lsp servers installed by Mason
-  -- every time Neovim trigger the event FileType.
+  -- This plugin auto starts the lsp servers installed by Mason.
   {
     "mason-org/mason-lspconfig.nvim",
     dependencies = { "neovim/nvim-lspconfig" },
