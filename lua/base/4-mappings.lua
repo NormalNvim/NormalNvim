@@ -1413,6 +1413,7 @@ function M.lsp_mappings(client, bufnr)
   -- Formatting (keymapping)
   local format_opts = {
     format_on_save = { enabled = vim.g.autoformat_enabled or false },
+    disabled = {} -- You can disable formatting for desired lsp clients.
   }
 
   lsp_mappings.n["<leader>lf"] = {
@@ -1433,53 +1434,40 @@ function M.lsp_mappings(client, bufnr)
   )
 
   -- Autoformatting (autocmd)
-  local autoformat = format_opts
-  local filetype = vim.api.nvim_get_option_value("filetype", { buf = bufnr })
+  utils.add_autocmds_to_buffer("lsp_auto_format", bufnr, {
+    events = "BufWritePre", -- Trigger before save
+    desc = "Autoformat on save",
+    callback = function()
+      -- guard clause: supports_method
+      if
+          not supports_method("textDocument/formatting", { bufnr = bufnr })
+      then
+        utils.del_autocmds_from_buffer("lsp_auto_format", bufnr)
+        return
+      end
 
-  -- guard clauses
-  local is_autoformat_enabled = autoformat.enabled
-  local is_filetype_allowed = vim.tbl_isempty(autoformat.allow_filetypes or {})
-      or vim.tbl_contains(autoformat.allow_filetypes, filetype)
-  local is_filetype_ignored = vim.tbl_isempty(
-    autoformat.ignore_filetypes or {}
-  ) or not vim.tbl_contains(autoformat.ignore_filetypes, filetype)
+      -- Get autoformat setting (buffer or global)
+      local autoformat_enabled = vim.b.autoformat_enabled
+          or vim.g.autoformat_enabled
 
-if is_autoformat_enabled and is_filetype_allowed and is_filetype_ignored then
-    utils.add_autocmds_to_buffer("lsp_auto_format", bufnr, {
-      events = "BufWritePre", -- Trigger before save
-      desc = "Autoformat on save",
-      callback = function()
-        -- guard clause: supports_method
-        if
-            not supports_method("textDocument/formatting", { bufnr = bufnr })
-        then
-          utils.del_autocmds_from_buffer("lsp_auto_format", bufnr)
-          return
-        end
+      -- Use these variables in the if condition
+      if autoformat_enabled then
+        vim.lsp.buf.format(
+          vim.tbl_deep_extend("force", format_opts, { bufnr = bufnr })
+        )
+      end
+    end,
+  })
 
-        -- Get autoformat setting (buffer or global)
-        local autoformat_enabled = vim.b.autoformat_enabled
-            or vim.g.autoformat_enabled
-
-        -- Use these variables in the if condition
-        if autoformat_enabled then
-          vim.lsp.buf.format(
-            vim.tbl_deep_extend("force", format_opts, { bufnr = bufnr })
-          )
-        end
-      end,
-    })
-
-    -- Key mappings for toggling autoformat (buffer/global)
-    lsp_mappings.n["<leader>uf"] = {
-      function() require("base.utils.ui").toggle_buffer_autoformat() end,
-      desc = "Toggle buffer autoformat",
-    }
-    lsp_mappings.n["<leader>uF"] = {
-      function() require("base.utils.ui").toggle_autoformat() end,
-      desc = "Toggle global autoformat",
-    }
-  end
+  -- Key mappings for toggling autoformat (buffer/global)
+  lsp_mappings.n["<leader>uf"] = {
+    function() require("base.utils.ui").toggle_buffer_autoformat() end,
+    desc = "Autoformat (buffer)",
+  }
+  lsp_mappings.n["<leader>uF"] = {
+    function() require("base.utils.ui").toggle_autoformat() end,
+    desc = "Autoformat",
+  }
 
   -- Highlight references when cursor holds
   utils.add_autocmds_to_buffer("lsp_document_highlight", bufnr, {
