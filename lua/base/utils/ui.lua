@@ -90,6 +90,7 @@ function M.toggle_autopairs()
 end
 
 --- Toggle background="dark"|"light"
+--- It will only work if your colorscheme implements this feature.
 function M.toggle_background()
   vim.go.background = vim.go.background == "light" and "dark" or "light"
   utils.notify(string.format("background=%s", vim.go.background))
