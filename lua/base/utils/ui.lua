@@ -5,7 +5,6 @@
 --  to keep it as it takes a lot of complexity out of `../4-mappings.lua`.
 
 --    Functions:
---      -> change_number
 --      -> set_indent
 --      -> toggle_animations
 --      -> toggle_autoformat
@@ -21,6 +20,7 @@
 --      -> toggle_diagnostics
 --      -> toggle_foldcolumn
 --      -> toggle_inlay_hints
+--      -> toggle_line_numbers
 --      -> toggle_lsp_signature
 --      -> toggle_paste
 --      -> toggle_signcolumn
@@ -36,22 +36,6 @@
 local M = {}
 local utils = require("base.utils")
 local function bool2str(bool) return bool and "on" or "off" end
-
---- Change the number display modes
-function M.change_number()
-  local number = vim.wo.number                 -- local to window
-  local relativenumber = vim.wo.relativenumber -- local to window
-  if not number and not relativenumber then
-    vim.wo.number = true
-  elseif number and not relativenumber then
-    vim.wo.relativenumber = true
-  elseif number and relativenumber then
-    vim.wo.number = false
-  else -- not number and relativenumber
-    vim.wo.relativenumber = false
-  end
-  utils.notify(string.format("number %s, relativenumber %s", bool2str(vim.wo.number), bool2str(vim.wo.relativenumber)))
-end
 
 --- Set the indent and tab related numbers
 function M.set_indent()
@@ -220,6 +204,22 @@ function M.toggle_inlay_hints(bufnr)
   vim.b.inlay_hints_enabled = not vim.g.inlay_hints_enabled -- sync buffer state
   vim.lsp.buf.inlay_hint.enable(vim.g.inlay_hints_enabled, { bufnr = bufnr }) -- apply state
   utils.notify(string.format("Global inlay hints %s", bool2str(vim.g.inlay_hints_enabled)))
+end
+
+--- Toggle line numbers
+function M.toggle_line_numbers()
+  local number = vim.wo.number                 -- local to window
+  local relativenumber = vim.wo.relativenumber -- local to window
+  if not number and not relativenumber then    -- mode 1
+    vim.wo.number = true
+  elseif number and not relativenumber then    -- mode 2
+    vim.wo.relativenumber = true
+  elseif number and relativenumber then
+    vim.wo.number = false                      -- mode 3
+  else -- not number and relativenumber
+    vim.wo.relativenumber = false              -- mode 4
+  end
+  utils.notify(string.format("number %s, relativenumber %s", bool2str(vim.wo.number), bool2str(vim.wo.relativenumber)))
 end
 
 --- Toggle lsp signature
