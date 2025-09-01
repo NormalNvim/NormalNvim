@@ -5,12 +5,11 @@
 --  to keep it as it takes a lot of complexity out of `../4-mappings.lua`.
 
 --    Functions:
---      -> set_indent
+--      -> set_tabulation
 --      -> toggle_animations
 --      -> toggle_autoformat
 --      -> toggle_autopairs
 --      -> toggle_background
---      -> toggle_buffer_autoformat
 --      -> toggle_buffer_inlay_hints
 --      -> toggle_buffer_syntax
 --      -> toggle_codelens
@@ -37,9 +36,11 @@ local M = {}
 local utils = require("base.utils")
 local function bool2str(bool) return bool and "on" or "off" end
 
---- Set the indent and tab related numbers
-function M.set_indent()
-  local input_avail, input = pcall(vim.fn.input, "Set indent value (>0 expandtab, <=0 noexpandtab): ")
+--- Set tabulation value for the current buffer.
+--- Enter a positive number to set tabulation to n spaces.
+--- Or enter a negative number to set tabulation to n tabs.
+function M.set_tabulation()
+  local input_avail, input = pcall(vim.fn.input, "Set indent value (n>0 spaces, n<=0 tabs): ")
   if input_avail then
     local indent = tonumber(input)
     if not indent or indent == 0 then return end

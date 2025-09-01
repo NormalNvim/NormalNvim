@@ -448,7 +448,7 @@ if is_available("nvim-highlight-colors") then
   { "<cmd>HighlightColors toggle<cr>", desc = "Hex #colors" }
 end
 maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "LSP Diagnostics" }
-maps.n["<leader>uD"] = { ui.set_indent, desc = "Change indent setting" }
+maps.n["<leader>uD"] = { ui.set_tabulation, desc = "Set tabulation" }
 maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Signcolumn" }
 maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Statusline" }
 maps.n["<leader>un"] = { ui.toggle_line_numbers, desc = "Line numbers" }
@@ -1459,12 +1459,8 @@ function M.lsp_mappings(client, bufnr)
     end,
   })
 
-  -- Key mappings for toggling autoformat (buffer/global)
+  -- Key mappings for toggling autoformat (globally)
   lsp_mappings.n["<leader>uf"] = {
-    function() require("base.utils.ui").toggle_buffer_autoformat() end,
-    desc = "Autoformat (buffer)",
-  }
-  lsp_mappings.n["<leader>uF"] = {
     function() require("base.utils.ui").toggle_autoformat() end,
     desc = "Autoformat",
   }
