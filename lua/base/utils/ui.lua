@@ -115,6 +115,19 @@ function M.toggle_buffer_inlay_hints(bufnr)
   utils.notify(string.format("Buffer inlay hints %s", bool2str(vim.b[bufnr].inlay_hints_enabled)))
 end
 
+--- Toggle buffer semantic token highlighting for all language servers that support it
+--- @param bufnr? number the buffer to toggle `semantic tokens` on.
+function M.toggle_buffer_semantic_tokens(bufnr)
+  bufnr = bufnr or 0
+  vim.b[bufnr].semantic_tokens_enabled = not vim.b[bufnr].semantic_tokens_enabled
+  for _, client in ipairs(vim.lsp.get_clients({ bufnr = bufnr })) do
+    if client.server_capabilities.semanticTokensProvider then
+      vim.lsp.semantic_tokens[vim.b[bufnr].semantic_tokens_enabled and "start" or "stop"](bufnr, client.id)
+      utils.notify(string.format("Buffer lsp semantic highlighting %s", bool2str(vim.b[bufnr].semantic_tokens_enabled)))
+    end
+  end
+end
+
 --- Toggle syntax highlighting and treesitter
 --- @param bufnr? number the buffer to toggle `treesitter` on.
 function M.toggle_buffer_syntax(bufnr)
@@ -125,9 +138,11 @@ function M.toggle_buffer_syntax(bufnr)
   if vim.bo[bufnr].syntax == "off" then
     if ts_avail and parsers.has_parser() then vim.treesitter.start(bufnr) end
     vim.bo[bufnr].syntax = "on"
+    if not vim.b.semantic_tokens_enabled then M.toggle_buffer_semantic_tokens(bufnr) end
   else
     if ts_avail and parsers.has_parser() then vim.treesitter.stop(bufnr) end
     vim.bo[bufnr].syntax = "off"
+    if vim.b.semantic_tokens_enabled then M.toggle_buffer_semantic_tokens(bufnr) end
   end
   utils.notify(string.format("syntax %s", bool2str(vim.bo[bufnr].syntax)))
 end
