@@ -275,9 +275,16 @@ function M.toggle_tabline()
   utils.notify(string.format("tabline %s", bool2str(vim.opt.showtabline:get() == 2)))
 end
 
---- Toggle notifications for UI toggles
+
+local notify_state
+--- Toggle notifications
 function M.toggle_notifications()
   vim.g.notifications_enabled = not vim.g.notifications_enabled
+  if vim.g.notifications_enabled then
+    vim.notify = notify_state
+  else
+    notify_state = vim.notify
+  end
   utils.notify(string.format("Notifications %s", bool2str(vim.g.notifications_enabled)))
 end
 
