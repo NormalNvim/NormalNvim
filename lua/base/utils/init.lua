@@ -17,7 +17,7 @@
 --      -> os_path                    → Converts a path to the current OS.
 --      -> get_plugin_opts            → Return a plugin opts table.
 --      -> set_mappings               → Set a list of mappings in a clean way.
---      -> set_url_effect             → Show an effect for urls.
+--      -> set_url_hl                 → Add underline highlight to urls.
 --      -> open_with_program          → Open the file or URL under the cursor.
 --      -> trigger_event              → Manually trigger an event.
 --      -> which_key_register         → When setting a mapping, add it to whichkey.
@@ -320,8 +320,8 @@ function M.set_mappings(map_table, base)
 end
 
 
---- Add syntax matching rules for highlighting URLs/URIs.
-function M.set_url_effect()
+--- Set a highlight to apply to URLs.
+function M.set_url_hl()
   --- regex used for matching a valid URL/URI string
   local url_matcher =
       "\\v\\c%(%(h?ttps?|ftp|file|ssh|git)://|[a-z]+[@][a-z]+[.][a-z]+:)" ..
@@ -331,14 +331,15 @@ function M.set_url_effect()
       "|\\[[&:#*@~%_\\-=?!+;/.0-9a-z]*\\]|\\{%([&:#*@~%_\\-=?!+;/.0-9a-z]*" ..
       "|\\{[&:#*@~%_\\-=?!+;/.0-9a-z]*})\\})+"
 
-  M.delete_url_effect()
-  if vim.g.url_effect_enabled then
+  M.delete_url_hl()
+  if vim.g.url_hl_enabled then -- set url hl
+    vim.api.nvim_set_hl(0, "HighlightURL", { underline = true, bg = "NONE" })
     vim.fn.matchadd("HighlightURL", url_matcher, 15)
   end
 end
 
 --- Delete the syntax matching rules for URLs/URIs if set.
-function M.delete_url_effect()
+function M.delete_url_hl()
   for _, match in ipairs(vim.fn.getmatches()) do
     if match.group == "HighlightURL" then vim.fn.matchdelete(match.id) end
   end

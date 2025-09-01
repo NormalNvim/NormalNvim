@@ -81,5 +81,5 @@ vim.g.inlay_hints_enabled = false -- Enable always show function parameter names
 vim.g.lsp_round_borders_enabled = true -- Enable round borders for lsp hover and signatureHelp.
 vim.g.lsp_signature_enabled = true -- Enable automatically showing lsp help as you write function parameters.
 vim.g.notifications_enabled = true -- Enable notifications.
-vim.g.url_effect_enabled = true -- Highlight URLs with an underline effect.
+vim.g.url_hl_enabled = true -- Highlight URLs with an underline effect.
 

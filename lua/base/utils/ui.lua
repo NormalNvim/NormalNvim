@@ -28,7 +28,7 @@
 --      -> toggle_statusline
 --      -> toggle_tabline
 --      -> toggle_ui_notifications
---      -> toggle_url_effect
+--      -> toggle_url_hl
 --      -> toggle_wrap
 --      -> toggle_zen_mode
 
@@ -288,11 +288,11 @@ function M.toggle_notifications()
   utils.notify(string.format("Notifications %s", bool2str(vim.g.notifications_enabled)))
 end
 
---- Toggle URL/URI syntax highlighting rules
-function M.toggle_url_effect()
-  vim.g.url_effect_enabled = not vim.g.url_effect_enabled
-  require("base.utils").set_url_effect()
-  utils.notify(string.format("URL effect %s", bool2str(vim.g.url_effect_enabled)))
+--- Toggle URL highlight
+function M.toggle_url_hl()
+  vim.g.url_hl_enabled = not vim.g.url_hl_enabled
+  require("base.utils").set_url_hl()
+  utils.notify(string.format("URL highlight %s", bool2str(vim.g.url_hl_enabled)))
 end
 
 --- Toggle wrap
