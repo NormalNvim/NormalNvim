@@ -39,6 +39,8 @@ local function bool2str(bool) return bool and "on" or "off" end
 --- Set tabulation value for the current buffer.
 --- Enter a positive number to set tabulation to n spaces.
 --- Or enter a negative number to set tabulation to n tabs.
+---
+--- NOTE: it will also be used when you autoformat your code.
 function M.set_tabulation()
   local input_avail, input = pcall(vim.fn.input, "Set indentation value (n>0 spaces, n<=0 tabs): ")
   if input_avail then
