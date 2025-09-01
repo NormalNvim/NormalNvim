@@ -461,7 +461,7 @@ maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Wrap" }
 maps.n["<leader>uy"] = { ui.toggle_buffer_syntax, desc = "Syntax highlight (buffer)" }
 maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Foldcolumn" }
 maps.n["<leader>uN"] =
-{ ui.toggle_ui_notifications, desc = "UI notifications" }
+{ ui.toggle_ui_notifications, desc = "Notifications" }
 if is_available("lsp_signature.nvim") then
   maps.n["<leader>up"] = { ui.toggle_lsp_signature, desc = "LSP signature" }
 end
