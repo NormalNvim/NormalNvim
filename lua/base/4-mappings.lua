@@ -448,7 +448,6 @@ if is_available("nvim-highlight-colors") then
   { "<cmd>HighlightColors toggle<cr>", desc = "Hex #colors" }
 end
 maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "LSP Diagnostics" }
-maps.n["<leader>uD"] = { ui.set_tabulation, desc = "Set tabulation" }
 maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Signcolumn" }
 maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Statusline" }
 maps.n["<leader>un"] = { ui.toggle_line_numbers, desc = "Line numbers" }
@@ -457,6 +456,7 @@ maps.n["<leader>uP"] = { ui.toggle_paste, desc = "Paste mode" }
 maps.n["<leader>us"] = { ui.toggle_spell, desc = "Spellcheck" }
 maps.n["<leader>uS"] = { ui.toggle_conceal, desc = "Conceal" }
 maps.n["<leader>ut"] = { ui.toggle_tabline, desc = "Tabline" }
+maps.n["<leader>uT"] = { ui.set_tabulation, desc = "Set tabulation" }
 maps.n["<leader>uu"] = { ui.toggle_url_hl, desc = "URL highlight" }
 maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Wrap" }
 maps.n["<leader>uy"] = { ui.toggle_buffer_syntax, desc = "Syntax highlight (buffer)" }
