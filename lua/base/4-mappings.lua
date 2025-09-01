@@ -1403,11 +1403,11 @@ function M.lsp_mappings(client, bufnr)
       vim.lsp.codelens.run()
       vim.lsp.codelens.refresh({ bufnr = 0 })
     end,
-    desc = "LSP CodeLens run",
+    desc = "LSP codelens run",
   }
   lsp_mappings.n["<leader>uL"] = {
     function() ui.toggle_codelens() end,
-    desc = "CodeLens",
+    desc = "Codelens",
   }
 
   -- Formatting (keymapping)
@@ -1486,7 +1486,7 @@ function M.lsp_mappings(client, bufnr)
   -- Other LSP mappings
   lsp_mappings.n["<leader>lL"] = {
     function() vim.api.nvim_command(':LspRestart') end,
-    desc = "LSP refresh",
+    desc = "LSP restart",
   }
 
   -- Goto definition / declaration
