@@ -442,11 +442,6 @@ maps.n["<leader>ub"] = { ui.toggle_background, desc = "Background" }
 if is_available("nvim-cmp") then
   maps.n["<leader>uc"] = { ui.toggle_cmp, desc = "Autocompletion" }
 end
-if is_available("nvim-highlight-colors") then
-  -- TODO: Create an actual toggle for this in ./utils/ui.lua
-  maps.n["<leader>uC"] =
-  { "<cmd>HighlightColors toggle<cr>", desc = "Hex #colors" }
-end
 maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "LSP Diagnostics" }
 maps.n["<leader>uD"] = { ui.set_indent, desc = "Change indent setting" }
 maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Signcolumn" }
@@ -456,7 +451,7 @@ maps.n["<leader>uP"] = { ui.toggle_paste, desc = "Paste mode" }
 maps.n["<leader>us"] = { ui.toggle_spell, desc = "Spellcheck" }
 maps.n["<leader>uS"] = { ui.toggle_conceal, desc = "Conceal" }
 maps.n["<leader>ut"] = { ui.toggle_tabline, desc = "Tabline" }
-maps.n["<leader>uu"] = { ui.toggle_url_effect, desc = "URL highlight" }
+maps.n["<leader>uu"] = { ui.toggle_url_hl, desc = "URL highlight" }
 maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Wrap" }
 maps.n["<leader>uy"] = { ui.toggle_buffer_syntax, desc = "Syntax highlight (buffer)" }
 maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Foldcolumn" }
