@@ -40,7 +40,7 @@ local function bool2str(bool) return bool and "on" or "off" end
 --- Enter a positive number to set tabulation to n spaces.
 --- Or enter a negative number to set tabulation to n tabs.
 function M.set_tabulation()
-  local input_avail, input = pcall(vim.fn.input, "Set indent value (n>0 spaces, n<=0 tabs): ")
+  local input_avail, input = pcall(vim.fn.input, "Set indentation value (n>0 spaces, n<=0 tabs): ")
   if input_avail then
     local indent = tonumber(input)
     if not indent or indent == 0 then return end
