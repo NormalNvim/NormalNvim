@@ -5,6 +5,7 @@
 --       ## TREE SITTER
 --       -> nvim-treesitter                [syntax highlight]
 --       -> render-markdown.nvim           [normal mode markdown]
+--       -> checkmate.nvim                 [markdown toggle checks]
 --       -> nvim-highlight-colors          [hex colors]
 
 --       ## LSP
@@ -153,6 +154,28 @@ return {
       },
       pipe_table = {
         style = 'full', -- use 'normal' if colorcolumn is important for you.
+      },
+    },
+  },
+
+  --  checkmate.nvim [markdown toogle checks]
+  --  https://github.com/bngarren/checkmate.nvim
+  {
+    'bngarren/checkmate.nvim',
+    event = "User BaseFile",
+    opts = {
+      files = { "*.md" },
+      keys = { -- TODO: Move to the keymappings file.
+        ["g-"] = {
+          rhs = "<cmd>Checkmate toggle<CR>",
+          desc = "Markdown - Toggle check",
+          modes = { "n", "v" },
+        },
+        ["g*"] = {
+          rhs = "<cmd>Checkmate create<CR>",
+          desc = "Markdown - Add new check",
+          modes = { "n", "v" },
+        },
       },
     },
   },
