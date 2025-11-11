@@ -254,7 +254,18 @@ return {
     opts = {},
     config = function(_, opts)
       require("mason-lspconfig").setup(opts)
-      utils.apply_lsp_diagnostic_defaults() -- Only needs to be called once.
+
+      vim.api.nvim_create_autocmd("UIEnter", {
+        once = true,
+        callback = function()
+          -- Only needs to be called once.
+          utils.apply_lsp_diagnostic_defaults()
+
+          -- NOTE: The UIEnter event shouldn't be necessary,
+          --       but it fixes a racing condition
+          --       the first time mason-lspconfig is loaded after installing.
+        end,
+      })
 
       -- Apply the lsp mappings to each client in each buffer.
       vim.api.nvim_create_autocmd('LspAttach', {
