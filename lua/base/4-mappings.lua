@@ -430,42 +430,42 @@ maps.n["[t"] = { function() vim.cmd.tabprevious() end, desc = "Previous tab" }
 -- zen mode
 if is_available("zen-mode.nvim") then
   maps.n["<leader>uz"] =
-  { function() ui.toggle_zen_mode() end, desc = "Zen mode" }
+  { function() ui.toggle_zen_mode() end, desc = "Zen mode [g]" }
 end
 
 -- ui toggles [ui] ---------------------------------------------------------
 maps.n["<leader>u"] = icons.u
 if is_available("nvim-autopairs") then
-  maps.n["<leader>ua"] = { ui.toggle_autopairs, desc = "Autopairs" }
+  maps.n["<leader>ua"] = { ui.toggle_autopairs, desc = "Autopairs [g]" }
 end
-maps.n["<leader>ub"] = { ui.toggle_background, desc = "Background" }
+maps.n["<leader>ub"] = { ui.toggle_background, desc = "Background [g]" }
 if is_available("nvim-cmp") then
-  maps.n["<leader>uc"] = { ui.toggle_cmp, desc = "Autocompletion" }
+  maps.n["<leader>uc"] = { ui.toggle_cmp, desc = "Autocompletion [g]" }
 end
 if is_available("nvim-highlight-colors") then
+  -- TODO: Create an actual toggle for this in ./utils/ui.lua
   maps.n["<leader>uC"] =
-  { "<cmd>HighlightColors toggle<cr>", desc = "Color highlight" }
+  { ui.toggle_css_colors, desc = "CSS #colors [g]" }
 end
-maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "Diagnostics" }
-maps.n["<leader>uD"] = { ui.set_indent, desc = "Change indent setting" }
-maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Signcolumn" }
-maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Statusline" }
-maps.n["<leader>un"] = { ui.change_number, desc = "Change line numbering" }
-maps.n["<leader>uP"] = { ui.toggle_paste, desc = "Paste mode" }
-maps.n["<leader>us"] = { ui.toggle_spell, desc = "Spellcheck" }
-maps.n["<leader>uS"] = { ui.toggle_conceal, desc = "Conceal" }
-maps.n["<leader>ut"] = { ui.toggle_tabline, desc = "Tabline" }
-maps.n["<leader>uu"] = { ui.toggle_url_effect, desc = "URL highlight" }
-maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Wrap" }
-maps.n["<leader>uy"] = { ui.toggle_buffer_syntax, desc = "Syntax highlight (buffer)" }
-maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Foldcolumn" }
-maps.n["<leader>uN"] =
-{ ui.toggle_ui_notifications, desc = "UI notifications" }
+maps.n["<leader>ud"] = { ui.toggle_diagnostics, desc = "LSP Diagnostics [g]" }
+maps.n["<leader>ug"] = { ui.toggle_signcolumn, desc = "Signcolumn [w]" }
+maps.n["<leader>ul"] = { ui.toggle_statusline, desc = "Statusline [*]" }
+maps.n["<leader>un"] = { ui.toggle_line_numbers, desc = "Line numbers [w]" }
+maps.n["<leader>uN"] = { ui.toggle_notifications, desc = "Notifications [g]" }
+maps.n["<leader>uP"] = { ui.toggle_paste, desc = "Paste mode [g]" }
+maps.n["<leader>us"] = { ui.toggle_spell, desc = "Spellcheck [w]" }
+maps.n["<leader>uS"] = { ui.toggle_conceal, desc = "Conceal [w]" }
+maps.n["<leader>ut"] = { ui.toggle_tabline, desc = "Tabline [g]" }
+maps.n["<leader>uT"] = { ui.set_tabulation, desc = "Tabulation [b]" }
+maps.n["<leader>uu"] = { ui.toggle_url_hl, desc = "URL highlight [g]" }
+maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Wrap [w]" }
+maps.n["<leader>uy"] = { ui.toggle_buffer_syntax, desc = "Syntax highlight [b]" }
+maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Foldcolumn [w]" }
 if is_available("lsp_signature.nvim") then
-  maps.n["<leader>up"] = { ui.toggle_lsp_signature, desc = "LSP signature" }
+  maps.n["<leader>up"] = { ui.toggle_lsp_signature, desc = "LSP signature [g]" }
 end
 if is_available("mini.animate") then
-  maps.n["<leader>uA"] = { ui.toggle_animations, desc = "Animations" }
+  maps.n["<leader>uA"] = { ui.toggle_animations, desc = "Animations [g]" }
 end
 
 -- shifted movement keys ----------------------------------------------------
@@ -1403,11 +1403,11 @@ function M.lsp_mappings(client, bufnr)
       vim.lsp.codelens.run()
       vim.lsp.codelens.refresh({ bufnr = 0 })
     end,
-    desc = "LSP CodeLens run",
+    desc = "LSP codelens run",
   }
   lsp_mappings.n["<leader>uL"] = {
     function() ui.toggle_codelens() end,
-    desc = "CodeLens",
+    desc = "Codelens [b]",
   }
 
   -- Formatting (keymapping)
@@ -1432,7 +1432,7 @@ function M.lsp_mappings(client, bufnr)
     { desc = "Format file with LSP" }
   )
 
-  -- Autoformatting (autocmd)
+  -- Autoformat (autocmd)
   utils.add_autocmds_to_buffer("lsp_auto_format", bufnr, {
     events = "BufWritePre", -- Trigger before save
     desc = "Autoformat on save",
@@ -1459,14 +1459,16 @@ function M.lsp_mappings(client, bufnr)
     end,
   })
 
-  -- Key mappings for toggling autoformat (buffer/global)
+  -- Key mappings for toggling autoformat (buffer)
   lsp_mappings.n["<leader>uf"] = {
     function() require("base.utils.ui").toggle_buffer_autoformat() end,
-    desc = "Autoformat (buffer)",
+    desc = "Autoformat [b]",
   }
+
+  -- Key mappings for toggling autoformat (global)
   lsp_mappings.n["<leader>uF"] = {
     function() require("base.utils.ui").toggle_autoformat() end,
-    desc = "Autoformat",
+    desc = "Autoformat [g]",
   }
 
   -- Highlight references when cursor holds
@@ -1490,7 +1492,7 @@ function M.lsp_mappings(client, bufnr)
   -- Other LSP mappings
   lsp_mappings.n["<leader>lL"] = {
     function() vim.api.nvim_command(':LspRestart') end,
-    desc = "LSP refresh",
+    desc = "LSP restart",
   }
 
   -- Goto definition / declaration
@@ -1568,19 +1570,8 @@ function M.lsp_mappings(client, bufnr)
   if vim.b.inlay_hints_enabled then vim.lsp.inlay_hint.enable(true, { bufnr = bufnr }) end
   lsp_mappings.n["<leader>uH"] = {
     function() require("base.utils.ui").toggle_buffer_inlay_hints(bufnr) end,
-    desc = "LSP inlay hints (buffer)",
+    desc = "LSP inlay hints [b]",
   }
-
-  -- Toggle semantic tokens
-  if vim.g.semantic_tokens_enabled then
-    vim.b[bufnr].semantic_tokens_enabled = true
-    lsp_mappings.n["<leader>uY"] = {
-      function() require("base.utils.ui").toggle_buffer_semantic_tokens(bufnr) end,
-      desc = "LSP semantic highlight (buffer)",
-    }
-  else
-    client.server_capabilities.semanticTokensProvider = nil
-  end
 
   -- LSP based search
   lsp_mappings.n["<leader>lS"] = { function() vim.lsp.buf.workspace_symbol() end, desc = "Search symbol in workspace" }

@@ -5,15 +5,16 @@
 --       ## TREE SITTER
 --       -> nvim-treesitter                [syntax highlight]
 --       -> render-markdown.nvim           [normal mode markdown]
+--       -> checkmate.nvim                 [markdown toggle checks]
 --       -> nvim-highlight-colors          [hex colors]
 
 --       ## LSP
 --       -> nvim-java                      [java support]
---       -> mason-lspconfig                [auto start lsp]
---       -> nvim-lspconfig                 [lsp configs]
+--       -> nvim-lspconfig                 [lsp default configs]
+--       -> mason-lspconfig                [auto start lsp clients]
 --       -> mason.nvim                     [lsp package manager]
---       -> none-ls-autoload.nvim          [mason package loader]
---       -> none-ls                        [lsp code formatting]
+--       -> none-ls                        [lsp server for formatters/linters]
+--       -> none-ls-autoload.nvim          [auto start none-ls clients]
 --       -> garbage-day                    [lsp garbage collector]
 --       -> lazydev                        [lua lsp for nvim plugins]
 
@@ -157,6 +158,28 @@ return {
     },
   },
 
+  --  checkmate.nvim [markdown toogle checks]
+  --  https://github.com/bngarren/checkmate.nvim
+  {
+    'bngarren/checkmate.nvim',
+    event = "User BaseFile",
+    opts = {
+      files = { "*.md" },
+      keys = { -- TODO: Move to the keymappings file.
+        ["g-"] = {
+          rhs = "<cmd>Checkmate toggle<CR>",
+          desc = "Markdown - Toggle check",
+          modes = { "n", "v" },
+        },
+        ["g*"] = {
+          rhs = "<cmd>Checkmate create<CR>",
+          desc = "Markdown - Add new check",
+          modes = { "n", "v" },
+        },
+      },
+    },
+  },
+
   --  [hex colors]
   --  https://github.com/brenoprata10/nvim-highlight-colors
   {
@@ -211,16 +234,17 @@ return {
     end
   },
 
-  --  nvim-lspconfig [lsp configs]
+  --  nvim-lspconfig [lsp default configs]
   --  https://github.com/neovim/nvim-lspconfig
-  --  This plugin provide default configs for the lsp servers available on mason.
+  --  This plugin is just a dependency for other plugins.
+  --  It provides default configs for the lsp servers available on mason.
   {
     "neovim/nvim-lspconfig",
     event = "User BaseFile",
     dependencies = "nvim-java/nvim-java",
   },
 
-  -- mason-lspconfig [auto start lsp]
+  -- mason-lspconfig [auto start lsp clients]
   -- https://github.com/mason-org/mason-lspconfig.nvim
   -- This plugin auto start the lsp clients installed by Mason.
   {
@@ -275,7 +299,7 @@ return {
     }
   },
 
-  -- none-ls-autoload.nvim [mason package loader]
+  -- none-ls-autoload.nvim [auto start none-ls clients]
   -- https://github.com/zeioth/mason-none-ls.nvim
   -- This plugin auto start the none-ls clients installed by Mason.
   {
@@ -313,8 +337,9 @@ return {
     },
   },
 
-  -- none-ls [lsp code formatting]
+  -- none-ls [lsp server for formatters/linters]
   -- https://github.com/nvimtools/none-ls.nvim
+  -- None-ls is a special lsp server capable of running formatters, and linters.
   {
     "nvimtools/none-ls.nvim",
     event = "User BaseFile",

@@ -202,7 +202,7 @@ autocmd("BufWritePre", {
 vim.api.nvim_set_hl(0, 'HighlightURL', { underline = true })
 autocmd({ "VimEnter", "FileType", "BufEnter", "WinEnter" }, {
   desc = "URL Highlighting",
-  callback = function() utils.set_url_effect() end,
+  callback = function() utils.set_url_hl() end,
 })
 
 -- 7. Customize right click contextual menu.

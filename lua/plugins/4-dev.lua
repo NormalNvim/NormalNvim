@@ -346,7 +346,7 @@ return {
   --  Write to get AI suggestion for your code on the fly.
   --
   --  NOTE: This plugin is disabled by default.
-  --        To enable it run :Copilot auth
+  --        To enable it run ':Copilot auth'
   --        and login using your GitHub account.
   {
     "zbirenbaum/copilot.lua",
