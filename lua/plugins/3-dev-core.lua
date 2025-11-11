@@ -162,7 +162,7 @@ return {
   --  https://github.com/bngarren/checkmate.nvim
   {
     'bngarren/checkmate.nvim',
-    event = "User BaseFile",
+    event = "User BaseDefered", -- Note: This plugin do not support 'BufEnter'
     opts = {
       files = { "*.md" },
       keys = { -- TODO: Move to the keymappings file.
