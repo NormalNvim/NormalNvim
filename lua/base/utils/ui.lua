@@ -310,7 +310,7 @@ function M.toggle_statusline()
     vim.opt.laststatus = 0
     status = "OFF"
   end
-  utils.notify(string.format("toggle [Status line]: `%s`", status))
+  utils.notify(string.format("Toggle [Status line]: `%s`", status))
 end
 
 --- Toggle showtabline=2|0
