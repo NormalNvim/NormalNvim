@@ -44,7 +44,7 @@ local function bool2str(bool) return bool and "ON" or "OFF" end
 ---
 --- NOTE: It will also be used when you autoformat your code.
 function M.set_tabulation()
-  local input_avail, input = pcall(vim.fn.input, "[Indentation] \n\n- Enter a possitive number to use spaces.\nOr\n- Enter a negative number to use tabs.\n\nThe value will be used when you press TAB for the current buffer, and also when you format your code.\n\nValue: ")
+  local input_avail, input = pcall(vim.fn.input, "[Tabulation] \n\n- Enter a possitive number to use spaces.\nOr\n- Enter a negative number to use tabs.\n\nThe value will be used when you press TAB for the current buffer, and also when you format your code.\n\nValue: ")
   if input_avail then
     local indent = tonumber(input)
     if not indent or indent == 0 then return end
