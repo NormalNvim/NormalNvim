@@ -4,23 +4,23 @@
 --  General utility functions to use within Nvim.
 
 --    Functions:
---      -> run_cmd                    → Run a shell command and return true/false.
---      -> add_autocmds_to_buffer     → Add autocmds to a bufnr.
---      -> apply_default_lsp_settings → Apply Default LSP settings.
---      -> apply_user_lsp_mappings    → Apply user lsp mappings to a lsp client.
---      -> del_autocmds_from_buffer   → Delete autocmds from a bufnr.
---      -> get_icon                   → Return an icon from the icons directory.
---      -> get_mappings_template      → Return a empty mappings table.
---      -> is_available               → Return true if the plugin exist.
---      -> is_big_file                → Return true if the file is too big.
---      -> notify                     → Send a notification with a default title.
---      -> os_path                    → Converts a path to the current OS.
---      -> get_plugin_opts            → Return a plugin opts table.
---      -> set_mappings               → Set a list of mappings in a clean way.
---      -> set_url_hl                 → Add underline highlight to urls.
---      -> open_with_program          → Open the file or URL under the cursor.
---      -> trigger_event              → Manually trigger an event.
---      -> which_key_register         → When setting a mapping, add it to whichkey.
+--      -> run_cmd                       → Run a shell command and return true/false.
+--      -> add_autocmds_to_buffer        → Add autocmds to a bufnr.
+--      -> apply_lsp_diagnostic_defaults → Apply Default LSP settings.
+--      -> apply_user_lsp_mappings       → Apply user lsp mappings to a lsp client.
+--      -> del_autocmds_from_buffer      → Delete autocmds from a bufnr.
+--      -> get_icon                      → Return an icon from the icons directory.
+--      -> get_mappings_template         → Return a empty mappings table.
+--      -> is_available                  → Return true if the plugin exist.
+--      -> is_big_file                   → Return true if the file is too big.
+--      -> notify                        → Send a notification with a default title.
+--      -> os_path                       → Converts a path to the current OS.
+--      -> get_plugin_opts               → Return a plugin opts table.
+--      -> set_mappings                  → Set a list of mappings in a clean way.
+--      -> set_url_hl                    → Add underline highlight to urls.
+--      -> open_with_program             → Open the file or URL under the cursor.
+--      -> trigger_event                 → Manually trigger an event.
+--      -> which_key_register            → When setting a mapping, add it to whichkey.
 
 
 local M = {}
@@ -155,8 +155,11 @@ M.apply_lsp_diagnostic_defaults = function()
     diagnostics_opts,
   }
 
-  -- Apply the settings defined in this function
-  vim.diagnostic.config(M.diagnostics_enum[vim.g.diagnostics_mode])
+  vim.api.nvim_create_autocmd("UIEnter", { -- Prevents nvim lifecycle bug.
+    callback = function()
+        vim.diagnostic.config(M.diagnostics_enum[vim.g.diagnostics_mode])
+    end,
+  })
 end
 
 --- Applies the user lsp mappings to a lsp client.
