@@ -155,7 +155,8 @@ M.apply_lsp_diagnostic_defaults = function()
     diagnostics_opts,
   }
 
-  vim.api.nvim_create_autocmd("UIEnter", { -- Prevents nvim lifecycle bug.
+  vim.api.nvim_create_autocmd("UIEnter", { -- Prevents nvim lifecycle bugs.
+    once = true,
     callback = function()
         vim.diagnostic.config(M.diagnostics_enum[vim.g.diagnostics_mode])
     end,
