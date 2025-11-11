@@ -272,9 +272,9 @@ return {
   },
 
   --  mini.indentscope [guides]
-  --  https://github.com/echasnovski/mini.indentscope
+  --  https://github.com/nvim-mini/mini.indentscope
   {
-    "echasnovski/mini.indentscope",
+    "nvim-mini/mini.indentscope",
     event = { "BufReadPre", "BufNewFile" },
     opts = {
       draw = { delay = 0, animation = function() return 0 end },
@@ -647,11 +647,11 @@ return {
   },
 
   --  mini.animate [animations]
-  --  https://github.com/echasnovski/mini.animate
+  --  https://github.com/nvim-mini/mini.animate
   --  HINT: if one of your personal keymappings fail due to mini.animate, try to
   --        disable it during the keybinding using vim.g.minianimate_disable = true
   {
-    "echasnovski/mini.animate",
+    "nvim-mini/mini.animate",
     event = "User BaseFile",
     enabled = not is_android,
     opts = function()

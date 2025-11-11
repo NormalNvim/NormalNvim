@@ -104,10 +104,10 @@ return {
   },
 
   -- mini.bufremove [smart bufdelete]
-  -- https://github.com/echasnovski/mini.bufremove
+  -- https://github.com/nvim-mini/mini.bufremove
   -- Defines what tab to go on :bufdelete
   {
-    "echasnovski/mini.bufremove",
+    "nvim-mini/mini.bufremove",
     event = "User BaseFile"
   },
 
