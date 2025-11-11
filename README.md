@@ -126,7 +126,6 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 ## Roadmap
 
 ### High prio
-* Let's try to improve the user experience of the toggle keys under `<space>u` where possible.
 * Let's contribute to eldritch.nvim so markdown support is as good as the one we had on tokyonight.
 
 ### Cool ideas 
@@ -144,13 +143,13 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 * Compiler.nvim: test support for nim-lang.
 * Let's start doing some manual testing for the installer to ensure it install correctly on all OS.
 * Version v2 of the website should look considerably better.
+* ~~Let's try to improve the user experience of the toggle keys under `<space>u` where possible.~~
 * ~~Let's ensure nvim 0.12 don't have any incompatibility, so it's easy to migrate when it's released next year.~~
 * ~~On Rust, out of the box, the items under `<lead> l` don't display unless rustfmt is installed.~~
 * ~~Compiler.nvim: add support for new language `common LISP`.~~ → Not planned.
 * ~~Compiler.nvim: add support for new language `COBOL`.~~  → Not planned.
 * ~~Let's consider [tiny-glimmer](https://github.com/rachartier/tiny-glimmer.nvim) over highlight-undo, so we don't have to maintain the plugin ourselves.~~ → Let's keep using highlighg-undo, as it's been fixed upstream.
 * ~~Let's keep an eye on the plugins that display deprecation warnings on nvim 0.11 [here](https://github.com/nvim-neo-tree/neo-tree.nvim/issues/1588) and [here](https://github.com/ray-x/lsp_signature.nvim/issues/346)~~. Full list of deprecations [here](https://neovim.io/doc/user/deprecated.html#deprecated).
-
 
 ### Blocked
 * Once selene add [this](https://github.com/Kampfkarren/selene/issues/224) and [this](https://github.com/Kampfkarren/selene/issues/524) and [this](https://github.com/Kampfkarren/selene/pull/591), let's add the new rules.
