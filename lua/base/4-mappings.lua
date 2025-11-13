@@ -458,7 +458,7 @@ maps.n["<leader>uS"] = { ui.toggle_conceal, desc = "Conceal [w]" }
 maps.n["<leader>ut"] = { ui.toggle_tabline, desc = "Tabline [g]" }
 maps.n["<leader>uT"] = { ui.set_tabulation, desc = "Tabulation [b]" }
 maps.n["<leader>uu"] = { ui.toggle_url_hl, desc = "URL highlight [g]" }
-maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Wrap [w]" }
+maps.n["<leader>uw"] = { ui.toggle_wrap, desc = "Line wrap [w]" }
 maps.n["<leader>uy"] = { ui.toggle_buffer_syntax, desc = "Syntax highlight [b]" }
 maps.n["<leader>uh"] = { ui.toggle_foldcolumn, desc = "Foldcolumn [w]" }
 if is_available("lsp_signature.nvim") then
