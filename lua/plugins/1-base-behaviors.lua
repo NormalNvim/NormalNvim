@@ -541,7 +541,7 @@ return {
   --  https://github.com/andymass/vim-matchup
   {
     "andymass/vim-matchup",
-    event = "User BaseFile",
+    event = "User BaseDefered",
     config = function()
       vim.g.matchup_matchparen_deferred = 1   -- work async
       vim.g.matchup_matchparen_offscreen = {} -- disable status bar icon
