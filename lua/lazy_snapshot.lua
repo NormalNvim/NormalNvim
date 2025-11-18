@@ -55,7 +55,7 @@ return {
   { "nvim-java/nvim-java-core", commit = "229ebcdfa33c75cf746f97c46c2893b2de3626e5" },
   { "nvim-java/nvim-java-dap", commit = "55f239532f7a3789d21ea68d1e795abc77484974" },
   { "nvim-java/nvim-java-refactor", commit = "b51a57d862338999059e1d1717df3bc80a3a15c0" },
-  { "nvim-java/nvim-java-test", version = "^3" },
+  { "nvim-java/nvim-java-test", commit = "7f0f40e9c5b7eab5096d8bec6ac04251c6e81468" },
   { "nvim-lua/plenary.nvim", commit = "b9fd5226c2f76c951fc8ed5923d85e4de065e509" },
   { "nvim-mini/mini.animate", commit = "0365de8b69331c25d0d0d7573407a7dc7719e578" },
   { "nvim-mini/mini.bufremove", commit = "10857aa39160c127694151828914df3131ba83b6" },
