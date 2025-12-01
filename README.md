@@ -127,6 +127,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 
 ### High prio
 * New known bug: Diagnostics icons not displaying correctly on the left bar.
+* Port needed: We might need some ajustments for the new major version of overseer.
 * Let's contribute to eldritch.nvim so markdown support is as good as the one we had on tokyonight.
 
 ### Cool ideas 
