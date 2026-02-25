@@ -97,7 +97,7 @@ return {
   { "zeioth/distroupdate.nvim", version = "^2" },
   { "zeioth/dooku.nvim", version = "^3" },
   { "zeioth/garbage-day.nvim", version = "^1.4" },
-  { "zeioth/heirline-components.nvim", version = "^1.3" },
+  { "zeioth/heirline-components.nvim", version = "^1.5" },
   { "zeioth/hot-reload.nvim", version = "^1" },
   { "zeioth/markmap.nvim", version = "^3" },
   { "zeioth/mason-extra-cmds", version = "^2" },
