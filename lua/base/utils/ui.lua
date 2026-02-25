@@ -352,8 +352,8 @@ function M.toggle_zen_mode()
     return
   end
 
-  utils.notify(string.format("Global [Zen mode]: `%s`", bool2str(vim.g.zen_mode)))
   vim.cmd("ZenMode")
+  utils.notify(string.format("Global [Zen mode]: `%s`", bool2str(vim.g.zen_mode)))
 end
 
 return M
