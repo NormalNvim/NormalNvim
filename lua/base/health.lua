@@ -31,10 +31,10 @@ function M.check()
     vim.health.warn(
       "Neovim nightly is not officially supported and may have breaking changes"
     )
-  elseif vim.fn.has("nvim-0.10") == 1 then
-    vim.health.ok("Using stable Neovim >= 0.10.0")
+  elseif vim.fn.has("nvim-0.12") == 1 then
+    vim.health.ok("Using stable Neovim >= 0.12.0")
   else
-    vim.health.error("Neovim >= 0.10.0 is required")
+    vim.health.error("Neovim >= 0.12.0 is required")
   end
 
   -- Checks to perform.
