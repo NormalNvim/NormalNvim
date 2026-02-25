@@ -127,7 +127,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 
 ### High prio
 * ~~New known bug: Diagnostics icons not displaying correctly on the left bar.~~
-* New known bug: The first time nvim open, two instances on stylua are opened (is this an issue in nonels-autoload, or some other piece? let's debug).
+* New known bug: The first time nvim open, two instances on stylua are opened → This one come from mason registry. PR has been sent: https://github.com/mason-org/mason-registry/pull/13797/changes
 * Port needed: We might need some ajustments for the new major version of overseer.
 * Let's contribute to eldritch.nvim so markdown support is as good as the one we had on tokyonight.
 
