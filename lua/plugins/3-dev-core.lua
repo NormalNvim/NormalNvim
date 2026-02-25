@@ -362,7 +362,7 @@ return {
     opts = {
       aggressive_mode = false,
       excluded_lsp_clients = {
-        "null-ls", "jdtls", "marksman", "lua_ls"
+        "null-ls", "jdtls", "marksman", "lua_ls", "copilot"
       },
       grace_period = (60 * 15),
       wakeup_delay = 3000,
