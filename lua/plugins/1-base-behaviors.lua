@@ -528,6 +528,10 @@ return {
   {
     "folke/zen-mode.nvim",
     cmd = "ZenMode",
+    opts = {
+      on_open = function() vim.g.zen_mode = true end,
+      on_close = function() vim.g.zen_mode = false end,
+    },
   },
 
   --  suda.nvim [write as sudo]
