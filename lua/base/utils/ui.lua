@@ -346,19 +346,12 @@ function M.toggle_wrap()
 end
 
 --- Toggle zen mode
---- @param bufnr? number the buffer to toggle `zen mode` on.
-function M.toggle_zen_mode(bufnr)
+function M.toggle_zen_mode()
   if not utils.is_available("zen-mode.nvim") then -- guard clause
     utils.notify("Plugin 'zen-mode.nvim' not available")
     return
   end
 
-  bufnr = bufnr or 0
-  if not vim.g.zen_mode then
-    vim.g.zen_mode = true
-  else
-    vim.g.zen_mode = false
-  end
   utils.notify(string.format("Global [Zen mode]: `%s`", bool2str(vim.g.zen_mode)))
   vim.cmd("ZenMode")
 end
