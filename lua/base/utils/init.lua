@@ -155,12 +155,7 @@ M.apply_lsp_diagnostic_defaults = function()
     diagnostics_opts,
   }
 
-  vim.api.nvim_create_autocmd("UIEnter", { -- Prevents nvim lifecycle bugs.
-    once = true,
-    callback = function()
-        vim.diagnostic.config(M.diagnostics_enum[vim.g.diagnostics_mode])
-    end,
-  })
+  vim.diagnostic.config(M.diagnostics_enum[vim.g.diagnostics_mode])
 end
 
 --- Applies the user lsp mappings to a lsp client.
