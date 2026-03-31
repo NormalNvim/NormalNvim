@@ -128,6 +128,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 ### High prio
 * ~~New known bug: Diagnostics icons not displaying correctly on the left bar.~~
 * New known bug: The first time nvim open, two instances on stylua are opened → This one come from mason registry. PR has been sent: https://github.com/mason-org/mason-registry/pull/13797/changes
+* Undotree is natively supported now, so let's consider ship [that](https://www.reddit.com/r/neovim/comments/1s8y8kn/neovim_012_comes_with_undotree_builtin/).
 * Port needed: We might need some ajustments for the new major version of overseer.
 * Let's contribute to eldritch.nvim so markdown support is as good as the one we had on tokyonight.
 
@@ -136,7 +137,6 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 * Let's start preparing NormalNvim v5.0
 
 ### Todos before v5.0 (2025)
-* Undotree is natively supported now, so let's consider ship [that](https://www.reddit.com/r/neovim/comments/1s8y8kn/neovim_012_comes_with_undotree_builtin/).
 * It would be a neat UX improvement to integrate [snacks.nvim UI toggles](https://github.com/folke/snacks.nvim/blob/main/docs/toggle.md). But let's ensure code remain decoupled.
 * Compiler.nvim: test windows support.
 * Compiler.nvim: add support for justfiles and taskfiles.
