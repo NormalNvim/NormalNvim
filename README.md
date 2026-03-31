@@ -136,6 +136,7 @@ Did you know NormalNvim was the first Neovim distro to ship a compiler that [sup
 * Let's start preparing NormalNvim v5.0
 
 ### Todos before v5.0 (2025)
+* Undotree is natively supported now, so let's consider ship [that](https://www.reddit.com/r/neovim/comments/1s8y8kn/neovim_012_comes_with_undotree_builtin/).
 * It would be a neat UX improvement to integrate [snacks.nvim UI toggles](https://github.com/folke/snacks.nvim/blob/main/docs/toggle.md). But let's ensure code remain decoupled.
 * Compiler.nvim: test windows support.
 * Compiler.nvim: add support for justfiles and taskfiles.
