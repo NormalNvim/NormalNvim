@@ -127,7 +127,7 @@ return {
     },
     config = function(_, opts)
       -- calling setup() here is necessary to enable conceal and some features.
-      require("nvim-treesitter.configs").setup(opts)
+      require("nvim-treesitter.config").setup(opts)
     end,
   },
 
@@ -362,7 +362,7 @@ return {
     opts = {
       aggressive_mode = false,
       excluded_lsp_clients = {
-        "null-ls", "jdtls", "marksman", "lua_ls", "copilot"
+        "null-ls", "jdtls", "marksman", "lua_ls"
       },
       grace_period = (60 * 15),
       wakeup_delay = 3000,
